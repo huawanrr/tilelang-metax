@@ -44,8 +44,13 @@ def build_stage1(cfg, shape):
     swizzle, k_pack = cfg["swizzle"], cfg["k_pack"]
     scale = 1.44269504
     dtype, accum = T.float16, T.float32
-    sub = BLOCK_TOKEN // bm
-    grid_m = num_blocks * sub
+    # `bm` may be smaller than an external 128-row block (sub-blocks) or a whole
+    # multiple of it (a tile spanning `sup` consecutive external blocks).  The
+    # latter is only correctly mapped when every expert's padded span is a
+    # multiple of `bm`, which is what the `pair*` cases are for.
+    sub = max(1, BLOCK_TOKEN // bm)
+    sup = max(1, bm // BLOCK_TOKEN)
+    grid_m = num_blocks * sub // sup
 
     @T.prim_func
     def kernel(
@@ -70,12 +75,21 @@ def build_stage1(cfg, shape):
             up_s = gate_s if one_buf else T.alloc_shared((bn, bk), dtype=dtype)
             gate_l = T.alloc_fragment((bm, bn), dtype=accum)
             up_l = T.alloc_fragment((bm, bn), dtype=accum)
+            # `a_frag` stages the A tile one step further, from shared memory into the
+            # MMA operand registers, so that the gate and up GEMMs share the reads of
+            # it instead of each issuing its own.  Needs the fragment/shared path in
+            # moe.py's lowering override, which the stock GEMM op gets wrong under
+            # k_pack, so this variant is only meaningful with --kpack.
+            if cfg["a_frag"]:
+                a_f = T.alloc_fragment((bm, bk), dtype=dtype)
+            else:
+                a_f = a_s
             if epi in ("smem", "smem_gated"):
                 o_s = T.alloc_shared((bm, bn), dtype=dtype)
             if swizzle:
                 T.use_swizzle(swizzle, order=cfg["order"])
 
-            ext = bx // sub
+            ext = (bx // sub) * sup
             expert = T.min(T.max(group_idx_for_bx[ext], 0), num_experts - 1)
             row0 = ext * BLOCK_TOKEN + (bx % sub) * bm
             rows = T.max(0, T.min(bm, group_sizes[expert] - (row0 - group_padded_offsets[expert])))
@@ -89,16 +103,18 @@ def build_stage1(cfg, shape):
                     T.copy(tokens[row0 : row0 + bm, ksrc * bk : (ksrc + 1) * bk], a_s)
                     T.copy(gate_w[expert, by * bn : (by + 1) * bn,
                                   ksrc * bk : (ksrc + 1) * bk], gate_s)
+                    if cfg["a_frag"]:
+                        T.copy(a_s, a_f)
                     if one_buf:
-                        T.gemm(a_s, gate_s, gate_l, transpose_B=True, policy=pol, k_pack=k_pack)
+                        T.gemm(a_f, gate_s, gate_l, transpose_B=True, policy=pol, k_pack=k_pack)
                         T.copy(up_w[expert, by * bn : (by + 1) * bn,
                                     ksrc * bk : (ksrc + 1) * bk], up_s)
-                        T.gemm(a_s, up_s, up_l, transpose_B=True, policy=pol, k_pack=k_pack)
+                        T.gemm(a_f, up_s, up_l, transpose_B=True, policy=pol, k_pack=k_pack)
                     else:
                         T.copy(up_w[expert, by * bn : (by + 1) * bn,
                                     ksrc * bk : (ksrc + 1) * bk], up_s)
-                        T.gemm(a_s, gate_s, gate_l, transpose_B=True, policy=pol, k_pack=k_pack)
-                        T.gemm(a_s, up_s, up_l, transpose_B=True, policy=pol, k_pack=k_pack)
+                        T.gemm(a_f, gate_s, gate_l, transpose_B=True, policy=pol, k_pack=k_pack)
+                        T.gemm(a_f, up_s, up_l, transpose_B=True, policy=pol, k_pack=k_pack)
 
                 if epi == "smem":
                     for i, j in T.Parallel(bm, bn):
@@ -141,8 +157,15 @@ def build_stage2(cfg, shape):
     pol = POLICIES[cfg["policy"]]
     swizzle, k_pack = cfg["swizzle"], cfg["k_pack"]
     dtype, accum = T.float16, T.float32
-    sub = BLOCK_TOKEN // bm
-    grid_m = num_blocks * sub
+    sub = max(1, BLOCK_TOKEN // bm)
+    sup = max(1, bm // BLOCK_TOKEN)
+    grid_m = num_blocks * sub // sup
+    # `n_pair` output tiles per block, all sharing one A tile and one weight
+    # buffer, serialised copy/gemm/copy/gemm.  The A tile is then read once per
+    # `n_pair` output tiles, so the bytes copied into shared memory per GEMM fall
+    # from (bm + bn) * bk * 2 to (bm / n_pair + bn) * bk * 2.  That ratio is what
+    # the inner loop is paced by; the cost is one accumulator per tile.
+    pair = max(1, int(cfg["n_pair"]))
 
     @T.prim_func
     def kernel(
@@ -156,12 +179,6 @@ def build_stage2(cfg, shape):
         store_flag: T.Tensor((1,), T.int32),
         out: T.Tensor((padded, hidden), dtype),
     ):
-        # `n_pair` gives each block two n-tiles that share one weight buffer,
-        # serialised copy/gemm/copy/gemm exactly as stage 1 shares gate and up.
-        # The A tile (`up_logits`) is then read once per two output tiles instead
-        # of once per tile, halving stage 2's share of the streaming traffic, at
-        # the cost of two more barriers per k-step and a second accumulator.
-        pair = 2 if cfg["n_pair"] else 1
         n_tiles = T.ceildiv(hidden, bn * pair)
         grid = (n_tiles, grid_m) if cfg["swap"] else (grid_m, n_tiles)
         with T.Kernel(grid[0], grid[1], threads=threads) as (g0, g1):
@@ -169,14 +186,29 @@ def build_stage2(cfg, shape):
             a_s = (T.alloc_shared if cfg["a_shared"] else T.alloc_fragment)((bm, bk), dtype=dtype)
             down_s = T.alloc_shared((bn, bk), dtype=dtype)
             out_l = T.alloc_fragment((bm, bn), dtype=accum)
-            out_l2 = T.alloc_fragment((bm, bn), dtype=accum) if cfg["n_pair"] else out_l
+            if pair >= 2:
+                out_l2 = T.alloc_fragment((bm, bn), dtype=accum)
+            else:
+                out_l2 = out_l
+            if pair >= 3:
+                out_l3 = T.alloc_fragment((bm, bn), dtype=accum)
+            else:
+                out_l3 = out_l
+            if pair >= 4:
+                out_l4 = T.alloc_fragment((bm, bn), dtype=accum)
+            else:
+                out_l4 = out_l
             w_l = T.alloc_fragment((bm,), dtype=T.float32)
+            if cfg["a_frag"]:
+                a_f = T.alloc_fragment((bm, bk), dtype=dtype)
+            else:
+                a_f = a_s
             if epi in ("smem", "smem_gated"):
                 o_s = T.alloc_shared((bm, bn), dtype=dtype)
             if swizzle:
                 T.use_swizzle(swizzle, order=cfg["order"])
 
-            ext = bx // sub
+            ext = (bx // sub) * sup
             expert = T.min(T.max(group_idx_for_bx[ext], 0), num_experts - 1)
             row0 = ext * BLOCK_TOKEN + (bx % sub) * bm
             offset = row0 - group_padded_offsets[expert]
@@ -189,8 +221,12 @@ def build_stage2(cfg, shape):
 
             if rows > 0:
                 T.clear(out_l)
-                if cfg["n_pair"]:
+                if pair >= 2:
                     T.clear(out_l2)
+                if pair >= 3:
+                    T.clear(out_l3)
+                if pair >= 4:
+                    T.clear(out_l4)
                 for k in T.Pipelined(T.ceildiv(intermediate, bk), num_stages=num_stages):
                     # "k0" keeps every MMA and every shared-memory write but
                     # re-reads the same two tiles, so the global working set is a
@@ -199,11 +235,23 @@ def build_stage2(cfg, shape):
                     T.copy(up_logits[row0 : row0 + bm, ksrc * bk : (ksrc + 1) * bk], a_s)
                     T.copy(down_w[expert, (by * pair) * bn : (by * pair + 1) * bn,
                                   ksrc * bk : (ksrc + 1) * bk], down_s)
-                    T.gemm(a_s, down_s, out_l, transpose_B=True, policy=pol, k_pack=k_pack)
-                    if cfg["n_pair"]:
+                    if cfg["a_frag"]:
+                        T.copy(a_s, a_f)
+                    T.gemm(a_f, down_s, out_l, transpose_B=True, policy=pol, k_pack=k_pack)
+                    if pair >= 2:
                         T.copy(down_w[expert, (by * pair + 1) * bn : (by * pair + 2) * bn,
                                       ksrc * bk : (ksrc + 1) * bk], down_s)
-                        T.gemm(a_s, down_s, out_l2, transpose_B=True, policy=pol,
+                        T.gemm(a_f, down_s, out_l2, transpose_B=True, policy=pol,
+                               k_pack=k_pack)
+                    if pair >= 3:
+                        T.copy(down_w[expert, (by * pair + 2) * bn : (by * pair + 3) * bn,
+                                      ksrc * bk : (ksrc + 1) * bk], down_s)
+                        T.gemm(a_f, down_s, out_l3, transpose_B=True, policy=pol,
+                               k_pack=k_pack)
+                    if pair >= 4:
+                        T.copy(down_w[expert, (by * pair + 3) * bn : (by * pair + 4) * bn,
+                                      ksrc * bk : (ksrc + 1) * bk], down_s)
+                        T.gemm(a_f, down_s, out_l4, transpose_B=True, policy=pol,
                                k_pack=k_pack)
 
                 for i in T.Parallel(bm):
@@ -226,12 +274,235 @@ def build_stage2(cfg, shape):
                     for i, j in T.Parallel(bm, bn):
                         if i < rows:
                             out[row0 + i, (by * pair) * bn + j] = out_l[i, j] * w_l[i]
-                if cfg["n_pair"]:
+                if pair >= 2:
                     for i, j in T.Parallel(bm, bn):
                         if i < rows:
                             out[row0 + i, (by * pair + 1) * bn + j] = (
                                 out_l2[i, j] * w_l[i]
                             )
+                if pair >= 3:
+                    for i, j in T.Parallel(bm, bn):
+                        if i < rows:
+                            out[row0 + i, (by * pair + 2) * bn + j] = (
+                                out_l3[i, j] * w_l[i]
+                            )
+                if pair >= 4:
+                    for i, j in T.Parallel(bm, bn):
+                        if i < rows:
+                            out[row0 + i, (by * pair + 3) * bn + j] = (
+                                out_l4[i, j] * w_l[i]
+                            )
+
+    return kernel
+
+
+def build_stage1_merged(cfg, shape):
+    """Stage 1 with the 128-row and the 64-row tile in *one* kernel scope.
+
+    The shipped kernel puts them in two scopes, which is two launches over the same
+    grid, each with half its blocks exiting immediately, and a full drain between
+    them.  Here one launch picks the tile per block from its row count, so the
+    partially filled last round of each launch is paid once instead of twice.  The
+    two branches are mutually exclusive, so the shared tiles and the accumulators
+    of one are dead while the other runs; whether the compiler actually overlaps
+    them is the thing this variant measures (if it does not, shared memory goes to
+    56 KiB, occupancy halves, and the time will say so loudly).
+    """
+    hidden, intermediate, num_experts, padded, valid, num_blocks = shape
+    bm, bn, bk = cfg["block_m"], cfg["block_n"], cfg["block_k"]
+    threads, num_stages = cfg["threads"], cfg["num_stages"]
+    one_buf = cfg["one_buf"]
+    pol = POLICIES[cfg["policy"]]
+    swizzle, k_pack = cfg["swizzle"], cfg["k_pack"]
+    tail_m = cfg["tail"]
+    scale = 1.44269504
+    dtype, accum = T.float16, T.float32
+
+    @T.prim_func
+    def kernel(
+        tokens: T.Tensor((padded, hidden), dtype),
+        gate_w: T.Tensor((num_experts, intermediate, hidden), dtype),
+        up_w: T.Tensor((num_experts, intermediate, hidden), dtype),
+        group_sizes: T.Tensor((num_experts,), T.int32),
+        group_padded_offsets: T.Tensor((num_experts + 1,), T.int32),
+        group_idx_for_bx: T.Tensor((num_blocks,), T.int32),
+        store_flag: T.Tensor((1,), T.int32),
+        up_logits: T.Tensor((padded, intermediate), dtype),
+    ):
+        with T.Kernel(num_blocks, T.ceildiv(intermediate, bn), threads=threads) as (bx, by):
+            a_s = T.alloc_shared((bm, bk), dtype=dtype)
+            gate_s = T.alloc_shared((bn, bk), dtype=dtype)
+            up_s = gate_s if one_buf else T.alloc_shared((bn, bk), dtype=dtype)
+            gate_l = T.alloc_fragment((bm, bn), dtype=accum)
+            up_l = T.alloc_fragment((bm, bn), dtype=accum)
+            a_s_t = T.alloc_shared((tail_m, bk), dtype=dtype)
+            gate_s_t = T.alloc_shared((bn, bk), dtype=dtype)
+            up_s_t = gate_s_t if one_buf else T.alloc_shared((bn, bk), dtype=dtype)
+            gate_l_t = T.alloc_fragment((tail_m, bn), dtype=accum)
+            up_l_t = T.alloc_fragment((tail_m, bn), dtype=accum)
+            if swizzle:
+                T.use_swizzle(swizzle, order=cfg["order"])
+
+            expert = T.min(T.max(group_idx_for_bx[bx], 0), num_experts - 1)
+            row0 = bx * BLOCK_TOKEN
+            rows = T.max(0, T.min(bm, group_sizes[expert] - (row0 - group_padded_offsets[expert])))
+
+            if rows > tail_m:
+                T.clear(gate_l)
+                T.clear(up_l)
+                for k in T.Pipelined(T.ceildiv(hidden, bk), num_stages=num_stages):
+                    T.copy(tokens[row0 : row0 + bm, k * bk : (k + 1) * bk], a_s)
+                    T.copy(gate_w[expert, by * bn : (by + 1) * bn, k * bk : (k + 1) * bk], gate_s)
+                    T.gemm(a_s, gate_s, gate_l, transpose_B=True, policy=pol, k_pack=k_pack)
+                    T.copy(up_w[expert, by * bn : (by + 1) * bn, k * bk : (k + 1) * bk], up_s)
+                    T.gemm(a_s, up_s, up_l, transpose_B=True, policy=pol, k_pack=k_pack)
+                for i, j in T.Parallel(bm, bn):
+                    gate_l[i, j] = gate_l[i, j] * (1.0 / (1.0 + T.exp2(-gate_l[i, j] * scale)))
+                    up_l[i, j] = up_l[i, j] * gate_l[i, j]
+                    if i < rows:
+                        up_logits[row0 + i, by * bn + j] = up_l[i, j]
+            else:
+                if rows > 0:
+                    T.clear(gate_l_t)
+                    T.clear(up_l_t)
+                    for k in T.Pipelined(T.ceildiv(hidden, bk), num_stages=num_stages):
+                        T.copy(tokens[row0 : row0 + tail_m, k * bk : (k + 1) * bk], a_s_t)
+                        T.copy(gate_w[expert, by * bn : (by + 1) * bn, k * bk : (k + 1) * bk],
+                               gate_s_t)
+                        T.gemm(a_s_t, gate_s_t, gate_l_t, transpose_B=True, policy=pol,
+                               k_pack=k_pack)
+                        T.copy(up_w[expert, by * bn : (by + 1) * bn, k * bk : (k + 1) * bk],
+                               up_s_t)
+                        T.gemm(a_s_t, up_s_t, up_l_t, transpose_B=True, policy=pol,
+                               k_pack=k_pack)
+                    for i, j in T.Parallel(tail_m, bn):
+                        gate_l_t[i, j] = gate_l_t[i, j] * (
+                            1.0 / (1.0 + T.exp2(-gate_l_t[i, j] * scale)))
+                        up_l_t[i, j] = up_l_t[i, j] * gate_l_t[i, j]
+                        if i < rows:
+                            up_logits[row0 + i, by * bn + j] = up_l_t[i, j]
+
+    return kernel
+
+
+def _emitter(bm, bn, bk, threads, dtype, accum, k_pack=2):
+    """Build a MACA MMA emitter for a `bm x bn x bk` tile, or return None.
+
+    `T.gemm` builds one of these internally per call, which is why the gate and the
+    up GEMM each issue their own shared-memory reads for the A tile they share.
+    Driving the emitter directly lets one set of A fragments feed both.  The warp
+    partition is hardcoded rather than asked of the policy (which needs a Target):
+    512 threads over a 128x128 tile is 4x2 warps, i.e. a 32x64 wave tile, which is
+    what `T.gemm` picks for the same shape -- so anything else returns None and the
+    caller falls back to the two-`T.gemm` form.
+    """
+    if (bm, bn, threads) != (128, 128, 512):
+        return None
+    mod = _reach(tilelang, "maca.intrinsics.macro.mma_macro_generator")
+    Emitter = getattr(mod, "TensorCoreIntrinEmitter", None) if mod else None
+    if Emitter is None:
+        return None
+    m_warp, n_warp = 4, 2
+    em = Emitter(
+        a_dtype=dtype, b_dtype=dtype, accum_dtype=accum,
+        a_transposed=False, b_transposed=True,
+        block_row_warps=m_warp, block_col_warps=n_warp,
+        warp_row_tiles=bm // m_warp, warp_col_tiles=bn // n_warp,
+        chunk=bk, k_pack=k_pack,
+    )
+    if bk % (k_pack * em.micro_size_k) != 0:
+        return None
+    return em
+
+
+def _reach(root, path):
+    obj = root
+    for part in path.split("."):
+        obj = getattr(obj, part, None)
+        if obj is None:
+            return None
+    return obj
+
+
+def build_stage1_fused(cfg, shape):
+    """Stage 1 with the gate and up GEMMs sharing one set of A fragments.
+
+    Everything else matches `build_stage1`'s `one_buf` path, including the order of
+    the MMAs, so the result should be bit-identical to it.
+    """
+    hidden, intermediate, num_experts, padded, valid, num_blocks = shape
+    bm, bn, bk = cfg["block_m"], cfg["block_n"], cfg["block_k"]
+    threads = cfg["threads"]
+    scale = 1.44269504
+    dtype, accum = T.float16, T.float32
+    em = _emitter(bm, bn, bk, threads, dtype, accum, k_pack=2)
+    swizzled = _reach(tilelang, "layout.make_swizzled_layout")
+    if em is None or swizzled is None:
+        raise RuntimeError("no emitter for this tile")
+    steps = bk // (2 * em.micro_size_k)
+    a_elems = em.warp_rows * 2 * em.local_size_a
+    b_elems = em.warp_cols * 2 * em.local_size_b
+
+    @T.prim_func
+    def kernel(
+        tokens: T.Tensor((padded, hidden), dtype),
+        gate_w: T.Tensor((num_experts, intermediate, hidden), dtype),
+        up_w: T.Tensor((num_experts, intermediate, hidden), dtype),
+        group_sizes: T.Tensor((num_experts,), T.int32),
+        group_padded_offsets: T.Tensor((num_experts + 1,), T.int32),
+        group_idx_for_bx: T.Tensor((num_blocks,), T.int32),
+        store_flag: T.Tensor((1,), T.int32),
+        up_logits: T.Tensor((padded, intermediate), dtype),
+    ):
+        with T.Kernel(num_blocks, T.ceildiv(intermediate, bn), threads=threads) as (bx, by):
+            a_s = T.alloc_shared((bm, bk), dtype=dtype)
+            w_s = T.alloc_shared((bn, bk), dtype=dtype)
+            gate_l = T.alloc_fragment((bm, bn), dtype=accum)
+            up_l = T.alloc_fragment((bm, bn), dtype=accum)
+            a_f0 = T.alloc_local((a_elems,), dtype)
+            a_f1 = T.alloc_local((a_elems,), dtype)
+            b_f = T.alloc_local((b_elems,), dtype)
+            # Nothing here is a `T.gemm`, so no op asks for these layouts: the swizzle
+            # on the shared tiles and the MMA store layout on the accumulators have to
+            # be requested by hand, or the emitter's logical indices land on a plain
+            # row-major tile (bank conflicts) and the epilogue reads the accumulator
+            # with a layout the MMA never wrote.
+            T.annotate_layout({
+                a_s: swizzled(a_s),
+                w_s: swizzled(w_s),
+                gate_l: em.make_mma_store_layout(gate_l),
+                up_l: em.make_mma_store_layout(up_l),
+            })
+            if cfg["swizzle"]:
+                T.use_swizzle(cfg["swizzle"], order=cfg["order"])
+
+            expert = T.min(T.max(group_idx_for_bx[bx], 0), num_experts - 1)
+            row0 = bx * BLOCK_TOKEN
+            rows = T.max(0, T.min(bm, group_sizes[expert] - (row0 - group_padded_offsets[expert])))
+
+            if rows > 0:
+                T.clear(gate_l)
+                T.clear(up_l)
+                for k in T.Pipelined(T.ceildiv(hidden, bk), num_stages=cfg["num_stages"]):
+                    T.copy(tokens[row0 : row0 + bm, k * bk : (k + 1) * bk], a_s)
+                    T.copy(gate_w[expert, by * bn : (by + 1) * bn, k * bk : (k + 1) * bk], w_s)
+                    em.ldmatrix_a(a_f0, a_s, 0)
+                    em.ldmatrix_b(b_f, w_s, 0)
+                    em.mma(a_f0, b_f, gate_l, 0)
+                    em.ldmatrix_a(a_f1, a_s, 1)
+                    em.ldmatrix_b(b_f, w_s, 1)
+                    em.mma(a_f1, b_f, gate_l, 1)
+                    T.copy(up_w[expert, by * bn : (by + 1) * bn, k * bk : (k + 1) * bk], w_s)
+                    em.ldmatrix_b(b_f, w_s, 0)
+                    em.mma(a_f0, b_f, up_l, 0)
+                    em.ldmatrix_b(b_f, w_s, 1)
+                    em.mma(a_f1, b_f, up_l, 1)
+
+                for i, j in T.Parallel(bm, bn):
+                    gate_l[i, j] = gate_l[i, j] * (1.0 / (1.0 + T.exp2(-gate_l[i, j] * scale)))
+                    up_l[i, j] = up_l[i, j] * gate_l[i, j]
+                    if i < rows:
+                        up_logits[row0 + i, by * bn + j] = up_l[i, j]
 
     return kernel
 
@@ -274,7 +545,8 @@ DEFAULT = {
     "num_stages": 0, "swizzle": 8, "policy": "square", "k_pack": 1,
     "one_buf": True, "epilogue": "direct", "nosafe": False, "k0load": False,
     "merge": False, "a_shared": True, "asyncc": False, "ldgstg": False,
-    "order": "row", "swap": False, "n_pair": False,
+    "order": "row", "swap": False, "n_pair": 1, "ws": False, "tail": 0,
+    "a_frag": False, "fused_a": False,
 }
 
 
@@ -391,6 +663,11 @@ def main():
     for name in names:
         cfg = all_v[name]
         passes = dict(BASE_PASS)
+        if cfg["ws"]:
+            # Every other variant disables warp specialisation, as the shipped
+            # kernel does.  This lets the pass run, to see whether it finds
+            # anything on a backend with no async copy to specialise around.
+            passes.pop(tilelang.PassConfigKey.TL_DISABLE_WARP_SPECIALIZED, None)
         if cfg["nosafe"]:
             passes[tilelang.PassConfigKey.TL_DISABLE_SAFE_MEMORY_ACCESS] = True
         if cfg["merge"]:
@@ -401,7 +678,15 @@ def main():
         if cfg["ldgstg"]:
             passes[tilelang.PassConfigKey.TL_ENABLE_LOWER_LDGSTG] = True
         try:
-            builder = build_stage1 if a.stage == 1 else build_stage2
+            if a.stage == 1:
+                if cfg["fused_a"]:
+                    builder = build_stage1_fused
+                elif cfg["tail"]:
+                    builder = build_stage1_merged
+                else:
+                    builder = build_stage1
+            else:
+                builder = build_stage2
             kern = tilelang.compile(builder(cfg, shape), out_idx=None,
                                     pass_configs=passes)
         except Exception as exc:

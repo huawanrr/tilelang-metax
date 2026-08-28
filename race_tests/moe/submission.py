@@ -1,4 +1,4 @@
-# MoE submission v23 (stripped; documented source is moe.py)
+# MoE submission v24 (stripped; documented source is moe.py)
 import torch
 import tilelang
 import tilelang.language as T
@@ -141,11 +141,11 @@ def _k_pack_on():
 _KERNEL_CACHE = {}
 _WORKSPACE_CACHE = {}
 
-_WIDE_M = True
+_WIDE_M = False
 
 _WIDE_M_MIN_BLOCKS = 64
 
-_VERSION = "v23"
+_VERSION = "v24"
 
 _TRACE = False
 _TRACED = {}

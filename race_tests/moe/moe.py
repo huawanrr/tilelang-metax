@@ -1,4 +1,4 @@
-# MoE submission v23.  If you are pasting this into the OJ, check the paste starts
+# MoE submission v24.  If you are pasting this into the OJ, check the paste starts
 # with this line.  The grader's sandbox validates the AST before running anything,
 # so `check_submission.py` enforces its three rules here: no top-level statement
 # other than an import / def / literal assignment, no `import` of anything but
@@ -157,10 +157,18 @@ def _k_pack_on():
 _KERNEL_CACHE = {}
 _WORKSPACE_CACHE = {}
 
-# Stage 1's 256-row scope, which is tuned for the grader's machine rather than this
-# one -- see the long note on `wide_m` in `_moe_forward_kernel`.  A literal, so the
-# sandbox's module-level check is happy.
-_WIDE_M = True
+# Stage 1's 256-row scope, **off because the grader said no**.  It was built on the
+# measurement that this box is 26 CUs of a 104-CU card holding the card's whole
+# bandwidth, so the grader should be four times more bandwidth-starved per CU and
+# should prefer a higher-intensity tile even at one block per CU.  v23 shipped it for
+# Config3 only, with Config1 and Config2 left alone as the in-run noise reference, and
+# the run came back **79 / 78 / 75** and then 73 on a repeat: the two unchanged configs
+# held exactly, and the only one whose kernel changed lost 3-5 points -- the same
+# direction as the 10% it loses here, not the 9-13% gain the model predicted.  So the
+# grader ranks this trade the way this box does, and local measurements do transfer.
+# The code stays, disabled, because the scope partition itself is correct and reusable
+# (see NOTES.md); flipping this to True is the only thing needed to retry it.
+_WIDE_M = False
 
 # Wide mode is gated on the token-block count so that a first submission changes only
 # Config3's kernel (96 blocks) and leaves Config1 (24) and Config2 (48) byte-identical,
@@ -171,7 +179,7 @@ _WIDE_M_MIN_BLOCKS = 64
 # Bump this whenever the submitted file changes.  Three OJ runs in a row returned
 # 14.12-14.20 ms while local per-stage time fell 16%; the explanation turned out
 # to be that all three selected the same `block_m`, so they were the same kernel.
-_VERSION = "v23"
+_VERSION = "v24"
 
 # One line per distinct shape reporting what the grader handed us.  Off by
 # default -- the OJ shows no stdout, so it earns nothing there.  Set

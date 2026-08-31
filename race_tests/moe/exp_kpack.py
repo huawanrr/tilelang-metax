@@ -96,6 +96,8 @@ def main():
     p.add_argument("--stage", type=int, default=2)
     p.add_argument("--case", default="mid")
     p.add_argument("--k-pack", type=int, default=2)
+    p.add_argument("--threads", type=int, default=256)
+    p.add_argument("--n-pair", type=int, default=1)
     p.add_argument("--iters", type=int, default=15)
     p.add_argument("--warmup", type=int, default=6)
     p.add_argument("--configs", default=os.path.join(os.path.dirname(os.path.abspath(__file__)),
@@ -117,6 +119,8 @@ def main():
 
     cfg = dict(ex.DEFAULT)
     cfg["swizzle"] = 8
+    cfg["threads"] = a.threads
+    cfg["n_pair"] = a.n_pair
     flag = torch.zeros((1,), device=device, dtype=torch.int32)
     print(f"case={a.case} stage={a.stage}")
     print(f"{'variant':<16}{'ms':>10}{'TF/s':>9}{'err':>11}")

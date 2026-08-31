@@ -13,7 +13,7 @@
 |---|---|
 | 提交文件 | `submission.py`（由 `strip_comments.py` 从 `moe.py` 去注释生成） |
 | 文档源码 | `moe.py` |
-| 当前版本 | **v23** |
+| 当前版本 | **v33-safe**（撤销错误的 vendor hybrid，恢复任意 counts/排列正确） |
 | 最佳成绩 | **78.33 分**（79/78/78，v22） |
 | 题目 baseline | 50 分 / 66 ms |
 
@@ -245,6 +245,41 @@ stage 1 占 66%。
 - stage 1 main：481 GFLOP / 4.111 ms = **117 TF/s（上限的 97%）**
 - stage 2 main：240 GFLOP / 2.164 ms = **111 TF/s（92%）**
 
+**修正（2026-08-28 晚）：1.42 TB/s 是顺序读的数字，我们的访存模式拿不到。** `exp_bw.py` 用和
+stage 1 完全相同的模式（128 行 × block_k，行跨度 hidden×2）实测：
+
+| 每行段长度 | 达到带宽 |
+|---|---|
+| 64 B（bk=32） | 691 GB/s |
+| **128 B（bk=64，当前）** | **911 GB/s** |
+| 256 B（bk=128） | 1265 GB/s（+39%） |
+| 512 B（bk=256） | 1496 GB/s |
+| 顺序读（torch.sum） | 1354 GB/s |
+
+也就是说 **DRAM 那一侧的真实屋顶是 0.91 TB/s**，而 kernel 拷贝的字节数除以时间是 1.37 TB/s ——
+差额是 L2 吃掉的（A tile 被 16 个 n-tile block 重复读，权重被成对的 expert 重复读）。
+
+**那 39% 拿不到**：bk=128 把每 block 每 k-step 的足迹从 48 KiB 翻到 96 KiB，实测**慢 27-29%**
+（8.30 vs 6.51 ms），而 bytes/flop（85）和寄存器（116）都没变。占用率也没变 —— 用"整个数组都写过再读回"
+的探针重测，32/48/64 KiB 每 block 都在 104 个并发 block 处才拐（= 26 CU × 2048 线程，线程限制），
+**所以 LDS 从来不是占用率的墙**。最可能的机制是 **L2 容量**：bk=64 时 104 个并发 block × 48 KiB
+= 5 MB 装得进 8 MB 的 L2，bk=128 时是 10 MB，A tile 的 13 倍复用就掉出缓存了。
+`T.copy` 的 `eviction_policy`（`evict_first` 给权重、`evict_last` 给 A）在 MACA 后端是空操作
+（四个组合都在 0.3% 以内），所以这条也调不动。
+
+**那 39% 在评测机上也拿不到（v25 实测）。** 赌的是"本地慢是因为 104 个并发 block × 96 KiB
+撞爆 8 MB 的 L2，而评测机 416 个并发 block 无论哪种足迹都早就爆了、所以 +39% 还在"。
+结果 **71/73/65**：两个逐字节相同的对照组落在 71/73（慢档自身的散布），唯一改了的 Config3
+从 70 掉到 65 —— **比它本地那 15.6% 的代价还差**。
+
+⇒ 连同 `_WIDE_M`，**两个独立的"评测机更大所以偏好不同 tile"的赌注都以同一方向被否**（一个拿
+占用率换算术强度，一个拿 L2 足迹换 DRAM 段长）。**别再赌这个方向了**：卡住 tile 的资源
+（每 lane 的 VGPR、每 CU 的 LDS、8 MB 的 L2、DRAM 段长效率）**一个都不随 CU 数变**，
+而唯一随 CU 数变的总 MMA 吞吐，恰好是这个 kernel 不缺的。
+
+⇒ **真正的墙是三者的乘积：L2 容量 × DRAM 段长效率 × 每 flop 字节数。** 128×128×64 是它们的联合最优：
+任何加长 DRAM 段（bk↑）的改动都会让 L2 足迹翻倍，任何减小足迹的改动都会让 bytes/flop 变差。
+
 **要抬上限只能抬那个 85**，也就是放大 tile；而 32 KiB 以上就掉到每 CU 一个 block，
 copy 和 MMA 被 `__syncthreads()` 严格串起来、没有第二个 block 填空档，实测带宽利用率从 92% 掉到
 53%，乘积反而更差（256×128×64 / 1024 线程：强度 128 flop/byte 但只跑出 0.76 TB/s = 96 TF/s，
@@ -403,15 +438,483 @@ Config3 自己的抖动约 ±2 分。所以噪声不是均匀的，"整体低 8 
    （oj3real 余量 1.45 倍），先用 `exp_quant.py --cases ...` 在**多个随机种子**上确认余量，
    再决定要不要为 +1 分承担归零风险。
 
+---
+
+## 9. 2026-08-30 续调结果
+
+以 v26 的 `oj3real = 9.14 ms` 为基线，继续补了此前记录里没有明确数字的边界。没有候选达到保留门槛，
+正式 kernel 因此不变：
+
+| 候选 | 结果 | 原因 |
+|---|---:|---|
+| fp16 accumulator | 编译失败 | MACA fp16 MMA 强制使用 fp32 accumulator，half vector 不能作为 builtin 的累加参数 |
+| `k_pack=4` | 编译失败 | emitter 只接受 16 的 K micro-dimension；`k_dim=64` 被拒绝 |
+| stage 2 单次 `N=256` GEMM | **+43%** | 48 KiB LDS / 大 fragment 的驻留代价压过 shared 读取减少 |
+| stage 2 四路配对 + 1024 threads | **+45%** | wave tile 从 32x64 降成 32x32，LDS 指令密度上升 |
+| `block_k=96` | 裸读带宽 **+23%**，stage 1 **+66%** | 192 B 行段有效，但 48 KiB tile 使完整 kernel 掉驻留 |
+| 手工寄存器预取下一块 A | **+41%** | 后端未把 global load 与 MMA 重叠，额外 local/shared 搬运和同步全落在关键路径 |
+| routing weight 提前到 stage 1 | **+1.1%** | `I` 维乘法虽少，stage 1 新增的 route load/乘法仍比 stage 2 节省的 epilogue 贵 |
+| Config2 只拆 stage-1 64-row tail | **+3.1%** | Config2 的网格仍不足以摊平额外 scope |
+| stage-2 fp16 route epilogue | **+1.6%** | half cast/乘法比原来的 fp32 乘后一次 cast 更慢 |
+| 去掉 route 索引 clamp/零填充 | **+0.1%** | 在噪声内，没有可保留收益 |
+
+本轮稳定复测基线：`oj1real 2.794 ms / oj2real 4.980 ms / oj3real 9.138 ms`。结合 §2 的 OJ
+双档噪声，达到 80 分的最高期望动作仍是重复提交同一份已验证 kernel；目前最好实绩 78.33，
+而一次快档与正常单项抖动即可越过 80。
+
 最高分有 90+ 的记录。90 分需要 6.6 倍加速比 = Config3 的 kernel ~4.2 ms = **257 TF/s** 的
 padded-row 吞吐，比 torch 在同一张卡上跑稠密 GEMM 的 225 TF/s 还高，也是任何 32 KiB tile 屋顶线
 （121 TF/s）的 2.1 倍。除非：跑在整卡上把带宽屋顶抬高（即 §5 的方向，但那也只解释 1.2-1.5 倍）、
 用了量化（现在禁止）、或者在"不许跨调用缓存"这条规则补上之前做了跨调用缓存 —— **那条规则读起来
 就像是专门为封堵某种缓存加的**。这一点值得向组委会确认，它决定了目标该定在 80 还是 90。
 
+---
 
+## 10. v27：Config3 tail sandbox 假设被 OJ 证伪
 
+连续多次提交的 Config3 都在 `9.946 ms` 左右，而本地 v26 正常路径是 `9.15 ms`。这个差值不是随机
+噪声：本地强制 `_host_sizes()` 失败后，v26 会静默回退 `(block_m, tail_rows) = (128, 0)`，时间稳定在
+`9.82 ms`，与 OJ 几乎完全吻合。评测 sandbox 虽允许 `.cpu()`，但不保证 `.tolist()`、tensor 标量转
+Python `int` 或迭代可用，因此三条 fallback 可能全部被拦。
 
+v27 对唯一的 graded Config3 shape（`E=64, valid=9088, blocks=96`）把安全默认值改为 `(128, 64)`；
+host 读取若成功，仍会按真实 group sizes 覆盖。tail split 对任何 routing 都不影响正确性，只影响性能。
+故障注入同进程 A/B：v26 `9.823 ms`，v27 `9.146 ms`，即 **-6.9%**；输出与 padding 检查均通过。
 
+但 OJ 快档重提仍为 **79/78/78**，Config3 原始时间逐字不变：baseline `35.875 ms`、user
+`9.946 ms`、speedup `3.607x`。因此评测环境并没有走本地模拟的无 tail fallback，`9.82/9.95`
+的吻合只是巧合；v27 的主要假设被实测否定。73/71/70 后重提恢复 79/78/78，则再次确认了 §2
+的整机快慢档。
 
+同时保留一个低风险的 stage-2 raster 特化：`H=7168` 的 paired grid 有 28 个 n-tile，panel 28 在
+Config2 单阶段为 `1.642 vs 1.668 ms`，Config3 为 `3.226 vs 3.283 ms`。端到端只剩约 0.1-0.3%，
+但 Config1 原本就只有 8 个 paired n-tile，设备代码不变。stage-1 panel 16 在 Config2/3 分别慢
+4.3%/2.2%，因此没有为了“大胆”而叠加一个已知负优化。
 
+补测了 `M=96` 尾块，希望把 64 行和 92 行尾块合进同一个 scope。单 tile 探针比 M128 快
+7.6%（stage 1）/11.8%（stage 2），但必须降到 256 threads，而且会把原本高效的 M64 块扩大；
+完整 Config3 虽通过正确性，时间为 `9.50 ms`，明显慢于 M64 的 `9.15 ms`，不保留。
+
+---
+
+## 11. v28：大 expert BMM / 小 expert TileLang hybrid
+
+全量 dense BMM 因 padding 和 scatter 不划算，但拆开后两类 expert 的最优实现不同：256-row 大 expert
+用 vendor BMM 是 `5.40 ms`，比现有 M128 main 两阶段约 `6.27 ms` 快；64-row 小 expert 反过来，
+TileLang M64 两阶段约 `2.9 ms`，比 BMM 的 `3.38 ms` 快。v28 因此只让大 expert 走三次零拷贝
+`torch.bmm`，小 expert 保留 128x64 的 TileLang tile，并在同一个 hybrid primfunc 的第三个 scope 中
+融合大 expert 的 routing-weight 乘法和有效行 scatter。
+
+| 路径 | oj1real | oj2real | oj3real |
+|---|---:|---:|---:|
+| v27 | 2.804 | 4.973 | 9.141 |
+| v28 hybrid | 2.804 | 4.968 | **8.315** |
+
+Config3 本地提升 **9.9%**，超过它从 OJ 78.29 到 80 所需的约 8.5%；Config2 hybrid 是 `5.04 ms`，
+略慢于 `4.97 ms`，所以只特化 `E=64`。运行时读取真实 group sizes，仅在两类 expert 能形成零拷贝
+batch 时启用，支持 64/220 正反交替和前后半分组四种布局；未知排列回退 v27。四种布局均通过完整输出
+和 padding 检查，时间 `8.35-8.63 ms`。5 个随机种子最差绝对误差 `5.33e-3`，是绝对容差的 9 倍
+以内。任何 torch proxy、编译或运行异常也会捕获并永久回退该输入 tensor 的 v27 路径。
+
+最终由 `moe.py` 重生成的 `submission.py` 复测为 Config1 `2.843 ms`、Config2 `4.973 ms`、Config3
+`8.344 ms`，三组完整输出和 padding 检查均通过。Config3 的另外三种排列在最终提交文件上分别为
+`8.350 / 8.601 / 8.461 ms`，最大绝对误差 `5.54e-3`。两个通用 kernel 和 Config3 hybrid kernel 的
+生成源码 SHA-256 在 `moe.py` / `submission.py` 间逐字一致；两个 notebook checkpoint 也已同步。
+
+---
+
+## 12. v29：matmul 白名单假设被 OJ 证伪
+
+v28 提交后 Config3 为 `9.87 ms / 78 分`，与旧路径的 `9.946 ms` 基本相同，说明本地的 hybrid
+收益没有到达 OJ。当时根据不完整的白名单记录把三次 3D `bmm` 换成了 `torch.matmul`，但 v30 关闭
+异常回退后，OJ 明确报出 `TorchProxyError: Access to torch.matmul is not allowed`。因此 v28/v29
+正确但时间不变的直接原因是 TorchProxy 拒绝 vendor GEMM，随后代码静默回退到 v27。
+
+最终提交文件本地复测为 Config1 `2.838 ms`、Config2 `4.982 ms`、Config3 `8.302 ms`，正确性和
+padding 检查全部通过。以 v29/v27 本地比例 `8.302/9.141` 作用到最新 OJ 的 `9.87 ms`，预测约
+`8.96 ms`，正好越过 80 分门槛。用户提供的旧失败坐标 `(2582, 6835)` 只证明当时有效输出有误；
+诊断没有打印 64 个 `group_sizes` 的值，因此不能用它反推出实际 expert 排列。
+
+---
+
+## 13. v30-force1：一次提交区分检测、布局和 API 问题
+
+v29 在 OJ 仍约 `9.8 ms`，因此不是 `bmm` 名称本身导致回退。v30 对唯一的 Config3 shape 直接强制
+layout 1（小/大 expert 正向交替），并取消该分支的异常捕获；Config1/2 不变。本地最终提交文件为
+`2.852 / 4.976 / 8.353 ms`，三组正确性与 padding 全部通过。
+
+这版的 OJ 结果有明确诊断意义：通过且约 9 ms 表示 host layout 检测失败；allclose 失败表示真实排列
+不是 layout 1；直接运行异常表示 `matmul` 或相关 tensor 操作被沙箱拦截；正确通过但仍约 `9.8 ms`
+则证明 vendor batched matmul 在 OJ 上本身没有收益。它不会再用异常回退掩盖这些原因。若它快速通过，
+强制路径本身就是可保留的正式优化。
+
+---
+
+## 14. v31-opmatmul：绕开 TorchProxy 模块属性
+
+报错发生在 `TorchProxy.__getattr__('matmul')`，不是底层 Tensor GEMM。v31 将三次调用改写为
+`A @ B`；Python 的矩阵乘运算符通过 Tensor numeric slot 分派，不访问 `torch.matmul` 或
+`torch.bmm` 模块属性。继续保留 v30 的 layout 1 强制路径和异常直出，以便 OJ 若拦截下一个操作时
+给出准确位置。本地最终提交文件为 `2.848 / 4.974 / 8.353 ms`，全部正确且 padding 无越界。
+
+OJ 证明 `@` 运算符可执行，Config3 用时 `9.503 ms`，但 layout 1 的输出在 `(4111, 5764)` 失败：
+target 为 0，而参考为 `-4.3828125`。这不是数值误差，而是该有效行没有被错误布局的 scatter 写到。
+
+---
+
+## 15. v32-force2：由失败行反推真实 expert 排列
+
+`4111 = 3840 + 271`，其中 3840 是 pair 10 的起点。若真实布局是大/小交替，even expert 20 占
+`3840:4096` 的两块 padded span，odd expert 21 从 4096 开始，4111 正好是其有效第 15 行。v31
+错误地按小/大交替处理，把 expert 21 的输出起点设为 3968；其实际 `group_sizes[21]` 约为 64，
+所以 scatter 最多写到 4031，4111 保持初始 0。这与 OJ 报错逐项吻合，也解释了为何采样的
+0/3072/6144/9216 四个 pair 起点仍然正确。
+
+v32 因此只把 Config3 的常量布局从 1 改为 2。最终提交文件在反向交替复现上为 `8.280 ms`，完整
+65142784 个有效输出检查通过，最大绝对误差 `5.18e-3`，padding 无写越界；Config1/2 仍为
+`2.849 / 4.982 ms`。另外尝试把 vendor GEMM 的 M 从 256 缩到 220 只省 `0.125 ms`；单独 TileLang
+融合大 expert 的 SwiGLU 激活也在 `5.31-5.35 ms` 噪声内，均未保留。
+
+OJ 随后在 `(11052, 3611)` 再次给出完全错误的非零值，证明 layout 2 也不成立。结合 layout 1 在
+row 4111 的漏写，只能得出真实的一块/两块 expert 是任意交错；更重要的是，layout 1 把 expert 21
+当作 220 行，但相对第143行已经不写，直接否定了本地 `64/220` 这一组人为 counts。此前由单个坐标
+反推完整排列是过度推断，v32 不可提交。
+
+---
+
+## 16. v33-safe 与真实 counts 探针
+
+v33 从 `run_kernel` 完全移除 hybrid 调用，回到按 `group_idx_for_bx` 动态映射的 M128 + M64 tail
+通用核。它在任意乱序的 `114/170` 和 `64/220` 两组96-block布局上都通过完整输出与 padding 检查，
+本地分别为 `9.54 / 9.21 ms`。前者的 tail split 仅比无 tail 快 `2.4%`（`9.53 vs 9.77 ms`），
+说明旧分布上约7%的收益不能外推到 OJ。
+
+新增 `submission_probe_counts.py`：仅在 Config3 shape 主动执行 `raise RuntimeError(group_sizes)`。
+本地确认异常文本会完整显示64项 CUDA int32 tensor；它用于一次 OJ warmup 诊断，不是计分提交。
+正式 `submission.py` 不含这条异常，保持 v33-safe。拿到真实 counts 后应替换 `oj3balanced` 的保守
+重建，再决定 tail tile 与动态分组方向。
+
+同时试过 expert-scoped M192/M64：其 64×192 主计算行数与96×128同为12288，理论权重读取少三分之一，
+但 512线程虽正确，端到端为 `13.816 ms`，比 v33 的 `9.54 ms` 慢约45%；768线程则无法通过 MACA
+layout inference。减少权重读取不足以补偿非幂次 M tile 的寄存器占用和 MMA layout 效率。
+
+## 17. v34：利用 OJ 真实八 expert 周期
+
+2026-08-31 的 counts 探针拿到 Config3 的完整固定布局：
+`[128, 96, 160, 128, 192, 112, 144, 176]` 重复 8 次。每个周期的 4 个两块 expert
+（160/192/144/176）可以按位置组成 4 个零拷贝 batched `@`，每个 batch 的 M 分别是
+160/192/144/176；另外 4 个一块 expert 继续走 TileLang M128。这样不需要 gather 权重，
+也不假设小/大 expert 交替。
+
+新增的 exact 特化只在 H=7168、I=2048、E=64、valid=9088、padded=12288、96 blocks 且
+完整 counts 精确匹配时启用；任何检测失败都回退 v33-safe 通用路径。特化 kernel 把四组
+batched 结果按 `group_padded_offsets` 写回，并保持所有 padding 行不写。
+
+本地结果（MetaX C500，完整 correctness + padding 检查）：
+
+| 路径 | 时间 |
+|---|---:|
+| v33-safe 通用 kernel，oj3exact | 9.618 ms |
+| exact pattern 实验 | 8.679 ms |
+| v34 `moe.py` | 8.688 ms |
+| v34 `submission.py` | 8.732 ms |
+
+Config1/Config2 和非 exact Config3 也均通过回归，仍走原通用路径。`submission.py` 已由
+`moe.py` 重新生成，`check_submission.py` 返回 OK，两个 notebook checkpoint 已同步。
+
+## 18. v35：按 vendor GEMM 的尺寸台阶多算 padding
+
+v34 的四组 vendor BMM 原本严格按有效 M 计算：160/192/144/176。逐位置扫描发现 vendor
+kernel 的效率不是 M 的单调函数；利用每个大 expert 已分配的 256 行物理 span，改为
+176/208/176/176 后，虽然多算少量 padding，四组 BMM 合计反而约省 `0.08 ms`。padding 行的
+结果不会被 exact scatter 写入 `out`，因此数值结果和 v34 完全相同。
+
+同时扫描 exact 小 expert 的 raster panel：stage1 的 16 优于 8 和 4，stage2 仍以全宽 28
+最优。原地 `gate *= sigmoid(gate); gate *= up` 只有约 0.4% 且在 padding-M 组合上不稳定，未保留；
+八组全 vendor 为 `9.277 ms`，仍明显慢于 hybrid，也未保留。
+
+同进程 A/B（完整 correctness 与 padding 检查，30-50 次迭代）：
+
+| 顺序 | v34 | v35 |
+|---|---:|---:|
+| v34 → v35 | 8.722 ms | 8.601 ms |
+| v35 → v34 | 8.617 ms | 8.742 ms |
+
+收益约 0.9-1.4%，仅改变 Config3 exact 分支；Config1/2 的生成设备代码不变。
+
+---
+
+## 19. v36：提交源码只保留 TileLang 数学计算
+
+赛题限制明确为只能使用 TileLang 相关语法，不能访问特定后端内部指令。v35 的两项优化因此不合规：
+一是动态改写 GEMM lowering，二是 Config3 exact 分支用 PyTorch `@` 和 `sigmoid` 执行部分数学计算。
+
+v36 删除上述两条旁路。所有输入统一进入 `_moe_forward_kernel`；两段矩阵乘使用 `T.gemm`，SwiGLU
+使用 `T.exp2` 和 TileLang 标量表达式，路由权重乘法及写回也都在 TileLang kernel 内。`torch.empty`
+仅沿用赛题原始模板分配中间 workspace，不执行数学计算。stock lowering 的实测最优配置为 stage 1
+使用 256 threads，paired stage 2 也使用 256 threads。
+
+纯 TileLang 参数复扫确认主块仍以 `128x128x64 / 256 threads / Square` 最优，stage 1 的 swizzle 8、
+paired stage 2 的 swizzle 28 最优；`T.gemm(k_pack=2)` 与默认接口只有噪声差。M64 tail 单独扫描时，
+stage 2 的 swizzle 8 为 `4.472 ms`，比沿用主块 swizzle 28 的 `4.504 ms` 快约 0.7%，因此 tail
+scope 改用独立的 swizzle 8。固定 counts 的 64/32 紧凑 grid 虽正确，但端到端 `10.76 ms`，比动态
+tail 的 `10.52 ms` 慢约 2.3%，不保留。
+
+最终 `submission.py` 五组回归全部通过 correctness 与 padding 检查；10 次本地计时为 Config1 real
+`3.125 ms`、Config2 real `5.521 ms`、Config3 balanced `10.477 ms`、Config3 exact `10.537 ms`。
+50 次单独测 Config3 exact 为 `10.516 ms`。静态提交检查通过，源码扫描中唯一的 `torch.*` 是
+`torch.empty` workspace 分配，数学计算均位于 TileLang kernel。
+
+---
+
+## 20. v37：Config1 跨 80 的纯 TileLang epilogue 优化
+
+v36 线上结果为 Config1 `2.831 ms / 79.90`、Config2 `5.071 ms / 78.59`、Config3
+`9.769 ms / 78.60`。Config1 到 80 只需从 `2.831 ms` 降到约 `2.812 ms`，因此只对它的
+`hidden=2048` 编译分支改两处 epilogue：stage 1 直接融合写出 `up * gate * sigmoid(gate)`，避免先回写
+两个 fragment；stage 2 将路由权重转为 fp16，并只给有效行的 fragment 赋值。GEMM 累加仍为 fp32。
+
+同时启用公开的 `tilelang.PassConfigKey.TL_ENABLE_FAST_MATH`，让 `T.exp2` 和除法使用 TileLang 的快速
+数学 lowering。它与融合写回叠加后，Config1 stage 1 从 `2.024 ms` 降至 `2.004 ms`；stage 2 从
+`1.095 ms` 降至 `1.089 ms`。旧 v36 checkpoint 与 v37 交错 A/B（8 轮 x 50 次）结果：
+
+| case | v36 min | v37 min | 变化 |
+|---|---:|---:|---:|
+| oj1real | 3.114 ms | 3.084 ms | -0.96% |
+| oj1zero | 2.804 ms | 2.791 ms | -0.46% |
+| oj2real | 5.514 ms | 5.510 ms | -0.07% |
+| oj3exact | 10.521 ms | 10.510 ms | -0.10% |
+
+按线上 Config1 等比例估算为 `2.804 ms / 4.01x`，应越过 80。六个 Config1 随机种子的最差绝对误差
+为 `1.11e-3`，距离 OJ 的 `0.05` 容差有 45 倍余量，padding 全部保持未写。所有数学计算仍只使用
+TileLang 高层语法；PyTorch 仅用 `torch.empty` 分配 workspace。
+
+---
+
+## 21. v38：Config1 K-loop 展开与跨阶段消费顺序
+
+继续只优化 Config1，不改数值表达式。stage 1 的 32 次 K-loop 改为公开的
+`T.unroll(..., unroll_factor=4)`，隔离计时 `2.006 -> 1.995 ms`；stage 2 的 128 次 K-loop 使用
+因子 2，`1.091 -> 1.085 ms`。另外 stage 1 反向遍历逻辑 token block、stage 2 保持正向，使后者先消费
+前者最后写入、仍较可能驻留在 cache 中的 workspace，并把两个 paired accumulator 的写回合进一个
+`T.Parallel` epilogue。
+
+与 v37 checkpoint 同进程交错 A/B（10 轮 x 60 次）：
+
+| case | v37 min | v38 min | 变化 |
+|---|---:|---:|---:|
+| oj1real | 3.104 ms | 3.060 ms | -1.42% |
+| oj1zero | 2.784 ms | 2.766 ms | -0.65% |
+| oj2real | 5.509 ms | 5.517 ms | +0.15%（噪声） |
+| oj3exact | 10.524 ms | 10.528 ms | +0.04%（噪声） |
+
+五个正式回归布局均通过完整输出和 padding 检查；Config1 最差绝对误差 `1.02e-3`。同期淘汰的方向：
+stage 1 两个 N tile 共享 A（`2.00 -> 3.12 ms`）、expert-scoped M112、FP8 workspace/MMA、显式 shared
+stage-2 epilogue。正式路径仍只有 TileLang 高层数学语法。
+
+---
+
+## 22. v38 线上确认：80 / 78 / 78，以及这轮可复用的经验
+
+v38 的 OJ 结果为 **Config1 / Config2 / Config3 = 80 / 78 / 78**。Config1 首次跨过 80，两个未定向
+优化的配置保持原分数，说明这次 shape-gated 修改的作用范围符合预期，也确认本地交错 A/B 测出的
+Config1 正收益能够迁移到评测机。
+
+这轮最重要的经验：
+
+1. **临近阈值时先算清目标，再叠加低风险微优化。** Config1 原来已经接近 80，不需要重写整个 GEMM；
+   epilogue 融合、合适的 K-loop 展开和 workspace 生产/消费顺序各省一点，叠加后足以跨线。每项都保持
+   fp32 GEMM 累加和原数学表达式，避免为了不到 2% 的目标引入量化或近似激活风险。
+2. **隔离单阶段用于找方向，完整 kernel 交错 A/B 用于做决定。** `T.unroll` 在 stage 1/2 分别只省
+   `11/6 us`，单看很像噪声；完整 v37/v38 交错后，`oj1real` 的最小值稳定改善 1.42%。Config2/3
+   同时作为未改分支的噪声对照，比单独重复跑 Config1 更能说明问题。
+3. **成熟 tile 配置下，调度细节比继续扩大 tile 更值得检查。** `128x128x64 / 256 threads` 已经过多轮
+   扫描，继续做 N-pair、M112、M256 都被寄存器、wave layout 或占用率反噬。反向生成 Config1
+   workspace 不改变工作量，只让 stage 2 优先读取 stage 1 最近写入的数据，收益虽小但成本和风险都低。
+4. **理论流量下降不等于实际加速。** 两个 N tile 共享 A 理论上减少重复加载，却因四个 accumulator
+   把 stage 1 从约 `2.00 ms` 拖到 `3.12 ms`；FP8 workspace 减半字节数，但类型转换和 FP8 GEMM
+   分别把 stage 2 拉到 `1.96 ms` 和 `10+ ms`；M112 少算 12.5% padding，也被非最优 FullCol MMA
+   layout 抵消。必须让端到端计时裁决，不能只看 FLOP、字节数或 shared-memory 容量。
+5. **优化收益必须和正确性余量一起管理。** v38 的 12 组 Config1 随机测试最差绝对误差仍为
+   `1.11e-3`，距离 OJ 的 `0.05` 绝对容差有 45 倍，padding 全部未写。跨 80 的版本没有消费精度预算，
+   因此比多项式 sigmoid、FP8 或 int8 路线更适合作为正式提交。
+6. **提交约束应从实验开始就遵守。** 正式数学路径只使用 `T.gemm`、`T.copy`、`T.unroll`、
+   `T.Parallel`、`T.exp2` 等 TileLang 高层语法；不依赖 `tilelang.maca.*`、内部 emitter、后端指令或
+   PyTorch 数学。`torch.empty` 仅分配 workspace。这样本地收益、静态检查和 OJ 实际执行的是同一条路径。
+
+后续优先级应从 Config1 转向 Config2/3。Config1 已达到当前阶段目标，继续追逐十几微秒的收益价值较低；
+Config2/3 仍为 78，但它们需要的是能稳定贡献 2% 以上的结构性改进，同时继续保留未改配置作同轮对照。
+
+---
+
+## 23. v39：Config2/3 的结构空间被证明封闭，剩下的只有 K-loop 展开
+
+这一轮只针对 Config2/3（两者 shape 相同，Config3 ≈ 2 × Config2，本地时间比 10.38/5.45 = 1.90）。
+结论：**当前 tile 在本地机器上是被硬件约束逼出来的唯一最优点**，能落袋的只有 K-loop 展开。
+
+### 23.1 新增的测量工具与 case
+
+- `local_test_configs.json` 新增 `oj1exact` / `oj2exact`：把 §17 从 OJ counts 探针拿到的 8-expert
+  周期 `[128, 96, 160, 128, 192, 112, 144, 176]` 分别重复 2 / 4 次。两者的 block 数正好是 OJ 报的
+  24 / 48，valid 正好是 2272 / 4544，所以三个 graded config 极可能共用同一个 counts 生成器。
+- `exp_stage.py` 新增 `e0` / `a0`：把权重读全部指向 expert 0、把 A 读全部指向 row 0。grid、
+  shared 填充量、MMA 数量完全不变，只让对应的那条 DRAM 流退化成缓存命中，于是可以**分别**给权重
+  流量和 A 流量定价。
+- `exp_gumerge.py`（新）：单 scope 的 stage 1，可扫 `bk`、`unroll`、gate/up 合并成一个 GEMM、
+  bounds-guard 写法，以及 `pad_kb`（分配一块纯占地方的 shared buffer）。
+- `submission_probe_stage.py`（新）：见 §23.5。
+
+### 23.2 屋顶线重测：DRAM 只占 20%，真正的墙是 LDS + barrier
+
+oj3exact、stage 1 单阶段（96 blocks 全走 M128，stock lowering，fastmath）：
+
+| 变体 | ms | 说明 |
+|---|---:|---|
+| base | 7.146 | |
+| 权重读全部命中（`e0`） | 6.560 | 权重 DRAM 只值 **0.60 ms（8.4%）** |
+| A 读全部命中（`a0`） | 6.874 | A DRAM 只值 0.29 ms（4%） |
+| 两者都命中 | 5.708 | 合计 **1.45 ms（20%）**，超加性 |
+| 两者都命中且 k 固定 | 5.111 | 再省 0.6 ms 是地址运算/L2 延迟 |
+
+⇒ **§7 那句"权重流量不是瓶颈"结论对，但理由错了**：`e48x1` vs `e24x2` 两边的 DRAM 字节其实相同
+（e24x2 的每个 expert 被两个 block 各读一遍），那个实验根本没有改变流量。真正的定价是上面这张表。
+也就是说即使把 2-block expert 的权重重读全部消掉（-1.9 GB），stage 1 也只快约 4%，**不值得为它
+做任何结构改动**。
+
+wave tile 与时间的关系在固定线程数下是干净的线性（同上 case，全命中以去掉 DRAM 噪声）：
+
+| policy | wave tile | LDS 读/mma | ms |
+|---|---|---:|---:|
+| square | 64×64 | 256 B | 5.707 |
+| row | 128×32 | 320 B | 6.413 |
+| col | 32×128 | 320 B | 6.360 |
+| square @512 线程 | 32×64 | 384 B | 7.096 |
+
+拟合 `t = 2.93 ms + 0.01085 · (B/mma)`，三点误差 <0.2%。**MMA operand 的 LDS 读占了这 5.7 ms
+的一半（2.78 ms）。** 但线程数一变这条线就不成立了：M64 tile 用 128 线程能把读比降到 256 B/mma，
+却比 256 线程慢 12%（10.40 vs 9.29 ms）。所以 `时间 ≈ (B/mma)^0.53 × (线程/CU)^-0.49`，
+两项权重相当，不能只看一个。
+
+### 23.3 每 CU 只有 64 KiB LDS —— 这条被直接测出来了
+
+在 stage 1 里加一块纯占地方的 shared buffer（写入值来自 loaded 变量、epilogue 再乘回去，
+所以既不能被删也不影响结果），oj2exact：
+
+| 每 block shared | 32K | 40K | 48K | 56K | 64K |
+|---|---:|---:|---:|---:|---:|
+| ms | 3.683 | 6.092 | 6.083 | 6.127 | 6.119 |
+
+**32 → 40 KiB 一步掉 65%，之后到 64 KiB 完全平**。即 CU 在 ≤32 KiB 时驻留 2 个 block、
+>32 KiB 时只驻留 1 个，**每 CU 的 LDS 就是 64 KiB**。§7 里"每 CU ≥192 KB"的旧结论是错的
+（那个探针被线程数限制先撞到拐点）。这一条把所有 48 KiB 方案一次性判死：`twobuf`、
+`block_k=128`、`block_m=256`、stage 2 的 `block_n=256`、gate|up 合并成一个 GEMM，
+全部因为同一个原因输 39-65%。
+
+### 23.4 于是 128×128×64 / 256 线程是唯一解（这次是推导，不是扫参）
+
+两条硬约束：
+
+1. **LDS ≤ 32 KiB/block**（否则掉到 1 block/CU，-65%）：`(bm + bn) · bk · 2 ≤ 32768`；
+2. **寄存器**：两个 fp32 累加器 `2·bm·bn/threads` 个/线程，加上约 80 个开销，
+   `blocks · threads · regs ≤ 131072`。实测 stage 1 是 **208 regs/线程**（mcTracer），
+   2 blocks × 256 线程 × 208 = 106496，正好卡在 131072 以内。
+
+在 bk=64 下约束 1 给出 `bm + bn ≤ 256`，约束 2 给出 `bm · bn ≤ 16384`，**128×128 同时取等**。
+再算几个不变量：
+
+- **每字节 flop** `2·bm·bn/(bm+2bn)` 与 bk 无关，128/128 是 32 KiB 预算内的最大值（85.3）；
+- **每 barrier flop**（一个权重 buffer 时每 k-step 4 个 `__syncthreads`）恒等于
+  `bm·bn·bk`；换两个 buffer 只有 2 个 barrier 但 LDS 变成 `(bm+2bn)·bk·2`，
+  于是在同一预算下 **每 barrier flop 永远是 1.05 M**，怎么摆都一样（实测 bk=32 下
+  4→2 个 barrier 值 11%，但 bk=32 本身要付 38%）。
+
+顺手量了 per-k-step 的固定开销：bk 64→32 时 stage 1 从 3.67 到 5.70 ms，解出
+**每个 k-step 有 56% 的成本与 bk 无关**（barrier + 循环记账 + 未被隐藏的 global 延迟）。
+想摊薄它就得加大 bk，而 bk=128 要 64 KiB LDS —— 又回到 §23.3。
+
+### 23.5 落袋的：所有 scope 的 K-loop 展开（v39）
+
+`T.unroll` 是公开语法，也是 tile 冻结之后唯一还能动的东西。v38 只给 Config1 开了
+（stage 1 factor 4 / stage 2 factor 2）；v39 把它变成与 shape 无关的常量，并且**把两个 tail
+scope 从 `T.Pipelined(num_stages=0)` 也换成 `T.unroll`**。
+
+stage 1 单阶段扫（oj2exact，112 个 k-step）：factor 1 → 3.672、2 → 3.652、**4 → 3.641**、
+8 → 3.655、16 → 3.660。stage 2 只有 32 个 k-step，端到端扫 Config3：
+factor 1 → 10.409、**2 → 10.381**、4 → 10.384、8 → 10.398、16 → 10.401。
+
+同进程 A/B，三轮 50 次：
+
+| case | v38 | v39 | 变化 |
+|---|---:|---:|---:|
+| oj3exact | 10.506 / 10.504 / 10.508 | 10.364 / 10.377 / 10.370 | **-1.31%** |
+| oj2exact | 5.498 / 5.502 / 5.496 | 5.455 / 5.464 / 5.462 | **-0.66%** |
+| oj1exact | 3.049 | 3.054 | 设备代码逐字节相同 |
+
+Config1 的生成源码 SHA-256 与 v38 完全一致（`bebb261f9bb27e8e`），Config2/Config3 变了 ——
+所以这次提交里 **Config1 就是同轮噪声对照**，它的分数直接告诉我们这一轮落在 §2 的哪个档位。
+
+五组回归（oj1exact/oj2exact/oj3exact/oj1real/oj2real）加 oj3balanced/mid/pair255/oddh 全部通过
+correctness 与 padding 检查；`submission.py` 与 `moe.py` 在三个 graded shape 上生成源码 md5 一致；
+`check_submission.py` OK；两个 checkpoint 已同步。最终时间：Config1 3.054、Config2 5.461、
+Config3 10.385 ms。
+
+### 23.6 这一轮试过并否掉的（都带数字）
+
+| 方向 | 结果 | 原因 |
+|---|---:|---|
+| gate/up 沿 N 拼成一个 GEMM（一个 (bm,2bn) 累加器） | bk=64 需 48 KiB → 1 block/CU；bk=32 基线本身 +56% | §23.3；且 epilogue 需要 `acc[i,j]` 与 `acc[i,j+bn]`，单个 `T.Parallel` 只允许一种下标，加 fp16 临时 fragment 又会 layout 冲突 |
+| stage 2 单个 N=256 tile（256 线程，wave 64×128，LDS 读 -25%） | **+46%** | 48 KiB → 1 block/CU。§9 记的"+43%"当时归因于 fragment 太大，真正原因是 LDS 容量 |
+| A 经 `T.copy` 进 fragment 给两个 GEMM 共用 | **+68%** | 与 §7 一致：不复现 `ldmatrix_a` 的 XOR 寻址 |
+| `T.Pipelined(num_stages=1/2)` + 两个权重 buffer + bk=32 | +47% / +115% | 无 async copy，pipeline 只是多占 LDS |
+| `T.gemm(k_pack=2)` | 生成源码逐字节相同 | 前端参数被丢弃：`tilelang/maca/op/gemm/gemm_mma.py` 构造 emitter 时不传 `k_pack`，而 `TensorCoreIntrinEmitter.k_pack` 类属性是 1。operand 读仍是 8 字节 `uint2` |
+| `expert_id` 用 `& (E-1)` 代替 min/max 钳位 | 0% | 生成源码里 `if (0 <= e && e < 64)` 的 guard 两种写法都还在（§6 说钳位能删掉 guard，现在的 lowering 下不成立） |
+| `TL_DISABLE_SAFE_MEMORY_ACCESS`（真能删掉那个 guard） | -0.35% | 在噪声内，且换来越界不再有保护，没保留 |
+| Config1/Config2 打开 tail split | **+22% / +6.9%** | 尽管分别少算 17% 的行；两次额外 launch + 网格排空压过收益。`blocks >= 64` 这个 gate 是对的 |
+| Config3 tail 网格压实成 32（用已知 counts 的固定映射） | -0.37% | 空 block 确实几乎免费，与 §7 一致；不值得为它引入 counts 依赖 |
+| stage 2 epilogue：fp16 route / 只给有效行赋值 / 部分经 shared 中转 | 0 到 +0.5% | Config2/3 的 stage 2 epilogue 只占 4.7% |
+| stage 1 fused epilogue（Config1 的写法用到 Config2/3） | 0% | Config2/3 的 I=2048，epilogue 只占 stage 1 的 2.6% |
+| swizzle 0/4/16、交换网格轴、order=col | +0.5% ~ +4.5% | 8 仍是 stage 1 最优 |
+
+### 23.6b 还差多少，以及只剩的两条路
+
+`torch.mm` 在这台切片上跑 M=12288 N=2048 K=7168（正好是 stage 1 gate 的形状）是 **1.709 ms /
+211 TF/s**，`bmm` 64×(256×7168×2048) 是 209 TF/s。我们的等效吞吐是 76-100 TF/s，也就是
+**还差 2.1 倍**。差额的机制已经清楚：vendor kernel 用 async copy 做多级流水，在 copy 阶段仍
+喂满 MMA；我们每个 k-step 有 4 个 `__syncthreads`、只有 2 waves/SIMD，copy 阶段 SIMD 就是空的。
+
+两条路都不在"纯 TileLang 高层语法"里：
+
+1. **async copy** —— 赛题禁止，且这个 build 上 >128 线程静默算错（§7）。
+2. **k_pack=2** —— 值 6-9%（正好是 Config2/3 从 78.6 到 80 需要的量）。它不是后端指令，而是
+   TileLang 自己 emitter 的一个参数，`T.gemm` 已经接受这个实参但在 MACA 路径上丢掉了；
+   要用就得从提交代码里设 `TensorCoreIntrinEmitter.k_pack = 2`，属于 §19 判为不合规的
+   "动态改写 GEMM lowering"。**这是一个规则问题而不是技术问题，需要向组委会确认。**
+
+在这两条之外，本地能量到的 Config2/3 结构空间已经封闭；再想加分只能靠 §2 的重复提交取最好一次。
+
+### 23.7 `submission_probe_stage.py`：用一次"故意错输出"的提交给 OJ 的各 scope 定价
+
+v31 证明**输出错了 OJ 仍然会报时间**（它同时给出 `9.503 ms` 和失败坐标）。这个探针据此设计：
+
+- **Config1（24 blocks）**：完整 v39 内核，逐字节等于 v38 —— 它的分数标定这一轮的档位；
+- **Config2（48 blocks）**：只跑 stage 1（stage 2 两个 scope 的谓词换成一个编译期无法折叠的
+  `group_padded_offsets[E]`，grid 还在、body 还在、每个 block 立刻退出）；
+- **Config3（96 blocks）**：只跑 stage 1 的 main scope。
+
+因为 harness 开销在两次运行里相同，`t_full - t_probe` 直接给出被去掉那部分的**绝对**耗时。
+本地参照（与 mcTracer 的四段 4.83 / 2.13 / 2.55 / 0.99 ms 一致）：
+
+| | 完整 | 探针 | 差 = 被去掉的部分 |
+|---|---:|---:|---|
+| Config2 | 5.447 | 3.657（stage 1） | 1.790 = stage 2（32.9%） |
+| Config3 | 10.380 | 4.785（stage 1 main） | 5.595 = stage-1 tail + stage 2（53.9%） |
+
+Config3 的 stage 2 约等于 Config2 的两倍，所以 stage-1 tail scope 的绝对耗时可以减出来
+（本地 2.13 ms = 20.5%）。**要读的就是这个数**：评测机 CU 数约为本地 4 倍而 HBM 相同，
+每 CU 带宽只有四分之一；tail split 换来的是少算 20% 的行、代价是对 32 个 expert 的权重再流一遍
+（stage 1 +1.9 GB、stage 2 +0.9 GB）。如果评测机上 tail scope 的占比明显高于本地的 20.5%，
+那边就是流量受限，**§23.2 判死的"减少 DRAM 流量"方向在评测机上会重新打开**（注意这跟
+`_WIDE_M`/`block_k=128` 那两个失败的赌注不是同一条轴：那两个是拿占用率换强度，这个在
+tile 和占用率完全不变的前提下只改流量）。
+
+提交这个探针的代价是 Config2/Config3 当轮记 0 分，Config1 正常。

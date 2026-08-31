@@ -98,7 +98,7 @@ class Case:
         if self.counts is not None:
             # What the grader actually sizes `group_idx_for_bx` to: one entry per
             # 128-row block of the padded buffer, i.e. sum of the padded groups.
-            return sum((c + 1 + BLOCK_TOKEN - 1) // BLOCK_TOKEN for c in self.counts)
+            return sum((c + BLOCK_TOKEN - 1) // BLOCK_TOKEN for c in self.counts)
         # Same formula the grader uses to size `group_idx_for_bx`.
         return math.ceil(self.n_valid / BLOCK_TOKEN) + self.nroutedexperts
 
@@ -190,9 +190,10 @@ def build_case(case: Case, device: torch.device) -> Tuple[Dict[str, torch.Tensor
 
     offsets = torch.zeros(e + 1, dtype=torch.int64, device=device)
     offsets[1:] = torch.cumsum(counts, 0)
-    # The grader pads every group to a multiple of BLOCK_TOKEN and always keeps
-    # at least one padding row: ceil((count + 1) / 128) * 128.
-    padded_sizes = ((counts + 1 + BLOCK_TOKEN - 1) // BLOCK_TOKEN) * BLOCK_TOKEN
+    # The grader pads every group to a multiple of BLOCK_TOKEN.  The Config3
+    # diagnostic exposed exact 128-row groups inside a 96-block buffer, proving
+    # that an already aligned group stays at 128 rather than gaining another block.
+    padded_sizes = ((counts + BLOCK_TOKEN - 1) // BLOCK_TOKEN) * BLOCK_TOKEN
     pad_off = torch.zeros(e + 1, dtype=torch.int64, device=device)
     pad_off[1:] = torch.cumsum(padded_sizes, 0)
 

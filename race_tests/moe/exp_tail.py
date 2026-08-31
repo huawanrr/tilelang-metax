@@ -24,6 +24,8 @@ def main():
     p.add_argument("--reps", type=int, default=3)
     p.add_argument("--iters", type=int, default=25)
     p.add_argument("--warmup", type=int, default=8)
+    p.add_argument("--tails", default="0,64,96",
+                   help="comma-separated tail tile heights to compare")
     p.add_argument("--configs", default=os.path.join(
         os.path.dirname(os.path.abspath(__file__)), "local_test_configs.json"))
     a = p.parse_args()
@@ -59,12 +61,18 @@ def main():
     blocks = sum(-(-c // 128) for c in meta["counts"] if c > 0)
     print(f"blocks with <= 64 valid rows: {tail_blocks}/{blocks} "
           f"({100 * tail_blocks / blocks:.0f}%)")
+    tails = [int(v) for v in a.tails.split(",") if v]
     for rep in range(a.reps):
-        off, s_off = measure(0, rep == 0)
-        on, s_on = measure(64, rep == 0)
-        win = "ON " if on < off else "OFF"
-        print(f"  rep{rep}: off {off:7.3f}{s_off}   on {on:7.3f}{s_on}   "
-              f"{win} by {abs(on - off) / off * 100:4.1f}%")
+        results = []
+        for tail_rows in tails:
+            ms, status = measure(tail_rows, rep == 0)
+            results.append((tail_rows, ms, status))
+        best = min(ms for _, ms, _ in results)
+        detail = "   ".join(
+            f"tail={tail_rows:<3} {ms:7.3f}{status} ({ms / best:5.3f}x)"
+            for tail_rows, ms, status in results
+        )
+        print(f"  rep{rep}: {detail}")
 
 
 if __name__ == "__main__":

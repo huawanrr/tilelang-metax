@@ -43,7 +43,8 @@ def build_stage1(cfg, shape):
     pol = POLICIES[cfg["policy"]]
     swizzle, k_pack = cfg["swizzle"], cfg["k_pack"]
     scale = 1.44269504
-    dtype, accum = T.float16, T.float32
+    dtype = T.float16
+    accum = T.float16 if cfg["accum16"] else T.float32
     # `bm` may be smaller than an external 128-row block (sub-blocks) or a whole
     # multiple of it (a tile spanning `sup` consecutive external blocks).  The
     # latter is only correctly mapped when every expert's padded span is a
@@ -75,6 +76,10 @@ def build_stage1(cfg, shape):
             up_s = gate_s if one_buf else T.alloc_shared((bn, bk), dtype=dtype)
             gate_l = T.alloc_fragment((bm, bn), dtype=accum)
             up_l = T.alloc_fragment((bm, bn), dtype=accum)
+            if cfg["prefetch_a"]:
+                # Fixed to the shipped 128x64/512-thread copy mapping: two
+                # 16-byte vectors per thread cover the complete A tile.
+                a_next = T.alloc_local((16,), dtype=dtype)
             # `a_frag` stages the A tile one step further, from shared memory into the
             # MMA operand registers, so that the gate and up GEMMs share the reads of
             # it instead of each issuing its own.  Needs the fragment/shared path in
@@ -94,27 +99,79 @@ def build_stage1(cfg, shape):
             row0 = ext * BLOCK_TOKEN + (bx % sub) * bm
             rows = T.max(0, T.min(bm, group_sizes[expert] - (row0 - group_padded_offsets[expert])))
             gate_on = store_flag[0] > 0
+            # Traffic probes: `e0` points every block's weight loads at expert 0 and
+            # `a0` points every block's A loads at row 0, so the corresponding DRAM
+            # stream collapses to a cached working set while the shared-memory fill,
+            # the MMA count and the grid all stay identical.  Results are wrong on
+            # purpose; the point is the time.
+            wexp = 0 if cfg["e0"] else expert
+            arow = 0 if cfg["a0"] else row0
 
             if rows > 0:
                 T.clear(gate_l)
                 T.clear(up_l)
+                if cfg["prefetch_a"]:
+                    T.copy(tokens[arow : arow + bm, 0:bk], a_s)
                 for k in T.Pipelined(T.ceildiv(hidden, bk), num_stages=num_stages):
                     ksrc = 0 if cfg["k0load"] else k
-                    T.copy(tokens[row0 : row0 + bm, ksrc * bk : (ksrc + 1) * bk], a_s)
-                    T.copy(gate_w[expert, by * bn : (by + 1) * bn,
-                                  ksrc * bk : (ksrc + 1) * bk], gate_s)
+                    # `evict`: the A tile is read by every n-tile block of this token
+                    # block, so it wants to stay in L2; the weight tile is read once
+                    # (twice for a two-block expert) and should not displace it.
+                    if cfg["prefetch_a"]:
+                        if k + 1 < T.ceildiv(hidden, bk):
+                            tx = T.get_thread_binding()
+                            for ii in T.serial(2):
+                                for v in T.vectorized(8):
+                                    a_next[ii * 8 + v] = tokens[
+                                        arow + ii * 64 + tx // 8,
+                                        (k + 1) * bk + (tx % 8) * 8 + v,
+                                    ]
+                        T.copy(gate_w[wexp, by * bn : (by + 1) * bn,
+                                      ksrc * bk : (ksrc + 1) * bk], gate_s)
+                    elif cfg["evict"] == "a":
+                        T.copy(tokens[arow : arow + bm, ksrc * bk : (ksrc + 1) * bk], a_s,
+                               eviction_policy="evict_last")
+                        T.copy(gate_w[wexp, by * bn : (by + 1) * bn,
+                                      ksrc * bk : (ksrc + 1) * bk], gate_s)
+                    elif cfg["evict"] == "w":
+                        T.copy(tokens[arow : arow + bm, ksrc * bk : (ksrc + 1) * bk], a_s)
+                        T.copy(gate_w[wexp, by * bn : (by + 1) * bn,
+                                      ksrc * bk : (ksrc + 1) * bk], gate_s,
+                               eviction_policy="evict_first")
+                    elif cfg["evict"] == "aw":
+                        T.copy(tokens[arow : arow + bm, ksrc * bk : (ksrc + 1) * bk], a_s,
+                               eviction_policy="evict_last")
+                        T.copy(gate_w[wexp, by * bn : (by + 1) * bn,
+                                      ksrc * bk : (ksrc + 1) * bk], gate_s,
+                               eviction_policy="evict_first")
+                    else:
+                        T.copy(tokens[arow : arow + bm, ksrc * bk : (ksrc + 1) * bk], a_s)
+                        T.copy(gate_w[wexp, by * bn : (by + 1) * bn,
+                                      ksrc * bk : (ksrc + 1) * bk], gate_s)
                     if cfg["a_frag"]:
                         T.copy(a_s, a_f)
                     if one_buf:
                         T.gemm(a_f, gate_s, gate_l, transpose_B=True, policy=pol, k_pack=k_pack)
-                        T.copy(up_w[expert, by * bn : (by + 1) * bn,
-                                    ksrc * bk : (ksrc + 1) * bk], up_s)
+                        if cfg["evict"] in ("w", "aw"):
+                            T.copy(up_w[wexp, by * bn : (by + 1) * bn,
+                                        ksrc * bk : (ksrc + 1) * bk], up_s,
+                                   eviction_policy="evict_first")
+                        else:
+                            T.copy(up_w[wexp, by * bn : (by + 1) * bn,
+                                        ksrc * bk : (ksrc + 1) * bk], up_s)
                         T.gemm(a_f, up_s, up_l, transpose_B=True, policy=pol, k_pack=k_pack)
                     else:
-                        T.copy(up_w[expert, by * bn : (by + 1) * bn,
+                        T.copy(up_w[wexp, by * bn : (by + 1) * bn,
                                     ksrc * bk : (ksrc + 1) * bk], up_s)
                         T.gemm(a_f, gate_s, gate_l, transpose_B=True, policy=pol, k_pack=k_pack)
                         T.gemm(a_f, up_s, up_l, transpose_B=True, policy=pol, k_pack=k_pack)
+                    if cfg["prefetch_a"] and k + 1 < T.ceildiv(hidden, bk):
+                        tx = T.get_thread_binding()
+                        for ii in T.serial(2):
+                            for v in T.vectorized(8):
+                                a_s[ii * 64 + tx // 8, (tx % 8) * 8 + v] = (
+                                    a_next[ii * 8 + v]
+                                )
 
                 if epi == "smem":
                     for i, j in T.Parallel(bm, bn):
@@ -139,6 +196,41 @@ def build_stage1(cfg, shape):
                         up_l[i, j] = up_l[i, j] * gate_l[i, j]
                         if i < rows and gate_on:
                             up_logits[row0 + i, by * bn + j] = up_l[i, j]
+                elif epi == "fused":
+                    for i, j in T.Parallel(bm, bn):
+                        if i < rows:
+                            up_logits[row0 + i, by * bn + j] = (
+                                up_l[i, j]
+                                * gate_l[i, j]
+                                * (1.0 / (1.0 + T.exp2(-gate_l[i, j] * scale)))
+                            )
+                elif epi == "sigmoid":
+                    for i, j in T.Parallel(bm, bn):
+                        gate_l[i, j] = gate_l[i, j] * T.sigmoid(gate_l[i, j])
+                        up_l[i, j] = up_l[i, j] * gate_l[i, j]
+                        if i < rows:
+                            up_logits[row0 + i, by * bn + j] = up_l[i, j]
+                elif epi == "fused_sigmoid":
+                    for i, j in T.Parallel(bm, bn):
+                        if i < rows:
+                            up_logits[row0 + i, by * bn + j] = (
+                                up_l[i, j] * gate_l[i, j] * T.sigmoid(gate_l[i, j])
+                            )
+                elif epi == "fused_half":
+                    for i, j in T.Parallel(bm, bn):
+                        if i < rows:
+                            gate_half = T.cast(gate_l[i, j], dtype)
+                            up_logits[row0 + i, by * bn + j] = (
+                                T.cast(up_l[i, j], dtype)
+                                * gate_half
+                                * (
+                                    T.cast(1, dtype)
+                                    / (
+                                        T.cast(1, dtype)
+                                        + T.exp2(-gate_half * T.cast(scale, dtype))
+                                    )
+                                )
+                            )
                 else:
                     for i, j in T.Parallel(bm, bn):
                         gate_l[i, j] = gate_l[i, j] * (1.0 / (1.0 + T.exp2(-gate_l[i, j] * scale)))
@@ -156,7 +248,8 @@ def build_stage2(cfg, shape):
     epi = cfg["epilogue"]
     pol = POLICIES[cfg["policy"]]
     swizzle, k_pack = cfg["swizzle"], cfg["k_pack"]
-    dtype, accum = T.float16, T.float32
+    dtype = T.float16
+    accum = T.float16 if cfg["accum16"] else T.float32
     sub = max(1, BLOCK_TOKEN // bm)
     sup = max(1, bm // BLOCK_TOKEN)
     grid_m = num_blocks * sub // sup
@@ -198,7 +291,8 @@ def build_stage2(cfg, shape):
                 out_l4 = T.alloc_fragment((bm, bn), dtype=accum)
             else:
                 out_l4 = out_l
-            w_l = T.alloc_fragment((bm,), dtype=T.float32)
+            route_dtype = dtype if cfg["route_f16"] else T.float32
+            w_l = T.alloc_fragment((bm,), dtype=route_dtype)
             if cfg["a_frag"]:
                 a_f = T.alloc_fragment((bm, bk), dtype=dtype)
             else:
@@ -254,8 +348,17 @@ def build_stage2(cfg, shape):
                         T.gemm(a_f, down_s, out_l4, transpose_B=True, policy=pol,
                                k_pack=k_pack)
 
-                for i in T.Parallel(bm):
-                    w_l[i] = T.if_then_else(i < rows, routed_w[raw0 + i], T.cast(0, T.float32))
+                if cfg["route_pred"]:
+                    for i in T.Parallel(bm):
+                        if i < rows:
+                            w_l[i] = T.cast(routed_w[raw0 + i], route_dtype)
+                else:
+                    for i in T.Parallel(bm):
+                        w_l[i] = T.if_then_else(
+                            i < rows,
+                            T.cast(routed_w[raw0 + i], route_dtype),
+                            T.cast(0, route_dtype),
+                        )
 
                 if epi == "smem":
                     for i, j in T.Parallel(bm, bn):
@@ -273,25 +376,45 @@ def build_stage2(cfg, shape):
                 else:
                     for i, j in T.Parallel(bm, bn):
                         if i < rows:
-                            out[row0 + i, (by * pair) * bn + j] = out_l[i, j] * w_l[i]
+                            if cfg["route_f16"]:
+                                out[row0 + i, (by * pair) * bn + j] = (
+                                    T.cast(out_l[i, j], dtype) * w_l[i]
+                                )
+                            else:
+                                out[row0 + i, (by * pair) * bn + j] = out_l[i, j] * w_l[i]
                 if pair >= 2:
                     for i, j in T.Parallel(bm, bn):
                         if i < rows:
-                            out[row0 + i, (by * pair + 1) * bn + j] = (
-                                out_l2[i, j] * w_l[i]
-                            )
+                            if cfg["route_f16"]:
+                                out[row0 + i, (by * pair + 1) * bn + j] = (
+                                    T.cast(out_l2[i, j], dtype) * w_l[i]
+                                )
+                            else:
+                                out[row0 + i, (by * pair + 1) * bn + j] = (
+                                    out_l2[i, j] * w_l[i]
+                                )
                 if pair >= 3:
                     for i, j in T.Parallel(bm, bn):
                         if i < rows:
-                            out[row0 + i, (by * pair + 2) * bn + j] = (
-                                out_l3[i, j] * w_l[i]
-                            )
+                            if cfg["route_f16"]:
+                                out[row0 + i, (by * pair + 2) * bn + j] = (
+                                    T.cast(out_l3[i, j], dtype) * w_l[i]
+                                )
+                            else:
+                                out[row0 + i, (by * pair + 2) * bn + j] = (
+                                    out_l3[i, j] * w_l[i]
+                                )
                 if pair >= 4:
                     for i, j in T.Parallel(bm, bn):
                         if i < rows:
-                            out[row0 + i, (by * pair + 3) * bn + j] = (
-                                out_l4[i, j] * w_l[i]
-                            )
+                            if cfg["route_f16"]:
+                                out[row0 + i, (by * pair + 3) * bn + j] = (
+                                    T.cast(out_l4[i, j], dtype) * w_l[i]
+                                )
+                            else:
+                                out[row0 + i, (by * pair + 3) * bn + j] = (
+                                    out_l4[i, j] * w_l[i]
+                                )
 
     return kernel
 
@@ -316,7 +439,8 @@ def build_stage1_merged(cfg, shape):
     swizzle, k_pack = cfg["swizzle"], cfg["k_pack"]
     tail_m = cfg["tail"]
     scale = 1.44269504
-    dtype, accum = T.float16, T.float32
+    dtype = T.float16
+    accum = T.float16 if cfg["accum16"] else T.float32
 
     @T.prim_func
     def kernel(
@@ -546,7 +670,9 @@ DEFAULT = {
     "one_buf": True, "epilogue": "direct", "nosafe": False, "k0load": False,
     "merge": False, "a_shared": True, "asyncc": False, "ldgstg": False,
     "order": "row", "swap": False, "n_pair": 1, "ws": False, "tail": 0,
-    "a_frag": False, "fused_a": False,
+    "a_frag": False, "fused_a": False, "evict": "", "accum16": False,
+    "prefetch_a": False, "route_f16": False, "route_pred": False,
+    "fastmath": False, "e0": False, "a0": False,
 }
 
 
@@ -677,6 +803,8 @@ def main():
             passes[tilelang.PassConfigKey.TIR_USE_ASYNC_COPY] = True
         if cfg["ldgstg"]:
             passes[tilelang.PassConfigKey.TL_ENABLE_LOWER_LDGSTG] = True
+        if cfg["fastmath"]:
+            passes[tilelang.PassConfigKey.TL_ENABLE_FAST_MATH] = True
         try:
             if a.stage == 1:
                 if cfg["fused_a"]:

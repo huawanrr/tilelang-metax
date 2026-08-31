@@ -30,7 +30,12 @@ def build(n_blocks, threads, smem_halfs, iters):
             pad = T.alloc_shared((smem_halfs,), T.float16)
             acc = T.alloc_local((4,), T.float32)
             tx = T.get_thread_binding()
-            pad[tx] = T.cast(bx, T.float16)
+            # The WHOLE array has to be written and read back, or the compiler keeps
+            # one element in a register and drops the allocation -- which is what made
+            # an earlier version of this probe report 48 KiB blocks as if shared memory
+            # were free.
+            for i in T.serial(0, smem_halfs // threads):
+                pad[i * threads + tx] = T.cast(bx + i, T.float16)
             # Four independent chains, so one wave already saturates its SIMD's issue
             # slots.  With a single dependent chain the knee measures when the issue
             # slots fill rather than when the blocks stop being resident.
@@ -44,7 +49,12 @@ def build(n_blocks, threads, smem_halfs, iters):
                 acc[2] = acc[2] * 1.0000003 + 1.0
                 acc[3] = acc[3] * 1.0000004 + 1.0
             if tx == 0:
-                out[bx] = acc[0] + acc[1] + acc[2] + acc[3]
+                # Read back an element the compiler cannot resolve, so the whole
+                # allocation stays live.  Reading a *constant* index lets it keep that
+                # one value in a register and drop the rest -- which is exactly how an
+                # earlier version of this probe concluded that 64 KiB blocks were free.
+                out[bx] = (acc[0] + acc[1] + acc[2] + acc[3]
+                           + T.cast(pad[(bx * 4099) % smem_halfs], T.float32))
 
     return spin
 

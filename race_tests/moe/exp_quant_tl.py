@@ -38,7 +38,7 @@ from local_bench import ARG_ORDER, BLOCK_TOKEN, build_case, load_cases, time_fn
 import tune_moe as tm
 
 BASE_PASS = {tilelang.PassConfigKey.TL_DISABLE_WARP_SPECIALIZED: True}
-GROUP = 16  # elements per scale
+GROUP = int(os.environ.get("GROUP", "16"))  # elements per scale
 
 
 def build_quant(rows, hidden, bm=64, bk=256, threads=256):

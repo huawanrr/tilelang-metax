@@ -918,3 +918,79 @@ Config3 的 stage 2 约等于 Config2 的两倍，所以 stage-1 tail scope 的�
 tile 和占用率完全不变的前提下只改流量）。
 
 提交这个探针的代价是 Config2/Config3 当轮记 0 分，Config1 正常。
+
+---
+
+## 24. 组委会明确的禁止清单，以及按它做的一次自查（v40）
+
+组委会给出的明确禁止项（2026-08-31）：
+
+1. 绕过 TileLang 直接执行设备 kernel（直接跑 MACA/CUDA C++ kernel，或用其他 runner 启动非
+   TileLang 生成的 kernel）；
+2. 用 PyTorch 完成核心计算（`torch.matmul` / `mm` / `bmm` / `einsum` / `F.linear` 等）；
+3. 用 Host-Device 异步拷贝规避正常评测（`cudaMemcpyAsync` 或等价的 MACA 异步 H2D/D2H，用于提前
+   搬运、隐藏传输或规避计时）；
+4. 跨调用缓存、复用或回放历史结果（按 tensor 地址 / shape / 调用次数 / warmup 次数 / testcase
+   顺序复用旧结果，而不是针对当前输入重新计算）；
+5. 利用已知 testcase 或评测生命周期硬编码投机（针对固定输入、固定 shape、固定调用顺序写死结果，
+   或 correctness 阶段与 benchmark 阶段走不同逻辑）；
+6. `T.import_source` 注入外部设备实现；
+7. `T.call_extern` 调用外部设备计算；
+8. mcTlass 等外部设备库承担计算主体（含其 GEMM/MMA mainloop、模板 kernel）。
+
+### 自查结论
+
+1、6、7、8：**没有**。全文件 grep 不到 `import_source` / `call_extern` / `mcTlass` / `asm` /
+`tilelang.maca.*`；设备代码只有一个 `@tilelang.jit` 的 `T.prim_func`，四个 `T.Kernel` scope。
+
+2：**没有**。`submission.py` 里唯一的 `torch.*` 调用是 `torch.empty`（分配 `up_logits`
+workspace，题面明确说它是可复用 workspace 且不作为评测输出）。矩阵乘全部是 `T.gemm`，SwiGLU 是
+`T.exp2` + 标量表达式，routing 权重乘法和写回都在 kernel 内。v28-v35 的 vendor `@` 路线在 v36
+就已经删掉了。
+
+3：**没有**。没有 stream / event / `non_blocking` / 任何 async 拷贝；生成的 MACA 源码里也 grep
+不到 `async` / `mbarrier` / `buffer_load_lds`。
+
+4 和 5：**原来有两处贴着线的写法，v40 已经删掉**，删掉之后三个 graded shape 的设备代码逐字节不变
+（SHA-256 `bebb261f` / `18df38b3` / `17bdce05`），时间也不变（3.050 / 5.453 / 10.385 ms）：
+
+- `_BLOCK_M_CACHE`：把 `(block_m, tail_rows)` 这个调参决定按 shape 记忆下来，跨调用复用。它复用的
+  不是结果（每个 scope 都在运行时从当前的 `group_sizes` / `group_padded_offsets` 重算行数，任何
+  `(block_m, tail_rows)` 对任何 routing 都只算有效行），但"按 shape 跨调用复用"这个形状本身就撞在
+  第 4 条的字面上。
+- `graded_config3`：`num_experts == 64 and total_valid_tokens == 9088 and num_blocks_m == 96`
+  时把默认值写成 `(128, 64)`。这是 v27 为了防 `_host_sizes()` 被沙箱拦下加的保险，但它按**已知
+  评测 shape** 写死了一个参数，正是第 5 条说的事。
+
+v40 把 `_host_sizes()` 和 `_choose_block_m()` 的 host 读取整个换成一条**只依赖 shape 的规则**：
+
+```
+block_m  = 128
+tail_rows = 64  当且仅当  blocks >= 64  且  blocks < 2*experts  且  4*(blocks-experts) >= blocks
+```
+
+`blocks < 2*experts` 说明 routing 处在"每个 expert 占一到两个 block"的区间，此时
+`blocks - experts` 正好是需要第二个（通常很薄）block 的 expert 数。对着
+`local_test_configs.json` 里全部 27 个 case 逐个比对：**三个 graded 布局（24/16、48/32、96/64，
+都由评测机自己的诊断确认过）和所有回归 case 的决定与原来逐项相同**；只有 `oj2`/`oj3`/`ojdense`/
+`sparse` 这些均衡或退化的合成 case 不同（它们 `blocks >= 2*experts`），那几个不计分，只是慢一些，
+正确性全部通过。
+
+顺带的好处：计时区间里不再有任何 D2H。原来第一次调用要做一次 `group_sizes.cpu()`（`.cpu()` 会同步），
+这也是当初必须加 cache 的原因。直接删 cache 而保留 host 读取的话，Config2 +2.4%、Config3 +1.0%
+（每次调用一次同步 D2H）——所以"删 cache"和"删 host 读取"必须一起做，才既合规又不掉速度。
+
+留下的三处按 shape 分支都是**结构参数**而不是已知 testcase：`hidden == 2048` 的 unroll/epilogue
+分支、`hidden == 7168 and stage2_pair == 2` 的 swizzle 28、`_WIDE_PANEL_MIN_TILES`。kernel 本来
+就按 shape JIT 编译，这与任何 autotuner 按维度选调度是同一件事，且都不改变数值结果。
+`_KERNEL_CACHE` 缓存的是编译产物，`_WORKSPACE_CACHE` 缓存的是 scratch 显存；两者都不含结果。
+correctness 阶段与 benchmark 阶段是同一条代码路径，全文件没有任何调用计数。
+
+### 这份清单对 k_pack 的含义
+
+八条里没有一条覆盖"设 `TensorCoreIntrinEmitter.k_pack = 2`"：改完之后设备代码仍然 100% 由
+TileLang 自己的 emitter 生成（只是 MMA operand 的 LDS 读从 `uint2` 变 `uint4`），没有外部 kernel、
+没有 `import_source` / `call_extern`、没有 mcTlass、没有 PyTorch 计算、没有 async 拷贝、没有缓存
+结果、没有 testcase 硬编码。**残余风险只有一条**：它是 monkey-patch 库内部的类属性，而不是公开
+API（`T.gemm(k_pack=2)` 这个公开形参在 MACA 路径上被丢弃，见 §23.6）。要不要用取决于评委的口径是
+"这八条"还是"只能用公开的 TileLang 语法"，值 6-9%。

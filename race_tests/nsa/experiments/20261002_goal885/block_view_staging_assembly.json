@@ -1,0 +1,25 @@
+{
+  "baseline": "coalesced_block_view_local.py",
+  "baseline_sha256": "a5afde30d406c994ffc8393b2efea7090079b4bc3922c1a7b7b1e32fceebfe7c",
+  "variants": [
+    {
+      "path": "coalesced_block_view_fp32.py",
+      "sha256": "be4003996292647af0eda8c0a885a0314dce3ea319ad31dd281d104c161cbea2",
+      "fp32_staging": true,
+      "copy_width": null
+    },
+    {
+      "path": "coalesced_block_view_copy2.py",
+      "sha256": "bc39950e3dceab41f6f1793cf84867af4b097e929e38f11d6f72ac9a496c3725",
+      "fp32_staging": false,
+      "copy_width": 2
+    },
+    {
+      "path": "coalesced_block_view_copy4.py",
+      "sha256": "b0d1a710590d1abdc5c79f1c1de13848530c274edbdf07b9bcc7f6a40a9b481e",
+      "fp32_staging": false,
+      "copy_width": 4
+    }
+  ],
+  "hypothesis": "Prevent unpromoted LLVM memcpy between global/private/shared storage; fp16-fp32-fp16 staging preserves finite fp16 values"
+}

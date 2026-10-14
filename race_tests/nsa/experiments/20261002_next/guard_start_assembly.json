@@ -1,0 +1,31 @@
+{
+  "baseline": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_next/index_guards_all.py",
+  "baseline_sha256": "b815d712102ed1ce171f8314433e67344a441ae2a04ae84831a758b66fedf77a",
+  "variants": [
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_next/guard_start_local.py",
+      "changed_functions": [
+        "native_sparse_attention_shared_q_reuse",
+        "_coalesced_qo_prim"
+      ],
+      "sha256": "9a251d14c9c31a5e1bf69e01de6ad974000d615cd05fddd271037972489084e3"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_next/guard_start_shuffle.py",
+      "changed_functions": [
+        "native_sparse_attention_shared_q_reuse",
+        "_coalesced_qo_prim"
+      ],
+      "sha256": "ab2666971903553437ec959eeb721a4060874d2a481246eba238eaf6a3629bdf"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_next/guard_start_local_shuffle.py",
+      "changed_functions": [
+        "native_sparse_attention_shared_q_reuse",
+        "_coalesced_qo_prim"
+      ],
+      "sha256": "9429d245a99220ad1f21680e540c73f7a322b552664257353ceeaa0f521192d4"
+    }
+  ],
+  "hypothesis": "Source-level validated start values may change array lowering; no backend or compiler-flag changes."
+}

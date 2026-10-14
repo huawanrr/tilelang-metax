@@ -1,0 +1,66 @@
+{
+  "variants": [
+    {
+      "path": "split_s8_w2_fp32_balanced.py",
+      "parent": "split_s8_w2_fp32",
+      "sha256": "594236699a76e82e68cf15e412480b8680a7f50b92d88b95fc1be1644c670189"
+    },
+    {
+      "path": "split_s8_w2_direct_balanced.py",
+      "parent": "split_s8_w2_direct",
+      "sha256": "8d5d0ccae4cee768bc3b895e322bd489e5b9b48fdb04ac4c0187a190894ee8eb"
+    },
+    {
+      "path": "split_s8_w4_fp32_balanced.py",
+      "parent": "split_s8_w4_fp32",
+      "sha256": "2f56f0d74d2eb61124bab78d78ebbf8bd68278c5c10ed673f14142ade7f73a4a"
+    },
+    {
+      "path": "split_s8_directkv_swizzle4_balanced.py",
+      "parent": "split_s8_directkv_swizzle4",
+      "sha256": "90c5f385ee2693cf420b7592cfff844042e6326d5cb60fa638e81cae0e1d05d4"
+    }
+  ],
+  "partition_proof": [
+    {
+      "waves": 2,
+      "positions": [
+        [
+          0,
+          2,
+          4,
+          6
+        ],
+        [
+          1,
+          3,
+          5,
+          7
+        ]
+      ],
+      "every_selected_block_once": true
+    },
+    {
+      "waves": 4,
+      "positions": [
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          3,
+          7
+        ]
+      ],
+      "every_selected_block_once": true
+    }
+  ]
+}

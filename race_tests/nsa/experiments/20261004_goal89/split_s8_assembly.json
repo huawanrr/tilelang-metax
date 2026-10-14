@@ -1,0 +1,33 @@
+{
+  "baseline": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/submission.py",
+  "baseline_sha256": "ee780d62a64e427d742db494596feffd0f3f9834e4587cad61a66713f2936c31",
+  "variants": [
+    {
+      "path": "split_s8_w2_p1.py",
+      "waves": 2,
+      "prefetch": 1,
+      "sha256": "fbc7dc966f42bac5e7355aa5d7c49aae01d0b4d92fa00e475334e2d4bd8c8a8c"
+    },
+    {
+      "path": "split_s8_w2_p2.py",
+      "waves": 2,
+      "prefetch": 2,
+      "sha256": "0acb32af04ab4844ff82bafd98216406c34ac39aaad47fb63db693c0b0a6e2d4"
+    },
+    {
+      "path": "split_s8_w4_p1.py",
+      "waves": 4,
+      "prefetch": 1,
+      "sha256": "8c045d72a181931c044129f65b9339c5d03a5f1604623d3cacf6467f2c8c3109"
+    },
+    {
+      "path": "split_s8_w4_p2.py",
+      "waves": 4,
+      "prefetch": 2,
+      "sha256": "7f1825b2ac0968ddd6d9658b0063c09e9380b506fba720e2effff3a71895c2d5"
+    }
+  ],
+  "math": "Each wave sums a disjoint subset. Its FP32 denominator and normalized FP16 output are merged with denominator weights.",
+  "packing": "Unchanged and paid on every call",
+  "synchronization": "One CTA barrier protects partial outputs and denominators"
+}

@@ -1,0 +1,87 @@
+{
+  "status": "PASS",
+  "parent": "experiments/20261002_output_v1/nsa.py",
+  "parent_sha256": "34762aa61bd53c7d1a561276c5d8d1657394691ec5a400c8e3577922b0c7d149",
+  "modules": [
+    {
+      "path": "experiments/20261002_d128_mid/linear_pairs.py",
+      "sha256": "62fcafc2daf2bb5a051c328ef28bbda0bc1d76f15482c1fcecbb4d088bb2d00f",
+      "operands": [
+        {
+          "operand": "K",
+          "elements_per_load": 2,
+          "loads": 2048,
+          "stores": 2048,
+          "same_lane_values": true,
+          "shared_bijection": true
+        },
+        {
+          "operand": "V",
+          "elements_per_load": 2,
+          "loads": 2048,
+          "stores": 2048,
+          "same_lane_values": true,
+          "shared_bijection": true
+        }
+      ],
+      "preserved_fragment_layouts": true,
+      "protected_shared_dependencies": 3,
+      "checked_guard_combinations": 630
+    },
+    {
+      "path": "experiments/20261002_d128_mid/linear_quads.py",
+      "sha256": "09b26914625ff5fca5290565b9ff577223a031de81bf6749badbc4c5c3074490",
+      "operands": [
+        {
+          "operand": "K",
+          "elements_per_load": 4,
+          "loads": 2048,
+          "stores": 2048,
+          "same_lane_values": true,
+          "shared_bijection": true
+        },
+        {
+          "operand": "V",
+          "elements_per_load": 4,
+          "loads": 2048,
+          "stores": 2048,
+          "same_lane_values": true,
+          "shared_bijection": true
+        }
+      ],
+      "preserved_fragment_layouts": true,
+      "protected_shared_dependencies": 3,
+      "checked_guard_combinations": 630
+    }
+  ],
+  "views": [
+    {
+      "batch": 1,
+      "heads": 1,
+      "seq_len": 16,
+      "checked_half_addresses": 2048,
+      "identical_storage_bytes": true
+    },
+    {
+      "batch": 2,
+      "heads": 2,
+      "seq_len": 32,
+      "checked_half_addresses": 16384,
+      "identical_storage_bytes": true
+    },
+    {
+      "batch": 2,
+      "heads": 4,
+      "seq_len": 256,
+      "checked_half_addresses": 262144,
+      "identical_storage_bytes": true
+    },
+    {
+      "batch": 8,
+      "heads": 1,
+      "seq_len": 128,
+      "checked_half_addresses": 131072,
+      "identical_storage_bytes": true
+    }
+  ]
+}

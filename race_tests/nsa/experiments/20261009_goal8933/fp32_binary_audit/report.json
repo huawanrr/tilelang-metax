@@ -1,0 +1,860 @@
+{
+  "command": [
+    "experiments/20261008_resume8871/audit_actual_binary.py",
+    "experiments/20261009_goal8933/parent.py",
+    "experiments/20261009_goal8933/fp32_wave_sum.py",
+    "--case-file",
+    "experiments/20261009_goal8933/oj_cases.json",
+    "--cases",
+    "oj3,oj4,oj9,oj14",
+    "--output-dir",
+    "experiments/20261009_goal8933/fp32_binary_audit"
+  ],
+  "rows": [
+    {
+      "case": "oj3",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "modules": [
+        {
+          "path": "experiments/20261009_goal8933/parent.py",
+          "sha256": "17b91438e869aae07d53ce0b9d99cb8579735f366e80b25faf3dcbabbe94ac09",
+          "parts": [
+            {
+              "library": "/tmp/tilelang-cache-nsa/0.1.9_cuda_gitf1ca0fb9-x86_64/kernels/d7ed0d0d3ec2c620c7cf8dde50422a803bcdf8189e01237c12881285480a9576/executable.so",
+              "library_sha256": "4004479b2ef96ea6c9ed4fe133f5369aea8522bbcc1835351fba7191e6232c14",
+              "compile_flags": [],
+              "device_source_sha256": "0611f0320d59b16313547f09a6b9734e13ea9ca3bcd6677cc7656ab86d3ee375",
+              "elf_sha256": "ae2bd5b42806d0094dcbede936eee252b436b0f129db908dce0283d7133ba07f",
+              "resources": [
+                {
+                  ".dcompcapab": 8,
+                  ".kd_symbol": "kernel_kernel.kd",
+                  ".kernarg_align_bytes": 8,
+                  ".kernarg_size_bytes": 120,
+                  ".max_block_size": 64,
+                  ".mtreg_count": 60,
+                  ".name": "kernel_kernel",
+                  ".private_memory_size": 0,
+                  ".share_memory_size": 0,
+                  ".streg_count": 20
+                }
+              ],
+              "sections": {
+                "": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".strtab": {
+                  "size": 287,
+                  "sha256": "d664b7194fe5d8bd13f23e237db86245d76d5c157a360cdefdd371d95395bcdb"
+                },
+                ".text": {
+                  "size": 3584,
+                  "sha256": "0d4712d96682f495523f7074a8fa077b91f760c5ae117d97a6dcdaa6c36dd270"
+                },
+                ".rodata": {
+                  "size": 64,
+                  "sha256": "18a803e2eb77f1275bceb0015f72a3d5af213fa917c17d54a189fba73a46be43"
+                },
+                ".rela.rodata": {
+                  "size": 24,
+                  "sha256": "0464efd055ae8c93d8e17af0879e4445ac3a987794cf981e7a940d5e4976fcc3"
+                },
+                ".llvmbc": {
+                  "size": 27616,
+                  "sha256": "93042f03d86eede5aec4950849b14f1ecff0fda4d97276dcfcb4c0ae32b8d59b"
+                },
+                ".llvmcmd": {
+                  "size": 644,
+                  "sha256": "c780c79f62b06c33219f019bb4aefb37d5697b21ffa2983d788a6c6e56ff04bd"
+                },
+                ".debug_abbrev": {
+                  "size": 134,
+                  "sha256": "4ef185c8b412729a5dc716fc871c531bccdaea08c504a08dc98a278a789b1015"
+                },
+                ".debug_info": {
+                  "size": 301,
+                  "sha256": "8ca0211b4c27ef574caba6073fc7aeb16d7f1e4ede68ac10d0bf5c02fbd6bf0f"
+                },
+                ".rela.debug_info": {
+                  "size": 696,
+                  "sha256": "505bd37411984f41af760760d5155e01dd035855f7b78241b0523ecc10ff8e6c"
+                },
+                ".debug_ranges": {
+                  "size": 1392,
+                  "sha256": "32679e7d883b9a6ff4cc1d7d34f024fd253bfc33a28768f9ce53df7806367b5a"
+                },
+                ".debug_str": {
+                  "size": 194,
+                  "sha256": "50db4bb94eb58dbbb5e79c6d312f0c125dbc372fe35d3d90d06b395f5da6e13f"
+                },
+                ".note.GNU-stack": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".note": {
+                  "size": 1924,
+                  "sha256": "24722b105bb2a1ec036a118daf4af1f7a261d8906a710a7d8ba7fa6c49715cb8"
+                },
+                ".debug_line": {
+                  "size": 957,
+                  "sha256": "5a42a78ce3e99853fed685b4499221a821416b26550b1ff5a180213962052dcd"
+                },
+                ".rela.debug_line": {
+                  "size": 24,
+                  "sha256": "638f71e2193bedae494c704574390039e62d4a16e0eec58bfd6c07ab90e2dadb"
+                },
+                ".symtab": {
+                  "size": 336,
+                  "sha256": "bbc55fdbc8c558737d9953faf08b3c3514caa914be913c400ed8d2e681fc9bdc"
+                }
+              },
+              "normalized_llvm_sha256": "b505189c11bc57833ca52c2a445ffc4713ebcf202e56b46ec9f02acdff1d8771"
+            }
+          ]
+        },
+        {
+          "path": "experiments/20261009_goal8933/fp32_wave_sum.py",
+          "sha256": "8019f1540a5f80e9c0f32b63ddede0ccfe913bca86e506ba92b99f42563b4c7f",
+          "parts": [
+            {
+              "library": "/tmp/tilelang-cache-nsa/0.1.9_cuda_gitf1ca0fb9-x86_64/kernels/13dc67b41a6f9c6781a2db54cdd0fde0c911d04495d58df62b2fa574036e058e/executable.so",
+              "library_sha256": "fb3532a859388d1b47f20ff14856fc84d0825678be9732286b54150ef9fbd9a8",
+              "compile_flags": [],
+              "device_source_sha256": "a1069cadf810780d62299b68071ad69c1a0a485d76c401431a585f4f7f1cc0ed",
+              "elf_sha256": "e6f8118007e6cc26201eef63ad34971ce6384a305a771e489ebb7c7e8f508bb2",
+              "resources": [
+                {
+                  ".dcompcapab": 8,
+                  ".kd_symbol": "kernel_kernel.kd",
+                  ".kernarg_align_bytes": 8,
+                  ".kernarg_size_bytes": 120,
+                  ".max_block_size": 64,
+                  ".mtreg_count": 60,
+                  ".name": "kernel_kernel",
+                  ".private_memory_size": 0,
+                  ".share_memory_size": 0,
+                  ".streg_count": 20
+                }
+              ],
+              "sections": {
+                "": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".strtab": {
+                  "size": 287,
+                  "sha256": "d664b7194fe5d8bd13f23e237db86245d76d5c157a360cdefdd371d95395bcdb"
+                },
+                ".text": {
+                  "size": 3328,
+                  "sha256": "f479487f0a71ae98b8bf64abba97b51a334cb726bcd0450423074dca2c79b720"
+                },
+                ".rodata": {
+                  "size": 64,
+                  "sha256": "18a803e2eb77f1275bceb0015f72a3d5af213fa917c17d54a189fba73a46be43"
+                },
+                ".rela.rodata": {
+                  "size": 24,
+                  "sha256": "0464efd055ae8c93d8e17af0879e4445ac3a987794cf981e7a940d5e4976fcc3"
+                },
+                ".llvmbc": {
+                  "size": 26960,
+                  "sha256": "389107d71aa0c71677a6a95a3fde36998073845df73d9966a0a349aaa6b3326c"
+                },
+                ".llvmcmd": {
+                  "size": 644,
+                  "sha256": "79b298a55190659592c046908a53025957b00c533c53b7dbf11f2e87817bf5de"
+                },
+                ".debug_abbrev": {
+                  "size": 119,
+                  "sha256": "00cca8cb74e99cd1442466793a05ecdf8429dfcc0153f18e4a687c2f33a4b11f"
+                },
+                ".debug_info": {
+                  "size": 217,
+                  "sha256": "720e0dc5f094a9072c21c3af64d3f036c8e04b0a42a0f2f2b0f330922c10077c"
+                },
+                ".rela.debug_info": {
+                  "size": 504,
+                  "sha256": "2266d2767e85798ec2de32459e3407a81825bdef57aa5715f27d4f260b5083f4"
+                },
+                ".debug_ranges": {
+                  "size": 1312,
+                  "sha256": "d56b7eee0ba2a32bafd5088d8008997850e069ef87d5fbbec81525caf5cac194"
+                },
+                ".debug_str": {
+                  "size": 168,
+                  "sha256": "3be33ee8dee33862442911dabd00a32741b773fc2e5b494f11809d44ce73faa4"
+                },
+                ".note.GNU-stack": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".note": {
+                  "size": 1924,
+                  "sha256": "24722b105bb2a1ec036a118daf4af1f7a261d8906a710a7d8ba7fa6c49715cb8"
+                },
+                ".debug_line": {
+                  "size": 895,
+                  "sha256": "ab47424f790f1e9bd29d276cf99a82d9757c61775469950315409ece60b6aa06"
+                },
+                ".rela.debug_line": {
+                  "size": 24,
+                  "sha256": "868367db354b0f87dd7935b3f011588a2a1096dc00fe24ce367be36af5ad1dfb"
+                },
+                ".symtab": {
+                  "size": 336,
+                  "sha256": "d997af53e0e2399aea6ea06e9a1b752ab2f9cf89e74bd6df7b96cbce6e45eded"
+                }
+              },
+              "normalized_llvm_sha256": "d43505e305e6284ac002ddf3663d95389b58623f53c792813b37b47345cb313b"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "oj4",
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "modules": [
+        {
+          "path": "experiments/20261009_goal8933/parent.py",
+          "sha256": "17b91438e869aae07d53ce0b9d99cb8579735f366e80b25faf3dcbabbe94ac09",
+          "parts": [
+            {
+              "library": "/tmp/tilelang-cache-nsa/0.1.9_cuda_gitf1ca0fb9-x86_64/kernels/edd5c19015c9af825a71b6239f96e67cc943296bd3aa79894a5e17a801850e84/executable.so",
+              "library_sha256": "ce2848e9ac9bad5e6fa6b51ba2daddea4b28f8fb7b582c2dec21885fcc7d14bd",
+              "compile_flags": [],
+              "device_source_sha256": "219f0d49ac1900cac2690d85b0c6632da50376d9aa2b0a28242c63c5a6c80b6a",
+              "elf_sha256": "7aa3ddda282728e21c472e7a501c4b52cf38f64d08b9bce169d595ba16b917ee",
+              "resources": [
+                {
+                  ".dcompcapab": 8,
+                  ".kd_symbol": "kernel_kernel.kd",
+                  ".kernarg_align_bytes": 8,
+                  ".kernarg_size_bytes": 120,
+                  ".max_block_size": 64,
+                  ".mtreg_count": 38,
+                  ".name": "kernel_kernel",
+                  ".private_memory_size": 0,
+                  ".share_memory_size": 0,
+                  ".streg_count": 20
+                }
+              ],
+              "sections": {
+                "": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".strtab": {
+                  "size": 292,
+                  "sha256": "c0b54e05a2dfc01d42acf5cbb77a90127029482b42a57b77fd05e3917730a25c"
+                },
+                ".text": {
+                  "size": 3072,
+                  "sha256": "5af69656dac2d2f4d713d9b48f5bf3fdf260a00207f5078de772c56071cba83a"
+                },
+                ".rodata": {
+                  "size": 64,
+                  "sha256": "2ff858c52f37b5968abfe246db3156bc355e089b9af78d2668971cbe3c9c77ae"
+                },
+                ".rela.rodata": {
+                  "size": 24,
+                  "sha256": "0464efd055ae8c93d8e17af0879e4445ac3a987794cf981e7a940d5e4976fcc3"
+                },
+                ".llvmbc": {
+                  "size": 21824,
+                  "sha256": "c84fe7cd7b8f34ef0ff09387dd0158c31f611bc841bd336fb8010f6919055e04"
+                },
+                ".llvmcmd": {
+                  "size": 644,
+                  "sha256": "1c98af2d1cd940bac6126fef2956fa32d570457615a2948bd1413d55d5e8a825"
+                },
+                ".debug_abbrev": {
+                  "size": 119,
+                  "sha256": "bc1566743a3f0f08e295c6c70106dde0847a845a1f28ea0718ac7acea9a6c2ef"
+                },
+                ".debug_info": {
+                  "size": 273,
+                  "sha256": "d478aa2c779eaa63780d04d973e308b26c60b89d63bfd60bc3973bce6148ff68"
+                },
+                ".rela.debug_info": {
+                  "size": 600,
+                  "sha256": "24d4a4e0f58e90c291258397174e17bcb78148e0664dfe9933893227ef0e31d9"
+                },
+                ".debug_ranges": {
+                  "size": 928,
+                  "sha256": "36416de9ad8a506ccb429aa46b33af7ce18f1e02257a3c90c8e3cc88d0c60b8a"
+                },
+                ".debug_str": {
+                  "size": 185,
+                  "sha256": "ee97eac09ee33e60e95144bed49c55daa4cb2d142fece2bfea4259c790208792"
+                },
+                ".note.GNU-stack": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".note": {
+                  "size": 1924,
+                  "sha256": "c287c4a1ff85fb79761dca2313f11f8436e297bea1b5d60fa889b56a50ef09cf"
+                },
+                ".debug_line": {
+                  "size": 859,
+                  "sha256": "a35baf9b397c373d3015e16d9b0f0a7302797f954cac8f2086679ffb96650647"
+                },
+                ".rela.debug_line": {
+                  "size": 24,
+                  "sha256": "4fd9e057d427065a73f3e1bb657d637fc821a2803a166c0b54a5957d13ccb886"
+                },
+                ".symtab": {
+                  "size": 336,
+                  "sha256": "519a4a8af39c4d9985167e0dbbf760557a6a4d9e29a15d5c8d4f607ceca03b6e"
+                }
+              },
+              "normalized_llvm_sha256": "d293907450910073ea6a339ee1714719f4702931aa8a0544bb0ffa9041c2fffe"
+            }
+          ]
+        },
+        {
+          "path": "experiments/20261009_goal8933/fp32_wave_sum.py",
+          "sha256": "8019f1540a5f80e9c0f32b63ddede0ccfe913bca86e506ba92b99f42563b4c7f",
+          "parts": [
+            {
+              "library": "/tmp/tilelang-cache-nsa/0.1.9_cuda_gitf1ca0fb9-x86_64/kernels/8fb53744b672f25cce1ff23ef7106821519bcb92c9bf946048b954d7a65f04e1/executable.so",
+              "library_sha256": "c5021759c1a4bbf5caa85df5e22b30173f8c74ad4bcb969a55af236ff7c2c111",
+              "compile_flags": [],
+              "device_source_sha256": "370d0826fc734a5e1b3fa352079e209489936ffba350b6689075fc898a019ee5",
+              "elf_sha256": "f8ca862e92b7c52412aa299e257c6e3c4a2463f426118095c287793695a02e3a",
+              "resources": [
+                {
+                  ".dcompcapab": 8,
+                  ".kd_symbol": "kernel_kernel.kd",
+                  ".kernarg_align_bytes": 8,
+                  ".kernarg_size_bytes": 120,
+                  ".max_block_size": 64,
+                  ".mtreg_count": 38,
+                  ".name": "kernel_kernel",
+                  ".private_memory_size": 0,
+                  ".share_memory_size": 0,
+                  ".streg_count": 20
+                }
+              ],
+              "sections": {
+                "": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".strtab": {
+                  "size": 292,
+                  "sha256": "c0b54e05a2dfc01d42acf5cbb77a90127029482b42a57b77fd05e3917730a25c"
+                },
+                ".text": {
+                  "size": 2816,
+                  "sha256": "4caded86082db3283a0dd6807676b0ab108f38fd9ed2fb3f16fece6f823ab52c"
+                },
+                ".rodata": {
+                  "size": 64,
+                  "sha256": "2ff858c52f37b5968abfe246db3156bc355e089b9af78d2668971cbe3c9c77ae"
+                },
+                ".rela.rodata": {
+                  "size": 24,
+                  "sha256": "0464efd055ae8c93d8e17af0879e4445ac3a987794cf981e7a940d5e4976fcc3"
+                },
+                ".llvmbc": {
+                  "size": 21168,
+                  "sha256": "7101dd3bfaa51f1b776b52056b49985712f10d4fe3f1f7c9d7d973277af0b334"
+                },
+                ".llvmcmd": {
+                  "size": 644,
+                  "sha256": "11cce5f6f6b6b543dc9f7e56a2af7da29c234df2d477f0b291249776a4ae93a6"
+                },
+                ".debug_abbrev": {
+                  "size": 104,
+                  "sha256": "80bf68d97694ced6dc5c766529214c987c94ad40eaea3b9bc7064593640ac7b3"
+                },
+                ".debug_info": {
+                  "size": 181,
+                  "sha256": "f2c3a4095c8874f98f774c8d6dd7b634c6b73f188e6d1f7b2c1eb37e148c9093"
+                },
+                ".rela.debug_info": {
+                  "size": 408,
+                  "sha256": "c2f1d95c8f41a38b6b50c6fd1110e75af1c2d58ccbaeee3dfd57bfd819c41da4"
+                },
+                ".debug_ranges": {
+                  "size": 576,
+                  "sha256": "33fb088fe9169c026fb614cdbc10dec0ff115abb3065ad609544518a36d5c8d4"
+                },
+                ".debug_str": {
+                  "size": 159,
+                  "sha256": "b7b1365e653522be5ab1394b95d63f361ce40fe1d0c74ba4bc15055101a41847"
+                },
+                ".note.GNU-stack": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".note": {
+                  "size": 1924,
+                  "sha256": "c287c4a1ff85fb79761dca2313f11f8436e297bea1b5d60fa889b56a50ef09cf"
+                },
+                ".debug_line": {
+                  "size": 709,
+                  "sha256": "9dbfb696e53e93944323649449b4cded69823c6461e2d7bd6599e71583833d4a"
+                },
+                ".rela.debug_line": {
+                  "size": 24,
+                  "sha256": "f30c24af3a9106e91e110a75e43ece623ec291643c819796787c70e9d808aca8"
+                },
+                ".symtab": {
+                  "size": 336,
+                  "sha256": "a325a8339a81b48e75b997875db7165a2672487e6d1b99b3ed761a3e2d3ed2c2"
+                }
+              },
+              "normalized_llvm_sha256": "10d619677ee3cde412cd384b7f9e2d735d715e27b398a9dfa1e9629acd64786a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "oj9",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 8192,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "modules": [
+        {
+          "path": "experiments/20261009_goal8933/parent.py",
+          "sha256": "17b91438e869aae07d53ce0b9d99cb8579735f366e80b25faf3dcbabbe94ac09",
+          "parts": [
+            {
+              "library": "/tmp/tilelang-cache-nsa/0.1.9_cuda_gitf1ca0fb9-x86_64/kernels/46bd73199bd51b76d70b7b0cb9f327e411244b99c5842b821e740126043fcc2d/executable.so",
+              "library_sha256": "48c1acb01139b8707753d559aa994f17b2235c31ae3a3ff8dcded6b13675a00a",
+              "compile_flags": [],
+              "device_source_sha256": "4d18d63bf9bca6e0bf433ce1ca600f3703e591578f310f518182259464ea1be9",
+              "elf_sha256": "33887a531a3256b7cec4cc125fd8d4e9ec179fc8cd41dee37387dcb4500997d9",
+              "resources": [
+                {
+                  ".dcompcapab": 8,
+                  ".kd_symbol": "kernel_kernel.kd",
+                  ".kernarg_align_bytes": 8,
+                  ".kernarg_size_bytes": 120,
+                  ".max_block_size": 64,
+                  ".mtreg_count": 36,
+                  ".name": "kernel_kernel",
+                  ".private_memory_size": 0,
+                  ".share_memory_size": 0,
+                  ".streg_count": 20
+                }
+              ],
+              "sections": {
+                "": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".strtab": {
+                  "size": 292,
+                  "sha256": "c0b54e05a2dfc01d42acf5cbb77a90127029482b42a57b77fd05e3917730a25c"
+                },
+                ".text": {
+                  "size": 3072,
+                  "sha256": "312697f1b7e14195171a29d40673be1e26d1948ed33c4d1bd251dd82b7cb6834"
+                },
+                ".rodata": {
+                  "size": 64,
+                  "sha256": "7c06abd4e001dea4176fe2d2402327594287d9c47183ced1092290cbe0bd30ba"
+                },
+                ".rela.rodata": {
+                  "size": 24,
+                  "sha256": "0464efd055ae8c93d8e17af0879e4445ac3a987794cf981e7a940d5e4976fcc3"
+                },
+                ".llvmbc": {
+                  "size": 22208,
+                  "sha256": "36f0741558952b6baa1d5056d901c9301bc337bd56899b2c3e03bcb93c503b42"
+                },
+                ".llvmcmd": {
+                  "size": 644,
+                  "sha256": "9bd08b823f341ca00309af0f8602959f36ed146a30038f88cc39fa82fa220c86"
+                },
+                ".debug_abbrev": {
+                  "size": 134,
+                  "sha256": "4e3e9d08c0a1028497547e02c507dfcd0d253cdd1fa5124f0084340d655051b3"
+                },
+                ".debug_info": {
+                  "size": 309,
+                  "sha256": "54ad8cfb4e78832d9ffb20e9dd9b78be354cb8690792cea4063a364519a80517"
+                },
+                ".rela.debug_info": {
+                  "size": 696,
+                  "sha256": "1ebc5e0005c4313acaf6b03f4b3f015d325bdf765aa0bf14a8504f016ccbdb66"
+                },
+                ".debug_ranges": {
+                  "size": 1200,
+                  "sha256": "3eef87e6f1d8d15548c7fddd03ed764579ca898aca608d277ed97107dadcb5ef"
+                },
+                ".debug_str": {
+                  "size": 195,
+                  "sha256": "1e6554091ef9c41446cb1a58d6cfd34131c9209fa833456ab68ce9a16588d3e0"
+                },
+                ".note.GNU-stack": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".note": {
+                  "size": 1924,
+                  "sha256": "bfff8182a763dd3c5408e11f505271c43806c22541068721d4b82a4fad58492c"
+                },
+                ".debug_line": {
+                  "size": 1057,
+                  "sha256": "f83db28692905d7d750e15740f6d02b11aa75d146f90be15324e9859356d99cc"
+                },
+                ".rela.debug_line": {
+                  "size": 24,
+                  "sha256": "638f71e2193bedae494c704574390039e62d4a16e0eec58bfd6c07ab90e2dadb"
+                },
+                ".symtab": {
+                  "size": 336,
+                  "sha256": "df1885435eeabadcd455ff408f0c68e1c3473806714ff74e8f6f96b51cb894df"
+                }
+              },
+              "normalized_llvm_sha256": "d52d4fd9b083dd6e9996dbcb6071d1c8d5203f74f7c44c33f1e1c2340c0c2e08"
+            }
+          ]
+        },
+        {
+          "path": "experiments/20261009_goal8933/fp32_wave_sum.py",
+          "sha256": "8019f1540a5f80e9c0f32b63ddede0ccfe913bca86e506ba92b99f42563b4c7f",
+          "parts": [
+            {
+              "library": "/tmp/tilelang-cache-nsa/0.1.9_cuda_gitf1ca0fb9-x86_64/kernels/c1ac20e39d8d19874c6dada8ed3eb3776e468f646f6e27cfa8e52055872fdba3/executable.so",
+              "library_sha256": "21d4374a44233914600b070d10dd3736338323e033068bf794fe024c79218909",
+              "compile_flags": [],
+              "device_source_sha256": "1dff4f0c7f506f25dd626cf6eb02493f0dbb40e6361c2418083584e880dc0699",
+              "elf_sha256": "69cb30af55f60b1cb9d96963a47fdc3ec322d08434a729eeeec6f4b6704a8b78",
+              "resources": [
+                {
+                  ".dcompcapab": 8,
+                  ".kd_symbol": "kernel_kernel.kd",
+                  ".kernarg_align_bytes": 8,
+                  ".kernarg_size_bytes": 120,
+                  ".max_block_size": 64,
+                  ".mtreg_count": 36,
+                  ".name": "kernel_kernel",
+                  ".private_memory_size": 0,
+                  ".share_memory_size": 0,
+                  ".streg_count": 20
+                }
+              ],
+              "sections": {
+                "": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".strtab": {
+                  "size": 292,
+                  "sha256": "c0b54e05a2dfc01d42acf5cbb77a90127029482b42a57b77fd05e3917730a25c"
+                },
+                ".text": {
+                  "size": 2816,
+                  "sha256": "5c62db4c2f95aa35be7c315bd0f7eac29a5256b4c90c67b560015d5bf0644383"
+                },
+                ".rodata": {
+                  "size": 64,
+                  "sha256": "7c06abd4e001dea4176fe2d2402327594287d9c47183ced1092290cbe0bd30ba"
+                },
+                ".rela.rodata": {
+                  "size": 24,
+                  "sha256": "0464efd055ae8c93d8e17af0879e4445ac3a987794cf981e7a940d5e4976fcc3"
+                },
+                ".llvmbc": {
+                  "size": 21536,
+                  "sha256": "94567bef734ad17c581425d97050f9f97ec5f6e2790ac880e5ebff6ed02b5355"
+                },
+                ".llvmcmd": {
+                  "size": 644,
+                  "sha256": "d18f6e387c896164a26fa00142483180cef5a5f81f5ffbd1432eb45f9e0ede0e"
+                },
+                ".debug_abbrev": {
+                  "size": 119,
+                  "sha256": "00cca8cb74e99cd1442466793a05ecdf8429dfcc0153f18e4a687c2f33a4b11f"
+                },
+                ".debug_info": {
+                  "size": 217,
+                  "sha256": "9a51792f9b73ced56a5786c0534999b65507a86c5fccb6015d85e7fd55eb1ff8"
+                },
+                ".rela.debug_info": {
+                  "size": 504,
+                  "sha256": "5cbc7dceda40454489ece5978cac2610b32f601d64a0c2c2d383d23f1f79a425"
+                },
+                ".debug_ranges": {
+                  "size": 832,
+                  "sha256": "93453b735b38aef9abf18388836727ce97b0dc046a0b1dcb35042922b46b2832"
+                },
+                ".debug_str": {
+                  "size": 169,
+                  "sha256": "bec5c301522afbe41ffc5bb4634a1d1ce67c05bf09731cdd62d6d6d044cf7655"
+                },
+                ".note.GNU-stack": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".note": {
+                  "size": 1924,
+                  "sha256": "bfff8182a763dd3c5408e11f505271c43806c22541068721d4b82a4fad58492c"
+                },
+                ".debug_line": {
+                  "size": 943,
+                  "sha256": "1e5ae3e81b3a9b4e6c7e3c10e7d551f97c399dcf19935da3c1a907dd2473b35b"
+                },
+                ".rela.debug_line": {
+                  "size": 24,
+                  "sha256": "868367db354b0f87dd7935b3f011588a2a1096dc00fe24ce367be36af5ad1dfb"
+                },
+                ".symtab": {
+                  "size": 336,
+                  "sha256": "a547e5762fd13aa52768e7e2fb7308768d27d18e050658eccd9ce893e99a6282"
+                }
+              },
+              "normalized_llvm_sha256": "6c22c1da3fe578829a616862b892b59ed093ee609f203ba781efd094a82f5691"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "oj14",
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "modules": [
+        {
+          "path": "experiments/20261009_goal8933/parent.py",
+          "sha256": "17b91438e869aae07d53ce0b9d99cb8579735f366e80b25faf3dcbabbe94ac09",
+          "parts": [
+            {
+              "library": "/tmp/tilelang-cache-nsa/0.1.9_cuda_gitf1ca0fb9-x86_64/kernels/d3c87041a1ffb77652f5ebfdec35f08f0c4dde1f837a48f381a97f056d1f39a0/executable.so",
+              "library_sha256": "de76123c2c55ab0d86f3afde4af05fad62ad24ef22700d0224d94faac08532af",
+              "compile_flags": [],
+              "device_source_sha256": "727066da9745bc329448dff44d4038b8096a153369b27a945ddf5df27eafc388",
+              "elf_sha256": "17a7afb0c6cd64a24ad34327040cd948f56272c8e47a3016d8b838447705c8dd",
+              "resources": [
+                {
+                  ".dcompcapab": 8,
+                  ".kd_symbol": "kernel_kernel.kd",
+                  ".kernarg_align_bytes": 8,
+                  ".kernarg_size_bytes": 120,
+                  ".max_block_size": 64,
+                  ".mtreg_count": 40,
+                  ".name": "kernel_kernel",
+                  ".private_memory_size": 0,
+                  ".share_memory_size": 0,
+                  ".streg_count": 20
+                }
+              ],
+              "sections": {
+                "": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".strtab": {
+                  "size": 292,
+                  "sha256": "c0b54e05a2dfc01d42acf5cbb77a90127029482b42a57b77fd05e3917730a25c"
+                },
+                ".text": {
+                  "size": 3072,
+                  "sha256": "3a0b38091c0f1395e17f39fba8d358eb5068d78eac8735d945c1567d2f87cb36"
+                },
+                ".rodata": {
+                  "size": 64,
+                  "sha256": "2ff858c52f37b5968abfe246db3156bc355e089b9af78d2668971cbe3c9c77ae"
+                },
+                ".rela.rodata": {
+                  "size": 24,
+                  "sha256": "0464efd055ae8c93d8e17af0879e4445ac3a987794cf981e7a940d5e4976fcc3"
+                },
+                ".llvmbc": {
+                  "size": 22000,
+                  "sha256": "587f3a91045af6b5618d3336653f4ba083a00c94fb95275f7822116a15924760"
+                },
+                ".llvmcmd": {
+                  "size": 644,
+                  "sha256": "b43bab3f3966964bfc21f4ef7d7b2e4596dc986fc049a138801f702b374ff616"
+                },
+                ".debug_abbrev": {
+                  "size": 119,
+                  "sha256": "bc1566743a3f0f08e295c6c70106dde0847a845a1f28ea0718ac7acea9a6c2ef"
+                },
+                ".debug_info": {
+                  "size": 273,
+                  "sha256": "d478aa2c779eaa63780d04d973e308b26c60b89d63bfd60bc3973bce6148ff68"
+                },
+                ".rela.debug_info": {
+                  "size": 600,
+                  "sha256": "619035f6ef9ae6492cdfc68fd987e6e6a7f1ae91fd82e71d2ce4f5e75f994079"
+                },
+                ".debug_ranges": {
+                  "size": 928,
+                  "sha256": "65f6b6fd93c33917a6c166eecfa9cd38e13783a5c18d1e1a8f037d5ffb35af65"
+                },
+                ".debug_str": {
+                  "size": 185,
+                  "sha256": "7e5d1513458b88cf1d8da90472b8f1e29f2fd8ca4f672086b8ed68a77cd4257d"
+                },
+                ".note.GNU-stack": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".note": {
+                  "size": 1924,
+                  "sha256": "6e097dae362de9e3249c568b69d005926d56d573a3ef659abdfbe6d9dadc264d"
+                },
+                ".debug_line": {
+                  "size": 874,
+                  "sha256": "f87d443c9715cd4818775758476674d858147348b4cc2416ac0895a147c907de"
+                },
+                ".rela.debug_line": {
+                  "size": 24,
+                  "sha256": "4fd9e057d427065a73f3e1bb657d637fc821a2803a166c0b54a5957d13ccb886"
+                },
+                ".symtab": {
+                  "size": 336,
+                  "sha256": "2069bf4d7501b0a3192fa4d8c8c360bd279e474c75c1b262d7bbf1a519b77a3a"
+                }
+              },
+              "normalized_llvm_sha256": "5e62005e2ca7f96f16b28f3a98cf80f77dd41ae0b08b7b15c8e840f6333b9dfd"
+            }
+          ]
+        },
+        {
+          "path": "experiments/20261009_goal8933/fp32_wave_sum.py",
+          "sha256": "8019f1540a5f80e9c0f32b63ddede0ccfe913bca86e506ba92b99f42563b4c7f",
+          "parts": [
+            {
+              "library": "/tmp/tilelang-cache-nsa/0.1.9_cuda_gitf1ca0fb9-x86_64/kernels/4381d17f44ccf95672468ae4fd6801ec493d13d72ea63e1862c137242f6b86a0/executable.so",
+              "library_sha256": "dc3aa3d69e266f44863818b4cc541201c1248739280e264f2b7efe206279dea8",
+              "compile_flags": [],
+              "device_source_sha256": "6695789eb4ec4052c239d9f0c3d7a20e2a7b641b2dceec622e2e0d7a1ebc494f",
+              "elf_sha256": "46c567e973b75ff817fe975778703001aa11ca65abc3e2da50634cc9ba889f91",
+              "resources": [
+                {
+                  ".dcompcapab": 8,
+                  ".kd_symbol": "kernel_kernel.kd",
+                  ".kernarg_align_bytes": 8,
+                  ".kernarg_size_bytes": 120,
+                  ".max_block_size": 64,
+                  ".mtreg_count": 44,
+                  ".name": "kernel_kernel",
+                  ".private_memory_size": 0,
+                  ".share_memory_size": 0,
+                  ".streg_count": 20
+                }
+              ],
+              "sections": {
+                "": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".strtab": {
+                  "size": 292,
+                  "sha256": "c0b54e05a2dfc01d42acf5cbb77a90127029482b42a57b77fd05e3917730a25c"
+                },
+                ".text": {
+                  "size": 3072,
+                  "sha256": "017f8029f69dbf220b038fc1469840237ead3024d2d91139d56c632df9bcd11d"
+                },
+                ".rodata": {
+                  "size": 64,
+                  "sha256": "b51d8d0bee87faf3c510a7e8f5249bd620f4d0821cc71673ea8d8e4fef83e891"
+                },
+                ".rela.rodata": {
+                  "size": 24,
+                  "sha256": "0464efd055ae8c93d8e17af0879e4445ac3a987794cf981e7a940d5e4976fcc3"
+                },
+                ".llvmbc": {
+                  "size": 21360,
+                  "sha256": "d92278306f08343cc27ee25e97723c793517ea18540816e8b06671f6c58e092b"
+                },
+                ".llvmcmd": {
+                  "size": 644,
+                  "sha256": "72f19ac425d40b0631cf9ed5bb99e517d65ab8ff162b94c3a73fb02b32789ea5"
+                },
+                ".debug_abbrev": {
+                  "size": 104,
+                  "sha256": "80bf68d97694ced6dc5c766529214c987c94ad40eaea3b9bc7064593640ac7b3"
+                },
+                ".debug_info": {
+                  "size": 181,
+                  "sha256": "8a43c3c2ef146e226a62f780bf5cd6b3ccba46e8ee90f8f132493e5377f18f0b"
+                },
+                ".rela.debug_info": {
+                  "size": 408,
+                  "sha256": "c7a0500d8a7a6e1ed3603cf1895c1aa409428ed0a678c281bec710b52e641a54"
+                },
+                ".debug_ranges": {
+                  "size": 576,
+                  "sha256": "2c5bf03752ec4bbd6943ba174b6a041460f82639ca22f5fe242a246cde5d06f2"
+                },
+                ".debug_str": {
+                  "size": 159,
+                  "sha256": "584de2bae3fce32d83b4e70d9f6faadc5384836135ede5e71445b7e17955f3ca"
+                },
+                ".note.GNU-stack": {
+                  "size": 0,
+                  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                },
+                ".note": {
+                  "size": 1924,
+                  "sha256": "a64a346e9637f5c99e05157adb2e943ea6c7891d50801fb688b2bb68528dbeba"
+                },
+                ".debug_line": {
+                  "size": 724,
+                  "sha256": "54f05f2bc7b966d034ebb161abeb5be362b7c81cae04602f5d2cb2e18fbaf304"
+                },
+                ".rela.debug_line": {
+                  "size": 24,
+                  "sha256": "f30c24af3a9106e91e110a75e43ece623ec291643c819796787c70e9d808aca8"
+                },
+                ".symtab": {
+                  "size": 336,
+                  "sha256": "c57bde69d485819300ac84d045d54368d9938e8a0699860c3acea7d9c4402233"
+                }
+              },
+              "normalized_llvm_sha256": "7ef04b9cc36dfb174e19fa0d7293f3ad57f6524decc91fb37c2b436cf964c656"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "method": "Exact JIT adapter libpath; embedded MetaX ELF; no device execution"
+}

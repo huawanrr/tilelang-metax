@@ -1,0 +1,114 @@
+{
+  "date": "2026-09-28",
+  "decision": "retain baseline; no new submission",
+  "selected_source": "experiments/20260927_next/selected.py",
+  "oj_sources_unchanged": {
+    "nsa.py": "b130372b331e04cec85e6ad005ca239038adbb7f2c1fb5ce55b745b720c814fa",
+    "submission.py": "a588a9f4f23f93c076c37ebecf88577619f5ffbee03278fc5875253b06b016cd",
+    "experiments/20260927_next/selected.py": "311e64a25b16471d2689049070303e6400bc0f593e184615222839e1a77b3a26",
+    "experiments/20260927_next/submission.py": "8733abd64b1f72e0a098d2412a1d3a0db8b5ec03d899408d0ec15b2f6c9f3cc0"
+  },
+  "experiments": [
+    {
+      "report": "pack.json",
+      "source_sha256": {
+        "experiments/20260928_tuning/baseline.py": "311e64a25b16471d2689049070303e6400bc0f593e184615222839e1a77b3a26",
+        "experiments/20260928_tuning/pack64.py": "9d4bf5a3ea26c04b3bee5eb45431364a20d6dd63d9a20730eb1541c50d0f5337",
+        "experiments/20260928_tuning/pack_v128.py": "ccb75b2c514eefe98b7faa93e929df90444c5d55251c077138a973ba5b0563e3",
+        "experiments/20260928_tuning/pack_kv128.py": "5d634394d43d3555045742aa1fd20e1995f9da0abc836ce2032ceba994dba6c8",
+        "experiments/20260928_tuning/pack_kv64.py": "ca371877b83d5738eca49fcb544aab7d53b2fdd9db7b73ecdb1ac92b400648ba"
+      },
+      "geomean_speedups": [
+        1.0,
+        0.9953696769749388,
+        1.0015049584413658,
+        1.0001674743094078,
+        0.996793559989972
+      ],
+      "decision": "retain baseline"
+    },
+    {
+      "report": "pack_tiles.json",
+      "source_sha256": {
+        "experiments/20260928_tuning/baseline.py": "311e64a25b16471d2689049070303e6400bc0f593e184615222839e1a77b3a26",
+        "experiments/20260928_tuning/pack_tiles2_t128.py": "f2015fd812fce5b1cc87082b60c68518e67d79fb029f82e68878fb959712a921",
+        "experiments/20260928_tuning/pack_tiles4_t128.py": "9506db6fd4f1ebb15c5cd5cac9164df88da319e7173bb89f23d8388f7bca8ac2",
+        "experiments/20260928_tuning/pack_tiles4_t256.py": "2f309bf2d7f09e108f8c07e9ee074982e4aa67ff5e7398d38a028cb7076bce7a"
+      },
+      "geomean_speedups": [
+        1.0,
+        0.9355167048425234,
+        0.8849568203139453,
+        0.8843143561729068
+      ],
+      "decision": "retain baseline"
+    },
+    {
+      "report": "packed_schedule.json",
+      "source_sha256": {
+        "experiments/20260928_tuning/baseline.py": "311e64a25b16471d2689049070303e6400bc0f593e184615222839e1a77b3a26",
+        "experiments/20260928_tuning/packed_qfirst.py": "45813721fc4445acb41cbd4508c423634ccf7b4c52f897cf6010df781e48c859",
+        "experiments/20260928_tuning/packed_lane.py": "272417846a1c1553dcfedb1e8c12adc25438e328e48b243e273e9b23408305a2",
+        "experiments/20260928_tuning/packed_qfirst_lane.py": "c42e683fd3691d8243f522eaf95a30e6082aade482bea15775610a72c601febd"
+      },
+      "geomean_speedups": [
+        1.0,
+        0.9978648429015963,
+        0.9969543263069368,
+        1.0008539971053596
+      ],
+      "decision": "retain baseline"
+    },
+    {
+      "report": "qk_overlap.json",
+      "source_sha256": {
+        "experiments/20260928_tuning/baseline.py": "311e64a25b16471d2689049070303e6400bc0f593e184615222839e1a77b3a26",
+        "experiments/20260928_tuning/qk_grouped.py": "794f4de17fb0c15480fa580821f7b7587a1aa2ec3667c62f19a31cdbdbbb54c5",
+        "experiments/20260928_tuning/qk_interleaved.py": "63a02ae9a386e49796cd1e369d526a0fa93df02c1ae56f6d6e60b850fd891b6a"
+      },
+      "geomean_speedups": [
+        1.0,
+        0.9984743502676107,
+        0.9913045619891726
+      ],
+      "decision": "retain baseline"
+    },
+    {
+      "report": "prefetch_deeper.json",
+      "source_sha256": {
+        "experiments/20260928_tuning/baseline.py": "311e64a25b16471d2689049070303e6400bc0f593e184615222839e1a77b3a26",
+        "experiments/20260928_tuning/prefetch_unroll.py": "1bafdeccfd366fd6a05cd78cdaa840871e2c1c2a5dd2a8d867b4e49719770103",
+        "experiments/20260928_tuning/prefetch8.py": "d0ae97e3440e0be995b89cf1166048b101cdcdfe111b50b11c636360ec6fed3c",
+        "experiments/20260928_tuning/prefetch8_unroll.py": "f65e30a27776279bcdd42264d1077efb614d26882bd274c9c9569fc21b670a33"
+      },
+      "geomean_speedups": [
+        1.0,
+        0.9972432264040318,
+        0.9506930251604166,
+        0.9446531554731177
+      ],
+      "decision": "retain baseline"
+    }
+  ],
+  "candidate_shape_checks": 45,
+  "candidate_count": 15,
+  "correctness_scope": "three causal S8 shapes per candidate, unchanged float32 reference",
+  "static_submission_check": "baseline plus all 15 candidates PASS",
+  "generated_source_dumps_checked": 48,
+  "forbidden_markers": [
+    "maca_async_copy",
+    "memcpy_async",
+    "cp.async",
+    "cp_async",
+    "tma_load",
+    "tma_store",
+    "mbarrier",
+    "TL_DISABLE_DATA_RACE_CHECK"
+  ],
+  "official_oj_result": "pending; last reported 86.5; 87 not yet established",
+  "limitations": [
+    "No full-suite, boundary or RestrictedPython test of rejected probes.",
+    "CUDA graph timings exclude compilation/allocation, include packing.",
+    "Local timing does not determine an OJ score."
+  ]
+}

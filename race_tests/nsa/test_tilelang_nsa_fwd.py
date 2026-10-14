@@ -308,3 +308,6 @@ def run_regression_perf():
 
 if __name__ == "__main__":
     main()
+
+# Local A/B hook for benchmark_nsa.py: the unmodified competition kernel.
+native_sparse_attention_baseline = native_sparse_attention

@@ -1,0 +1,197 @@
+{
+  "status": "running",
+  "source_sha256": "e377f010cb26e22d4f7fe7c661f6fb2b427f6c51c9461d86af9e1586c7ba8799",
+  "official_sandbox": false,
+  "strict_fp32": [
+    {
+      "builder": "_coalesced_block_loads_prim_fp32_sum",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "_coalesced_block_loads_prim_fp32_mask",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "_coalesced_block_loads_prim_boundary_v8",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "_coalesced_block_loads_prim_fp32_mask_head_first_v11",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "native_sparse_attention_short_list_oct8_sum_v11",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "native_sparse_attention_staged_sparse_blocks_sum_v11",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 32,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 63,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 65,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.0009765625
+    }
+  ],
+  "scales": [],
+  "live": [],
+  "restricted": []
+}

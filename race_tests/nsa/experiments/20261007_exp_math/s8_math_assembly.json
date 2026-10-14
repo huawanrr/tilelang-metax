@@ -1,0 +1,102 @@
+{
+  "baseline": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/nsa.py",
+  "variants": [
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_math_floor64.py",
+      "sha256": "4c3561538b0efb6d9cf7b7c01a943633c0d26f5ad4dd095e696f6e61199f76d2",
+      "changed": [
+        {
+          "function": "native_sparse_attention_online_packed",
+          "expressions": 5
+        },
+        {
+          "function": "native_sparse_attention_online_packed_batch_minor_o_v2",
+          "expressions": 5
+        },
+        {
+          "function": "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+          "expressions": 5
+        }
+      ],
+      "lower_exponent_bound": -64.0
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_math_floor80.py",
+      "sha256": "174c248ed285fe3d7f7bd0d39d49993fae1907ba0a992247dc2b9c04d3155a38",
+      "changed": [
+        {
+          "function": "native_sparse_attention_online_packed",
+          "expressions": 5
+        },
+        {
+          "function": "native_sparse_attention_online_packed_batch_minor_o_v2",
+          "expressions": 5
+        },
+        {
+          "function": "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+          "expressions": 5
+        }
+      ],
+      "lower_exponent_bound": -80.0
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_math_poly3.py",
+      "sha256": "d370f80b17805f9459de97c21b875d44b4737584f8d624ada728222b264f7f11",
+      "changed": [
+        {
+          "function": "native_sparse_attention_online_packed",
+          "expressions": 5
+        },
+        {
+          "function": "native_sparse_attention_online_packed_batch_minor_o_v2",
+          "expressions": 5
+        },
+        {
+          "function": "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+          "expressions": 5
+        }
+      ],
+      "degree": 3,
+      "coefficients": [
+        0.9999002814292908,
+        0.6963247656822205,
+        0.2246931493282318,
+        0.07896725833415985
+      ],
+      "sampled_relative_error_float64_eval": 9.971857070922852e-05,
+      "sample_count": 1000001,
+      "note": "Coefficient rounding included; this is not a GPU arithmetic error proof."
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_math_poly4.py",
+      "sha256": "f534a60bc3ca5f004d4db9dac80803e53e6c7ef1375557d02313438a0cf17f97",
+      "changed": [
+        {
+          "function": "native_sparse_attention_online_packed",
+          "expressions": 5
+        },
+        {
+          "function": "native_sparse_attention_online_packed_batch_minor_o_v2",
+          "expressions": 5
+        },
+        {
+          "function": "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+          "expressions": 5
+        }
+      ],
+      "degree": 4,
+      "coefficients": [
+        1.000003457069397,
+        0.6929728984832764,
+        0.24160435795783997,
+        0.05174499750137329,
+        0.013670309446752071
+      ],
+      "sampled_relative_error_float64_eval": 3.4570693969726562e-06,
+      "sample_count": 1000001,
+      "note": "Coefficient rounding included; this is not a GPU arithmetic error proof."
+    }
+  ],
+  "scope": "Research only: unnormalized packed weights, FP16 PV inputs and FP32 denominator.",
+  "bound_note": "At -64, added denominator mass <=128*2^-64 for S8/BS16. If any FP16 weight is nonzero, its pre-cast value >=2^-25; the relative denominator perturbation is <=2^-32. This bound excludes the existing upper clipping error and polynomial approximation."
+}

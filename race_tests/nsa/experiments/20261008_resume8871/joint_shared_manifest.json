@@ -1,0 +1,33 @@
+{
+  "parent": "parent.py",
+  "modified_function": "_coalesced_block_loads_prim_oct8",
+  "variants": [
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/coalesced_qk_joint.py",
+      "sha256": "3b0aef9f749c17c257b90f11cf1a41b5c2c03256b737441b07472eb833007ed2",
+      "joint_inputs": "QK",
+      "boundary_mask": false,
+      "wave_barriers": 5,
+      "shared_bytes_d64": 4096
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/coalesced_qkv_joint.py",
+      "sha256": "741637bcd50d5f4aefe2955635fd31ff0b7c1e2cc9474d12642e854c700041c2",
+      "joint_inputs": "QKV",
+      "boundary_mask": false,
+      "wave_barriers": 3,
+      "shared_bytes_d64": 6144
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/coalesced_qkv_mask.py",
+      "sha256": "012972038dce3ed09eca97a76175f689b9b5306dcb9006392f0c51c9425d8ae4",
+      "joint_inputs": "QKV",
+      "boundary_mask": true,
+      "wave_barriers": 3,
+      "shared_bytes_d64": 6144
+    }
+  ],
+  "synchronization": "Joint input RAW, optional K/V WAR and V RAW, input/output WAR, output RAW",
+  "memory": "Shared lifetimes overlap until the first reads, preventing unsafe aliasing",
+  "safety_passes_unchanged": true
+}

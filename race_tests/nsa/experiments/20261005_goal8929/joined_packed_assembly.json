@@ -1,0 +1,27 @@
+{
+  "baseline": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/submission.py",
+  "variants": [
+    {
+      "path": "joined_packed_stage0_early0.py",
+      "output_stage": false,
+      "early_v": false,
+      "sha256": "252326f4bb0cd91bb2f0db66fa3706032ed96ee5c5313f926ae207b5cb0914ce"
+    },
+    {
+      "path": "joined_packed_stage1_early0.py",
+      "output_stage": true,
+      "early_v": false,
+      "sha256": "e868b6a1b9c24cf5e8de5c70c094c5298c58a58690463a2512d2a9b59fbcc602"
+    },
+    {
+      "path": "joined_packed_stage0_early1.py",
+      "output_stage": false,
+      "early_v": true,
+      "sha256": "a1dc09f97a6c80c1bb302af215134e11abb3cab2c0263e70f661b1490456467c"
+    }
+  ],
+  "math": "Full concatenated QK, FP32 exponential and denominator, FP16 probabilities, FP32 PV and final normalization.",
+  "bounds": "Validate raw block indices before K/V addresses; masks retain causal, tail, invalid and repeated-index semantics.",
+  "synchronization": "All operands stay in registers; optional output shared staging has an explicit wave barrier.",
+  "packing": "Unmodified and executed on every public invocation."
+}

@@ -1,0 +1,287 @@
+{
+  "module": "experiments/20261002_mid_v1/submission.py",
+  "source_sha256": "ee780d62a64e427d742db494596feffd0f3f9834e4587cad61a66713f2936c31",
+  "torch": "2.8.0+metax3.5.3.9",
+  "device": "_CudaDeviceProperties(name='MetaX C500', major=8, minor=0, total_memory=15584MB, multi_processor_count=104, uuid=506a1316-4f83-dc23-706e-ed0ae9dd843d, pci_bus_id=15, pci_device_id=0, pci_domain_id=0, L2_cache_size=8MB)",
+  "repeat": 200,
+  "samples": 7,
+  "rounds": 4,
+  "rows": [
+    {
+      "case": "oj6",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "source_hashes": [
+        "75ed150868cee8fc780cb5a595db084a3a3a6a0a454b5061cec3d638baaf1658",
+        "10a29e4be7d587e20187d332adb1d3c524196bdddc97fb4e89ad1b8ebde4e5ef"
+      ],
+      "us": {
+        "public": 70.87936162948608,
+        "copy_q_to_output_floor": 82.2323226928711,
+        "pack": 6.567679941654205,
+        "attention": 62.71984100341797
+      },
+      "rounds_us": {
+        "public": [
+          70.8684778213501,
+          70.87232112884521,
+          70.88640213012695,
+          70.89407920837402
+        ],
+        "copy_q_to_output_floor": [
+          82.21440315246582,
+          82.20671653747559,
+          82.25791931152344,
+          82.25024223327637
+        ],
+        "pack": [
+          6.558719873428345,
+          6.572800278663635,
+          6.57151997089386,
+          6.563839912414551
+        ],
+        "attention": [
+          62.723522186279304,
+          62.74303913116455,
+          62.70080089569091,
+          62.71615982055664
+        ]
+      },
+      "note": "Attention-only reuses packed inputs for attribution; public timing includes fresh packing every call. Copy is only a Q/output traffic lower bound."
+    },
+    {
+      "case": "oj12",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "source_hashes": [
+        "33dd960d834b50f1c743f38b1457e9ce04ac889ed53010e247e9d38cba8514ff",
+        "d990334bb3d29cb83e74ddf76c697def94d197943e7ad5be26a8baceaaaf5ced"
+      ],
+      "us": {
+        "public": 50.621440410614014,
+        "copy_q_to_output_floor": 47.72671937942505,
+        "pack": 3.2767999172210693,
+        "attention": 46.63616180419922
+      },
+      "rounds_us": {
+        "public": [
+          50.631680488586426,
+          50.61503887176514,
+          50.62784194946289,
+          50.612478256225586
+        ],
+        "copy_q_to_output_floor": [
+          47.71455764770508,
+          47.73888111114502,
+          47.65312194824219,
+          47.76576042175293
+        ],
+        "pack": [
+          3.28575998544693,
+          3.2767999172210693,
+          3.2678401470184326,
+          3.2767999172210693
+        ],
+        "attention": [
+          46.62655830383301,
+          46.64703845977783,
+          46.63936138153076,
+          46.632962226867676
+        ]
+      },
+      "note": "Attention-only reuses packed inputs for attribution; public timing includes fresh packing every call. Copy is only a Q/output traffic lower bound."
+    },
+    {
+      "case": "oj9",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 8192,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "source_hashes": [
+        "0314cf77f31aac344bdd6d3bfe203b76df126d743c23b7a6d600acb0175c1404"
+      ],
+      "us": {
+        "public": 29.78111982345581,
+        "copy_q_to_output_floor": 58.99904012680054
+      },
+      "rounds_us": {
+        "public": [
+          29.777920246124268,
+          29.767680168151855,
+          29.784319400787354,
+          29.884159564971924
+        ],
+        "copy_q_to_output_floor": [
+          59.015679359436035,
+          58.98240089416504,
+          58.972158432006836,
+          59.02336120605469
+        ]
+      },
+      "note": "Attention-only reuses packed inputs for attribution; public timing includes fresh packing every call. Copy is only a Q/output traffic lower bound."
+    },
+    {
+      "case": "69",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "source_hashes": [
+        "75ed150868cee8fc780cb5a595db084a3a3a6a0a454b5061cec3d638baaf1658",
+        "10a29e4be7d587e20187d332adb1d3c524196bdddc97fb4e89ad1b8ebde4e5ef"
+      ],
+      "us": {
+        "public": 40.68928003311157,
+        "copy_q_to_output_floor": 58.98367881774902,
+        "pack": 4.4998399913311005,
+        "attention": 35.20959973335266
+      },
+      "rounds_us": {
+        "public": [
+          40.684800148010254,
+          40.692481994628906,
+          40.70784091949463,
+          40.68607807159424
+        ],
+        "copy_q_to_output_floor": [
+          59.202561378479004,
+          59.018239974975586,
+          58.82239818572998,
+          58.94911766052246
+        ],
+        "pack": [
+          4.49535995721817,
+          4.509440064430237,
+          4.503040015697479,
+          4.496639966964722
+        ],
+        "attention": [
+          35.21791934967041,
+          35.207679271698,
+          35.20128011703491,
+          35.211520195007324
+        ]
+      },
+      "note": "Attention-only reuses packed inputs for attribution; public timing includes fresh packing every call. Copy is only a Q/output traffic lower bound."
+    },
+    {
+      "case": "83",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "source_hashes": [
+        "d0dff91518cf44d1dae3729f6542ab908f74900715a72f9f4192bee3fccc8fdf",
+        "e69c38f036f38068b44f8e1883c2e7c336f114664ec3c0bfb9b1d6da97967305"
+      ],
+      "us": {
+        "public": 15.67039966583252,
+        "copy_q_to_output_floor": 40.67967891693115,
+        "pack": 3.0425599217414856,
+        "attention": 12.085760235786438
+      },
+      "rounds_us": {
+        "public": [
+          15.669759511947632,
+          15.68384051322937,
+          15.646719932556154,
+          15.671039819717405
+        ],
+        "copy_q_to_output_floor": [
+          40.695037841796875,
+          40.66431999206543,
+          40.79616069793701,
+          40.61312198638916
+        ],
+        "pack": [
+          3.0105599761009216,
+          3.0348798632621765,
+          3.0592000484466553,
+          3.0502399802207947
+        ],
+        "attention": [
+          12.08191990852356,
+          12.078080177307129,
+          12.090879678726196,
+          12.089600563049316
+        ]
+      },
+      "note": "Attention-only reuses packed inputs for attribution; public timing includes fresh packing every call. Copy is only a Q/output traffic lower bound."
+    },
+    {
+      "case": "59",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "source_hashes": [
+        "b7a5a4e58777c11f17ccf2015f5c5c703035c7626f5c1c2c59017f281b9719b9"
+      ],
+      "us": {
+        "public": 55.099520683288574,
+        "copy_q_to_output_floor": 82.14335918426514
+      },
+      "rounds_us": {
+        "public": [
+          55.10272026062012,
+          55.10272026062012,
+          55.06944179534912,
+          55.09632110595703
+        ],
+        "copy_q_to_output_floor": [
+          82.06080436706543,
+          82.2374439239502,
+          82.16320037841797,
+          82.1235179901123
+        ]
+      },
+      "note": "Attention-only reuses packed inputs for attribution; public timing includes fresh packing every call. Copy is only a Q/output traffic lower bound."
+    }
+  ]
+}

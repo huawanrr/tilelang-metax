@@ -1,0 +1,18 @@
+{
+  "variants": [
+    {
+      "path": "bs32_qkstream_p1.py",
+      "parent": "bs32_kstream_p1_early.py",
+      "prefetch": 1,
+      "sha256": "59a616e3aeacbe556bb062decebbe49bad3975a8d9cb01feaf9fa752efa49a85"
+    },
+    {
+      "path": "bs32_qkstream_p2.py",
+      "parent": "bs32_kstream_p2_early.py",
+      "prefetch": 2,
+      "sha256": "fd0db68f5947ab4fbe10d3c183ecb271c8f0bc036865fc158a0f7cb26430e717"
+    }
+  ],
+  "changes": "The full coalesced Q tile is still loaded once into shared memory. Only its current 32-feature reduction slice is held in MMA registers.",
+  "preserved": "All original wave synchronization, output math, packing, and host dispatch are retained."
+}

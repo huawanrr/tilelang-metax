@@ -1,0 +1,25 @@
+{
+  "baseline": "experiments/20261002_d32_v1/nsa.py",
+  "baseline_sha256": "05139dd9eb19e19b7ccb63b12cebb005613ed1c595004b879c3d4101ee798689",
+  "variants": [
+    {
+      "path": "experiments/20261002_goal885/coalesced_block_view_local.py",
+      "sha256": "a5afde30d406c994ffc8393b2efea7090079b4bc3922c1a7b7b1e32fceebfe7c",
+      "scalar_start": false,
+      "fused_kv_load": false
+    },
+    {
+      "path": "experiments/20261002_goal885/coalesced_block_view_scalar.py",
+      "sha256": "9e96733277858f6716ff79507301ba0d184c204f44d15ab97bb97b938c80e589",
+      "scalar_start": true,
+      "fused_kv_load": false
+    },
+    {
+      "path": "experiments/20261002_goal885/coalesced_block_view_fused.py",
+      "sha256": "a9e35cc3167821cc7729f6ebbf0d800f7559e64fa9d4ff2534089cb5134d600f",
+      "scalar_start": false,
+      "fused_kv_load": true
+    }
+  ],
+  "scope": "Existing coalesced paths with complete blocks only; T.reshape shares original storage; bounds checks remain enabled"
+}

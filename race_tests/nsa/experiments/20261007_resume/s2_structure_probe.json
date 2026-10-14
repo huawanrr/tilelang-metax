@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "source": "experiments/20261007_resume/short_refine_full2.py",
+  "source_sha256": "7503b71dc42970c7c3e39a499686c2575daf92a8989fce306b6c1a5df56abb71",
+  "builders": [
+    {
+      "name": "native_sparse_attention_short_list_blocks",
+      "loads": [
+        {
+          "operand": "k",
+          "elements": 2048,
+          "owners": 2048
+        },
+        {
+          "operand": "v",
+          "elements": 2048,
+          "owners": 2048
+        }
+      ],
+      "shared_elements": 2048,
+      "checked_complete_guards": 171072,
+      "explicit_wave_barriers": 0,
+      "synchronization": "Unchanged from its baseline builder."
+    },
+    {
+      "name": "native_sparse_attention_short_list_qo_v2_blocks",
+      "loads": [
+        {
+          "operand": "k",
+          "elements": 2048,
+          "owners": 2048
+        },
+        {
+          "operand": "v",
+          "elements": 2048,
+          "owners": 2048
+        }
+      ],
+      "shared_elements": 2048,
+      "checked_complete_guards": 171072,
+      "explicit_wave_barriers": 7,
+      "synchronization": "Unchanged from its baseline builder."
+    }
+  ]
+}

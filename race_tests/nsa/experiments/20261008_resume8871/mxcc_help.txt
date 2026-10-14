@@ -1,0 +1,175 @@
+OVERVIEW: MXMACA C/C++ Compiler
+
+USAGE: mxcc [options] file...
+
+OPTIONS:
+  -arbin <value>          Specify the path of the archiver tool used create static librarie. Can only be used when --emit-static-lib is defined
+  -clean                  Delete all the non-temporary files that the same mxcc command would generate without this option
+  -c                      Only run preprocess, compile, and assemble steps
+  -default-stream <value> Specify the stream thatMXMACAcommands from the compiled program will be sent to by default. 
+  -device-bc              Compile input file into device-only bitcode file
+  -device-bin             Compile input file into device-only binary file
+  --device-obj            Compile input file into device-only object file
+  -disable_promote_alloca_to_bsm <value>
+                          backend metaxgpu.
+  -disable_promote_alloca_to_vector <value>
+                          backend metaxgpu.
+  -dlink-asm              generate dlink phase asm
+  -dlink-cpp              Compile input file into dlink phase cpp file
+  -dlink-obj              Compile input file into dlink phase obj file
+  -D <macro>=<value>      Define <macro> to <value> (or 1 if <value> omitted)
+  -emit-llvm              Use the LLVM representation for assembler and object files
+  --emit-static-lib       Enable linker job to emit a static library.
+  -enable_ldg_bsm_opt <value>
+                          backend metaxgpu.
+  -expt-extended-lambda   Alias for --extended-lambda: Allow __host__, __device__ annotations in lambda declarations
+  -extended-lambda        Allow __host__, __device__ annotations in lambda declarations
+  -E                      Only run the preprocessor
+  -fast-bfloat16-math <value>
+                          metaxgpu fast bfloat16 math
+  -fatbc                  Compile input file into device-only mcfb(bc) file
+  -fatbin                 Compile input file into device-only mcfb(bin) file
+  -fexceptions            Enable support for exception handling
+  -fgpu-rdc               Generate relocatable device code, also known as separate compilation mode
+  -fixed_function_abi <value>
+                          backend metaxgpu.
+  -fkeep-device-symbols   keep unused device symbols
+  -fmaca-uuid <value>     pass the unique id to mxcc frontend
+  -fmad=<value>           Enables(disables) the contraction of floating-point multipiles and adds/subtracts into floating-point multiply-add operations.
+  -fmad <value>           Enables(disables) the contraction of floating-point multipiles and adds/subtracts into floating-point multiply-add operations.
+  -fno-exceptions         Disable support for exception handling
+  -fopenmp-targets=<value>,...
+                          Specify comma-separated list of triples OpenMP offloading targets to be supported
+  -fopenmp-version=<value>
+                          Set OpenMP version (e.g. 45 for OpenMP 4.5, 51 for OpenMP 5.1). Default value is 51 for Clang
+  -fopenmp                Parse OpenMP pragmas and generate parallel code.
+  -foptimization-record-passes=<regex>
+                          Only include passes which match a specified regular expression in the generated optimization record (by default, include all passes)
+  -forward-unknown-to-compiler
+                          Forward unknown options to host and device compilation. An 'unknown option' is an option which is not recognized by mxcc but can be processed by clang
+  -fproc-stat-report=<value>
+                          Save subprocess statistics to the given file
+  -fproc-stat-report<value>
+                          Print subprocess statistics
+  -ftemplate-backtrace-limit=<value>
+                          Set the maximum number of entries to print in a template instantiation backtrace (0 = no limit)
+  -ftemplate-depth=<value>
+                          Set the maximum depth of recursive template instantiation
+  -ftz=<value>            Controls single-precision denormals support
+  -ftz <value>            Controls single-precision denormals support
+  -funique-internal-linkage-names
+                          Uniqueify Internal Linkage Symbol Names by appending the MD5 hash of the module path
+  -fvisibility-inlines-hidden
+                          Give inline C++ member functions hidden visibility by default
+  -gcc-toolchain=<value>  Specify a directory where Clang can find 'include' and 'lib{,32,64}/gcc{,-cross}/$triple/$version'. Clang will use the GCC installation with the largest version
+  -gcc-toolchain <value>  Specify a directory where Clang can find 'include' and 'lib{,32,64}/gcc{,-cross}/$triple/$version'. Clang will use the GCC installation with the largest version
+  -gcc-version=<value>    Try to find and use the gcc toolchain of the given version
+  -gcc-version <value>    Try to find and use the gcc toolchain of the given version
+  --generate-line-info    Generate device-side line info. Disables asm optimizations.
+  --gpu-max-threads-per-block=<value>
+                          Default max threads per block for kernel launch bounds for HIP
+  -g                      Generate source-level debug information
+  -help                   Display available options
+  -h                      Display available options
+  -include-device-pch <file>
+                          Include device precompiled header file
+  -include-host-pch <file>
+                          Include host precompiled header file
+  -include <file>         Include file before parsing
+  -input-is-device        treat all input file as device source file
+  -input-is-host          treat all input file as host source file
+  -isystem <directory>    Add directory to SYSTEM include search path
+  -I <dir>                Add directory to the end of the list of include search paths
+  -L <dir>                Add directory to library search path
+  -maca-device-input=<value>
+                          input MXMACA device file
+  -maca-device-input <value>
+                          input MXMACA device file
+  -maca-device-lib-path=<value>
+                          MXMACA device library path. Alternative to maca-path.
+  -maca-device-lib=<value>
+                          MXMACA device library
+  -maca-device-only       CompileMXMACAcode for device only
+  -maca-fetch-on-write-global <value>
+                          backend metaxgpu.
+  -maca-fetch-on-write-private <value>
+                          backend metaxgpu.
+  -maca-host-input=<value>
+                          input MXMACA host file
+  -maca-host-input <value>
+                          input MXMACA host file
+  -maca-host-lib-path=<value>
+                          MXMACA host library path. Alternative to maca-path.
+  -maca-host-lib=<value>  MXMACA host library
+  -maca-host-only         CompileMXMACAcode for host only.  Has no effect on non-MXMACA compilations.
+  -maca-ignore-ambigous-decl
+                          Ignore redeclaration in MACA
+  -maca-infer-ldg         Infer that the LDG offset is greater than 128 bytes for MXMACA
+  -maca-link              Link clang-offload-bundler bundles for MACA
+  --maca-noopt-device-debug
+                          Enable device-side debug info generation. Disables asm optimizations.
+  --maca-path=<value>     MXMACA installation path, used for finding and automatically linking required bitcode libraries.
+  -map-sched-select <value>
+                          backend metaxgpu.
+  -map_use_pk_fma <value> backend metaxgpu.
+  -MD                     Write a depfile containing user and system headers
+  -metaxgpu-bsm-direct-address <value>
+                          backend metaxgpu.
+  -metaxgpu-merge-builtin-limit <value>
+                          backend metaxgpu.
+  -metaxgpu-new-streg-abi <value>
+                          backend metaxgpu.
+  -metaxgpu-sched-select <value>
+                          backend metaxgpu.
+  -MF <file>              Write depfile output from -MMD, -MD, -MM, or -M to <file>
+  -mllvm <value>          Additional arguments to forward to LLVM's option processing
+  -MMD                    Write a depfile containing user headers
+  -MM                     Like -MMD, but also implies -E and writes to stdout by default
+  -MP                     Create phony target for each dependency (other than main file)
+  -MT <value>             Specify name of main file output in depfile
+  -M                      Like -MD, but also implies -E and writes to stdout by default
+  -no-offload-arch=<value>,...
+                          Remove MXMACA offloading device architecture (e.g. xcore1000) from the list of devices to compile for. It should be placed after -offload-arch.
+  -nodefaultrpath         Do not add default rpath when linking
+  -nogpuinc               Do not add include paths for MXMACA and do not include the default MXMACA wrapper headers
+  -nogpulib               Do not link device library for MXMACA device compilation
+  -nomacartlibs           Do not add MXMACA runtime libs and path when linking.
+  -objtemp                for tempfile output dir
+  -odir <value>           for output dir
+  -offload-arch=<value>,...
+                          MXMACA offloading device architecture (e.g. xcore1000).
+  -o <file>               Write output to <file>
+  -pg                     Enable mcount instrumentation
+  -prec-div=<value>       Controls single-precision division and reciprocals
+  -prec-div <value>       Controls single-precision division and reciprocals
+  -prec-sqrt=<value>      Controls single-precision square root
+  -prec-sqrt <value>      Controls single-precision square root
+  -resource-usage         Show resource usage such as registers and memory of the GPU code.
+  -run-args=<value>       Specify command line arguments for the executable when used in conjunction with --run
+  -run-args <value>       Specify command line arguments for the executable when used in conjunction with --run
+  -run                    Compile and link all input files into an executable and executes it
+  -scalarize_global_loads <value>
+                          backend metaxgpu.
+  -shfl_combine <value>   backend metaxgpu.
+  -std=<value>            Language standard to compile for
+  -use-dim-intrinsic      Use GridDim or BlockDim Instinsic
+  -use-fast-math          Make use of fast math library
+  -U <macro>              Undefine macro <macro>
+  --version               Print version information
+  -v                      Show commands to run and use verbose output
+  -Wdeprecated            Enable warnings for deprecated constructs and define __DEPRECATED
+  -Winvalid-constexpr     Enable checking of constexpr function bodies for validity within a constant expression context
+  -Wl,<arg>               Pass the comma separated arguments in <arg> to the linker
+  -Wno-invalid-constexpr  Disable checking of constexpr function bodies for validity within a constant expression context
+  -W<warning>             Enable the specified warning
+  -w                      Suppress all warnings
+  -Xarchive <arg>         Pass <arg> to the ar
+  -Xcompiler <arg>        Pass <arg> directly to the compiler
+  -Xdevice=<arg>          Pass <arg> to the MXMACA device compilation
+  -Xdevice <arg>          Pass <arg> to the MXMACA device compilation
+  -Xhost=<arg>            Pass <arg> to the MXMACA host compilation
+  -Xhost <arg>            Pass <arg> to the MXMACA host compilation
+  -Xlinker <arg>          Pass <arg> to the linker
+  -Xmaca-device-linker <arg>
+                          Pass <arg> to the MXMACA device linker
+  -x <language>           Treat subsequent input files as having type <language>

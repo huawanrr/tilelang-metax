@@ -1,0 +1,42 @@
+{
+  "baseline": "experiments/20261002_d32_v1/nsa.py",
+  "baseline_sha256": "05139dd9eb19e19b7ccb63b12cebb005613ed1c595004b879c3d4101ee798689",
+  "variants": [
+    {
+      "path": "experiments/20261002_goal885/coalesced_v_late.py",
+      "sha256": "24a6ec6df3d586d25a3eb185115ce3287a0dacf47df6c03baf050a92ea62b048",
+      "k_after_q": false,
+      "v_load": "late",
+      "parallel_shared": false
+    },
+    {
+      "path": "experiments/20261002_goal885/coalesced_kv_after_q.py",
+      "sha256": "169381a984f14654bde62c251d1a40769683b09b5f6b5ec2b4558dfc7f8326f6",
+      "k_after_q": true,
+      "v_load": "after_q",
+      "parallel_shared": false
+    },
+    {
+      "path": "experiments/20261002_goal885/coalesced_k_after_q_v_late.py",
+      "sha256": "d9d1252d2c12342a96ae552b66b29c459574455e871476193c29e5b9bbd27e68",
+      "k_after_q": true,
+      "v_load": "late",
+      "parallel_shared": false
+    },
+    {
+      "path": "experiments/20261002_goal885/coalesced_qk_parallel.py",
+      "sha256": "ca5d63756f0007571dc7bed9848fada79245689ce27494fd8b49fefc0751d20c",
+      "k_after_q": false,
+      "v_load": "early",
+      "parallel_shared": true
+    },
+    {
+      "path": "experiments/20261002_goal885/coalesced_qk_parallel_v_late.py",
+      "sha256": "df67aade39ace549b628899b35da41dd9391db890c540fc8a58bfcab41901fc7",
+      "k_after_q": false,
+      "v_load": "late",
+      "parallel_shared": true
+    }
+  ],
+  "scope": "Existing coalesced S1/BS16 paths; explicit barriers protect all shared dependencies"
+}

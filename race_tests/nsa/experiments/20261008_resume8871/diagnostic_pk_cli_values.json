@@ -1,0 +1,66 @@
+[
+  {
+    "name": "pk_cli_one",
+    "flags": [
+      "-map_use_pk_fma",
+      "1"
+    ],
+    "command": [
+      "/opt/maca/mxgpu_llvm/bin/mxcc",
+      "-x",
+      "maca",
+      "-w",
+      "-std=c++17",
+      "-O3",
+      "-use-fast-math",
+      "-D__FAST_HALF_CVT__",
+      "-I/app/tilelang-metax/src",
+      "-I/opt/maca/include",
+      "-S",
+      "-emit-llvm",
+      "-maca-device-only",
+      "--offload-arch=xcore1000",
+      "-map_use_pk_fma",
+      "1",
+      "experiments/20261008_resume8871/parent_oj2.cpp",
+      "-o",
+      "experiments/20261008_resume8871/diagnostic_pk_cli_one.ll"
+    ],
+    "returncode": 0,
+    "attributes": [
+      "attributes #3 = { convergent mustprogress norecurse nounwind willreturn \"denormal-fp-math-f32\"=\"preserve-sign,preserve-sign\" \"disable-promote-alloca-to-bsm\"=\"true\" \"disable-promote-alloca-to-vector\"=\"false\" \"enable-ldg-bsm-opt\"=\"false\" \"fixed-function-abi\"=\"true\" \"metaxgpu-bsm-direct-address\"=\"true\" \"metaxgpu-implicitarg-num-bytes\"=\"80\" \"metaxgpu-inline-scope\"=\"11\" \"metaxgpu-max-block-size\"=\"64\" \"metaxgpu-min-blocks\"=\"1\" \"metaxgpu-new-streg-abi\"=\"false\" \"metaxgpu-pk-fma\"=\"false\" \"metaxgpu-resource-usage\"=\"false\" \"metaxgpu-sched-select\"=\"default\" \"metaxgpu-use-dim-intrinsic\"=\"false\" \"no-trapping-math\"=\"true\" \"prec-div\"=\"false\" \"prec-sqrt\"=\"false\" \"scalarize-global-loads\"=\"true\" \"shfl-combine\"=\"true\" \"stack-protector-buffer-size\"=\"8\" \"target-cpu\"=\"xcore1000\" \"target-features\"=\"+xcore1000\" \"uniform-work-group-size\"=\"true\" }"
+    ]
+  },
+  {
+    "name": "pk_cli_enable",
+    "flags": [
+      "-map_use_pk_fma",
+      "enable"
+    ],
+    "command": [
+      "/opt/maca/mxgpu_llvm/bin/mxcc",
+      "-x",
+      "maca",
+      "-w",
+      "-std=c++17",
+      "-O3",
+      "-use-fast-math",
+      "-D__FAST_HALF_CVT__",
+      "-I/app/tilelang-metax/src",
+      "-I/opt/maca/include",
+      "-S",
+      "-emit-llvm",
+      "-maca-device-only",
+      "--offload-arch=xcore1000",
+      "-map_use_pk_fma",
+      "enable",
+      "experiments/20261008_resume8871/parent_oj2.cpp",
+      "-o",
+      "experiments/20261008_resume8871/diagnostic_pk_cli_enable.ll"
+    ],
+    "returncode": 0,
+    "attributes": [
+      "attributes #3 = { convergent mustprogress norecurse nounwind willreturn \"denormal-fp-math-f32\"=\"preserve-sign,preserve-sign\" \"disable-promote-alloca-to-bsm\"=\"true\" \"disable-promote-alloca-to-vector\"=\"false\" \"enable-ldg-bsm-opt\"=\"false\" \"fixed-function-abi\"=\"true\" \"metaxgpu-bsm-direct-address\"=\"true\" \"metaxgpu-implicitarg-num-bytes\"=\"80\" \"metaxgpu-inline-scope\"=\"11\" \"metaxgpu-max-block-size\"=\"64\" \"metaxgpu-min-blocks\"=\"1\" \"metaxgpu-new-streg-abi\"=\"false\" \"metaxgpu-pk-fma\"=\"false\" \"metaxgpu-resource-usage\"=\"false\" \"metaxgpu-sched-select\"=\"default\" \"metaxgpu-use-dim-intrinsic\"=\"false\" \"no-trapping-math\"=\"true\" \"prec-div\"=\"false\" \"prec-sqrt\"=\"false\" \"scalarize-global-loads\"=\"true\" \"shfl-combine\"=\"true\" \"stack-protector-buffer-size\"=\"8\" \"target-cpu\"=\"xcore1000\" \"target-features\"=\"+xcore1000\" \"uniform-work-group-size\"=\"true\" }"
+    ]
+  }
+]

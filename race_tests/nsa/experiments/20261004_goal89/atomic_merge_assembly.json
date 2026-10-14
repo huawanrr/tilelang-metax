@@ -1,0 +1,20 @@
+{
+  "variants": [
+    {
+      "path": "split_s8_w2_atomic.py",
+      "parent": "split_s8_w2_fp32_balanced.py",
+      "waves": 2,
+      "sha256": "5d71412e79e933072aeee3e775ed4bd68a4c994613272b1eaf7f5283040118dd"
+    },
+    {
+      "path": "split_s8_w4_atomic.py",
+      "parent": "split_s8_w4_fp32_balanced.py",
+      "waves": 4,
+      "sha256": "049aff45aadad50e367f1faa28e900f7d345022e168e47ebb30c60ef32207b1f"
+    }
+  ],
+  "math": "Disjoint FP32 partial numerators are divided by the total FP32 denominator, rounded to FP16, and atomically added.",
+  "initialization": "Each output is zeroed once per invocation by its only owning CTA, followed by a CTA barrier.",
+  "synchronization": "One explicit CTA barrier publishes denominators and global output initialization.",
+  "checks": "Race and bounds checks are retained. Ordinary TileLang atomic_add; no asynchronous operations."
+}

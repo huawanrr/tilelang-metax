@@ -1,0 +1,26 @@
+[
+  {
+    "source": "short_wave_only.py",
+    "sha256": "32a02c0ec35ba05a1fe24809e928b6c53a097c08f840296f83f72fb128c3d1a1",
+    "parent": "baseline.py",
+    "q_fence": false,
+    "wave_barriers": 3,
+    "hazards": "K shared RAW, K shared read before V overwrite, V shared RAW; one 64-lane wave"
+  },
+  {
+    "source": "short_wave_lane.py",
+    "sha256": "d8ffc7f81f4bebf0062c7bcd66be7c0e30069ba2ffa6a019dfe3b5f7a7c0fa3e",
+    "parent": "lane_shuffle.py",
+    "q_fence": false,
+    "wave_barriers": 3,
+    "hazards": "K shared RAW, K shared read before V overwrite, V shared RAW; one 64-lane wave"
+  },
+  {
+    "source": "short_wave_qpreload.py",
+    "sha256": "61a66d4fe4e72bbd2c4e798a9397ca45121b3b014147473dec20570f33be9f3f",
+    "parent": "lane_shuffle.py",
+    "q_fence": true,
+    "wave_barriers": 4,
+    "hazards": "K shared RAW, K shared read before V overwrite, V shared RAW; one 64-lane wave"
+  }
+]

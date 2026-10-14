@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "source": "experiments/20261007_resume/candidate_v3.py",
+  "source_sha256": "d03084772f266678bb5ef12e88a3c5cca9d943912ca141abaced888eb5208e41",
+  "builders": [
+    {
+      "name": "native_sparse_attention_short_list_blocks",
+      "loads": [
+        {
+          "operand": "k",
+          "elements": 2048,
+          "owners": 2048
+        },
+        {
+          "operand": "v",
+          "elements": 2048,
+          "owners": 2048
+        }
+      ],
+      "shared_elements": 2048,
+      "checked_complete_guards": 171072,
+      "explicit_wave_barriers": 0,
+      "synchronization": "Unchanged from its baseline builder."
+    },
+    {
+      "name": "native_sparse_attention_short_list_qo_v2_blocks",
+      "loads": [
+        {
+          "operand": "k",
+          "elements": 2048,
+          "owners": 2048
+        },
+        {
+          "operand": "v",
+          "elements": 2048,
+          "owners": 2048
+        }
+      ],
+      "shared_elements": 2048,
+      "checked_complete_guards": 171072,
+      "explicit_wave_barriers": 7,
+      "synchronization": "Unchanged from its baseline builder."
+    }
+  ]
+}

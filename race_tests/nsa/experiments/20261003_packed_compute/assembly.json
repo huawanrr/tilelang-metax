@@ -1,0 +1,44 @@
+{
+  "baseline": "experiments/20261002_mid_v1/nsa.py",
+  "baseline_sha256": "644206570d4ca96c15acdf28ff9ef365e61dcbbe1670915e1ec188c80f834412",
+  "variants": [
+    {
+      "path": "experiments/20261003_packed_compute/qk_unroll.py",
+      "sha256": "0bf122ef8a2eb5d1a4865ad77472b9f4ffa94ba417133702e6bc96890c8a5a7b",
+      "s1_parts": 1,
+      "s8_parts": 1,
+      "changed_functions": [
+        "native_sparse_attention_single_packed_qo_v2",
+        "native_sparse_attention_online_packed_batch_minor_o_v2",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+      ]
+    },
+    {
+      "path": "experiments/20261003_packed_compute/qk_split2.py",
+      "sha256": "debd2bae1c0b59bf1063653d56fb267bcd8f56f9d845840b997ee4a9f349467d",
+      "s1_parts": 2,
+      "s8_parts": 2,
+      "changed_functions": [
+        "native_sparse_attention_single_packed_qo_v2",
+        "native_sparse_attention_online_packed_batch_minor_o_v2",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+      ]
+    },
+    {
+      "path": "experiments/20261003_packed_compute/qk_split4.py",
+      "sha256": "d6768bfaf2bce0bdc0bc537fc6a8eaef77b6888305dcaded8874c5c220fc4d2b",
+      "s1_parts": 4,
+      "s8_parts": 2,
+      "changed_functions": [
+        "native_sparse_attention_single_packed_qo_v2",
+        "native_sparse_attention_online_packed_batch_minor_o_v2",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+      ]
+    }
+  ],
+  "mechanism": "Split QK D-reduction into independent accumulators on the current packed K/V paths",
+  "prior_context": "Earlier split-accumulator study used shared K/V staging; current packed path has different dependency chains",
+  "arithmetic_note": "Every product retained; reassociation changes only FP32 summation order; reference checks required",
+  "unchanged_synchronization": true,
+  "goal_complete": false
+}

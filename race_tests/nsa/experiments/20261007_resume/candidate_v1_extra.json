@@ -1,0 +1,559 @@
+{
+  "status": "running",
+  "command": [
+    "experiments/20261007_resume/verify_s2_extra.py",
+    "experiments/20261007_resume/candidate_v1_submission.py",
+    "--output",
+    "experiments/20261007_resume/candidate_v1_extra.json"
+  ],
+  "source_sha256": "b256c5b4c146fcf534996790fda3bec8317bdc718ba5e3619109673bd903b1ec",
+  "harness_sha256": "6ce9a38071a021e9b1a620912d30e3fdd66b4e05be585fe6d527c52a976f0cdb",
+  "reference_matmul_tf32": false,
+  "official_sandbox": false,
+  "edge_cases": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 127,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": true,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 255,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": true,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 511,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 767,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": true,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 768,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1535,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1536,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": true,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2047,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1023,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": true,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1024,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": true,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 1024,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 4,
+        "HQ": 64,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 768,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "scale": 0.1,
+      "expanded": true,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 12,
+        "SEQ_LEN": 127,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": true,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 12,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 12,
+        "SEQ_LEN": 129,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 16,
+        "SEQ_LEN": 127,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": true,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 16,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 16,
+        "SEQ_LEN": 129,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 191,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": true,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 192,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 193,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 384,
+        "H": 4,
+        "HQ": 64,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": true,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 192,
+        "H": 8,
+        "HQ": 128,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3071,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3072,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": true,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3073,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "expanded": false,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 768,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": null,
+      "extreme": true,
+      "expanded": true,
+      "max_abs_error": 0.001953125
+    }
+  ],
+  "tuning": [],
+  "live_updates": [],
+  "restricted_host": []
+}

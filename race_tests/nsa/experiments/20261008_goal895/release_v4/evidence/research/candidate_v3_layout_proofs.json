@@ -1,0 +1,123 @@
+{
+  "status": "PASS",
+  "source_sha256": "5c4f8f7d908080fcb476bce78d97b23297419d8b238f38957f0ff918d791d27c",
+  "scalar_maps": [
+    {
+      "function": "native_sparse_attention_direct_kv",
+      "destination": "prob",
+      "dim": 32,
+      "bs": 16,
+      "lhs": "(tid % 16, tid // 16 * 4 + lane)",
+      "rhs": "(tid % 16, tid // 16 * 4 + lane)",
+      "covered_elements": 256,
+      "unique_and_same_thread": true
+    },
+    {
+      "function": "native_sparse_attention_direct_kv",
+      "destination": "prob",
+      "dim": 64,
+      "bs": 16,
+      "lhs": "(tid % 16, tid // 16 * 4 + lane)",
+      "rhs": "(tid % 16, tid // 16 * 4 + lane)",
+      "covered_elements": 256,
+      "unique_and_same_thread": true
+    },
+    {
+      "function": "native_sparse_attention_direct_kv",
+      "destination": "result",
+      "dim": 32,
+      "bs": 16,
+      "lhs": "(tid % 16, chunk * 16 + tid // 16 * 4 + lane)",
+      "rhs": "(tid % 16, chunk * 16 + tid // 16 * 4 + lane)",
+      "covered_elements": 512,
+      "unique_and_same_thread": true
+    },
+    {
+      "function": "native_sparse_attention_direct_kv",
+      "destination": "result",
+      "dim": 64,
+      "bs": 16,
+      "lhs": "(tid % 16, chunk * 16 + tid // 16 * 4 + lane)",
+      "rhs": "(tid % 16, chunk * 16 + tid // 16 * 4 + lane)",
+      "covered_elements": 1024,
+      "unique_and_same_thread": true
+    },
+    {
+      "function": "native_sparse_attention_linear_v_blocks_oct8",
+      "destination": "O_cast",
+      "dim": 128,
+      "bs": 16,
+      "lhs": "(T.get_thread_binding() % 16, output_chunk * 16 + T.get_thread_binding() // 16 * 4 + output_lane)",
+      "rhs": "(T.get_thread_binding() % 16, output_chunk * 16 + T.get_thread_binding() // 16 * 4 + output_lane)",
+      "covered_elements": 2048,
+      "unique_and_same_thread": true
+    },
+    {
+      "function": "native_sparse_attention_linear_v_blocks_oct8",
+      "destination": "acc_s_cast",
+      "dim": 128,
+      "bs": 16,
+      "lhs": "(T.get_thread_binding() % 16, cast_chunk * 16 + T.get_thread_binding() // 16 * 4 + cast_lane)",
+      "rhs": "(T.get_thread_binding() % 16, cast_chunk * 16 + T.get_thread_binding() // 16 * 4 + cast_lane)",
+      "covered_elements": 256,
+      "unique_and_same_thread": true
+    },
+    {
+      "function": "native_sparse_attention_short_list_oct8",
+      "destination": "O_cast",
+      "dim": 64,
+      "bs": 32,
+      "lhs": "(T.get_thread_binding() % 16, output_chunk * 16 + T.get_thread_binding() // 16 * 4 + output_lane)",
+      "rhs": "(T.get_thread_binding() % 16, output_chunk * 16 + T.get_thread_binding() // 16 * 4 + output_lane)",
+      "covered_elements": 1024,
+      "unique_and_same_thread": true
+    },
+    {
+      "function": "native_sparse_attention_short_list_oct8",
+      "destination": "acc_s_cast",
+      "dim": 64,
+      "bs": 32,
+      "lhs": "(T.get_thread_binding() % 16, cast_chunk * 16 + T.get_thread_binding() // 16 * 4 + cast_lane)",
+      "rhs": "(T.get_thread_binding() % 16, cast_chunk * 16 + T.get_thread_binding() // 16 * 4 + cast_lane)",
+      "covered_elements": 512,
+      "unique_and_same_thread": true
+    },
+    {
+      "function": "native_sparse_attention_staged_sparse_blocks",
+      "destination": "result",
+      "dim": 64,
+      "bs": 16,
+      "lhs": "(tid % 16, chunk * 16 + tid // 16 * 4 + lane)",
+      "rhs": "(tid % 16, chunk * 16 + tid // 16 * 4 + lane)",
+      "covered_elements": 1024,
+      "unique_and_same_thread": true
+    },
+    {
+      "function": "native_sparse_attention_staged_sparse_blocks",
+      "destination": "prob",
+      "dim": 64,
+      "bs": 16,
+      "lhs": "(tid % 16, tid // 16 * 4 + lane)",
+      "rhs": "(tid % 16, tid // 16 * 4 + lane)",
+      "covered_elements": 256,
+      "unique_and_same_thread": true
+    }
+  ],
+  "complete_blocks": [
+    {
+      "dim": 64,
+      "elements": 1024,
+      "pair_ownership": true,
+      "swizzle_bijection": true,
+      "multihead_same_storage_offsets": true
+    },
+    {
+      "dim": 128,
+      "elements": 2048,
+      "pair_ownership": true,
+      "swizzle_bijection": true,
+      "multihead_same_storage_offsets": true
+    }
+  ],
+  "sync_proof": "S4: separate 2048-byte K/V buffers. Each valid iteration has K-ready and V-ready wave barriers; K-ready protects prior V readers, V-ready protects K readers. Lookahead changes only registers. Two final barriers protect staged output. Skipped slots access neither shared tile."
+}

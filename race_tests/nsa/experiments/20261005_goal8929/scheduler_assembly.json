@@ -1,0 +1,37 @@
+{
+  "baseline": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/nsa.py",
+  "baseline_sha256": "644206570d4ca96c15acdf28ff9ef365e61dcbbe1670915e1ec188c80f834412",
+  "variants": [
+    {
+      "path": "scheduler_mma.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-mma-sched=true"
+      ],
+      "sha256": "b11c338235db5b21833092e75ea8da18520dc8145ec69259155121e8a04823a4"
+    },
+    {
+      "path": "scheduler_postra.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-PostRA-Scheduler=true"
+      ],
+      "sha256": "69ca851de1bde7a1d3e94193ca4c636d6a01944ecd7677b0f35dbbb68d131148"
+    },
+    {
+      "path": "scheduler_listall.py",
+      "flags": [
+        "-mllvm",
+        "--misched=metaxgpu-listall"
+      ],
+      "sha256": "d1449da436e4ce406f7cfe2c49d1a86bb665e0ca8406f7b73f6a799d231a5e63"
+    }
+  ],
+  "builders": [
+    "native_sparse_attention_single_packed_qo_v2",
+    "native_sparse_attention_online_packed_batch_minor_o_v2",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+    "native_sparse_attention_coalesced_blocks"
+  ],
+  "bodies_and_safety_passes_unchanged": true
+}

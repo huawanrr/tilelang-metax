@@ -1,0 +1,47 @@
+{
+  "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/nsa.py",
+  "parent_sha256": "644206570d4ca96c15acdf28ff9ef365e61dcbbe1670915e1ec188c80f834412",
+  "official_baseline": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/submission.py",
+  "official_baseline_sha256": "ee780d62a64e427d742db494596feffd0f3f9834e4587cad61a66713f2936c31",
+  "official_score": 88.29,
+  "target_score": 89,
+  "candidate": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/candidate_v1.py",
+  "candidate_sha256": "d6ef68ec0422c388148bc226a0f7c216f3cb8fb25a74a544a3a6847f3220e246",
+  "new_official_score": null,
+  "origins": [
+    {
+      "function": "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/lane_cast_folded.py",
+      "parent_sha256": "0d12d8619372766476d59e7f7a6cdc3c6e9358c85b212a2a49cfe639901dc32d"
+    },
+    {
+      "function": "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/lane_cast_folded.py",
+      "parent_sha256": "0d12d8619372766476d59e7f7a6cdc3c6e9358c85b212a2a49cfe639901dc32d"
+    },
+    {
+      "function": "native_sparse_attention_single_packed_qo_v2_mathcast",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/lane_cast_baseline.py",
+      "parent_sha256": "e8ae7dff299148e94469b156a22028d34241cc08a6cd7310690282267d5ced5d"
+    },
+    {
+      "function": "_coalesced_block_loads_prim_mathcast",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/lane_cast_baseline.py",
+      "parent_sha256": "e8ae7dff299148e94469b156a22028d34241cc08a6cd7310690282267d5ced5d"
+    },
+    {
+      "function": "native_sparse_attention_coalesced_blocks_mathcast",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/lane_cast_baseline.py",
+      "parent_sha256": "e8ae7dff299148e94469b156a22028d34241cc08a6cd7310690282267d5ced5d"
+    }
+  ],
+  "original_builders_unchanged": true,
+  "default_arguments_only": true,
+  "cache_key_distinguishes_explicit_tuning": true,
+  "s8_scope": "Existing s8_output_v2: S8/D64/BS16/G16, grid >= 4096",
+  "single_scope": "Existing packed_qo: S1/D128/BS32/G16, grid >= 1024",
+  "blocks_scope": "Existing coalesced_blocks, complete BS16 blocks; D64 grid >= 2304, D128 grid >= 1280",
+  "extra_fp16_rounding": false,
+  "scales_guarded_after_exp_when_nonpositive": true,
+  "s8_raw_index_clamped_before_multiply": true
+}

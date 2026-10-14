@@ -1,0 +1,302 @@
+{
+  "restrictedpython": "8.5",
+  "official_sandbox": false,
+  "reproduced": [
+    {
+      "module": "experiments/20260928_guard_fix/rejected_current_submission.py",
+      "expected_rejection": true,
+      "exceptions": [
+        "TypeError: attribute-less object (assign or del)",
+        "AttributeError: 'function' object has no attribute '__guarded_setattr__'"
+      ]
+    },
+    {
+      "module": "experiments/20260928_guard_fix/rejected_next_submission.py",
+      "expected_rejection": true,
+      "exceptions": [
+        "TypeError: attribute-less object (assign or del)",
+        "AttributeError: 'function' object has no attribute '__guarded_setattr__'"
+      ]
+    }
+  ],
+  "warmups": [
+    {
+      "module": "submission.py",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 37,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.0009765625,
+      "status": "PASS"
+    },
+    {
+      "module": "submission.py",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "status": "PASS"
+    },
+    {
+      "module": "submission.py",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "status": "PASS"
+    },
+    {
+      "module": "submission.py",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 37,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "status": "PASS"
+    },
+    {
+      "module": "submission.py",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 37,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.0009765625,
+      "status": "PASS"
+    },
+    {
+      "module": "submission.py",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.000244140625,
+      "status": "PASS"
+    },
+    {
+      "module": "submission.py",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "status": "PASS"
+    },
+    {
+      "module": "submission.py",
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "status": "PASS"
+    },
+    {
+      "module": "experiments/20260927_next/submission.py",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 37,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.0009765625,
+      "status": "PASS"
+    },
+    {
+      "module": "experiments/20260927_next/submission.py",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "status": "PASS"
+    },
+    {
+      "module": "experiments/20260927_next/submission.py",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "status": "PASS"
+    },
+    {
+      "module": "experiments/20260927_next/submission.py",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 37,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "status": "PASS"
+    },
+    {
+      "module": "experiments/20260927_next/submission.py",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 37,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.0009765625,
+      "status": "PASS"
+    },
+    {
+      "module": "experiments/20260927_next/submission.py",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.000244140625,
+      "status": "PASS"
+    },
+    {
+      "module": "experiments/20260927_next/submission.py",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "status": "PASS"
+    },
+    {
+      "module": "experiments/20260927_next/submission.py",
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "status": "PASS"
+    }
+  ],
+  "refresh": [
+    {
+      "module": "submission.py",
+      "iteration": 0,
+      "max_abs_error": 0.0009765625,
+      "status": "PASS"
+    },
+    {
+      "module": "submission.py",
+      "iteration": 1,
+      "max_abs_error": 0.0009765625,
+      "status": "PASS"
+    },
+    {
+      "module": "submission.py",
+      "iteration": 2,
+      "max_abs_error": 0.0009765625,
+      "status": "PASS"
+    },
+    {
+      "module": "experiments/20260927_next/submission.py",
+      "iteration": 0,
+      "max_abs_error": 0.0009765625,
+      "status": "PASS"
+    },
+    {
+      "module": "experiments/20260927_next/submission.py",
+      "iteration": 1,
+      "max_abs_error": 0.0009765625,
+      "status": "PASS"
+    },
+    {
+      "module": "experiments/20260927_next/submission.py",
+      "iteration": 2,
+      "max_abs_error": 0.0009765625,
+      "status": "PASS"
+    }
+  ]
+}

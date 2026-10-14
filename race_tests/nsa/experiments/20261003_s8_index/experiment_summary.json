@@ -1,0 +1,470 @@
+{
+  "status": "completed; no S8 change adopted",
+  "baseline_official_score": 88.29,
+  "validated_candidate": "experiments/20261003_d128_v1/submission.py",
+  "records": [
+    {
+      "module": "experiments/20261003_s8_index/s8_unroll.py",
+      "report": "screen.json",
+      "shapes": 6,
+      "geomean_speedup": 0.9971545673871584,
+      "speedup_range": [
+        0.9895869817058669,
+        1.0036229641943533
+      ],
+      "max_abs_error": 0.001953125,
+      "below_one": [
+        {
+          "case": "oj12",
+          "config": {
+            "B": 4,
+            "SEQ_LEN": 1024,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9895869817058669
+        },
+        {
+          "case": "s8_b8_t1024_h1",
+          "config": {
+            "B": 8,
+            "SEQ_LEN": 1024,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.999189027653532
+        },
+        {
+          "case": "s8_b1_t1024_h4",
+          "config": {
+            "B": 1,
+            "SEQ_LEN": 1024,
+            "H": 4,
+            "HQ": 64,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9970663996024806
+        },
+        {
+          "case": "s8_b16_t256_h1",
+          "config": {
+            "B": 16,
+            "SEQ_LEN": 256,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9930834328868711
+        }
+      ],
+      "adopted": false
+    },
+    {
+      "module": "experiments/20261003_s8_index/s8_blocks.py",
+      "report": "screen.json",
+      "shapes": 6,
+      "geomean_speedup": 1.0019658242635783,
+      "speedup_range": [
+        0.9974170001221169,
+        1.0078434754188121
+      ],
+      "max_abs_error": 0.001953125,
+      "below_one": [
+        {
+          "case": "s8_b1_t4096_h1",
+          "config": {
+            "B": 1,
+            "SEQ_LEN": 4096,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9989573683461636
+        },
+        {
+          "case": "s8_b1_t8192_h1",
+          "config": {
+            "B": 1,
+            "SEQ_LEN": 8192,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9974170001221169
+        }
+      ],
+      "adopted": false
+    },
+    {
+      "module": "experiments/20261003_s8_index/s8_blocks_unroll.py",
+      "report": "screen.json",
+      "shapes": 6,
+      "geomean_speedup": 1.0009120332641117,
+      "speedup_range": [
+        0.995261922293372,
+        1.0063015050756985
+      ],
+      "max_abs_error": 0.001953125,
+      "below_one": [
+        {
+          "case": "oj12",
+          "config": {
+            "B": 4,
+            "SEQ_LEN": 1024,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9954621547263567
+        },
+        {
+          "case": "s8_b1_t1024_h4",
+          "config": {
+            "B": 1,
+            "SEQ_LEN": 1024,
+            "H": 4,
+            "HQ": 64,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.995261922293372
+        }
+      ],
+      "adopted": false
+    },
+    {
+      "module": "experiments/20261003_s8_index/s8_q_first.py",
+      "report": "schedule_screen.json",
+      "shapes": 6,
+      "geomean_speedup": 1.0014514836232375,
+      "speedup_range": [
+        0.9926106896343831,
+        1.0110148042470906
+      ],
+      "max_abs_error": 0.001953125,
+      "below_one": [
+        {
+          "case": "oj12",
+          "config": {
+            "B": 4,
+            "SEQ_LEN": 1024,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9947626030449592
+        },
+        {
+          "case": "s8_b1_t8192_h1",
+          "config": {
+            "B": 1,
+            "SEQ_LEN": 8192,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9996095798522542
+        },
+        {
+          "case": "s8_b1_t1024_h4",
+          "config": {
+            "B": 1,
+            "SEQ_LEN": 1024,
+            "H": 4,
+            "HQ": 64,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9926106896343831
+        }
+      ],
+      "adopted": false
+    },
+    {
+      "module": "experiments/20261003_s8_index/s8_lookahead2.py",
+      "report": "schedule_screen.json",
+      "shapes": 6,
+      "geomean_speedup": 0.9970380061190812,
+      "speedup_range": [
+        0.9919138416726827,
+        1.0036203838963262
+      ],
+      "max_abs_error": 0.001953125,
+      "below_one": [
+        {
+          "case": "oj12",
+          "config": {
+            "B": 4,
+            "SEQ_LEN": 1024,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9942880875961878
+        },
+        {
+          "case": "s8_b8_t1024_h1",
+          "config": {
+            "B": 8,
+            "SEQ_LEN": 1024,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9978590996710526
+        },
+        {
+          "case": "s8_b1_t8192_h1",
+          "config": {
+            "B": 1,
+            "SEQ_LEN": 8192,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.992461636742687
+        },
+        {
+          "case": "s8_b1_t1024_h4",
+          "config": {
+            "B": 1,
+            "SEQ_LEN": 1024,
+            "H": 4,
+            "HQ": 64,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9919138416726827
+        }
+      ],
+      "adopted": false
+    },
+    {
+      "module": "experiments/20261003_s8_index/s8_lookahead2_q_first.py",
+      "report": "schedule_screen.json",
+      "shapes": 6,
+      "geomean_speedup": 0.9935410881203576,
+      "speedup_range": [
+        0.988184624920672,
+        1.000146914653126
+      ],
+      "max_abs_error": 0.001953125,
+      "below_one": [
+        {
+          "case": "oj12",
+          "config": {
+            "B": 4,
+            "SEQ_LEN": 1024,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.988184624920672
+        },
+        {
+          "case": "s8_b8_t1024_h1",
+          "config": {
+            "B": 8,
+            "SEQ_LEN": 1024,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.996170305506908
+        },
+        {
+          "case": "s8_b1_t8192_h1",
+          "config": {
+            "B": 1,
+            "SEQ_LEN": 8192,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.991957796484311
+        },
+        {
+          "case": "s8_b1_t1024_h4",
+          "config": {
+            "B": 1,
+            "SEQ_LEN": 1024,
+            "H": 4,
+            "HQ": 64,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.991491166440644
+        },
+        {
+          "case": "s8_b16_t256_h1",
+          "config": {
+            "B": 16,
+            "SEQ_LEN": 256,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9933389492495216
+        }
+      ],
+      "adopted": false
+    },
+    {
+      "module": "experiments/20261003_s8_index/s8_v_first.py",
+      "report": "schedule_screen.json",
+      "shapes": 6,
+      "geomean_speedup": 0.9929328562531565,
+      "speedup_range": [
+        0.9876790774182159,
+        0.9975477527661701
+      ],
+      "max_abs_error": 0.001953125,
+      "below_one": [
+        {
+          "case": "oj12",
+          "config": {
+            "B": 4,
+            "SEQ_LEN": 1024,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9903098109542575
+        },
+        {
+          "case": "s8_b8_t1024_h1",
+          "config": {
+            "B": 8,
+            "SEQ_LEN": 1024,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9918941652849775
+        },
+        {
+          "case": "s8_b1_t4096_h1",
+          "config": {
+            "B": 1,
+            "SEQ_LEN": 4096,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9955380262142323
+        },
+        {
+          "case": "s8_b1_t8192_h1",
+          "config": {
+            "B": 1,
+            "SEQ_LEN": 8192,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9946618744699152
+        },
+        {
+          "case": "s8_b1_t1024_h4",
+          "config": {
+            "B": 1,
+            "SEQ_LEN": 1024,
+            "H": 4,
+            "HQ": 64,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9876790774182159
+        },
+        {
+          "case": "s8_b16_t256_h1",
+          "config": {
+            "B": 16,
+            "SEQ_LEN": 256,
+            "H": 1,
+            "HQ": 16,
+            "D": 64,
+            "S": 8,
+            "block_size": 16,
+            "is_causal": true
+          },
+          "speedup": 0.9975477527661701
+        }
+      ],
+      "adopted": false
+    }
+  ],
+  "rationale": "No broad, convincing improvement in either screen; retain the independent D128 gain."
+}

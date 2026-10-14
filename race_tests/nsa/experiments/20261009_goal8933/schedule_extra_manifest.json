@@ -1,0 +1,60 @@
+{
+  "parent_sha256": "17b91438e869aae07d53ce0b9d99cb8579735f366e80b25faf3dcbabbe94ac09",
+  "targets": [
+    "native_sparse_attention_coalesced_blocks_mathcast",
+    "native_sparse_attention_coalesced_blocks_oct8",
+    "native_sparse_attention_direct_kv",
+    "native_sparse_attention_linear_v_blocks_oct8",
+    "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_q_preload",
+    "native_sparse_attention_short_list_oct8",
+    "native_sparse_attention_single_packed_qo_v2_mathcast",
+    "native_sparse_attention_staged_sparse_blocks"
+  ],
+  "variants": [
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/schedule_mma.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-mma-sched=true"
+      ],
+      "sha256": "abf949eafabcb3aff51655bb295123f5cf427d9fc13786d3bc25dfc5c19d82cb"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/schedule_igroup.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-igroup=true",
+        "-mllvm",
+        "--metaxgpu-igroup-strategy=1"
+      ],
+      "sha256": "3e8c850522312a0304e6131a555be7bf9635d612a5759417396250fdbca4383c"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/schedule_hireg.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-use-hireg=true"
+      ],
+      "sha256": "3d58ce9c1eeffcc07ffbd1ddb3ddf1be21b61b0148d998b34c2e2d87b5b70835"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/schedule_warp_split.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-warp-split=true"
+      ],
+      "sha256": "e64a6c8f126d05d6c378d21a3686778e06f264eb1c3a2a17de1cd9257b825f03"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/schedule_bsm_store_back.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-bsm-store-back=true"
+      ],
+      "sha256": "8dcbc00b907de6831b238cc945a5eea4485c7126e7bb99a045a1511b6d3f2105"
+    }
+  ],
+  "kernel_bodies_and_safety_passes_unchanged": true
+}

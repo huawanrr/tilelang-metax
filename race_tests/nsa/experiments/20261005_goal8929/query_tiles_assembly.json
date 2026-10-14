@@ -1,0 +1,36 @@
+{
+  "baseline": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/nsa.py",
+  "variants": [
+    {
+      "path": "query_tiles_q2_incremental0_vec4.py",
+      "queries": 2,
+      "incremental": false,
+      "q_vec": 4,
+      "sha256": "55d31785f10fc6af9879fb8f2a675a3867b7cc39b427018f128d4daa9f270510"
+    },
+    {
+      "path": "query_tiles_q2_incremental1_vec4.py",
+      "queries": 2,
+      "incremental": true,
+      "q_vec": 4,
+      "sha256": "2e09de71c07c9f2cf143a3418873dcac290ec8dabec0bfbd17de391afec7b92f"
+    },
+    {
+      "path": "query_tiles_q2_incremental1_vec8.py",
+      "queries": 2,
+      "incremental": true,
+      "q_vec": 8,
+      "sha256": "cad94f5a110544500cf87f5b27b15fe7ac0438ca00c090f57281ff61869c23cd"
+    },
+    {
+      "path": "query_tiles_q4_incremental1_vec4.py",
+      "queries": 4,
+      "incremental": true,
+      "q_vec": 4,
+      "sha256": "933c925a49a6ba698b44075b63d9742c267618d208db279c916434d230c631a3"
+    }
+  ],
+  "mechanism": "One shared Q/O tile spans multiple queries; QK, probabilities and PV remain independent for each query.",
+  "synchronization": "One Q RAW barrier, per-query or bulk Q/O WAR barriers, and one final O RAW barrier.",
+  "packing": "The original packing kernel is invoked on every public call."
+}

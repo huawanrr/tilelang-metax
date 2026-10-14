@@ -1,0 +1,116 @@
+"""Join pasted OJ per-case results with the local benchmark table.
+
+Usage:
+    python score_diff.py oj_scores.txt          # file with pasted OJ lines
+    python score_diff.py                        # paste lines, Ctrl-D to end
+
+Accepts any line that contains a case index, a time and optionally a score:
+    case 12: 16.44 ms 85     |  12 45.3     |  idx 12, 0.045ms, 88
+Time unit defaults to us; "ms" multiplies by 1000.
+
+Prints per case: OJ time, local baseline/optimized time, OJ-side speedup
+(OJ time / local optimized time), the local speedup, and flags for cases
+where the OJ ordering disagrees with the local one.  With >=3 (speedup,
+score) pairs it fits score = a + b*log2(speedup) and reports what speedup
+score 85 would need.
+"""
+
+import csv
+import math
+import re
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).parent
+LOCAL = HERE / "benchmark_nsa_final.csv"
+
+
+def parse_oj(lines):
+    rows = []
+    for line in lines:
+        s = line.strip()
+        if not s or s.lower().startswith(("idx,", "case_idx", "status", "#")):
+            continue
+        m = re.match(r"(?:case|idx)?\s*#?(\d+)\s*[:|,]?\s*(.*)", s, re.I)
+        if not m:
+            continue
+        idx = int(m.group(1))
+        rest = m.group(2)
+        nums = re.findall(r"(\d+(?:\.\d+)?)", rest)
+        if not nums:
+            continue
+        t = float(nums[0])
+        if re.search(r"\bms\b|毫秒", rest, re.I):
+            t *= 1000.0
+        score = float(nums[1]) if len(nums) > 1 else None
+        rows.append((idx, t, score))
+    return rows
+
+
+def main():
+    if len(sys.argv) > 1:
+        lines = Path(sys.argv[1]).read_text().splitlines()
+    else:
+        print("paste OJ lines (case <idx> <time> [score]), Ctrl-D to end:")
+        lines = sys.stdin.read().splitlines()
+    oj = parse_oj(lines)
+    if not oj:
+        sys.exit("no (idx, time) pairs recognised — check the pasted format")
+
+    local = {}
+    for r in csv.DictReader(LOCAL.open()):
+        local[int(r["idx"])] = dict(
+            base=float(r["baseline_ms"]) * 1000,
+            opt=float(r["optimized_ms"]) * 1000,
+            shape=f"B{r['B']} T{r['SEQ_LEN']} D{r['D']} S{r['S']} bs{r['block_size']}",
+            speedup=float(r["speedup"]),
+        )
+
+    print(f"{'idx':>4} {'shape':<34} {'oj_us':>9} {'loc_base':>9} {'loc_opt':>8} "
+          f"{'oj/loc_opt':>10} {'loc_spd':>8} {'score':>6}")
+    flags = []
+    triples = []
+    for idx, oj_us, score in sorted(oj):
+        if idx not in local:
+            print(f"{idx:>4} {'(not in local table)':<34} {oj_us:>9.1f}")
+            continue
+        d = local[idx]
+        ratio = oj_us / d["opt"]
+        print(f"{idx:>4} {d['shape']:<34} {oj_us:>9.1f} {d['base']:>9.1f} {d['opt']:>8.1f} "
+              f"{ratio:>9.2f}x {d['speedup']:>7.2f}x "
+              f"{'':>6}" if score is None else
+              f"{idx:>4} {d['shape']:<34} {oj_us:>9.1f} {d['base']:>9.1f} {d['opt']:>8.1f} "
+              f"{ratio:>9.2f}x {d['speedup']:>7.2f}x {score:>6.1f}")
+        if score is not None:
+            triples.append((d["speedup"], score))
+        if ratio < 0.9 * d["speedup"]:
+            flags.append((idx, f"OJ-side speedup {ratio:.2f}x << local {d['speedup']:.2f}x — investigate first"))
+        elif ratio > 1.5 * d["speedup"]:
+            flags.append((idx, f"OJ-side speedup {ratio:.2f}x >> local — grader favours this shape"))
+
+    if len(triples) >= 3:
+        xs = [math.log2(s) for s, _ in triples]
+        ys = [c for _, c in triples]
+        n = len(triples)
+        mx, my = sum(xs) / n, sum(ys) / n
+        denom = sum((x - mx) ** 2 for x in xs)
+        if denom > 1e-9:
+            b = sum((x - mx) * (y - my) for x, y in zip(xs, ys)) / denom
+            a = my - b * mx
+            print(f"\nfit over {n} cases: score ≈ {a:.4f} + {b:.4f} * log2(speedup)")
+            if b > 0:
+                need_log2 = (0.85 - a) / b
+                print(f"  score 85 would need speedup ≈ 2^{need_log2:.2f} = {2 ** need_log2:.2f}x  "
+                      f"(local geomean 1.523x; D32 group physically capped, see NOTES.md)")
+
+    if flags:
+        print("\nflags:")
+        seen = set()
+        for idx, msg in flags:
+            if idx not in seen:
+                seen.add(idx)
+                print(f"  case {idx}: {msg}")
+
+
+if __name__ == "__main__":
+    main()

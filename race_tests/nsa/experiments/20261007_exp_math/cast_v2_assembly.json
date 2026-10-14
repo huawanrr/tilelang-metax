@@ -1,0 +1,65 @@
+{
+  "variants": [
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_cast_scalar_v2.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/exp_folded.py",
+      "functions": [
+        "native_sparse_attention_online_packed",
+        "native_sparse_attention_online_packed_batch_minor_o_v2",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+      ],
+      "output": true,
+      "sha256": "d1c8dae8bfa3e3b2271dea8084485f7d02614e425274e24192143ed26919aa79"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_cast_scalar_base_prob.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/nsa.py",
+      "functions": [
+        "native_sparse_attention_online_packed",
+        "native_sparse_attention_online_packed_batch_minor_o_v2",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+      ],
+      "output": false,
+      "sha256": "b517cabb3eb30043a244ed766a0a9932d66daca11af622d9c3c4228165e8a047"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_cast_scalar_base_v2.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/nsa.py",
+      "functions": [
+        "native_sparse_attention_online_packed",
+        "native_sparse_attention_online_packed_batch_minor_o_v2",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+      ],
+      "output": true,
+      "sha256": "6990ea84567e56659d5be98a16e341c3ab79bcac528c1ecb00bc5783e0ceadf1"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/packed_cast_scalar_v2.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/exp_folded.py",
+      "functions": [
+        "native_sparse_attention_online_packed",
+        "native_sparse_attention_online_packed_batch_minor_o_v2",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+        "native_sparse_attention_single_packed_qo_v2"
+      ],
+      "output": true,
+      "sha256": "a903c96e07dd17ddb4d98c1f77709774903c8c19d1ee623e465a8bd7433f2142"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/packed_cast_scalar_base_v2.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/nsa.py",
+      "functions": [
+        "native_sparse_attention_online_packed",
+        "native_sparse_attention_online_packed_batch_minor_o_v2",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+        "native_sparse_attention_single_packed_qo_v2"
+      ],
+      "output": true,
+      "sha256": "c6b1f8bfb50a903683cfb780e10d7349bdbea7da0dcb8666339560f32115dd07"
+    }
+  ],
+  "reason": "Bound each scalar-conversion loop to one 16-column MMA tile",
+  "no_backend_changes": true,
+  "unchanged_sync": true,
+  "unchanged_math": true
+}

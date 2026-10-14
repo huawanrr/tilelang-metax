@@ -1,0 +1,29 @@
+--- experiments/20261012_goal89/release_v10/submission.py
++++ experiments/20261013_mfma_fix/submission.py
+@@ -8359,7 +8359,7 @@
+     pv = TensorCoreIntrinEmitter(a_dtype=T.float16, b_dtype=T.float16, accum_dtype=T.float32, a_transposed=False, b_transposed=False, block_row_warps=1, block_col_warps=1, warp_row_tiles=16, warp_col_tiles=VW, chunk=BS, k_pack=1)
+     qk_steps = qk.chunk // (qk.k_pack * qk.micro_size_k)
+     pv_steps = pv.chunk // (pv.k_pack * pv.micro_size_k)
+-    wsum = TensorCoreIntrinEmitter(a_dtype=T.float32, b_dtype=T.float32, accum_dtype=T.float32, a_transposed=False, b_transposed=False, block_row_warps=1, block_col_warps=1, warp_row_tiles=16, warp_col_tiles=16, chunk=4, k_pack=1)
++    wsum = TensorCoreIntrinEmitter(a_dtype="float32", b_dtype="float32", accum_dtype="float32", a_transposed=False, b_transposed=False, block_row_warps=1, block_col_warps=1, warp_row_tiles=16, warp_col_tiles=16, chunk=4, k_pack=1)
+ 
+     @T.prim_func
+     def kernel(Q: T.Tensor(q_shape, T.float16), K: T.Tensor(kv_shape, T.float16), V: T.Tensor(kv_shape, T.float16), BlockIndices: T.Tensor([batch, seq_len, head_kv, 1], T.int32), Output: T.Tensor(q_shape, T.float16)):
+@@ -8520,7 +8520,7 @@
+     pv = TensorCoreIntrinEmitter(a_dtype=T.float16, b_dtype=T.float16, accum_dtype=T.float32, a_transposed=False, b_transposed=False, block_row_warps=1, block_col_warps=1, warp_row_tiles=16, warp_col_tiles=VW, chunk=BS, k_pack=1)
+     qk_steps = qk.chunk // (qk.k_pack * qk.micro_size_k)
+     pv_steps = pv.chunk // (pv.k_pack * pv.micro_size_k)
+-    wsum = TensorCoreIntrinEmitter(a_dtype=T.float32, b_dtype=T.float32, accum_dtype=T.float32, a_transposed=False, b_transposed=False, block_row_warps=1, block_col_warps=1, warp_row_tiles=16, warp_col_tiles=16, chunk=4, k_pack=1)
++    wsum = TensorCoreIntrinEmitter(a_dtype="float32", b_dtype="float32", accum_dtype="float32", a_transposed=False, b_transposed=False, block_row_warps=1, block_col_warps=1, warp_row_tiles=16, warp_col_tiles=16, chunk=4, k_pack=1)
+ 
+     @T.prim_func
+     def kernel(Q: T.Tensor(q_shape, T.float16), K: T.Tensor(kv_shape, T.float16), V: T.Tensor(kv_shape, T.float16), BlockIndices: T.Tensor([batch, seq_len, head_kv, 1], T.int32), Output: T.Tensor(q_shape, T.float16)):
+@@ -8752,7 +8752,7 @@
+     pv = TensorCoreIntrinEmitter(a_dtype=T.float16, b_dtype=T.float16, accum_dtype=T.float32, a_transposed=False, b_transposed=False, block_row_warps=1, block_col_warps=1, warp_row_tiles=16, warp_col_tiles=VW, chunk=BS, k_pack=1)
+     qk_steps = qk.chunk // (qk.k_pack * qk.micro_size_k)
+     pv_steps = pv.chunk // (pv.k_pack * pv.micro_size_k)
+-    wsum = TensorCoreIntrinEmitter(a_dtype=T.float32, b_dtype=T.float32, accum_dtype=T.float32, a_transposed=False, b_transposed=False, block_row_warps=1, block_col_warps=1, warp_row_tiles=16, warp_col_tiles=16, chunk=4, k_pack=1)
++    wsum = TensorCoreIntrinEmitter(a_dtype="float32", b_dtype="float32", accum_dtype="float32", a_transposed=False, b_transposed=False, block_row_warps=1, block_col_warps=1, warp_row_tiles=16, warp_col_tiles=16, chunk=4, k_pack=1)
+ 
+     @T.prim_func
+     def kernel(Q: T.Tensor(q_shape, T.float16), K: T.Tensor(kv_shape, T.float16), V: T.Tensor(kv_shape, T.float16), BlockIndices: T.Tensor([batch, seq_len, head_kv, 1], T.int32), Output: T.Tensor(q_shape, T.float16)):

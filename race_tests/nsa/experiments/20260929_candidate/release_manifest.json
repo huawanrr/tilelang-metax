@@ -1,0 +1,66 @@
+{
+  "date": "2026-09-29",
+  "target_oj_score": 88,
+  "latest_known_oj_score": 86.5,
+  "official_score": null,
+  "official_sandbox_tested": false,
+  "artifacts": {
+    "experiments/20260929_candidate/nsa.py": "43fdc92b5c8a22185a98bfcaf83e5a580eac607c3fc0df212facc7cea2165a31",
+    "experiments/20260929_candidate/submission.py": "09e9bd0441ca0746810a097106831bb6298036a11d04cfa1620ea66d17316536",
+    "experiments/20260929_candidate/full_v2.json": "cd045b53a1eee9c4ef10cfbe5724715295487cd8c87694ba53b424ae52d10b00",
+    "experiments/20260929_candidate/verification.json": "a099e5e5e39c2155a7667dc7c6ecfdcae61e0af67bb4a2e7bd86065575dde65f",
+    "experiments/20260929_candidate/trial_checks.json": "870ee61f34cae06c68912201d6fe1cb2f8343a59021564885472ea962030e4f3",
+    "experiments/20260929_candidate/equivalence.log": "475177cf94617ff0f4b5679b4649cd60bc4a6b0721f3daa2e17f4de125c36f70",
+    "experiments/20260929_candidate/static_checks.log": "f44d9916c54645581ba3d57617609c0d4fd2d6a471c5fdc9aab1bc0025cefad1",
+    "experiments/20260929_candidate/layout_proof.json": "e301c49d8cfdf17015270b4ef6a43c6071627a7ac6854146e1ab7c9e675a6024",
+    "experiments/20260929_candidate/make_candidate.py": "45dff959e486278c2841b2732ca014c304858269659c83b4dfec5374a817b49f",
+    "experiments/20260929_candidate/verify_candidate.py": "b966e1047b56bad0574b2acac12053d1880416352a23f9f691fc3fbc5a9f561d",
+    "experiments/20260929_candidate/check_layouts.py": "c43282c331df2ce4b0145be9cf2e9ef94760c0b8f75da170f06bb39a7eca14a8",
+    "experiments/20260929_candidate/README.md": "95f3a04fb2a9ca81d47ca2dd843090a237781104b5726f982b08c2b1c170a5b4"
+  },
+  "performance": {
+    "cases": 109,
+    "method": "CUDA graph, one shared preallocated output for every module, public run_kernel, no cache flush, ~40ms replay warmup",
+    "rounds": 4,
+    "geometric_speedup_vs_86_5": 1.0707328178061384,
+    "geometric_speedup_vs_next": 1.0323795447384445,
+    "regressions_over_3_percent_vs_next": [],
+    "candidate_max_abs_error": 0.00390625,
+    "max_abs_error_all_versions": 0.00390625
+  },
+  "verification": {
+    "reference_cases": 125,
+    "boundaries": 49,
+    "both_interfaces": true,
+    "boundary_source_equivalence": 49,
+    "routine_source_equivalence": 18,
+    "explicit_schedule_fallbacks": 4,
+    "input_refreshes": 12,
+    "restricted_host_cases": 6,
+    "shared_layout_bijections": 9,
+    "shuffle_values_exactly_verified": 512,
+    "race_checks_disabled": false
+  },
+  "preserved_gpu_builders": [
+    "native_sparse_attention_single_block",
+    "native_sparse_attention_online",
+    "native_sparse_attention_online_emitter",
+    "native_sparse_attention_single_block_emitter",
+    "native_sparse_attention_online_packed",
+    "native_sparse_attention_pack_kv",
+    "native_sparse_attention_online_packed_batch_minor",
+    "native_sparse_attention_online_packed_quad_batch_minor"
+  ],
+  "frozen_releases": {
+    "nsa.py": "b130372b331e04cec85e6ad005ca239038adbb7f2c1fb5ce55b745b720c814fa",
+    "submission.py": "a588a9f4f23f93c076c37ebecf88577619f5ffbee03278fc5875253b06b016cd",
+    "experiments/20260927_next/selected.py": "311e64a25b16471d2689049070303e6400bc0f593e184615222839e1a77b3a26",
+    "experiments/20260927_next/submission.py": "8733abd64b1f72e0a098d2412a1d3a0db8b5ec03d899408d0ec15b2f6c9f3cc0",
+    "experiments/20260928_pv32_oj/submission.py": "3b87e4fba20ac3ab2d755fab239fcc0d2d61b9686d75f2e444e863f72db23424",
+    "experiments/20260928_s8_order_oj/submission.py": "bb632603c1a5d70e0ae57fa0053bc2ff8aba7ded8ebc2409dc8c6a15e3cac685"
+  },
+  "bracketed_evidence": [
+    "experiments/20260929_recheck/d32_bracketed.json",
+    "experiments/20260929_recheck/shared_q_bracketed.json"
+  ]
+}

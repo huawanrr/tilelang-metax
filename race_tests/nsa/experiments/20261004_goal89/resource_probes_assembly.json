@@ -1,0 +1,57 @@
+{
+  "baseline": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/submission.py",
+  "baseline_sha256": "ee780d62a64e427d742db494596feffd0f3f9834e4587cad61a66713f2936c31",
+  "variants": [
+    {
+      "path": "residency_streaming.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-set-rp=streaming"
+      ],
+      "sha256": "ea612dc709e936981b3f4edf219533f74d59bbea09e4e628437ed0336bfda065"
+    },
+    {
+      "path": "residency_persisting.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-set-rp=persisting"
+      ],
+      "sha256": "4223c5377df1d1bc8b185d05f651c73f7f197dbe843212421a51cb28489b58b8"
+    },
+    {
+      "path": "residency_noreuse.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-set-rp=noreuse"
+      ],
+      "sha256": "c2b1d6f59d33d39c90e5abdbc258ef877557bca86b64f29d199ccc5f05efc78e"
+    },
+    {
+      "path": "registers_64.py",
+      "flags": [
+        "-mllvm",
+        "--max-mtreg-number=64"
+      ],
+      "sha256": "aa199e576e618f2c977255ddff39e895c1da04beb45598f0d7be0e19e6434631"
+    },
+    {
+      "path": "registers_56.py",
+      "flags": [
+        "-mllvm",
+        "--max-mtreg-number=56"
+      ],
+      "sha256": "d92c4edb5d469871fae4c20f5bee61cf3915a5edc149e5f7fcfec908ea482563"
+    },
+    {
+      "path": "registers_96.py",
+      "flags": [
+        "-mllvm",
+        "--max-mtreg-number=96"
+      ],
+      "sha256": "da8dec07a8bd1074bd5ce17024ddf7a54f22e403970c6641c87ae8c3dbc7b48c"
+    }
+  ],
+  "identical_math_layouts_guards_sync_and_dispatch": true,
+  "packing_unchanged": true,
+  "reason": "Measure cache eviction hints and register allocation; do not change cache coherency or synchronization."
+}

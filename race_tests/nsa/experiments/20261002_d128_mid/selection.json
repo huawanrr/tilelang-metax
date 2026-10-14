@@ -1,0 +1,129 @@
+{
+  "config": {
+    "linear": {
+      "enabled": true,
+      "min_grid": 129,
+      "max_grid_exclusive": 768,
+      "min_seq": 16,
+      "heads": [
+        1
+      ],
+      "probe": "experiments/20261002_d128_mid/linear_pairs.py"
+    },
+    "coalesced": {
+      "enabled": true,
+      "min_grid": 1024,
+      "max_grid_exclusive": 1280,
+      "min_seq": 32,
+      "heads": [
+        1,
+        2
+      ],
+      "probe": "experiments/20261002_d128_mid/coalesced_q8.py"
+    },
+    "bracket_reports": [
+      "experiments/20261002_d128_mid/family_multiseed.json",
+      "experiments/20261002_d128_mid/boundary_multiseed.json"
+    ]
+  },
+  "rationale": [
+    "For H1 below grid768, half pairs and quads both improved every measured seed; pairs have the stronger minimum and slightly higher family geomean.",
+    "Grid768..1023 remains on the baseline: the denser boundary study found isolated negative seeds for both new methods.",
+    "For grid1024..1279, coalesced Q/O is consistently stronger than only changing K/V loads.",
+    "Coalesced requires seq_len>=32 and H<=2: T16 and H4 had negative seeds; these entire shape families retain the parent.",
+    "All raw results, including faster rejected shapes and every negative/rejected sample, remain available."
+  ],
+  "evidence": [
+    {
+      "report": "experiments/20261002_d128_mid/family_multiseed.json",
+      "report_sha256": "2b05efa98eb75d85286ea78b64837fce1d736c21d6b8818555ff2c83da3c1672",
+      "shapes": 35,
+      "seed_combinations": 105,
+      "seeds": [
+        0,
+        61,
+        2026
+      ],
+      "attempts": 24,
+      "calls_per_graph": 500,
+      "active_shapes": 24,
+      "active_combinations": 72,
+      "active_geomean": 1.0694173637595237,
+      "active_range": [
+        1.0055685632375544,
+        1.1901504466119988
+      ],
+      "active_below_one": [],
+      "by_kind": {
+        "linear": {
+          "combinations": 42,
+          "geomean": 1.0610491470762253,
+          "range": [
+            1.0183586337407042,
+            1.1359387145763145
+          ]
+        },
+        "coalesced": {
+          "combinations": 30,
+          "geomean": 1.0812438600997851,
+          "range": [
+            1.0055685632375544,
+            1.1901504466119988
+          ]
+        }
+      },
+      "control_range": [
+        0.9992312830312506,
+        1.0015163734841503
+      ],
+      "minimum_accepted": 15,
+      "rejected_samples_retained": true
+    },
+    {
+      "report": "experiments/20261002_d128_mid/boundary_multiseed.json",
+      "report_sha256": "b1ef631e9a467de65367d55c00961a63a25e0eb38d206982a4178cc589b979f2",
+      "shapes": 20,
+      "seed_combinations": 60,
+      "seeds": [
+        0,
+        61,
+        2026
+      ],
+      "attempts": 24,
+      "calls_per_graph": 500,
+      "active_shapes": 12,
+      "active_combinations": 36,
+      "active_geomean": 1.0752126647535531,
+      "active_range": [
+        1.0065636956766921,
+        1.1587385683127598
+      ],
+      "active_below_one": [],
+      "by_kind": {
+        "linear": {
+          "combinations": 15,
+          "geomean": 1.088792021445604,
+          "range": [
+            1.055218485138989,
+            1.1587385683127598
+          ]
+        },
+        "coalesced": {
+          "combinations": 21,
+          "geomean": 1.0656169383406453,
+          "range": [
+            1.0065636956766921,
+            1.1448225449342897
+          ]
+        }
+      },
+      "control_range": [
+        0.9996156092412715,
+        1.0007188992703986
+      ],
+      "minimum_accepted": 22,
+      "rejected_samples_retained": true
+    }
+  ],
+  "official_new_score": null
+}

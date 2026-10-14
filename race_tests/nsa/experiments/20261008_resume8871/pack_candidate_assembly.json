@@ -1,0 +1,37 @@
+{
+  "parent": "parent.py",
+  "parent_sha256": "4887b6a68ea8f0a7647441625079f87f74c13906bcfb7bcd17e9fa170769121d",
+  "candidates": [
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/candidate_pack.py",
+      "sha256": "17b91438e869aae07d53ce0b9d99cb8579735f366e80b25faf3dcbabbe94ac09",
+      "old_functions_changed": [
+        "_get_kernel"
+      ],
+      "old_functions_preserved": 56,
+      "functions_added": [
+        "native_sparse_attention_pack_kv_bs32_tiles"
+      ],
+      "boundary_mask": false
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/candidate_pack_mask.py",
+      "sha256": "442fe0751184905180ef64bf311e5059ad528f89c7ce8454ed4740743cf27589",
+      "old_functions_changed": [
+        "_get_kernel"
+      ],
+      "old_functions_preserved": 56,
+      "functions_added": [
+        "_coalesced_block_loads_prim_boundary",
+        "native_sparse_attention_coalesced_boundary",
+        "native_sparse_attention_pack_kv_bs32_tiles"
+      ],
+      "boundary_mask": true
+    }
+  ],
+  "tiled_pack_scope": "Default S1/D128/BS32/G16 on existing shared pack path; source block count <= 256",
+  "threshold_evidence": "Original shared pack: 46/48 records improved. All studied grids <=8192 improved; grid16384 regressed in hot and cold checks.",
+  "mask_scope": "Optional complete default S1/D64/BS16 medium coalesced family, unchanged shape limits",
+  "safety_passes_unchanged": true,
+  "new_submission_status": "Not validated or released"
+}

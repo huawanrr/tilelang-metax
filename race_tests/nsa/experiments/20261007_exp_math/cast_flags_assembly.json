@@ -1,0 +1,164 @@
+{
+  "variants": [
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_cast_scalar_prob.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/exp_folded.py",
+      "description": {
+        "cast": "scalar",
+        "include_output": false,
+        "functions": [
+          "native_sparse_attention_online_packed",
+          "native_sparse_attention_online_packed_batch_minor_o_v2",
+          "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+        ]
+      },
+      "sha256": "eff250d1bc7fbd632d19dcca403c20af74d6f5ee99bac60667ae7a0338150d87"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_cast_scalar_all.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/exp_folded.py",
+      "description": {
+        "cast": "scalar",
+        "include_output": true,
+        "functions": [
+          "native_sparse_attention_online_packed",
+          "native_sparse_attention_online_packed_batch_minor_o_v2",
+          "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+        ]
+      },
+      "sha256": "f2f4f9c96f0a0cffd0be4d61cf9eee0430ee7455cd4cbf2e1dbb5f89d2038626"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_cast_width1.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/exp_folded.py",
+      "description": {
+        "cast": "width1",
+        "include_output": true,
+        "functions": [
+          "native_sparse_attention_online_packed",
+          "native_sparse_attention_online_packed_batch_minor_o_v2",
+          "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+        ]
+      },
+      "sha256": "6332ee1f39ca531c636dc094bd4dd309bcb96996c6ee9046253ebda339805bf8"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_cast_scalar_baseline.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/nsa.py",
+      "description": {
+        "cast": "scalar",
+        "include_output": true,
+        "functions": [
+          "native_sparse_attention_online_packed",
+          "native_sparse_attention_online_packed_batch_minor_o_v2",
+          "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+        ]
+      },
+      "sha256": "ae6cc86575395c0d20fe61a6adc24455cd141d93191143c4261e9d253b0d04e3"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_math_assoc_preserve.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/exp_preserve.py",
+      "description": {
+        "flags": [
+          "-fno-signed-zeros",
+          "-fno-trapping-math",
+          "-fassociative-math"
+        ],
+        "finite_math_only": false,
+        "functions": [
+          "native_sparse_attention_online_packed",
+          "native_sparse_attention_online_packed_batch_minor_o_v2",
+          "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+          "native_sparse_attention_single_packed_qo_v2"
+        ]
+      },
+      "sha256": "53e12d04356629bb1789ac8676f5c018c17bedbeb2b13085af435c076b8b5895"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_math_assoc_folded.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/exp_folded.py",
+      "description": {
+        "flags": [
+          "-fno-signed-zeros",
+          "-fno-trapping-math",
+          "-fassociative-math"
+        ],
+        "finite_math_only": false,
+        "functions": [
+          "native_sparse_attention_online_packed",
+          "native_sparse_attention_online_packed_batch_minor_o_v2",
+          "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+          "native_sparse_attention_single_packed_qo_v2"
+        ]
+      },
+      "sha256": "380514dc5bc8eae7230ef77848e6a75d1d9d9177b416ac168366073c39c1249c"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_math_unsafe_preserve.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/exp_preserve.py",
+      "description": {
+        "flags": [
+          "-funsafe-math-optimizations"
+        ],
+        "finite_math_only": false,
+        "functions": [
+          "native_sparse_attention_online_packed",
+          "native_sparse_attention_online_packed_batch_minor_o_v2",
+          "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+          "native_sparse_attention_single_packed_qo_v2"
+        ]
+      },
+      "sha256": "0035b60184aec02fc658c201710bff21e02df51e70f1937b0dafe52dc99d1d08"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_math_reg80.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/exp_folded.py",
+      "description": {
+        "flags": [
+          "-mllvm",
+          "--max-mtreg-number=80"
+        ],
+        "functions": [
+          "native_sparse_attention_online_packed_batch_minor_o_v2",
+          "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+        ]
+      },
+      "sha256": "ebd93f486db4625bcc6e8a6e7c1803c9936157e43166532b0b00c171737c206d"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_math_reg88.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/exp_folded.py",
+      "description": {
+        "flags": [
+          "-mllvm",
+          "--max-mtreg-number=88"
+        ],
+        "functions": [
+          "native_sparse_attention_online_packed_batch_minor_o_v2",
+          "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+        ]
+      },
+      "sha256": "092d15f7d483d9fdf2ee89509344637c5e072f2532b5d602653580db92750467"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_math_reg96.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/exp_folded.py",
+      "description": {
+        "flags": [
+          "-mllvm",
+          "--max-mtreg-number=96"
+        ],
+        "functions": [
+          "native_sparse_attention_online_packed_batch_minor_o_v2",
+          "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+        ]
+      },
+      "sha256": "dd92bc48448da56c0c7e30de71de302125e8f22a15ab4824bfcee6df98a4da64"
+    }
+  ],
+  "research_only": true,
+  "dispatch_unchanged": true,
+  "backend_changes": false,
+  "rounding": "Compare explicit RN library with normal FP16 scalar cast"
+}

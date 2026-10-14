@@ -1,0 +1,42 @@
+{
+  "baseline": "experiments/20261002_mid_v1/nsa.py",
+  "baseline_sha256": "644206570d4ca96c15acdf28ff9ef365e61dcbbe1670915e1ec188c80f834412",
+  "variants": [
+    {
+      "path": "experiments/20261004_resume/l2_fetch_off.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-FetchOnWrite-global=false"
+      ],
+      "sha256": "198e4f4d1cc17fe06b2e0d1869102abbb1bcac0106ec515fbd24936b2a0ea971"
+    },
+    {
+      "path": "experiments/20261004_resume/l2_fetch_on.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-FetchOnWrite-global=true"
+      ],
+      "sha256": "1ae83fe5a20d5ec1b804e6529956f793139af517ea03215a7a7ba3cd66bc7c39"
+    },
+    {
+      "path": "experiments/20261004_resume/device_g0.py",
+      "flags": [
+        "-Xdevice=-g0"
+      ],
+      "sha256": "509aca606bea11e4ae6c3350a008d71796f1af0adfe9d9f86fd4f6653469f1e0"
+    },
+    {
+      "path": "experiments/20261004_resume/device_no_slp.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-vectorize-slp=false"
+      ],
+      "sha256": "e4ab279644b511fef6bfe8d7b1611e4d6f886755edf933d643e63ef285b7661a"
+    }
+  ],
+  "kernel_bodies_unchanged": true,
+  "packers_unchanged": true,
+  "tilelang_pass_configs_unchanged": true,
+  "hypothesis": "Check L2 output write allocation; compare code generation without debug line info and vendor SLP",
+  "flag_source": "mxcc_llvm_help.txt and mxcc --help; no asynchronous, synchronization, bounds, race or cache-invalidation controls changed"
+}

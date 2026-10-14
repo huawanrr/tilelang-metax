@@ -1,0 +1,107 @@
+{
+  "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/parent.py",
+  "parent_sha256": "17b91438e869aae07d53ce0b9d99cb8579735f366e80b25faf3dcbabbe94ac09",
+  "components": [
+    "host",
+    "large",
+    "multihead",
+    "tiny"
+  ],
+  "scope_expressions": {
+    "fp32_large": "mathcast_blocks and (D == 128 or is_causal)",
+    "fp32_multih": "oct8_coalesced and H >= 2",
+    "tiny_vfirst": "preload_direct and D == 32"
+  },
+  "appended_functions": {
+    "_coalesced_block_loads_prim_fp32_sum": {
+      "probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/fp32_core.py",
+      "function": "_coalesced_block_loads_prim_mathcast"
+    },
+    "native_sparse_attention_coalesced_blocks_fp32_sum": {
+      "probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/parent.py",
+      "function": "native_sparse_attention_coalesced_blocks_mathcast"
+    },
+    "_coalesced_block_loads_prim_fp32_mask": {
+      "probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/fp32_mask_post.py",
+      "function": "_coalesced_block_loads_prim_oct8"
+    },
+    "native_sparse_attention_coalesced_blocks_fp32_mask": {
+      "probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/parent.py",
+      "function": "native_sparse_attention_coalesced_blocks_oct8"
+    },
+    "native_sparse_attention_q_preload_vfirst": {
+      "probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/small_vfirst.py",
+      "function": "native_sparse_attention_q_preload"
+    }
+  },
+  "unchanged_nondispatch_functions": [
+    "_clamped_load_base",
+    "_paired_pos_sel",
+    "native_sparse_attention_single_block",
+    "native_sparse_attention_online",
+    "native_sparse_attention_online_emitter",
+    "_emitters",
+    "native_sparse_attention_single_block_emitter",
+    "native_sparse_attention_online_packed",
+    "native_sparse_attention_pack_kv",
+    "_make_packed_attention",
+    "native_sparse_attention_online_packed_batch_minor",
+    "native_sparse_attention_online_packed_quad_batch_minor",
+    "native_sparse_attention_single_block_pv32",
+    "native_sparse_attention_d32_shuffle",
+    "native_sparse_attention_single_vec16",
+    "native_sparse_attention_single_linear_v",
+    "native_sparse_attention_mid_shared_q",
+    "native_sparse_attention_single_block_emitter_wave",
+    "native_sparse_attention_single_vec16_wave",
+    "native_sparse_attention_single_linear_v_wave",
+    "native_sparse_attention_d32_shuffle_wave",
+    "native_sparse_attention_mid_shared_q_wave",
+    "native_sparse_attention_shared_q_reuse",
+    "native_sparse_attention_short_list",
+    "native_sparse_attention_pv32_sync",
+    "_coalesced_qo_prim",
+    "native_sparse_attention_coalesced_qo",
+    "native_sparse_attention_single_packed_qo",
+    "native_sparse_attention_single_packed_qo_v2",
+    "native_sparse_attention_pack_kv_bs32_direct",
+    "native_sparse_attention_pack_kv_bs32_shared",
+    "native_sparse_attention_short_list_qo_v2",
+    "native_sparse_attention_online_packed_batch_minor_o_v2",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+    "native_sparse_attention_single_block_emitter_index_guard",
+    "native_sparse_attention_single_block_emitter_wave_index_guard",
+    "native_sparse_attention_d32_shuffle_wave_index_guard",
+    "native_sparse_attention_d32_compact",
+    "_coalesced_block_loads_prim",
+    "native_sparse_attention_coalesced_blocks",
+    "native_sparse_attention_shared_q_blocks",
+    "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_single_packed_qo_v2_mathcast",
+    "_coalesced_block_loads_prim_mathcast",
+    "native_sparse_attention_coalesced_blocks_mathcast",
+    "native_sparse_attention_direct_kv",
+    "native_sparse_attention_linear_v_blocks_oct8",
+    "native_sparse_attention_short_list_oct8",
+    "native_sparse_attention_staged_sparse_blocks",
+    "_coalesced_block_loads_prim_oct8",
+    "native_sparse_attention_coalesced_blocks_oct8",
+    "native_sparse_attention_q_preload",
+    "native_sparse_attention_pack_kv_bs32_tiles",
+    "_as_int32",
+    "native_sparse_attention",
+    "run_kernel"
+  ],
+  "source_sha256": {
+    "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/fp32_core.py": "e414b903f8461ad72d9e328574b0ff455254170c00c35f0d85c5987ad819cda2",
+    "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/parent.py": "17b91438e869aae07d53ce0b9d99cb8579735f366e80b25faf3dcbabbe94ac09",
+    "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/fp32_mask_post.py": "cb23246c04ecad2b5691464226886bf00f9c9aeb6d2ed765924c3703e3bd06dd",
+    "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/small_vfirst.py": "4472fbe7190281d94fa0814840a991dc1ae68176fb07f672d36b1ec419c3e1b7"
+  },
+  "development": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/candidate_v7.py",
+  "development_sha256": "ac01e8f33c663d602e1a7e11805e4185fa1d6abca9ad2e1cad71afcb879adeae",
+  "submission": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/candidate_v7_submission.py",
+  "submission_sha256": "c0b0d1891dfbaea02e45fd5196a010a012a3d9efed512eaa953e89d446380fe5",
+  "status": "assembled; actual submission validation and timing required"
+}

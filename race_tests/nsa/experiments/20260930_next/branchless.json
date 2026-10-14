@@ -1,0 +1,80 @@
+{
+  "command": [
+    "experiments/20260930_tuning/compare_family.py",
+    "experiments/20260930_candidate/submission.py",
+    "experiments/20260930_next/branchless_loads.py",
+    "experiments/20260930_next/branchless_all.py",
+    "--cases",
+    "oj12,80,81",
+    "--rounds",
+    "4",
+    "--repeat",
+    "150",
+    "--samples",
+    "7",
+    "--dump",
+    "--output",
+    "experiments/20260930_next/branchless.json"
+  ],
+  "torch": "2.8.0+metax3.5.3.9",
+  "device": "MetaX C500",
+  "source_sha256": {
+    "experiments/20260930_candidate/submission.py": "ff089cd0c3007936e0000a5abdb807321ca975903a9eba005df84d9db880ce38",
+    "experiments/20260930_next/branchless_loads.py": "b1ff271bcd162b954b03a9f4705a2b50ff290871ffe9b7c367d1812d4ac8b436",
+    "experiments/20260930_next/branchless_all.py": "97fe2cea577f2a1075c26ba1b013cdda5de76c579f53feb34480c62d06b6772f"
+  },
+  "backend": "CUDA graph, one shared preallocated output for every module, public run_kernel, no cache flush, ~40ms replay warmup",
+  "repeat": 150,
+  "samples": 7,
+  "rounds": 4,
+  "rows": [
+    {
+      "case": "oj12",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "us": [
+        51.68213367462158,
+        53.53642463684082,
+        54.99391873677571
+      ],
+      "rounds_us": [
+        [
+          51.843414306640625,
+          51.6044807434082,
+          51.74784024556478,
+          51.61642710367838
+        ],
+        [
+          53.49034627278646,
+          53.58591715494792,
+          53.49546432495117,
+          53.57738494873047
+        ],
+        [
+          55.04682540893555,
+          54.91370519002279,
+          55.055357615153,
+          54.94101206461588
+        ]
+      ],
+      "speedups": [
+        1.0,
+        0.9653639372670543,
+        0.9397790676091707
+      ],
+      "max_abs_error": [
+        0.001953125,
+        0.001953125,
+        0.001953125
+      ]
+    }
+  ]
+}

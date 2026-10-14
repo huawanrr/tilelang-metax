@@ -1,0 +1,62 @@
+{
+  "variants": [
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_cast_scalar_v3.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/exp_folded.py",
+      "functions": [
+        "native_sparse_attention_online_packed",
+        "native_sparse_attention_online_packed_batch_minor_o_v2",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+      ],
+      "output": true,
+      "sha256": "aa18a12335ec6a4fc215cd5c8730504c57ffcd053c2ec34632d97eff42eb1e14"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/s8_cast_scalar_base_v3.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/nsa.py",
+      "functions": [
+        "native_sparse_attention_online_packed",
+        "native_sparse_attention_online_packed_batch_minor_o_v2",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+      ],
+      "output": true,
+      "sha256": "fb56c979ba3b14348f58de46dd1ff13214f73a9468b239e732f7ba039256ab45"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/packed_cast_scalar_v3.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/exp_folded.py",
+      "functions": [
+        "native_sparse_attention_online_packed",
+        "native_sparse_attention_online_packed_batch_minor_o_v2",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+        "native_sparse_attention_single_packed_qo_v2"
+      ],
+      "output": true,
+      "sha256": "80290994199c67d793d1daff59ab9a15acc2ccd313421933f8cddd3d23b45524"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/packed_cast_scalar_base_v3.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/nsa.py",
+      "functions": [
+        "native_sparse_attention_online_packed",
+        "native_sparse_attention_online_packed_batch_minor_o_v2",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+        "native_sparse_attention_single_packed_qo_v2"
+      ],
+      "output": true,
+      "sha256": "9c7a66fdd2731268486cc01c9cfe967ef7ab0cbf08c92c862bbcfd8c034d515e"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/single_cast_prob_v3.py",
+      "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/nsa.py",
+      "functions": [
+        "native_sparse_attention_single_packed_qo_v2"
+      ],
+      "output": false,
+      "sha256": "c4a2ee8d02de13c66c4e91e522747b947f535db4f1fc582fad48215afa967401"
+    }
+  ],
+  "reason": "Explicit G x 4 layout: thread = query + lane_group * 16; one scalar per thread",
+  "unchanged_sync": true,
+  "unchanged_math": true
+}

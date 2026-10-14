@@ -1,0 +1,44 @@
+{
+  "baseline": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/nsa.py",
+  "baseline_sha256": "644206570d4ca96c15acdf28ff9ef365e61dcbbe1670915e1ec188c80f834412",
+  "variants": [
+    {
+      "path": "short_packed_online1.py",
+      "builder": "native_sparse_attention_online_packed",
+      "arguments": "online_unroll=2, dual_acc=False, prefetch_depth=1",
+      "sha256": "7f4378b070d67dae0598e6f10018374a95aaae868508bcae740d7da1c3b15a72"
+    },
+    {
+      "path": "short_packed_online2.py",
+      "builder": "native_sparse_attention_online_packed",
+      "arguments": "online_unroll=2, dual_acc=False, prefetch_depth=2",
+      "sha256": "d32ee882da88992b0fbff4710782033d8738f01098b81f863f0d77893afa475f"
+    },
+    {
+      "path": "short_packed_stage1.py",
+      "builder": "native_sparse_attention_online_packed_batch_minor_o_v2",
+      "arguments": "online_unroll=2, dual_acc=False, prefetch_depth=1",
+      "sha256": "0d754f6f92a8040924455194095d13e71f67e981b8893be05cbe18f1cd0dad8d"
+    },
+    {
+      "path": "short_packed_stage2.py",
+      "builder": "native_sparse_attention_online_packed_batch_minor_o_v2",
+      "arguments": "online_unroll=2, dual_acc=False, prefetch_depth=2",
+      "sha256": "2065d9c6cc8b8682fabfd1ad4d6067a92b5809c1ce74d8e6133061c57b3f6593"
+    },
+    {
+      "path": "short_packed_group.py",
+      "builder": "native_sparse_attention_grouped_packed",
+      "arguments": "joined_blocks=2, output_stage=True, early_v=False, batch_minor=False",
+      "sha256": "69bac787f457550223465fedaf498d06c813d529da4c1d76718c9b38d030845f"
+    },
+    {
+      "path": "short_packed_group_early.py",
+      "builder": "native_sparse_attention_grouped_packed",
+      "arguments": "joined_blocks=2, output_stage=True, early_v=True, batch_minor=False",
+      "sha256": "e5e6e6d7af91bfb3d69bbcddc2fa2e60806632c507ea9c14fa4895ddc33d3307"
+    }
+  ],
+  "selected_blocks": 2,
+  "every_call_packs_current_inputs": true
+}

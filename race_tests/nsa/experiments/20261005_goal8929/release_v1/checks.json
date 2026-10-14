@@ -1,0 +1,2458 @@
+{
+  "status": "PASS",
+  "command": [
+    "experiments/20261005_goal8929/verify_candidate.py",
+    "experiments/20261005_goal8929/candidate_combined_v2.py",
+    "--assembly",
+    "experiments/20261005_goal8929/candidate_combined_v2_assembly.json",
+    "--resume-from",
+    "experiments/20261005_goal8929/candidate_v2_checks.json",
+    "--output",
+    "experiments/20261005_goal8929/candidate_v2_checks_resumed.json"
+  ],
+  "boundaries": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 127,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "path": "baseline",
+      "max_abs_error": 0.0009765625,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "fce4b4feff167ff073a7c895bcd6b41e7b76f0041094f2468f13c693513589f4",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '8'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "53e7b4a2003a467b308e68f3ab86370fc63e99bb5dead1127664ddc7a879acff",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "1d747cd8719d402913928c580b84b5cfed51075db6fc8cdaa02ea1a1ea4ac70b",
+          "shared_bytes": 256,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '127'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "d86328193498649d0ea8968250c30ce2992d1de1eb78b3b5c7ddf5b8c81e310e",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "small_s8",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "cffc2db509da0b03155409141843304f3d44fc8937230393a592bf092235e419",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '8'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "be049623e236e4030025556e98aa58735654119b9640066ccc6864ddb6e7049d",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "26062833b212e304bb72ed0fe139295dd8d8c7460e71c9042eea5ed838a09512",
+          "shared_bytes": 8320,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '1'), ('blockIdx.y', '128'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "host_sha256": "97a34c3212a0e01abae57cfb1408fde1ef8860f884ecdf89deb9c14bf61ea968",
+          "block_barriers": 1,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 129,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "path": "small_s8",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "8f003f0bfaee16e61b3182b1ef826d97f8b07c11d0661555ad863fcc30adbeeb",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '9'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "76a4a15655b60b5b5b7dbba1f7945843d7c3b7f134b7053e2104cacb42385404",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "9c079764b0c793ee90d531f3e5a63d4b6d2f4f32139786f5756d8780f31b6c15",
+          "shared_bytes": 8320,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '1'), ('blockIdx.y', '129'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "host_sha256": "adc3f2945d7545aeab84cdb06348bd9c164ab1cfd7f2e158f580b2001f60b733",
+          "block_barriers": 1,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 255,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "path": "small_s8",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "fa40cfe1c18f3113be9daef165b9ca52a0a2984a2db43f49204043842c08d655",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '16'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "26572c18b16d39b01a17d9f99b918bc4d2675e2b038d503071622cb9ca4248c7",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "b388ab052f3128365257bae5bd508f5442dcbbdea03541e78a7fb3654cf1f2fb",
+          "shared_bytes": 8320,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '1'), ('blockIdx.y', '255'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "host_sha256": "b85423693d57b42daf2af407bf112e5f981b212fbd3be1c0542cbcde2f36f949",
+          "block_barriers": 1,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "small_s8",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "cffc2db509da0b03155409141843304f3d44fc8937230393a592bf092235e419",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '16'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "4677639f237aac65866e2c5e93801fe68c8cc145a48b9d203c3ffcb08d15b43c",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "b9bb02afdeeea946470e4b84dd9445481a128ab4b91011412eacb47c231ec8e1",
+          "shared_bytes": 8320,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '1'), ('blockIdx.y', '256'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "host_sha256": "0ff02d22a675a65fccfefad5d24ea316dd8e10eb551fdca064e1a5fd4839e60d",
+          "block_barriers": 1,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 257,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "path": "small_s8",
+      "max_abs_error": 0.0009765625,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "5f7ce02d33eb7af987aa7617274b002dde05ac1439075d91d79d68c5bcdf7300",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '17'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "2f46f486dff939cc2c1acd74497f9a2deb0e7c3a7a4a027f6bef9289c50cdbda",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "0a28032835fd538ad1f4b2af834637345b2e08bab21e4b0fb44154cce0947f0f",
+          "shared_bytes": 8320,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '1'), ('blockIdx.y', '257'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "host_sha256": "d75e83eaf20c75a1e68618f61f3db27919e3002156e9c2afc00646a50bba3e99",
+          "block_barriers": 1,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 511,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "path": "small_s8",
+      "max_abs_error": 0.0009765625,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "d5b290f17fed9fe48dfca2956fdc13f699333b48b1798518db9127112dc02fe6",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '32'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "e5d9412ae1d8a90dd902d7be9d65f55867be02bf107c44e820abe618ba1e7e3f",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "67aec3e9e99957b28d46b0cef2b71facbd0bf468ce08024a590af3ac31a464f3",
+          "shared_bytes": 8320,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '1'), ('blockIdx.y', '511'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "host_sha256": "7f5a2edb82a1b0976c5eeff9dbbd69fd839d97a26929328cc1b81a38f33dd55a",
+          "block_barriers": 1,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "small_s8",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "cffc2db509da0b03155409141843304f3d44fc8937230393a592bf092235e419",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '32'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "bd3c7ca28d61412e90d75f805ddad53808b684a785507fc8e86abb7e816f22b7",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "0904f38b5da52f7fc5dc93d9fc25cc155d9fe5822b9aa0f90ef2a0f68b472f23",
+          "shared_bytes": 8320,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '1'), ('blockIdx.y', '512'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "host_sha256": "6859f4b5a9e7ad03460b8a07e9d8ad174287de77476b7d822d717dbca9baac96",
+          "block_barriers": 1,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 513,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "path": "baseline",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "0b8b25b64936f6df8758282eaf6d5ebd67543347d4ff7c49f194584e941bb25a",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '33'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "9469910d6af8f79fbf451f7b2c6f3cf0e3b8a3e62f13ff1bb1790c9671b8aeaf",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "24105dce5c67fb29eae3ddb61fdad57b3fd2dbda3206a859d6ef5bdbbee4dd8b",
+          "shared_bytes": 256,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '513'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "76239786bb169bbaa1c2617b65ed579a52c4d5e4ecc51a557a51a6508070b7c5",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 127,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "baseline",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "07d1c1ed6cea60573e57e435a3c24ca1ff0e5ae379d1d003c04438fa7e61054a",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '8'), ('blockIdx.y', '1'), ('blockIdx.z', '2'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "7a29279729f20782ccd3c65175960a05101dd9a04deec3ed24ed0e707ea44045",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "032a98c8a3ffee72e54724abb193c00ea990eb7231a22e288bb5b543a545833f",
+          "shared_bytes": 256,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '127'), ('blockIdx.y', '1'), ('blockIdx.z', '2'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "37eff90eff3d32907549e538c4632dfd058580e363c7664f918f90da6eb1fee7",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "small_s8",
+      "max_abs_error": 0.0009765625,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "2e9555635c479d539eb6d1ae8773a6094a559e1873445dbc1bd2543fe29dfd6d",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '8'), ('blockIdx.y', '2'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "c64563e926377f6848412d4f17733be2bc2cb121ae8025ca77050c7a81a86018",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "53b9f62c52b592ce83ee258e165658fa533a6ff309c944847f0de90c5b6b853a",
+          "shared_bytes": 8320,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '2'), ('blockIdx.y', '128'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "host_sha256": "c4c4bd9bd47430f3c547e371cad40125880afb342a3a0d4ad052d46f5100a4d4",
+          "block_barriers": 1,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 4,
+        "HQ": 64,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "path": "small_s8",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "398d2ea454f8de9ba3b0fc80c8f68a3f64127539813a880c96b88489ff0b9eaa",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '8'), ('blockIdx.y', '4'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "2dbed3e9802f4951da891848b4480fe40461b67ec02034691db0b4c9ca11ebdc",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "b16acf4bee9468697c3731bb09b71a9a9e3e1677eb02af5156df30963b9bddc9",
+          "shared_bytes": 8320,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '4'), ('blockIdx.y', '128'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "host_sha256": "8c4ec583011cf1af9be1a72780974c90b208c1699f2ebd77ea9bedd91d2e5edc",
+          "block_barriers": 1,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 129,
+        "H": 4,
+        "HQ": 64,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "baseline",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "ef6026121153450d41e909b35defc09bb5e1aeb73d52ff78197d8e5db0768243",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '9'), ('blockIdx.y', '4'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "527c5889260e39996bf157c11ec4135ce8652c8a077fc71bae750d793487126f",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "6d3fa51bf77404dbead17c4fc4a24f8d504665cbbf2a69f513b951f597a4f7d2",
+          "shared_bytes": 256,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '129'), ('blockIdx.y', '1'), ('blockIdx.z', '4'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "5d13b1bba64df883f34f6e39d0e249ae453ca456d7407e62a988670b7b55ad08",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "small_s8",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "457ef72273a6766218f6fa2e6083794739f712b4cc161a68faca844549558b40",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '16'), ('blockIdx.y', '1'), ('blockIdx.z', '2'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "6e2a7f9ff08d1af406756eba5a7af2c85fa684dd3aa6dc2bbe774e80b4ca5b44",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "4729699864810e902c1144ae19d6b8af0f5d2c4c4ab681e3a788b18e246515aa",
+          "shared_bytes": 8320,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '2'), ('blockIdx.y', '256'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "host_sha256": "5c1f2badbaa43290532f43d9919280ca605487a4496ce463ecc22f1f0601f9f6",
+          "block_barriers": 1,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 257,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "baseline",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "8f12263ce30dee88c986f21e7ca1b698191c9889134a87707de9bd64f97b1e55",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '17'), ('blockIdx.y', '1'), ('blockIdx.z', '2'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "7b27e57604e06dc5a52e66152a14240e7a0c4de7c54da67ea7cde8169ef24d6a",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "6cb74695122f368a31806ce7c580bc30cf81ac566e9ef64907a273170abdf17d",
+          "shared_bytes": 256,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '257'), ('blockIdx.y', '1'), ('blockIdx.z', '2'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "e416e707273e69ffda98aba2bc355cd05dfc16c6f087c9204118ac4e58554d08",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2047,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "path": "baseline",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "b287ce61b67549bde4161d1434aee99fbba57c0d84ea6343b4b1cf340c49e54a",
+          "shared_bytes": 4096,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '2047'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "98fa3a7e90e0dcc96d143a936e6400aa0c1e034b24dc1a8e12d3d607e858c17a",
+          "block_barriers": 3,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "s4_pf2",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "cffc2db509da0b03155409141843304f3d44fc8937230393a592bf092235e419",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '128'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "2953b66d16a6026924b2077a022a08e677c34dd8bab5e422d7473c7878fbbb28",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "d7e5df82a33006f4715ff55e4624488cb81ad0e488cc42981b7928f19599eeac",
+          "shared_bytes": 2048,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '2048'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "09399857ac47cd1c6fbda69717d4af0b7a407c50d5bdd86e5e9f2321c54710dd",
+          "block_barriers": 0,
+          "wave_barriers": 1
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2049,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "path": "s4_pf2",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "012634f5b3ff39f47131051cdc1a693a1301cb062c9622db71ef316a8de531f9",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '129'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "3004b39ee7382b24946dcdf81995255993d5b671f9692d31b90c81fb6adae3df",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "428aa40afeefcabf0a51b9559d23685b01fbdd56e87fef93a006de7a8d76ba5a",
+          "shared_bytes": 2048,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '2049'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "4548d01c2d90900d2f616d1a7994077b500866ee93f4395e6da20f8e1ffb3c6a",
+          "block_barriers": 0,
+          "wave_barriers": 1
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3071,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "path": "s4_pf2",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "fbef66def73341e668d44ac75c86b5b3e3e6b9121a4dfdbe2845ed90de280bcc",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '192'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "5db59c5b54e1ee4bd373238c2e019bbc06a28e7652ddcc3b65c1e0860e45413d",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "5806d6a5baec012348eed424b02d31fda544c32e0b4026a42897a2ae43a0d2b4",
+          "shared_bytes": 2048,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '3071'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "34a410df76ffc15466d8a145fb6b04de8ced9d3d55cabd769c9a79e9559ddc39",
+          "block_barriers": 0,
+          "wave_barriers": 1
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3072,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "s4_pf4",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "cffc2db509da0b03155409141843304f3d44fc8937230393a592bf092235e419",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '192'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "6fc238e4f03b778fa1faa2977e24960a4e9c70337ff3473fba3a00016380206d",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "f32940ed48e0ba6d5566568f306581cc61ff27b77f02e38180bb636e7db2f248",
+          "shared_bytes": 2048,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '3072'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "12dcebb285baa4693e1bc7a72ea984077265675d292bc80e692eb30c6b2febc9",
+          "block_barriers": 0,
+          "wave_barriers": 1
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3073,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "path": "s4_pf4",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "14e3600fa744c97a2b8f1abc179a845e0a73d8e5a6b99d2de2e257db0fa4aa97",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '193'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "27c2d0eeabab1817552c7091ed72e3eba56d9201073d851d0b7b282a67f95b44",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "91125ac5b6d4f0555517eb107d8f831cd31a097a8da924430173c4a6ca5db3f1",
+          "shared_bytes": 2048,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '3073'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "870972af9600385a8e14072ff381c407d95dfd70012f130270c3765c0211e799",
+          "block_barriers": 0,
+          "wave_barriers": 1
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 9,
+        "SEQ_LEN": 255,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "baseline",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "171e97afe09926ee5001615b4bd47d9f5000bd6f708342fc36bc0afcf72aa5b8",
+          "shared_bytes": 4096,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '255'), ('blockIdx.y', '1'), ('blockIdx.z', '9'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "b9f4b8e16c8645e0cd81b5cdf55bd08c2e08c302cd5afe1f4ceea975fd20462d",
+          "block_barriers": 3,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 9,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "s4_pf2",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "457ef72273a6766218f6fa2e6083794739f712b4cc161a68faca844549558b40",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '16'), ('blockIdx.y', '1'), ('blockIdx.z', '9'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "e3ab1e11962aa248a1162489fe2f9607674acb8b2ae550a07cae766ae7407a46",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "273bede2853c47384f29505b1c1cbec798bcb6424dff54f8fdf94eb3959b4aaf",
+          "shared_bytes": 2048,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '256'), ('blockIdx.y', '1'), ('blockIdx.z', '9'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "40d257482005f452323b51b509553f5bd5a46767ba2c2b55df45bb1a35a0b70a",
+          "block_barriers": 0,
+          "wave_barriers": 1
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 9,
+        "SEQ_LEN": 257,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "s4_pf2",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "8f12263ce30dee88c986f21e7ca1b698191c9889134a87707de9bd64f97b1e55",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '17'), ('blockIdx.y', '1'), ('blockIdx.z', '9'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "281be5d5b5d273494f9860e58685a9ab5e27053c76512722d458bfc1b8791665",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "d55b9354cc8cc38eb34a26570f8d857ca1b93b1b2f850235a4271b7c89986444",
+          "shared_bytes": 2048,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '257'), ('blockIdx.y', '1'), ('blockIdx.z', '9'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "4d65db9f581211515df1ad3b7cdbe1aef72bf8b22f320586fabde17f6d4787dd",
+          "block_barriers": 0,
+          "wave_barriers": 1
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 255,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "baseline",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "171e97afe09926ee5001615b4bd47d9f5000bd6f708342fc36bc0afcf72aa5b8",
+          "shared_bytes": 4096,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '255'), ('blockIdx.y', '1'), ('blockIdx.z', '4'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "c58df4b9d7c320fc35924b31fe2528e1808a6996c6e940b34282feedb931e670",
+          "block_barriers": 3,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "baseline",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "587d45e3edf4926bdc41885312d64b7473b5048480c5b30c6b746fe1164edb76",
+          "shared_bytes": 4096,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '256'), ('blockIdx.y', '1'), ('blockIdx.z', '4'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "afd4e9bd2e96f2f3bd6bbc5f15fd2533e4809e8378b85b937d5081deddea6f8a",
+          "block_barriers": 3,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 257,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "baseline",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "f7c53c09bb1f0bfc03996346f5f7d587c2ddd353238a17192b5ca05af5b0babc",
+          "shared_bytes": 4096,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '257'), ('blockIdx.y', '1'), ('blockIdx.z', '4'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "e0cc83aa3e9e66999ac17073b7dd6fa6901b981ab50486335cfe28cfc8001846",
+          "block_barriers": 3,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "baseline",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "a505483171c1f7cdefac8c0285c118ffd0aafe0c32349d6c6e1481494f17de38",
+          "shared_bytes": 4096,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '512'), ('blockIdx.y', '1'), ('blockIdx.z', '2'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "fd2c060e4c64b00afe87a0935bd2a246aed501d85530dacec5bf73aafc0553d6",
+          "block_barriers": 3,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1024,
+        "H": 4,
+        "HQ": 64,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "baseline",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "a2f89c964e69d1f093e408e53b8f2c7f7d67a242a5fd3303688b2cf541b3c2b9",
+          "shared_bytes": 4096,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '1024'), ('blockIdx.y', '1'), ('blockIdx.z', '4'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "f03863787908e6fc00ac422cfd154e29b245cfc599cda9bcc4b66bfad53f5333",
+          "block_barriers": 3,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "path": "s4_pf4",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "3ff9f35c7f3607f7fed290a38261bef460fa26141002ff1530ea19b5aae7a683",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '65'), ('blockIdx.y', '1'), ('blockIdx.z', '4'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "f70ae81053041b5894d350a23023cbbae9cc9a5025dcab28706e44328e61c382",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "cabfe6f48ddbc8b966879831c51d076578edf45f5004eb5a7c6fadacfe9a12ed",
+          "shared_bytes": 2048,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '1025'), ('blockIdx.y', '1'), ('blockIdx.z', '4'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "21f1eed7b4f224dd5e2ebacf194f611b1ba7163fab9bd124ce0f6a0e3bd7636e",
+          "block_barriers": 0,
+          "wave_barriers": 1
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "baseline",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "0f0c7115cb7281aa6dab8e5a4859ee3805f6c4ae4f2a19e012088f4b1cb35ee0",
+          "shared_bytes": 4096,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '256'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "cfc6a5f9adbae2d10e613099a9847195e85a886b055e76fb852bed2247062ba2",
+          "block_barriers": 3,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 16,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "baseline",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "cffc2db509da0b03155409141843304f3d44fc8937230393a592bf092235e419",
+          "shared_bytes": 0,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '8'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "host_sha256": "be049623e236e4030025556e98aa58735654119b9640066ccc6864ddb6e7049d",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        },
+        {
+          "device_sha256": "284e2ea77ba2298924ebdbf87fbf21ab9eecb8a64cbd6a015fc92573d6534427",
+          "shared_bytes": 256,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '128'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "4cf94dbc7279bbe969904c34e60a45654df89bb2f71eeac1c9389d28e904a0e8",
+          "block_barriers": 0,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 129,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "baseline",
+      "max_abs_error": 0.0009765625,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "5fa74b04191393a2018e08e70e448138a70bad2d2027f4374473f629301a17a3",
+          "shared_bytes": 1024,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '129'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "1e08fbe48eccef10ffc1b00440f4454dfb8d7ce40363dabf3b5a66c2bfecf6bd",
+          "block_barriers": 0,
+          "wave_barriers": 1
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 129,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 8,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "path": "baseline",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "41cb9d1ddcff7a1d38fed94bfe9b676d35d6e9f6555b3ce6623ec99163074abf",
+          "shared_bytes": 16384,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '129'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "4c053afa7d0fcfbaa7d2e6054334ca145f9700c772a572c0bd3fa1abcc2adc78",
+          "block_barriers": 3,
+          "wave_barriers": 0
+        }
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 32,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "path": "baseline",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "source_audit": [
+        {
+          "device_sha256": "9d38a9960bf68a51ee8fcc4306ea567a57d175eb7dbb92a2922318b0eede3908",
+          "shared_bytes": 4096,
+          "shared_method": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '256'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "host_sha256": "f3938fa7bfcf6ef6cc9111905ce9cceaa1fc6d055bd783126a1c2f5f774576e9",
+          "block_barriers": 3,
+          "wave_barriers": 0
+        }
+      ]
+    }
+  ],
+  "extremes": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 129,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.0009765625,
+      "both_interfaces": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 257,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2049,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3073,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true
+    }
+  ],
+  "fallbacks": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "q_preload": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "kv_reuse": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "nmax": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "stage_regs": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "kv_split": true
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "q_frag": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "o_stage": true
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "pair": 2
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "late_normalize": true
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "online_unroll": 1
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "num_stages": 2
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "q_preload": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "kv_reuse": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "nmax": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "stage_regs": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "kv_split": true
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "q_frag": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "o_stage": true
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "pair": 2
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "late_normalize": true
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "online_unroll": 1
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "num_stages": 2
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "q_preload": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "kv_reuse": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "nmax": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "stage_regs": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "kv_split": true
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "q_frag": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "o_stage": true
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "pair": 2
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "late_normalize": true
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "online_unroll": 1
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "num_stages": 2
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3072,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "q_preload": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3072,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "kv_reuse": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3072,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "nmax": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3072,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "stage_regs": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3072,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "kv_split": true
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3072,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "q_frag": false
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3072,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "o_stage": true
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3072,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "pair": 2
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3072,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "late_normalize": true
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3072,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "online_unroll": 1
+      },
+      "source_and_flags_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3072,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "num_stages": 2
+      },
+      "source_and_flags_equal": true
+    }
+  ],
+  "unsupported": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "threads": 128
+      },
+      "same_baseline_failure": true,
+      "error_type": "InternalError",
+      "reason": "Check failed: pb->value != 0 (0 vs. 0) : Divide by zero"
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "threads": 128
+      },
+      "same_baseline_failure": true,
+      "error_type": "InternalError",
+      "reason": "Check failed: pb->value != 0 (0 vs. 0) : Divide by zero"
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 2048,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "threads": 128
+      },
+      "same_baseline_failure": true,
+      "error_type": "InternalError",
+      "reason": "Check failed: pb->value != 0 (0 vs. 0) : Divide by zero"
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3072,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "knobs": {
+        "threads": 128
+      },
+      "same_baseline_failure": true,
+      "error_type": "InternalError",
+      "reason": "Check failed: pb->value != 0 (0 vs. 0) : Divide by zero"
+    }
+  ],
+  "unsupported_shapes": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 8,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "same_baseline_failure": true,
+      "error_type": "InternalError",
+      "reason": "Check failed: (M % kMPerWarp == 0) is false: M must be divisible by 16, but got 8"
+    }
+  ],
+  "refresh": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 129,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "iteration": 0,
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140418138276352,
+        140418140303360,
+        140418140320256,
+        140418138545152
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 129,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "iteration": 1,
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140418138276352,
+        140418140303360,
+        140418140320256,
+        140418138545152
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 129,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "iteration": 2,
+      "max_abs_error": 0.0009765625,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140418138276352,
+        140418140303360,
+        140418140320256,
+        140418138545152
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 257,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "iteration": 0,
+      "max_abs_error": 0.0009765625,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140418139623424,
+        140418140149760,
+        140418140183040,
+        140418140216320
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 257,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "iteration": 1,
+      "max_abs_error": 0.0009765625,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140418139623424,
+        140418140149760,
+        140418140183040,
+        140418140216320
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 257,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "iteration": 2,
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140418139623424,
+        140418140149760,
+        140418140183040,
+        140418140216320
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "iteration": 0,
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140418138243072,
+        140418140300288,
+        140418138767360,
+        140418138808320
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "iteration": 1,
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140418138243072,
+        140418140300288,
+        140418138767360,
+        140418138808320
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "iteration": 2,
+      "max_abs_error": 0.0009765625,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140418138243072,
+        140418140300288,
+        140418138767360,
+        140418138808320
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2049,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "iteration": 0,
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140418710765568,
+        140418708213760,
+        140418706571264,
+        140418708509696
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2049,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "iteration": 1,
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140418710765568,
+        140418708213760,
+        140418706571264,
+        140418708509696
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2049,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "iteration": 2,
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140418710765568,
+        140418708213760,
+        140418706571264,
+        140418708509696
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3073,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "iteration": 0,
+      "max_abs_error": 0.0009765625,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140418050164736,
+        140418706833920,
+        140418138243072,
+        140418708592640
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3073,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "iteration": 1,
+      "max_abs_error": 0.0009765625,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140418050164736,
+        140418706833920,
+        140418138243072,
+        140418708592640
+      ]
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3073,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "iteration": 2,
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140418050164736,
+        140418706833920,
+        140418138243072,
+        140418708592640
+      ]
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "iteration": 0,
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140417987248128,
+        140418139424256,
+        140418707227648,
+        140418706686976
+      ]
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "iteration": 1,
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140417987248128,
+        140418139424256,
+        140418707227648,
+        140418706686976
+      ]
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "iteration": 2,
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true,
+      "graph_replay": true,
+      "input_addresses": [
+        140417987248128,
+        140418139424256,
+        140418707227648,
+        140418706686976
+      ]
+    }
+  ],
+  "guarded": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 129,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 257,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 2049,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 3073,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true
+    }
+  ],
+  "module_sha256": "966b63efee6769dd0edd84d8d489b209dabeefd5abef9176488edd96c8b98007",
+  "harness_sha256": "e446848012cff1eeb7c611863b8c508f5c45fbcf6b95425def5f76e5ce5659b0",
+  "reference_matmul_tf32": false,
+  "official_sandbox": false,
+  "resumed_from": {
+    "path": "experiments/20261005_goal8929/candidate_v2_checks.json",
+    "sha256": "07919c39e1bab9dc0a5a328601e9fa2a92bf01522e26d41896caa55f62e0e6bf",
+    "harness_sha256": "d56cc7ffaa2ac693fc109c7a3d3540a87bbbd82d6921bd616c7630b9e9abf62c"
+  }
+}

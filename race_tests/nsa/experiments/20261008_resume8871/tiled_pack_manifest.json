@@ -1,0 +1,25 @@
+{
+  "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/parent.py",
+  "parent_sha256": "4887b6a68ea8f0a7647441625079f87f74c13906bcfb7bcd17e9fa170769121d",
+  "variants": [
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/pack_tiles_rows.py",
+      "sha256": "b226118c34566564e2fb5a098ff01b19362d51459f868a72497b95c9a83cce55",
+      "split_axis": "rows",
+      "threads_per_cta": 128,
+      "tiles_per_input_block": 2
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/pack_tiles_cols.py",
+      "sha256": "7b5c8f4857e899d5a25d6793f1700fee2babe0df725265c8c1ffa964249a2453",
+      "split_axis": "cols",
+      "threads_per_cta": 128,
+      "tiles_per_input_block": 2
+    }
+  ],
+  "partition": "Disjoint halves of BS32 x D128, full destination coverage",
+  "copies": "Synchronous copies retain partial-row zero filling",
+  "shared_sync": "One CTA RAW barrier after both shared writes",
+  "attention_unchanged": true,
+  "safety_passes_unchanged": true
+}

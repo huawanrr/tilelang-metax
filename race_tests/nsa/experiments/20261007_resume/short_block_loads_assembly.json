@@ -1,0 +1,34 @@
+{
+  "baseline": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/nsa.py",
+  "baseline_sha256": "644206570d4ca96c15acdf28ff9ef365e61dcbbe1670915e1ec188c80f834412",
+  "variants": [
+    {
+      "path": "short_block_loads_v2.py",
+      "fp16_load_width": 2,
+      "added_builders": [
+        "native_sparse_attention_short_list_blocks",
+        "native_sparse_attention_short_list_qo_v2_blocks"
+      ],
+      "sha256": "c2375176d4e87552406378ec9438293ad776946af2500bb65a48cc423e89da8d"
+    },
+    {
+      "path": "short_block_loads_v4.py",
+      "fp16_load_width": 4,
+      "added_builders": [
+        "native_sparse_attention_short_list_blocks",
+        "native_sparse_attention_short_list_qo_v2_blocks"
+      ],
+      "sha256": "a25a5c15dbd18ad39e4a9014f6b761bd3563fb47915f7aa9d30d36d3ac599c17"
+    },
+    {
+      "path": "short_block_loads_v8.py",
+      "fp16_load_width": 8,
+      "added_builders": [
+        "native_sparse_attention_short_list_blocks",
+        "native_sparse_attention_short_list_qo_v2_blocks"
+      ],
+      "sha256": "ce91bb9e6c3109fa0c70465affd4d4851e7b481ac1f00ac5ee17b926e0a816a6"
+    }
+  ],
+  "note": "Each selected full block is validated before typed vector loads. Invalid tiles are explicitly zero-filled; all original score masks and synchronization remain."
+}

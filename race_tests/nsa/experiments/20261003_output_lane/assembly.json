@@ -1,0 +1,33 @@
+{
+  "baseline": "experiments/20261003_d128_v1/nsa.py",
+  "baseline_sha256": "9b08cfb7274b10ca2b933d81b80af57e2ad5fd37d01b8b0516b3d7c38fefa9df",
+  "variants": [
+    {
+      "path": "experiments/20261003_output_lane/output_lane_shared.py",
+      "sha256": "a46ead42b27428fe1d6752891e5b35df9c25d906f578e5bf1791be1d3cb2e117",
+      "changed_functions": [
+        "_coalesced_block_loads_prim",
+        "_coalesced_qo_prim",
+        "native_sparse_attention_online_packed_batch_minor_o_v2",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+        "native_sparse_attention_single_packed_qo_v2"
+      ]
+    },
+    {
+      "path": "experiments/20261003_output_lane/output_lane_d32.py",
+      "sha256": "ddb9ce40b65735b258c369451ccae3ab5203a5007f05648c66bf5db0752b2cfe",
+      "changed_functions": [
+        "native_sparse_attention_d32_compact",
+        "native_sparse_attention_d32_shuffle",
+        "native_sparse_attention_d32_shuffle_wave",
+        "native_sparse_attention_d32_shuffle_wave_index_guard",
+        "native_sparse_attention_single_block_emitter_index_guard",
+        "native_sparse_attention_single_block_emitter_wave_index_guard"
+      ]
+    }
+  ],
+  "method": "Pair fp16 outputs into uint32, permute the lane, store four consecutive fp16 per lane",
+  "source_lane": "destination_lane // 4 + destination_lane % 4 * 16",
+  "unchanged_math": true,
+  "asynchronous_operations": false
+}

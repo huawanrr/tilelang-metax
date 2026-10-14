@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "stages": [
+    {
+      "command": [
+        "experiments/20261003_output_lane/verify_reference.py",
+        "experiments/20261003_d32_output_v1/submission.py",
+        "--extras",
+        "--output",
+        "experiments/20261003_d32_output_v1/verification_fp32.json"
+      ],
+      "status": "PASS",
+      "log": "verification_fp32.log"
+    },
+    {
+      "command": [
+        "check_equiv.py",
+        "experiments/20261003_d32_output_v1/nsa.py",
+        "experiments/20261003_d32_output_v1/submission.py"
+      ],
+      "status": "PASS",
+      "log": "equivalence.log"
+    },
+    {
+      "command": [
+        "experiments/20261003_output_lane/audit_lane.py",
+        "--directory",
+        "experiments/20261003_d32_output_v1"
+      ],
+      "status": "PASS",
+      "log": "device_audit.log"
+    }
+  ]
+}

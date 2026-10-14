@@ -1,0 +1,31 @@
+{
+  "baseline": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/submission.py",
+  "variants": [
+    {
+      "path": "bs32_kstream_p1_compute.py",
+      "prefetch": 1,
+      "first_load_before_q_staging": false,
+      "sha256": "7937fdd2b3e118646ca632fb6379cb1253c712aeddc79b299af92f933fd653c1"
+    },
+    {
+      "path": "bs32_kstream_p1_early.py",
+      "prefetch": 1,
+      "first_load_before_q_staging": true,
+      "sha256": "dd0e3881aefe841f8dcef1a570ff021c161018cd3d6f7d6c2e024e81cbae3a04"
+    },
+    {
+      "path": "bs32_kstream_p2_compute.py",
+      "prefetch": 2,
+      "first_load_before_q_staging": false,
+      "sha256": "d5cc61a6d0425beee8478562511093b7aa5a31168fff4a5858e960324c811980"
+    },
+    {
+      "path": "bs32_kstream_p2_early.py",
+      "prefetch": 2,
+      "first_load_before_q_staging": true,
+      "sha256": "6157dbf7bb4a4bdb4d0b7e163b054b3bb5820914adaff6cac5a28857e2de097d"
+    }
+  ],
+  "changes": "Same MMA calls, operands, and accumulation order. One or two local K slices instead of the full D128 fragment.",
+  "preserved": "Packing, host dispatch, Q/output staging, bounds/race checking, and explicit synchronization."
+}

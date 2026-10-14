@@ -1,0 +1,59 @@
+{
+  "baseline": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/parent.py",
+  "baseline_sha256": "4887b6a68ea8f0a7647441625079f87f74c13906bcfb7bcd17e9fa170769121d",
+  "targets": [
+    "native_sparse_attention_coalesced_blocks_mathcast",
+    "native_sparse_attention_coalesced_blocks_oct8",
+    "native_sparse_attention_direct_kv",
+    "native_sparse_attention_linear_v_blocks_oct8",
+    "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_q_preload",
+    "native_sparse_attention_short_list_oct8",
+    "native_sparse_attention_single_packed_qo_v2_mathcast",
+    "native_sparse_attention_staged_sparse_blocks"
+  ],
+  "variants": [
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/compiler_vector_loads.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-scalarize-global-loads=0"
+      ],
+      "sha256": "1dbbda47c5fa6b85ec0b35a083b20ae6245e938cd306605e559e8d11ad860fdd"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/compiler_half_copy.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-enable-16bit-reg-copy-opt=true"
+      ],
+      "sha256": "9457687d870fe8636c874f7c7919ba26ec06a5c3207aa805226d70e05de61743"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/compiler_packed_fma.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-pk-fma=1"
+      ],
+      "sha256": "77b4d5f6ac1d3bfb890ea6b533726c4ac9e31baac724facca7bfe8d001efb25b"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/compiler_reciprocal.py",
+      "flags": [
+        "-freciprocal-math"
+      ],
+      "sha256": "77130c32a53ab8a620367d5ed1f83dc10cf388f47131f765d63fef144597b271"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/compiler_fast_preserve_inf.py",
+      "flags": [
+        "-ffast-math",
+        "-fno-finite-math-only"
+      ],
+      "sha256": "d2e844ede88ac4410f4f2ef2d3eebb1ea4f2a7d93fa3583a499454b7ab29687f"
+    }
+  ],
+  "function_bodies_unchanged": true,
+  "safety_passes_unchanged": true
+}

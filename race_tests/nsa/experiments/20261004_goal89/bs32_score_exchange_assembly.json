@@ -1,0 +1,34 @@
+{
+  "variants": [
+    {
+      "path": "bs32_score_exchange_stage_early.py",
+      "parent": "bs32_colwaves_q4_early.py",
+      "q_direct": false,
+      "late_normalize": false,
+      "sha256": "8ae5fda70b8d06a24b2d9192852ad132ea8a0bea2f918e1223bb2a70fca61dbd"
+    },
+    {
+      "path": "bs32_score_exchange_direct_early.py",
+      "parent": "bs32_colwaves_q4_early.py",
+      "q_direct": true,
+      "late_normalize": false,
+      "sha256": "305a226f6b465242a08837ce64da1f4e776454ce5fec676e918334cac89c997d"
+    },
+    {
+      "path": "bs32_score_exchange_stage_late.py",
+      "parent": "bs32_colwaves_q4_late.py",
+      "q_direct": false,
+      "late_normalize": true,
+      "sha256": "8fbd981e2d9dd0b6304c06418e0b01469a3646f569a428867953c54ee6770398"
+    },
+    {
+      "path": "bs32_score_exchange_direct_late.py",
+      "parent": "bs32_colwaves_q4_late.py",
+      "q_direct": true,
+      "late_normalize": true,
+      "sha256": "fa49beb09f219a32511db766a4f8779c841ce173c30654ad3d3219c854c9bdfa"
+    }
+  ],
+  "math": "Each wave receives complete FP32 score rows and computes the same denominator using wave-local reduction.",
+  "synchronization": "Explicit CTA barriers protect shared score exchange and scratch reuse. No large partial output reduction."
+}

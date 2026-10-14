@@ -1,0 +1,569 @@
+{
+  "status": "PASS",
+  "official_sandbox": false,
+  "command": [
+    "experiments/20261013_mfma_fix/verify_compatibility.py"
+  ],
+  "parent_sha256": "7d57a0519b0b2d9fb2694f2c56d8d8e97baa4b3b93bbd10a409ea2679a45d28d",
+  "submission_sha256": "71dd44e50e32a83a3758f656cf5ffcd757acae853546d69a226ec185bb18df92",
+  "harness_sha256": "afa06c3d6a4d900243850ce865c7ea267f91598e4817863420bfacf2793528bd",
+  "tilelang_path": "/app/tilelang-metax/tilelang/__init__.py",
+  "modified_functions": [
+    "_coalesced_block_loads_prim_fp32_sum",
+    "_coalesced_block_loads_prim_fp32_mask",
+    "_coalesced_block_loads_prim_boundary_v8"
+  ],
+  "byte_changes_limited_to_dtype_arguments": true,
+  "strict_primexpr": [
+    {
+      "builder": "_coalesced_block_loads_prim_fp32_sum",
+      "expected_rejection": true,
+      "error": "Mismatched type on argument #0 when calling: `tir.Evaluate(0: ir.PrimExpr, 1: ir.Span) -> tir.Evaluate`. Expected `ir.PrimExpr` but got `DataType`",
+      "traceback": "Traceback (most recent call last):\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261013_mfma_fix/verify_compatibility.py\", line 97, in main\n    getattr(parent, name)(**build_args)\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261012_goal89/release_v10/submission.py\", line 8364, in _coalesced_block_loads_prim_fp32_sum\n    @T.prim_func\n     ^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/language/eager/builder.py\", line 1284, in prim_func\n    return impl(func) if func is not None else impl\n           ^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/language/eager/builder.py\", line 1282, in impl\n    raise e\n  File \"/app/tilelang-metax/tilelang/language/eager/builder.py\", line 1275, in impl\n    ir_gen.gen(builder)(**annot)\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261012_goal89/release_v10/submission.py\", line 8460, in kernel\n    wsum.mma(lane_sum, wsum_unit, wsum_output, 0)\n  File \"/app/tilelang-metax/tilelang/maca/intrinsics/macro/mma_macro_generator.py\", line 406, in mma\n    return _warp_mma(A_local_buf, B_local_buf, C_local_buf)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/language/eager/builder.py\", line 779, in __call__\n    res = self.ir_gen.gen(builder)(*args, **kwargs)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/maca/intrinsics/macro/mma_macro_generator.py\", line 390, in _warp_mma\n    T.tvm_mfma(\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261013_mfma_fix/verify_compatibility.py\", line 88, in strict_mfma\n    tir.Evaluate(descriptor)\n  File \"/app/tilelang-metax/3rdparty/tvm/python/tvm/tir/stmt.py\", line 563, in __init__\n    self.__init_handle_by_constructor__(_ffi_api.Evaluate, value, span)  # type: ignore\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"python/tvm_ffi/cython/object.pxi\", line 186, in tvm_ffi.core.Object.__init_handle_by_constructor__\n  File \"python/tvm_ffi/cython/function.pxi\", line 123, in tvm_ffi.core.ConstructorCall\n  File \"python/tvm_ffi/cython/error.pxi\", line 159, in tvm_ffi.core.CHECK_CALL\nTypeError: Mismatched type on argument #0 when calling: `tir.Evaluate(0: ir.PrimExpr, 1: ir.Span) -> tir.Evaluate`. Expected `ir.PrimExpr` but got `DataType`\n",
+      "mma_calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "dtype",
+          "b_type": "dtype"
+        }
+      ],
+      "fixed_pass": true,
+      "fixed_mma_calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "_coalesced_block_loads_prim_fp32_mask",
+      "expected_rejection": true,
+      "error": "Mismatched type on argument #0 when calling: `tir.Evaluate(0: ir.PrimExpr, 1: ir.Span) -> tir.Evaluate`. Expected `ir.PrimExpr` but got `DataType`",
+      "traceback": "Traceback (most recent call last):\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261013_mfma_fix/verify_compatibility.py\", line 97, in main\n    getattr(parent, name)(**build_args)\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261012_goal89/release_v10/submission.py\", line 8525, in _coalesced_block_loads_prim_fp32_mask\n    @T.prim_func\n     ^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/language/eager/builder.py\", line 1284, in prim_func\n    return impl(func) if func is not None else impl\n           ^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/language/eager/builder.py\", line 1282, in impl\n    raise e\n  File \"/app/tilelang-metax/tilelang/language/eager/builder.py\", line 1275, in impl\n    ir_gen.gen(builder)(**annot)\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261012_goal89/release_v10/submission.py\", line 8613, in kernel\n    wsum.mma(lane_sum, wsum_unit, wsum_output, 0)\n  File \"/app/tilelang-metax/tilelang/maca/intrinsics/macro/mma_macro_generator.py\", line 406, in mma\n    return _warp_mma(A_local_buf, B_local_buf, C_local_buf)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/language/eager/builder.py\", line 779, in __call__\n    res = self.ir_gen.gen(builder)(*args, **kwargs)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/maca/intrinsics/macro/mma_macro_generator.py\", line 390, in _warp_mma\n    T.tvm_mfma(\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261013_mfma_fix/verify_compatibility.py\", line 88, in strict_mfma\n    tir.Evaluate(descriptor)\n  File \"/app/tilelang-metax/3rdparty/tvm/python/tvm/tir/stmt.py\", line 563, in __init__\n    self.__init_handle_by_constructor__(_ffi_api.Evaluate, value, span)  # type: ignore\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"python/tvm_ffi/cython/object.pxi\", line 186, in tvm_ffi.core.Object.__init_handle_by_constructor__\n  File \"python/tvm_ffi/cython/function.pxi\", line 123, in tvm_ffi.core.ConstructorCall\n  File \"python/tvm_ffi/cython/error.pxi\", line 159, in tvm_ffi.core.CHECK_CALL\nTypeError: Mismatched type on argument #0 when calling: `tir.Evaluate(0: ir.PrimExpr, 1: ir.Span) -> tir.Evaluate`. Expected `ir.PrimExpr` but got `DataType`\n",
+      "mma_calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "dtype",
+          "b_type": "dtype"
+        }
+      ],
+      "fixed_pass": true,
+      "fixed_mma_calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "_coalesced_block_loads_prim_boundary_v8",
+      "expected_rejection": true,
+      "error": "Mismatched type on argument #0 when calling: `tir.Evaluate(0: ir.PrimExpr, 1: ir.Span) -> tir.Evaluate`. Expected `ir.PrimExpr` but got `DataType`",
+      "traceback": "Traceback (most recent call last):\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261013_mfma_fix/verify_compatibility.py\", line 97, in main\n    getattr(parent, name)(**build_args)\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261012_goal89/release_v10/submission.py\", line 8757, in _coalesced_block_loads_prim_boundary_v8\n    @T.prim_func\n     ^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/language/eager/builder.py\", line 1284, in prim_func\n    return impl(func) if func is not None else impl\n           ^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/language/eager/builder.py\", line 1282, in impl\n    raise e\n  File \"/app/tilelang-metax/tilelang/language/eager/builder.py\", line 1275, in impl\n    ir_gen.gen(builder)(**annot)\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261012_goal89/release_v10/submission.py\", line 8845, in kernel\n    wsum.mma(lane_sum, wsum_unit, wsum_output, 0)\n  File \"/app/tilelang-metax/tilelang/maca/intrinsics/macro/mma_macro_generator.py\", line 406, in mma\n    return _warp_mma(A_local_buf, B_local_buf, C_local_buf)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/language/eager/builder.py\", line 779, in __call__\n    res = self.ir_gen.gen(builder)(*args, **kwargs)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/maca/intrinsics/macro/mma_macro_generator.py\", line 390, in _warp_mma\n    T.tvm_mfma(\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261013_mfma_fix/verify_compatibility.py\", line 88, in strict_mfma\n    tir.Evaluate(descriptor)\n  File \"/app/tilelang-metax/3rdparty/tvm/python/tvm/tir/stmt.py\", line 563, in __init__\n    self.__init_handle_by_constructor__(_ffi_api.Evaluate, value, span)  # type: ignore\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"python/tvm_ffi/cython/object.pxi\", line 186, in tvm_ffi.core.Object.__init_handle_by_constructor__\n  File \"python/tvm_ffi/cython/function.pxi\", line 123, in tvm_ffi.core.ConstructorCall\n  File \"python/tvm_ffi/cython/error.pxi\", line 159, in tvm_ffi.core.CHECK_CALL\nTypeError: Mismatched type on argument #0 when calling: `tir.Evaluate(0: ir.PrimExpr, 1: ir.Span) -> tir.Evaluate`. Expected `ir.PrimExpr` but got `DataType`\n",
+      "mma_calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "dtype",
+          "b_type": "dtype"
+        }
+      ],
+      "fixed_pass": true,
+      "fixed_mma_calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    }
+  ],
+  "normal_primfunc_equal": [
+    "_coalesced_block_loads_prim_fp32_sum",
+    "_coalesced_block_loads_prim_fp32_mask",
+    "_coalesced_block_loads_prim_boundary_v8"
+  ],
+  "oj": [
+    {
+      "case": "oj1",
+      "seed": 0,
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj2",
+      "seed": 0,
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj3",
+      "seed": 0,
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj4",
+      "seed": 0,
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj5",
+      "seed": 0,
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj5",
+      "seed": 61,
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj6",
+      "seed": 0,
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj7",
+      "seed": 0,
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 4096,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj7",
+      "seed": 61,
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 4096,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj8",
+      "seed": 0,
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 4096,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj8",
+      "seed": 61,
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 4096,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj9",
+      "seed": 0,
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 8192,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj9",
+      "seed": 61,
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 8192,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj10",
+      "seed": 0,
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj11",
+      "seed": 0,
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj12",
+      "seed": 0,
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj13",
+      "seed": 0,
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj13",
+      "seed": 61,
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj14",
+      "seed": 0,
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    }
+  ],
+  "adversarial": [
+    {
+      "case": "oj5",
+      "scale": null,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj5",
+      "scale": 0.0,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "case": "oj5",
+      "scale": -0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj5",
+      "scale": 0.03125,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj5",
+      "scale": 0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj7",
+      "scale": null,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj7",
+      "scale": 0.0,
+      "max_abs_error": 0.00048828125
+    },
+    {
+      "case": "oj7",
+      "scale": -0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj7",
+      "scale": 0.03125,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "case": "oj7",
+      "scale": 0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj8",
+      "scale": null,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj8",
+      "scale": 0.0,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "case": "oj8",
+      "scale": -0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj8",
+      "scale": 0.03125,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "case": "oj8",
+      "scale": 0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj9",
+      "scale": null,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj9",
+      "scale": 0.0,
+      "max_abs_error": 0.00048828125
+    },
+    {
+      "case": "oj9",
+      "scale": -0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj9",
+      "scale": 0.03125,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "case": "oj9",
+      "scale": 0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj13",
+      "scale": null,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj13",
+      "scale": 0.0,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "case": "oj13",
+      "scale": -0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj13",
+      "scale": 0.03125,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj13",
+      "scale": 0.1,
+      "max_abs_error": 0.001953125
+    }
+  ],
+  "restricted_host": [
+    {
+      "case": "oj5",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj7",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj8",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj9",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "case": "oj13",
+      "max_abs_error": 0.001953125
+    }
+  ],
+  "datatype_as_primexpr_rejected": "Mismatched type on argument #0 when calling: `tir.Evaluate(0: ir.PrimExpr, 1: ir.Span) -> tir.Evaluate`. Expected `ir.PrimExpr` but got `DataType`"
+}

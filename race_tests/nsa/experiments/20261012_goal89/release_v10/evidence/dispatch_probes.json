@@ -1,0 +1,44 @@
+{
+  "large_v6": {
+    "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261012_goal89/large_v6.py",
+    "sha256": "22ce7823f75bcc71a02a64351f73a662df021e2758b7f92f19c39fbe19c2da68",
+    "old": "fp32_large = mathcast_blocks and (D == 128 or is_causal)",
+    "new": "fp32_large = mathcast_blocks and D == 128"
+  },
+  "large_fp32": {
+    "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261012_goal89/large_fp32.py",
+    "sha256": "70cce35680a914b98ef1b04593a95d80b53f332138627e46b579c2629530d2c1",
+    "old": "native_sparse_attention_coalesced_blocks_fp32_sum if D == 128 else native_sparse_attention_coalesced_blocks_boundary_v8",
+    "new": "native_sparse_attention_coalesced_blocks_fp32_sum"
+  },
+  "small_qpreload": {
+    "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261012_goal89/small_qpreload.py",
+    "sha256": "fce2bcd2813e84de3adc1285d867c1b521831ada37e8f4c6439a1be24e2a43cc",
+    "old": "tiny_vfirst = preload_direct and D == 32",
+    "new": "tiny_vfirst = False"
+  },
+  "small_direct": {
+    "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261012_goal89/small_direct.py",
+    "sha256": "61fd004eb000a180dd2ff1fcae283b99e755ef7fa22d7575e4a388dfde3655d7",
+    "old": "preload_direct = oct8_direct and (D != 32 or (seq_len >= 64 and grid <= 64 and is_causal)) or (oct8_complete and D == 128 and (grid <= 128))",
+    "new": "preload_direct = (oct8_direct and D != 32) or (oct8_complete and D == 128 and grid <= 128)"
+  },
+  "mid_fp32": {
+    "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261012_goal89/mid_fp32.py",
+    "sha256": "7f731b7069a9751b1ac6c6857debdfcfe656757586d1e81944c87f1a21547f18",
+    "old": "native_sparse_attention_coalesced_blocks_fp32_mask if fp32_multih else native_sparse_attention_coalesced_blocks_oct8",
+    "new": "native_sparse_attention_coalesced_blocks_fp32_sum if fp32_multih else native_sparse_attention_coalesced_blocks_oct8"
+  },
+  "mid_mathcast": {
+    "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261012_goal89/mid_mathcast.py",
+    "sha256": "9f7b3c34ed3eced0e31076c483143f1a6b3e5876182a0cf7c896f1fe39f15394",
+    "old": "native_sparse_attention_coalesced_blocks_fp32_mask if fp32_multih else native_sparse_attention_coalesced_blocks_oct8",
+    "new": "native_sparse_attention_coalesced_blocks_mathcast if fp32_multih else native_sparse_attention_coalesced_blocks_oct8"
+  },
+  "large_q4": {
+    "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261012_goal89/large_q4.py",
+    "sha256": "d9ac68087c7326b3f07bb5e723172675c02a4d5479322c669f731634b41ce0fd",
+    "old": "builder(q_vec=4 if qo_four else 8, pv_width=64 if qo_narrow else 128, **common)",
+    "new": "builder(q_vec=4 if (qo_four or (mathcast_blocks and D == 64)) else 8, pv_width=64 if qo_narrow else 128, **common)"
+  }
+}

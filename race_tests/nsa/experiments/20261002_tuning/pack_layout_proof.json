@@ -1,0 +1,146 @@
+{
+  "status": "PASS",
+  "shape": {
+    "D": 128,
+    "block_size": 32
+  },
+  "checks": [
+    {
+      "threads": 64,
+      "elements": 4096,
+      "unique_packed_k": 4096,
+      "unique_packed_v": 4096,
+      "shared_bijection": true,
+      "cross_wave_elements": 0,
+      "required_sync": "wave"
+    },
+    {
+      "threads": 128,
+      "elements": 4096,
+      "unique_packed_k": 4096,
+      "unique_packed_v": 4096,
+      "shared_bijection": true,
+      "cross_wave_elements": 2048,
+      "required_sync": "block"
+    },
+    {
+      "threads": 256,
+      "elements": 4096,
+      "unique_packed_k": 4096,
+      "unique_packed_v": 4096,
+      "shared_bijection": true,
+      "cross_wave_elements": 3072,
+      "required_sync": "block"
+    }
+  ],
+  "tails": [
+    {
+      "seq_len": 1,
+      "covered_rows": 1,
+      "padded_rows": 31
+    },
+    {
+      "seq_len": 15,
+      "covered_rows": 15,
+      "padded_rows": 17
+    },
+    {
+      "seq_len": 16,
+      "covered_rows": 16,
+      "padded_rows": 16
+    },
+    {
+      "seq_len": 17,
+      "covered_rows": 17,
+      "padded_rows": 15
+    },
+    {
+      "seq_len": 31,
+      "covered_rows": 31,
+      "padded_rows": 1
+    },
+    {
+      "seq_len": 32,
+      "covered_rows": 32,
+      "padded_rows": 0
+    },
+    {
+      "seq_len": 33,
+      "covered_rows": 33,
+      "padded_rows": 31
+    },
+    {
+      "seq_len": 37,
+      "covered_rows": 37,
+      "padded_rows": 27
+    },
+    {
+      "seq_len": 64,
+      "covered_rows": 64,
+      "padded_rows": 0
+    },
+    {
+      "seq_len": 127,
+      "covered_rows": 127,
+      "padded_rows": 1
+    },
+    {
+      "seq_len": 128,
+      "covered_rows": 128,
+      "padded_rows": 0
+    },
+    {
+      "seq_len": 129,
+      "covered_rows": 129,
+      "padded_rows": 31
+    },
+    {
+      "seq_len": 511,
+      "covered_rows": 511,
+      "padded_rows": 1
+    },
+    {
+      "seq_len": 512,
+      "covered_rows": 512,
+      "padded_rows": 0
+    },
+    {
+      "seq_len": 513,
+      "covered_rows": 513,
+      "padded_rows": 31
+    },
+    {
+      "seq_len": 1023,
+      "covered_rows": 1023,
+      "padded_rows": 1
+    },
+    {
+      "seq_len": 1024,
+      "covered_rows": 1024,
+      "padded_rows": 0
+    },
+    {
+      "seq_len": 1025,
+      "covered_rows": 1025,
+      "padded_rows": 31
+    },
+    {
+      "seq_len": 2047,
+      "covered_rows": 2047,
+      "padded_rows": 1
+    },
+    {
+      "seq_len": 2048,
+      "covered_rows": 2048,
+      "padded_rows": 0
+    },
+    {
+      "seq_len": 2049,
+      "covered_rows": 2049,
+      "padded_rows": 31
+    }
+  ],
+  "race_checks_disabled": false,
+  "bounds_checks_disabled": false,
+  "scope": "Ownership proof; actual live-input values, tail zeros and synchronization are verified separately on GPU."
+}

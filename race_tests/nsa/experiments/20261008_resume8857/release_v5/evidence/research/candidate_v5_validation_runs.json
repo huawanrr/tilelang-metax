@@ -1,0 +1,189 @@
+[
+  {
+    "started_utc": "2026-10-08T07:03:43.711644+00:00",
+    "command": [
+      "experiments/20261008_resume8857/run_v5_validation.py"
+    ],
+    "source_sha256": {
+      "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/baseline.py": "06d69bab6089e3ac11f9cca58804b9ccdc505e2913f019a5ee31b85f811b67fc",
+      "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/baseline_submission.py": "6f1922f56d5bc372262eca5e3b54630b9ef6a2de23c082606aacec94b2010e02",
+      "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5.py": "ea3968b5c4940caf0dfe5c8e3a5cc95e05d91e37db7be314a4e5b49bb303dd86",
+      "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_submission.py": "31ff2168762d44391b88b1b218fc9e732ce7f5b2bd0dcd3e8bdfece9d7b263dc"
+    },
+    "stages": [
+      {
+        "stage": "reference",
+        "command": [
+          "/opt/conda/bin/python",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_blocks/verify_reference.py",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_submission.py",
+          "--cases",
+          "all",
+          "--extras",
+          "--output",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_reference.json"
+        ],
+        "status": "PASS",
+        "started_utc": "2026-10-08T07:03:43.714065+00:00",
+        "returncode": 0,
+        "finished_utc": "2026-10-08T07:04:36.150600+00:00"
+      },
+      {
+        "stage": "extra",
+        "command": [
+          "/opt/conda/bin/python",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/verify_candidate.py",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_submission.py",
+          "--output",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_extra.json"
+        ],
+        "status": "PASS",
+        "started_utc": "2026-10-08T07:04:36.152775+00:00",
+        "returncode": 0,
+        "finished_utc": "2026-10-08T07:07:47.295416+00:00"
+      },
+      {
+        "stage": "oj",
+        "command": [
+          "/opt/conda/bin/python",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261005_goal8929/bracketed_audited.py",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/baseline.py",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/baseline_submission.py",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5.py",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_submission.py",
+          "--case-file",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/oj_cases.json",
+          "--cases",
+          "oj1,oj2,oj3,oj4,oj5,oj6,oj7,oj8,oj9,oj10,oj11,oj12,oj13,oj14",
+          "--seeds",
+          "0,61",
+          "--attempts",
+          "20",
+          "--repeat",
+          "300",
+          "--shared-pool",
+          "--output",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_oj.json"
+        ],
+        "status": "PASS",
+        "started_utc": "2026-10-08T07:07:47.297647+00:00",
+        "returncode": 0,
+        "finished_utc": "2026-10-08T07:09:23.869614+00:00"
+      },
+      {
+        "stage": "full",
+        "command": [
+          "/opt/conda/bin/python",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261005_goal8929/bracketed_audited.py",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/baseline.py",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/baseline_submission.py",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_submission.py",
+          "--cases",
+          "all",
+          "--seeds",
+          "0",
+          "--attempts",
+          "12",
+          "--repeat",
+          "200",
+          "--shared-pool",
+          "--output",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_full.json"
+        ],
+        "status": "PASS",
+        "started_utc": "2026-10-08T07:09:23.871862+00:00",
+        "returncode": 0,
+        "finished_utc": "2026-10-08T07:12:02.773403+00:00"
+      },
+      {
+        "stage": "cold",
+        "command": [
+          "/opt/conda/bin/python",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_goal895/profile_cold.py",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/baseline.py",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/baseline_submission.py",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_submission.py",
+          "--case-file",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/final_cold_cases.json",
+          "--cases",
+          "oj1,oj2,oj3,oj4,oj5,oj6,oj7,oj8,oj9,oj10,oj11,oj12,oj13,oj14,d128_b1_t64_h1_c1,d128_b1_t128_h1_c1,d128_b1_t64_h2_c0,d128_b2_t64_h1_c1,d32_b1_t48_h1_c1,s2_b1_t192_h1_c1,s2_b1_t512_h1_c1",
+          "--seed",
+          "61",
+          "--repeat",
+          "48",
+          "--rounds",
+          "6",
+          "--output",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_cold.json"
+        ],
+        "status": "PASS",
+        "started_utc": "2026-10-08T07:12:02.775689+00:00",
+        "returncode": 0,
+        "finished_utc": "2026-10-08T07:13:14.058784+00:00"
+      },
+      {
+        "stage": "audit",
+        "command": [
+          "/opt/conda/bin/python",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/audit_candidate.py",
+          "--dev",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5.py",
+          "--submission",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_submission.py",
+          "--short-mode",
+          "none",
+          "--timings",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_oj.json",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_full.json",
+          "--output",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_audit.json"
+        ],
+        "status": "PASS",
+        "started_utc": "2026-10-08T07:13:14.061082+00:00",
+        "returncode": 0,
+        "finished_utc": "2026-10-08T07:14:54.611718+00:00"
+      },
+      {
+        "stage": "components",
+        "command": [
+          "/opt/conda/bin/python",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/audit_components.py",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5.py",
+          "--short-mode",
+          "none",
+          "--output",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_components.json"
+        ],
+        "status": "PASS",
+        "started_utc": "2026-10-08T07:14:54.614017+00:00",
+        "returncode": 0,
+        "finished_utc": "2026-10-08T07:15:40.645743+00:00"
+      },
+      {
+        "stage": "performance_summary",
+        "command": [
+          "/opt/conda/bin/python",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/summarize_candidate.py",
+          "--oj",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_oj.json",
+          "--full",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_full.json",
+          "--cold",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_cold.json",
+          "--confirmation",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/confirmation_screen.json",
+          "--components",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_components.json",
+          "--output",
+          "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8857/candidate_v5_performance_summary.json"
+        ],
+        "status": "PASS",
+        "started_utc": "2026-10-08T07:15:40.648102+00:00",
+        "returncode": 0,
+        "finished_utc": "2026-10-08T07:15:41.211339+00:00"
+      }
+    ],
+    "status": "PASS",
+    "finished_utc": "2026-10-08T07:15:41.213531+00:00"
+  }
+]

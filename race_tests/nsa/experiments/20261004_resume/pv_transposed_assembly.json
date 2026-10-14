@@ -1,0 +1,25 @@
+{
+  "baseline": "experiments/20261002_mid_v1/nsa.py",
+  "baseline_sha256": "644206570d4ca96c15acdf28ff9ef365e61dcbbe1670915e1ec188c80f834412",
+  "variants": [
+    {
+      "path": "experiments/20261004_resume/pv_transposed_w128.py",
+      "sha256": "5fba734da8fbf5beb4d080aa56ca2f6baa1da493cb48ca5eb3a9bac7bae37c39",
+      "width": 128
+    },
+    {
+      "path": "experiments/20261004_resume/pv_transposed_w64.py",
+      "sha256": "00b1446c212c68c2d366fab27f33f249df7ddfa84d2b1b2b91e99a33ab7d455a",
+      "width": 64
+    },
+    {
+      "path": "experiments/20261004_resume/pv_transposed_w32.py",
+      "sha256": "533b13f6e4c6e3c38e39d913b30c506b53653002ad14ab553cabd0b089154e09",
+      "width": 32
+    }
+  ],
+  "changed_function": "native_sparse_attention_single_packed_qo_v2",
+  "mechanism": "Keep QK and packed inputs; exchange PV A/B roles and write transposed result directly",
+  "pack_kernel_unchanged": true,
+  "dispatch_unchanged": true
+}

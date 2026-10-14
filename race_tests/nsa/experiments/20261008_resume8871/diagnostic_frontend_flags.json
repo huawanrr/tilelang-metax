@@ -1,0 +1,89 @@
+[
+  {
+    "name": "pk_cli",
+    "flags": [
+      "-map_use_pk_fma",
+      "true"
+    ],
+    "command": [
+      "/opt/maca/mxgpu_llvm/bin/mxcc",
+      "-x",
+      "maca",
+      "-w",
+      "-std=c++17",
+      "-O3",
+      "-use-fast-math",
+      "-D__FAST_HALF_CVT__",
+      "-I/app/tilelang-metax/src",
+      "-I/opt/maca/include",
+      "-S",
+      "-emit-llvm",
+      "-maca-device-only",
+      "--offload-arch=xcore1000",
+      "-map_use_pk_fma",
+      "true",
+      "experiments/20261008_resume8871/parent_oj2.cpp",
+      "-o",
+      "experiments/20261008_resume8871/diagnostic_pk_cli.ll"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "fow_off",
+    "flags": [
+      "-maca-fetch-on-write-global",
+      "false"
+    ],
+    "command": [
+      "/opt/maca/mxgpu_llvm/bin/mxcc",
+      "-x",
+      "maca",
+      "-w",
+      "-std=c++17",
+      "-O3",
+      "-use-fast-math",
+      "-D__FAST_HALF_CVT__",
+      "-I/app/tilelang-metax/src",
+      "-I/opt/maca/include",
+      "-S",
+      "-emit-llvm",
+      "-maca-device-only",
+      "--offload-arch=xcore1000",
+      "-maca-fetch-on-write-global",
+      "false",
+      "experiments/20261008_resume8871/parent_oj2.cpp",
+      "-o",
+      "experiments/20261008_resume8871/diagnostic_fow_off.ll"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "fow_on",
+    "flags": [
+      "-maca-fetch-on-write-global",
+      "true"
+    ],
+    "command": [
+      "/opt/maca/mxgpu_llvm/bin/mxcc",
+      "-x",
+      "maca",
+      "-w",
+      "-std=c++17",
+      "-O3",
+      "-use-fast-math",
+      "-D__FAST_HALF_CVT__",
+      "-I/app/tilelang-metax/src",
+      "-I/opt/maca/include",
+      "-S",
+      "-emit-llvm",
+      "-maca-device-only",
+      "--offload-arch=xcore1000",
+      "-maca-fetch-on-write-global",
+      "true",
+      "experiments/20261008_resume8871/parent_oj2.cpp",
+      "-o",
+      "experiments/20261008_resume8871/diagnostic_fow_on.ll"
+    ],
+    "returncode": 0
+  }
+]

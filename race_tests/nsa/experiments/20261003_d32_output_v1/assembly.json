@@ -1,0 +1,80 @@
+{
+  "command": [
+    "experiments/20261003_output_lane/assemble_release.py",
+    "--output-dir",
+    "experiments/20261003_d32_output_v1"
+  ],
+  "config": {
+    "min_grid": 8192,
+    "min_seq": 1,
+    "complete_blocks_only": false,
+    "causal_only": false,
+    "heads": null,
+    "probe": "experiments/20261003_output_lane/output_lane_guard_d32.py",
+    "bracket_reports": [
+      "experiments/20261003_output_lane/lane_multiseed.json"
+    ]
+  },
+  "retained_functions": [
+    "_clamped_load_base",
+    "_paired_pos_sel",
+    "native_sparse_attention_single_block",
+    "native_sparse_attention_online",
+    "native_sparse_attention_online_emitter",
+    "_emitters",
+    "native_sparse_attention_single_block_emitter",
+    "native_sparse_attention_online_packed",
+    "native_sparse_attention_pack_kv",
+    "_make_packed_attention",
+    "native_sparse_attention_online_packed_batch_minor",
+    "native_sparse_attention_online_packed_quad_batch_minor",
+    "native_sparse_attention_single_block_pv32",
+    "native_sparse_attention_d32_shuffle",
+    "native_sparse_attention_single_vec16",
+    "native_sparse_attention_single_linear_v",
+    "native_sparse_attention_mid_shared_q",
+    "native_sparse_attention_single_block_emitter_wave",
+    "native_sparse_attention_single_vec16_wave",
+    "native_sparse_attention_single_linear_v_wave",
+    "native_sparse_attention_d32_shuffle_wave",
+    "native_sparse_attention_mid_shared_q_wave",
+    "native_sparse_attention_shared_q_reuse",
+    "native_sparse_attention_short_list",
+    "native_sparse_attention_pv32_sync",
+    "_coalesced_qo_prim",
+    "native_sparse_attention_coalesced_qo",
+    "native_sparse_attention_single_packed_qo",
+    "native_sparse_attention_single_packed_qo_v2",
+    "native_sparse_attention_pack_kv_bs32_direct",
+    "native_sparse_attention_pack_kv_bs32_shared",
+    "native_sparse_attention_short_list_qo_v2",
+    "native_sparse_attention_online_packed_batch_minor_o_v2",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+    "native_sparse_attention_single_block_emitter_index_guard",
+    "native_sparse_attention_single_block_emitter_wave_index_guard",
+    "native_sparse_attention_d32_shuffle_wave_index_guard",
+    "native_sparse_attention_d32_compact",
+    "_coalesced_block_loads_prim",
+    "native_sparse_attention_coalesced_blocks",
+    "native_sparse_attention_shared_q_blocks",
+    "native_sparse_attention_linear_v_blocks",
+    "_as_int32",
+    "native_sparse_attention",
+    "run_kernel"
+  ],
+  "new_functions": [
+    "native_sparse_attention_d32_output_lane"
+  ],
+  "probe_builder": "native_sparse_attention_d32_shuffle",
+  "source_sha256": {
+    "experiments/20261003_d128_v1/nsa.py": "9b08cfb7274b10ca2b933d81b80af57e2ad5fd37d01b8b0516b3d7c38fefa9df",
+    "experiments/20261003_output_lane/output_lane_guard_d32.py": "d6e9825a20dc94e64b9c58952a76a436e405abb187cf4ec127f218b34b1955f7",
+    "experiments/20261003_output_lane/selection.json": "a7b3896c9c41814fb789051b3d7b0ea7a3c6013282534fbf0eeabab5124bf1bb",
+    "experiments/20261003_output_lane/assemble_release.py": "5e022fc47bd944ccfea6f6adf89f83eb001271cf05ad0a14ff0bc70549e09b2a",
+    "experiments/20261003_d32_output_v1/nsa.py": "5b4e3c164f2cd25e770d414d1e49bf852b2f47a8ad2c7b7df395bf5cf43a7ccd",
+    "experiments/20261003_d32_output_v1/submission.py": "c44ee57ed560eae8691eee09e97bb78fe9ef79dab048994f1e100dea23ddcd4a"
+  },
+  "user_confirmed_best_score": 88.29,
+  "official_new_score": null,
+  "status": "assembled; final local validation pending"
+}

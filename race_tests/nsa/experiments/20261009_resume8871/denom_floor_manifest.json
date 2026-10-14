@@ -1,0 +1,44 @@
+{
+  "variants": [
+    {
+      "base": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/candidate_v6.py",
+      "base_sha256": "17b91438e869aae07d53ce0b9d99cb8579735f366e80b25faf3dcbabbe94ac09",
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_resume8871/raw_denom_floor.py",
+      "sha256": "9af6a7ff95157109dbe0e0d9c9404cc3bd2e73f6c7f67c293a1d6eaa8774ffa4",
+      "changes": {
+        "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast": 1,
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast": 1,
+        "native_sparse_attention_direct_kv": 1,
+        "native_sparse_attention_q_preload": 1
+      },
+      "mode": "raw"
+    },
+    {
+      "base": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_resume8871/tensor_denom_before.py",
+      "base_sha256": "011d2242996800528d793faeb38a6b7d65910f79d1bf10a477116226046079b0",
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_resume8871/tensor_denom_floor.py",
+      "sha256": "ea56ebccb02e4cf2cf726aa277e1caf99731c37553f2e8889a5f71cb1d9d5949",
+      "changes": {
+        "native_sparse_attention_direct_kv": 1,
+        "_coalesced_block_loads_prim_oct8": 1,
+        "native_sparse_attention_q_preload": 1
+      },
+      "mode": "tensor"
+    },
+    {
+      "base": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_resume8871/packed_tensor_denom_before.py",
+      "base_sha256": "6da818897a920c1d8aa15eabe4936a74ca3633fb31956f52bca950ea1d1c0080",
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_resume8871/packed_tensor_denom_floor.py",
+      "sha256": "2b508dfda0215fc3108ab263ace5e78bb85229d72bfd3a664a5d5417d9821ebc",
+      "changes": {
+        "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast": 1,
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast": 1,
+        "native_sparse_attention_single_packed_qo_v2_mathcast": 1
+      },
+      "mode": "tensor"
+    }
+  ],
+  "proof": "If raw FP32 sum < 2^-25, all rounded half weights are zero. Positive sums of rounded half weights are >= 2^-24.",
+  "limitations": "Proof assumes finite V and inherits the parent's exponential clipping and numerical contract. Independently verify floating point behavior before use.",
+  "status": "research only"
+}

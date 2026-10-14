@@ -1,0 +1,35 @@
+{
+  "baseline": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/nsa.py",
+  "baseline_sha256": "644206570d4ca96c15acdf28ff9ef365e61dcbbe1670915e1ec188c80f834412",
+  "variants": [
+    {
+      "path": "query_words_v2.py",
+      "fp16_load_width": 2,
+      "changed_builders": [
+        "native_sparse_attention_single_packed_qo_v2",
+        "_coalesced_block_loads_prim",
+        "native_sparse_attention_shared_q_blocks",
+        "native_sparse_attention_short_list_qo_v2",
+        "native_sparse_attention_online_packed",
+        "native_sparse_attention_online_packed_batch_minor_o_v2",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+      ],
+      "sha256": "ed4f110912e7754395554b2ad14274d3ab3abe5213e824ea5d1c74697c623c83"
+    },
+    {
+      "path": "query_words_v4.py",
+      "fp16_load_width": 4,
+      "changed_builders": [
+        "native_sparse_attention_single_packed_qo_v2",
+        "_coalesced_block_loads_prim",
+        "native_sparse_attention_shared_q_blocks",
+        "native_sparse_attention_short_list_qo_v2",
+        "native_sparse_attention_online_packed",
+        "native_sparse_attention_online_packed_batch_minor_o_v2",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+      ],
+      "sha256": "f5cef1e01366495fbfa7aac3bd87d05b119e15d263125111f3a49a5085119a20"
+    }
+  ],
+  "note": "Only Q global loads change; ownership, Q shared staging, K/V, MMA, normalization, output and all synchronization remain unchanged."
+}

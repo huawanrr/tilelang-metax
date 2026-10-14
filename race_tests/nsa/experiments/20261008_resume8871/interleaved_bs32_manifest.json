@@ -1,0 +1,36 @@
+{
+  "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/parent.py",
+  "parent_sha256": "4887b6a68ea8f0a7647441625079f87f74c13906bcfb7bcd17e9fa170769121d",
+  "variants": [
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/interleaved_bs32_kshared0.py",
+      "sha256": "41ba2ae9fa81f0418a4c5c548859a03ecd48fe91f8d79172578e39eae7ece780",
+      "k_shared": false
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/interleaved_bs32_kshared1.py",
+      "sha256": "26ea195878b02166680c59be93841e89e19a447648962810048bf950aef51176",
+      "k_shared": true
+    }
+  ],
+  "proof": [
+    {
+      "dim": 64,
+      "block_size": 16,
+      "payload_elements": 2048
+    },
+    {
+      "dim": 128,
+      "block_size": 16,
+      "payload_elements": 4096
+    },
+    {
+      "dim": 128,
+      "block_size": 32,
+      "payload_elements": 8192
+    }
+  ],
+  "attention_math_and_sync_unchanged": true,
+  "aliasing": "Both attention pointers are read-only views of the same fresh packed allocation",
+  "packing": "Current K/V packed on every invocation; source copies zero-fill partial blocks"
+}

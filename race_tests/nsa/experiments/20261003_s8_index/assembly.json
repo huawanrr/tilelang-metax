@@ -1,0 +1,31 @@
+{
+  "baseline": "experiments/20261002_mid_v1/nsa.py",
+  "baseline_sha256": "644206570d4ca96c15acdf28ff9ef365e61dcbbe1670915e1ec188c80f834412",
+  "baseline_official_score": 88.29,
+  "variants": [
+    {
+      "path": "experiments/20261003_s8_index/s8_unroll.py",
+      "sha256": "64ab65b3e0ef374aa32d670a483edc62b6e00041f5090e77b4160dbae7852e17",
+      "block_number_guards": false,
+      "unroll_lookahead_groups": true
+    },
+    {
+      "path": "experiments/20261003_s8_index/s8_blocks.py",
+      "sha256": "63e6c77e19edb953b3920dd58ab9f159316d2d496748bc52fe18cc60eefebc50",
+      "block_number_guards": true,
+      "unroll_lookahead_groups": false
+    },
+    {
+      "path": "experiments/20261003_s8_index/s8_blocks_unroll.py",
+      "sha256": "17ef5922bc869e8a5cf63b2ff8610c72c9e8ad3b304862277c73aa6d9198e2f3",
+      "block_number_guards": true,
+      "unroll_lookahead_groups": true
+    }
+  ],
+  "changed_functions": [
+    "native_sparse_attention_online_packed_batch_minor_o_v2",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2"
+  ],
+  "scope": "Existing default S8 output-staging paths, grid >= 4096",
+  "invariants": "Unchanged packer, query/output layouts, synchronization, arithmetic order and public dispatch"
+}

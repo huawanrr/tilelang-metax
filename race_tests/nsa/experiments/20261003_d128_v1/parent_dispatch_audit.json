@@ -1,0 +1,1867 @@
+{
+  "status": "PASS",
+  "method": "Execute the original host dispatch with builder-recording stand-ins; compare all arguments and unchanged builder ASTs",
+  "unchanged_functions": [
+    "_clamped_load_base",
+    "_paired_pos_sel",
+    "native_sparse_attention_single_block",
+    "native_sparse_attention_online",
+    "native_sparse_attention_online_emitter",
+    "_emitters",
+    "native_sparse_attention_single_block_emitter",
+    "native_sparse_attention_online_packed",
+    "native_sparse_attention_pack_kv",
+    "_make_packed_attention",
+    "native_sparse_attention_online_packed_batch_minor",
+    "native_sparse_attention_online_packed_quad_batch_minor",
+    "native_sparse_attention_single_block_pv32",
+    "native_sparse_attention_d32_shuffle",
+    "native_sparse_attention_single_vec16",
+    "native_sparse_attention_single_linear_v",
+    "native_sparse_attention_mid_shared_q",
+    "native_sparse_attention_single_block_emitter_wave",
+    "native_sparse_attention_single_vec16_wave",
+    "native_sparse_attention_single_linear_v_wave",
+    "native_sparse_attention_d32_shuffle_wave",
+    "native_sparse_attention_mid_shared_q_wave",
+    "native_sparse_attention_shared_q_reuse",
+    "native_sparse_attention_short_list",
+    "native_sparse_attention_pv32_sync",
+    "_coalesced_qo_prim",
+    "native_sparse_attention_coalesced_qo",
+    "native_sparse_attention_single_packed_qo",
+    "native_sparse_attention_single_packed_qo_v2",
+    "native_sparse_attention_pack_kv_bs32_direct",
+    "native_sparse_attention_pack_kv_bs32_shared",
+    "native_sparse_attention_short_list_qo_v2",
+    "native_sparse_attention_online_packed_batch_minor_o_v2",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+    "native_sparse_attention_single_block_emitter_index_guard",
+    "native_sparse_attention_single_block_emitter_wave_index_guard",
+    "native_sparse_attention_d32_shuffle_wave_index_guard",
+    "native_sparse_attention_d32_compact",
+    "_coalesced_block_loads_prim",
+    "native_sparse_attention_coalesced_blocks",
+    "native_sparse_attention_shared_q_blocks",
+    "_as_int32",
+    "native_sparse_attention",
+    "run_kernel"
+  ],
+  "source_sha256": {
+    "experiments/20261002_mid_v1/nsa.py": "644206570d4ca96c15acdf28ff9ef365e61dcbbe1670915e1ec188c80f834412",
+    "experiments/20261002_d128_mid/reference_output.py": "34762aa61bd53c7d1a561276c5d8d1657394691ec5a400c8e3577922b0c7d149"
+  },
+  "rows": [
+    {
+      "case": "9",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 256,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "12",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 512,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "15",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 1024,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "20",
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 2,
+          "heads": 16,
+          "seq_len": 128,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "23",
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 2,
+          "heads": 16,
+          "seq_len": 256,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "26",
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 2,
+          "heads": 16,
+          "seq_len": 512,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "32",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 4,
+          "heads": 16,
+          "seq_len": 64,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "35",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 4,
+          "heads": 16,
+          "seq_len": 128,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "38",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 4,
+          "heads": 16,
+          "seq_len": 256,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "47",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 8,
+          "heads": 16,
+          "seq_len": 64,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "50",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 8,
+          "heads": 16,
+          "seq_len": 128,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b1_t144_h1_c1",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 144,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 144,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b1_t384_h1_c1",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 384,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 384,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b1_t768_h1_c1",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 768,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 768,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b1_t1008_h1_c1",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1008,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 1008,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b1_t1056_h1_c1",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1056,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 1056,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b1_t1264_h1_c1",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1264,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 1264,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b2_t80_h1_c1",
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 80,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 2,
+          "heads": 16,
+          "seq_len": 80,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b4_t48_h1_c1",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 48,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 4,
+          "heads": 16,
+          "seq_len": 48,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b8_t32_h1_c1",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 32,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 8,
+          "heads": 16,
+          "seq_len": 32,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b16_t16_h1_c1",
+      "config": {
+        "B": 16,
+        "SEQ_LEN": 16,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 16,
+          "heads": 16,
+          "seq_len": 16,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b2_t384_h1_c1",
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 384,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 2,
+          "heads": 16,
+          "seq_len": 384,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b4_t192_h1_c1",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 192,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 4,
+          "heads": 16,
+          "seq_len": 192,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b8_t96_h1_c1",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 96,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 8,
+          "heads": 16,
+          "seq_len": 96,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b16_t64_h1_c1",
+      "config": {
+        "B": 16,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 16,
+          "heads": 16,
+          "seq_len": 64,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b1_t512_h1_c0",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 512,
+          "dim": 128,
+          "is_causal": false,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b4_t256_h1_c0",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 4,
+          "heads": 16,
+          "seq_len": 256,
+          "dim": 128,
+          "is_causal": false,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b1_t256_h2_c1",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 32,
+          "seq_len": 256,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b2_t256_h2_c1",
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 2,
+          "heads": 32,
+          "seq_len": 256,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128mid_b1_t256_h4_c1",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 4,
+        "HQ": 64,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 64,
+          "seq_len": 256,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "73",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 32,
+          "seq_len": 512,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "6",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_vec16_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": true,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 128,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128_bs16_t257",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 257,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 257,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128_bs16_t1280",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1280,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_coalesced_blocks",
+        "args": [],
+        "kwargs": {
+          "q_vec": 8,
+          "pv_width": 128,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 1280,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "29",
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_coalesced_blocks",
+        "args": [],
+        "kwargs": {
+          "q_vec": 8,
+          "pv_width": 128,
+          "batch": 2,
+          "heads": 16,
+          "seq_len": 1024,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b1_t528_h1_c1",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 528,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 528,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b1_t640_h1_c1",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 640,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 640,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b2_t320_h1_c1",
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 320,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 2,
+          "heads": 16,
+          "seq_len": 320,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b4_t160_h1_c1",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 160,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 4,
+          "heads": 16,
+          "seq_len": 160,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b8_t80_h1_c1",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 80,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 8,
+          "heads": 16,
+          "seq_len": 80,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b1_t896_h1_c1",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 896,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 896,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b2_t448_h1_c1",
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 448,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 2,
+          "heads": 16,
+          "seq_len": 448,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b8_t112_h1_c1",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 112,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 8,
+          "heads": 16,
+          "seq_len": 112,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b4_t240_h1_c1",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 240,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 4,
+          "heads": 16,
+          "seq_len": 240,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b20_t48_h1_c1",
+      "config": {
+        "B": 20,
+        "SEQ_LEN": 48,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 20,
+          "heads": 16,
+          "seq_len": 48,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b1_t1040_h1_c1",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1040,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 16,
+          "seq_len": 1040,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b2_t528_h1_c1",
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 528,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 2,
+          "heads": 16,
+          "seq_len": 528,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b4_t304_h1_c1",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 304,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 4,
+          "heads": 16,
+          "seq_len": 304,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b8_t144_h1_c1",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 144,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 8,
+          "heads": 16,
+          "seq_len": 144,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b32_t32_h1_c1",
+      "config": {
+        "B": 32,
+        "SEQ_LEN": 32,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 32,
+          "heads": 16,
+          "seq_len": 32,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b64_t16_h1_c1",
+      "config": {
+        "B": 64,
+        "SEQ_LEN": 16,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 64,
+          "heads": 16,
+          "seq_len": 16,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b4_t128_h2_c1",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 128,
+        "H": 2,
+        "HQ": 32,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 4,
+          "heads": 32,
+          "seq_len": 128,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b16_t32_h2_c1",
+      "config": {
+        "B": 16,
+        "SEQ_LEN": 32,
+        "H": 2,
+        "HQ": 32,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 16,
+          "heads": 32,
+          "seq_len": 32,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b4_t64_h4_c1",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 4,
+        "HQ": 64,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 4,
+          "heads": 64,
+          "seq_len": 64,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    },
+    {
+      "case": "d128edge_b1_t128_h8_c1",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 8,
+        "HQ": 128,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "identical_dispatch": true,
+      "selection": {
+        "builder": "native_sparse_attention_single_linear_v_wave",
+        "args": [],
+        "kwargs": {
+          "late_normalize": false,
+          "lane_reduce": true,
+          "kv_split": false,
+          "direct_k": false,
+          "batch": 1,
+          "heads": 128,
+          "seq_len": 128,
+          "dim": 128,
+          "is_causal": true,
+          "block_size": 16,
+          "groups": 16,
+          "scale_log2": 0.14426950400000002,
+          "threads": 64
+        }
+      }
+    }
+  ]
+}

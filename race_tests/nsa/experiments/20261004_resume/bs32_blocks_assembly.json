@@ -1,0 +1,35 @@
+{
+  "baseline": "experiments/20261002_mid_v1/nsa.py",
+  "baseline_sha256": "644206570d4ca96c15acdf28ff9ef365e61dcbbe1670915e1ec188c80f834412",
+  "variants": [
+    {
+      "path": "experiments/20261004_resume/bs32_blocks_q8_pv128.py",
+      "sha256": "e7f49870d02951992893a5d699c46ea580820261d51c83ed5eff8ee25e9c0f56",
+      "q_width": 8,
+      "pv_width": 128
+    },
+    {
+      "path": "experiments/20261004_resume/bs32_blocks_q4_pv128.py",
+      "sha256": "21f0971fe47939c088f2a41b75ed629cfd060e0e68229f092e8ab87e637b8789",
+      "q_width": 4,
+      "pv_width": 128
+    },
+    {
+      "path": "experiments/20261004_resume/bs32_blocks_q8_pv64.py",
+      "sha256": "e213ddab31a96d975e48e6f2cebf2b3030a7d7f6200397c87dded4204a31fca0",
+      "q_width": 8,
+      "pv_width": 64
+    },
+    {
+      "path": "experiments/20261004_resume/bs32_blocks_q4_pv64.py",
+      "sha256": "b1f2b95dd16b32a6f97ff5a6088268f4b516665b2a17d36d62835003511026fc",
+      "q_width": 4,
+      "pv_width": 64
+    }
+  ],
+  "unchanged_old_builders": true,
+  "mechanism": "Same-storage complete-block view and explicit uint32 K/V loads, extended from BS16 to BS32",
+  "selected_scope": "Original packed S1/D128/BS32 route, seq_len divisible by BS32",
+  "synchronization": "Seven explicit wave RAW/WAR barriers retained",
+  "no_pack_launch": true
+}

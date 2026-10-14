@@ -1,0 +1,158 @@
+{
+  "command": [
+    "experiments/20261007_exp_math/preflight.py",
+    "experiments/20261007_exp_math/mask_late_branch.py",
+    "experiments/20261007_exp_math/mask_late_predicate.py",
+    "--cases",
+    "oj12,oj6,oj9",
+    "--output",
+    "experiments/20261007_exp_math/postmask_preflight.json"
+  ],
+  "sha256": {
+    "experiments/20261007_exp_math/mask_late_branch.py": "99e5e527fba4802bf938225f108c46b69b91ee9e8b84286bcfb6c89fd2de7f63",
+    "experiments/20261007_exp_math/mask_late_predicate.py": "b7ce845e2dbcc3a8bd33d4146b9babdd13370506fefa7e38d2c2f6cd24b0b4b1"
+  },
+  "rows": [
+    {
+      "module": "experiments/20261007_exp_math/mask_late_branch.py",
+      "case": "oj12",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "33dd960d834b50f1c743f38b1457e9ce04ac889ed53010e247e9d38cba8514ff",
+        "5a94699353a7e1d232127ee0e20b5e84ca427e91b09ec732d4ce0cbdc2ed44b0"
+      ],
+      "compile_flags": [
+        [],
+        []
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/mask_late_predicate.py",
+      "case": "oj12",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "33dd960d834b50f1c743f38b1457e9ce04ac889ed53010e247e9d38cba8514ff",
+        "204e251c908d12eb2bbdda9a74a59e857eac2b9f29215b32b4c0a7e81996aebe"
+      ],
+      "compile_flags": [
+        [],
+        []
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/mask_late_branch.py",
+      "case": "oj6",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "75ed150868cee8fc780cb5a595db084a3a3a6a0a454b5061cec3d638baaf1658",
+        "270c5b9b193c11a40cc33d4a51f6d5061150cdc7de1640e0b2a1f8d3958aecb3"
+      ],
+      "compile_flags": [
+        [],
+        []
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/mask_late_predicate.py",
+      "case": "oj6",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "75ed150868cee8fc780cb5a595db084a3a3a6a0a454b5061cec3d638baaf1658",
+        "af7a0a5cfa047c3e9f069dd637a659d62cf68c05ef58b8870bd80c25db8da6d4"
+      ],
+      "compile_flags": [
+        [],
+        []
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/mask_late_branch.py",
+      "case": "oj9",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 8192,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "41d4f5d7ab5aec973c24ff5731fb2f85708a74db032ca1fac07c59675866cf6b"
+      ],
+      "compile_flags": [
+        []
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/mask_late_predicate.py",
+      "case": "oj9",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 8192,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "8bbaf0667ad89ceade125ecf346f30c6d07433dc9a3e2f514ef54800899f813e"
+      ],
+      "compile_flags": [
+        []
+      ],
+      "max_abs_error": 0.001953125
+    }
+  ],
+  "method": "Compilation then independent FP32 reference; no timings"
+}

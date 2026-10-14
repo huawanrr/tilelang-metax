@@ -1,0 +1,45 @@
+{
+  "base": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/candidate_v6.py",
+  "base_sha256": "17b91438e869aae07d53ce0b9d99cb8579735f366e80b25faf3dcbabbe94ac09",
+  "variants": [
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_resume8871/unsigned_guard_plain.py",
+      "sha256": "aad6fb1e8bebfea094d3bb01933bd860123bd32fb6bb8c9ad4ba296ee745ecd5",
+      "changed_conditions": {
+        "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast": 9,
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast": 9,
+        "_coalesced_block_loads_prim_mathcast": 2,
+        "native_sparse_attention_direct_kv": 1,
+        "_coalesced_block_loads_prim_oct8": 2,
+        "native_sparse_attention_q_preload": 1
+      },
+      "scoped_proven_assumptions": false
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_resume8871/unsigned_guard_scoped.py",
+      "sha256": "841d8aeefe568dc3fe98d91f3953063ff661a46aef61fa4f1c8166932253b357",
+      "changed_conditions": {
+        "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast": 9,
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast": 9,
+        "_coalesced_block_loads_prim_mathcast": 2,
+        "native_sparse_attention_direct_kv": 1,
+        "_coalesced_block_loads_prim_oct8": 2,
+        "native_sparse_attention_q_preload": 1
+      },
+      "scoped_proven_assumptions": true
+    }
+  ],
+  "proof": [
+    {
+      "causal": false,
+      "inequivalence": "unsat",
+      "domain": "all int32 indices; 0 < NB < 2^31; 0 <= token//BS < NB"
+    },
+    {
+      "causal": true,
+      "inequivalence": "unsat",
+      "domain": "all int32 indices; 0 < NB < 2^31; 0 <= token//BS < NB"
+    }
+  ],
+  "status": "research; all safety passes retained; GPU validation pending"
+}

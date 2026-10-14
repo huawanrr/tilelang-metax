@@ -1,0 +1,69 @@
+{
+  "command": [
+    "experiments/20261002_tuning/verify_candidate.py",
+    "--directory",
+    "experiments/20261002_candidate",
+    "--output",
+    "experiments/20261002_candidate/release_checks.json"
+  ],
+  "status": "running",
+  "boundaries": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1023,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "path": "base",
+      "max_abs_error": 0.001953125,
+      "both_interfaces": true
+    }
+  ],
+  "extremes": [],
+  "sources": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1023,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "path": "base",
+      "parts": [
+        {
+          "wave_barriers": 0,
+          "block_barriers": 3,
+          "shared_bytes": 8192,
+          "shared_evidence": "TVM FFI launch argument 11",
+          "host_source_sha256": "b144a8e1b807e58c7aecae79262707b167189994ff9070ab8bfbf1b8453413e9",
+          "source_sha256": "008401719f7677474efa7ad97f4ad761f6f552ef9f44d046a87b31eca1737666",
+          "launch_bounds": [
+            "64"
+          ]
+        }
+      ],
+      "compile_flags": [
+        []
+      ],
+      "probe_source_and_flags_equal": true
+    }
+  ],
+  "fallbacks": [],
+  "refresh": [],
+  "packing": [],
+  "guarded": [],
+  "official_sandbox": false,
+  "source_sha256": {
+    "experiments/20261002_candidate/nsa.py": "6bd70fe96c7a36611476d8b0470a78b3335deea770eb53459115739ccd289fbb",
+    "experiments/20261002_candidate/submission.py": "25868d45e3adf4878143f830fa77dadb8cf356ba0caf5111b4eb616b5e10790c"
+  }
+}

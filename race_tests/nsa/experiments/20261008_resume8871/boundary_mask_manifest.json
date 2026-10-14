@@ -1,0 +1,23 @@
+{
+  "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/parent.py",
+  "parent_sha256": "4887b6a68ea8f0a7647441625079f87f74c13906bcfb7bcd17e9fa170769121d",
+  "variants": [
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/boundary_mask_post.py",
+      "sha256": "36522b1506cff8abc51e04b779ad98eee27089dc802255d9adef132e3a5a11ce",
+      "mode": "post"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/boundary_mask_split.py",
+      "sha256": "01f54739d3ae38ea556535b67cb664313a1921c9b6bc814f7b47e49ef7231c2e",
+      "mode": "split"
+    }
+  ],
+  "assumptions": [
+    "Complete blocks",
+    "Raw block index validated",
+    "Causal block <= token // BS"
+  ],
+  "equivalence": "For every earlier block all columns are valid; the current block has j <= token % BS",
+  "safety_and_synchronization_unchanged": true
+}

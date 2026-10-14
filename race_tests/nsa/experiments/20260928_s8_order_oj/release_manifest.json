@@ -1,0 +1,94 @@
+{
+  "status": "validated OJ trial; official result pending",
+  "goal_score": 88,
+  "official_oj_score": null,
+  "official_sandbox": false,
+  "source_sha256": {
+    "experiments/20260928_s8_order_oj/nsa.py": "907c440d4d4b54a66a0db82d63c1bc9d12047d23657131a5dea318cc39a4a47d",
+    "experiments/20260928_s8_order_oj/submission.py": "bb632603c1a5d70e0ae57fa0053bc2ff8aba7ded8ebc2409dc8c6a15e3cac685",
+    "experiments/20260927_next/selected.py": "311e64a25b16471d2689049070303e6400bc0f593e184615222839e1a77b3a26"
+  },
+  "validation_counts": {
+    "reference": 125,
+    "boundaries": 26,
+    "boundary_source_comparisons": 26,
+    "input_refreshes": 6,
+    "guarded_host": 4,
+    "dev_submission_equivalence": 18
+  },
+  "max_abs_error": 0.001953125,
+  "unchanged_original_functions": [
+    "_clamped_load_base",
+    "_paired_pos_sel",
+    "native_sparse_attention_single_block",
+    "native_sparse_attention_online",
+    "native_sparse_attention_online_emitter",
+    "_emitters",
+    "native_sparse_attention_single_block_emitter",
+    "native_sparse_attention_online_packed",
+    "native_sparse_attention_pack_kv",
+    "_make_packed_attention",
+    "_as_int32",
+    "native_sparse_attention",
+    "run_kernel"
+  ],
+  "protected_sources_unchanged": {
+    "nsa.py": "b130372b331e04cec85e6ad005ca239038adbb7f2c1fb5ce55b745b720c814fa",
+    "submission.py": "a588a9f4f23f93c076c37ebecf88577619f5ffbee03278fc5875253b06b016cd",
+    "experiments/20260927_next/selected.py": "311e64a25b16471d2689049070303e6400bc0f593e184615222839e1a77b3a26",
+    "experiments/20260927_next/submission.py": "8733abd64b1f72e0a098d2412a1d3a0db8b5ec03d899408d0ec15b2f6c9f3cc0",
+    "experiments/20260928_pv32_oj/submission.py": "3b87e4fba20ac3ab2d755fab239fcc0d2d61b9686d75f2e444e863f72db23424"
+  },
+  "dispatch": "S8/D64/BS16/G16/threads64: grid>=4096 batch-major grid dimension moved to x; grid>=8192 four PV accumulators",
+  "timing_evidence": "../20260928_grid_order/long_bracketed.json",
+  "timing_summaries": {
+    "oj12": {
+      "control": {
+        "accepted": 42,
+        "total": 48,
+        "median_speedup": 0.9988235916348122,
+        "median_baseline_us": 52.982656478881836,
+        "median_candidate_us": 53.05574417114258
+      },
+      "selected": {
+        "accepted": 41,
+        "total": 48,
+        "median_speedup": 1.0317514653116713,
+        "median_baseline_us": 52.98521614074707,
+        "median_candidate_us": 51.356929779052734
+      }
+    },
+    "g4_b8": {
+      "control": {
+        "accepted": 16,
+        "total": 48,
+        "median_speedup": 0.9985266828899138,
+        "median_baseline_us": 57.79545593261719,
+        "median_candidate_us": 57.26118278503418
+      },
+      "selected": {
+        "accepted": 28,
+        "total": 48,
+        "median_speedup": 1.0411307253375013,
+        "median_baseline_us": 67.33568000793457,
+        "median_candidate_us": 64.9356803894043
+      }
+    },
+    "g8_b8": {
+      "control": {
+        "accepted": 22,
+        "total": 48,
+        "median_speedup": 0.9962435496204272,
+        "median_baseline_us": 119.24505424499512,
+        "median_candidate_us": 119.70943832397461
+      },
+      "selected": {
+        "accepted": 22,
+        "total": 48,
+        "median_speedup": 1.0888481569144068,
+        "median_baseline_us": 119.31673622131348,
+        "median_candidate_us": 109.49158477783203
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "baseline": "experiments/20261002_blocks_v2/nsa.py",
+  "baseline_sha256": "dfd56499dd405def3b1247780aa404919b8c03b7d493fdbb13c1420a331f4ee6",
+  "variants": [
+    {
+      "path": "mid_guard.py",
+      "sha256": "8ff3b8b2525649c9f11501e4289e0b572d1f38ec23382f50332569e66064a955",
+      "elements_per_load": 0,
+      "preserved_functions": 43
+    },
+    {
+      "path": "mid_pairs.py",
+      "sha256": "11d64805344a4aac3c80cd8c8607f764294eba0bb696e25e2eb24c6e4a7d4008",
+      "elements_per_load": 2,
+      "preserved_functions": 43
+    },
+    {
+      "path": "mid_quads.py",
+      "sha256": "7628a0577149b171d1d6dbdaffd4e3100bb38ec5ab6821916d25e4ce6d00bf83",
+      "elements_per_load": 4,
+      "preserved_functions": 43
+    }
+  ],
+  "restriction": "Only default complete-block D64 shared-Q reuse paths, 256 < B*H*T <= 2048",
+  "method": "Same-storage K/V views and explicit vector loads; no new launch, backend changes, asynchronous copy, or disabled checking"
+}

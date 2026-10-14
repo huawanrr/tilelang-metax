@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "source_sha256": {
+    "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/fp32_core.py": "e414b903f8461ad72d9e328574b0ff455254170c00c35f0d85c5987ad819cda2",
+    "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/fp32_mask_post.py": "cb23246c04ecad2b5691464226886bf00f9c9aeb6d2ed765924c3703e3bd06dd",
+    "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/small_vfirst.py": "4472fbe7190281d94fa0814840a991dc1ae68176fb07f672d36b1ec419c3e1b7"
+  },
+  "proofs": {
+    "complete_block_address_in_bounds_and_no_int32_overflow": "unsat",
+    "causal_boundary_only_mask_equivalent": "unsat"
+  },
+  "a_fragment_elements": 64,
+  "c_fragment_elements": 256,
+  "constant_one_mma": "C[row,col] = sum(A[row,k], k=0..3); lane-owned column is 4*(tid//16)",
+  "hypothesis": "One 64-lane wave, G=16, complete BS16 block validated before address formation",
+  "precision_evidence": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/fp32_sum_numeric.json"
+}

@@ -1,0 +1,762 @@
+{
+  "status": "PASS",
+  "command": [
+    "experiments/20261009_goal8933/audit_candidate.py",
+    "--manifest",
+    "experiments/20261009_goal8933/candidate_v7_preview_manifest.json",
+    "--case-files",
+    "experiments/20261009_goal8933/oj_cases.json",
+    "--output",
+    "experiments/20261009_goal8933/candidate_v7_preview_audit.json"
+  ],
+  "manifest": "experiments/20261009_goal8933/candidate_v7_preview_manifest.json",
+  "manifest_sha256": "989c1e568742d3e8034dc685c2e589c8c1c87dbc1db322a3d7ab2ee445c484fe",
+  "kept_functions": [
+    "_clamped_load_base",
+    "_paired_pos_sel",
+    "native_sparse_attention_single_block",
+    "native_sparse_attention_online",
+    "native_sparse_attention_online_emitter",
+    "_emitters",
+    "native_sparse_attention_single_block_emitter",
+    "native_sparse_attention_online_packed",
+    "native_sparse_attention_pack_kv",
+    "_make_packed_attention",
+    "native_sparse_attention_online_packed_batch_minor",
+    "native_sparse_attention_online_packed_quad_batch_minor",
+    "native_sparse_attention_single_block_pv32",
+    "native_sparse_attention_d32_shuffle",
+    "native_sparse_attention_single_vec16",
+    "native_sparse_attention_single_linear_v",
+    "native_sparse_attention_mid_shared_q",
+    "native_sparse_attention_single_block_emitter_wave",
+    "native_sparse_attention_single_vec16_wave",
+    "native_sparse_attention_single_linear_v_wave",
+    "native_sparse_attention_d32_shuffle_wave",
+    "native_sparse_attention_mid_shared_q_wave",
+    "native_sparse_attention_shared_q_reuse",
+    "native_sparse_attention_short_list",
+    "native_sparse_attention_pv32_sync",
+    "_coalesced_qo_prim",
+    "native_sparse_attention_coalesced_qo",
+    "native_sparse_attention_single_packed_qo",
+    "native_sparse_attention_single_packed_qo_v2",
+    "native_sparse_attention_pack_kv_bs32_direct",
+    "native_sparse_attention_pack_kv_bs32_shared",
+    "native_sparse_attention_short_list_qo_v2",
+    "native_sparse_attention_online_packed_batch_minor_o_v2",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2",
+    "native_sparse_attention_single_block_emitter_index_guard",
+    "native_sparse_attention_single_block_emitter_wave_index_guard",
+    "native_sparse_attention_d32_shuffle_wave_index_guard",
+    "native_sparse_attention_d32_compact",
+    "_coalesced_block_loads_prim",
+    "native_sparse_attention_coalesced_blocks",
+    "native_sparse_attention_shared_q_blocks",
+    "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_single_packed_qo_v2_mathcast",
+    "_coalesced_block_loads_prim_mathcast",
+    "native_sparse_attention_coalesced_blocks_mathcast",
+    "native_sparse_attention_direct_kv",
+    "native_sparse_attention_linear_v_blocks_oct8",
+    "native_sparse_attention_short_list_oct8",
+    "native_sparse_attention_staged_sparse_blocks",
+    "_coalesced_block_loads_prim_oct8",
+    "native_sparse_attention_coalesced_blocks_oct8",
+    "native_sparse_attention_q_preload",
+    "native_sparse_attention_pack_kv_bs32_tiles",
+    "_as_int32",
+    "native_sparse_attention",
+    "run_kernel"
+  ],
+  "appended_functions": {
+    "_coalesced_block_loads_prim_fp32_sum": {
+      "probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/fp32_core.py",
+      "function": "_coalesced_block_loads_prim_mathcast"
+    },
+    "native_sparse_attention_coalesced_blocks_fp32_sum": {
+      "probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/parent.py",
+      "function": "native_sparse_attention_coalesced_blocks_mathcast"
+    },
+    "_coalesced_block_loads_prim_fp32_mask": {
+      "probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/fp32_mask_post.py",
+      "function": "_coalesced_block_loads_prim_oct8"
+    },
+    "native_sparse_attention_coalesced_blocks_fp32_mask": {
+      "probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/parent.py",
+      "function": "native_sparse_attention_coalesced_blocks_oct8"
+    },
+    "native_sparse_attention_q_preload_vfirst": {
+      "probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/small_vfirst.py",
+      "function": "native_sparse_attention_q_preload"
+    }
+  },
+  "configurations": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "component": "tiny",
+      "expected_probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/small_vfirst.py",
+      "submitted": [
+        {
+          "sha256": "25d466389663b67c815098ab23bbfa5f0d362e97037064daa08cf19b9dfcfeee",
+          "flags": [],
+          "shared_bytes": 0,
+          "block_barriers": 0,
+          "wave_barriers": 1,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '64'), ('blockIdx.y', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true
+          }
+        }
+      ],
+      "parent": [
+        {
+          "sha256": "6c50633a6d919678d158d235f68d7ce0a8b498d417b68dd87a1d7d5c9114b3de",
+          "flags": [],
+          "shared_bytes": 0,
+          "block_barriers": 0,
+          "wave_barriers": 1,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '64'), ('blockIdx.y', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true
+          }
+        }
+      ],
+      "development_submission_and_probe_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "component": "parent",
+      "expected_probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/parent.py",
+      "submitted": [
+        {
+          "sha256": "23a8ea54e7a9c352af96457f34b7f45099ed802b0e569ce8ef4242be2a35b849",
+          "flags": [],
+          "shared_bytes": 0,
+          "block_barriers": 0,
+          "wave_barriers": 1,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '128'), ('blockIdx.y', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true
+          }
+        }
+      ],
+      "parent": [
+        {
+          "sha256": "23a8ea54e7a9c352af96457f34b7f45099ed802b0e569ce8ef4242be2a35b849",
+          "flags": [],
+          "shared_bytes": 0,
+          "block_barriers": 0,
+          "wave_barriers": 1,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '128'), ('blockIdx.y', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true
+          }
+        }
+      ],
+      "development_submission_and_probe_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "component": "parent",
+      "expected_probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/parent.py",
+      "submitted": [
+        {
+          "sha256": "0611f0320d59b16313547f09a6b9734e13ea9ca3bcd6677cc7656ab86d3ee375",
+          "flags": [],
+          "shared_bytes": 4096,
+          "block_barriers": 0,
+          "wave_barriers": 3,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '256'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "parent": [
+        {
+          "sha256": "0611f0320d59b16313547f09a6b9734e13ea9ca3bcd6677cc7656ab86d3ee375",
+          "flags": [],
+          "shared_bytes": 4096,
+          "block_barriers": 0,
+          "wave_barriers": 3,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '256'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "development_submission_and_probe_equal": true
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "component": "parent",
+      "expected_probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/parent.py",
+      "submitted": [
+        {
+          "sha256": "219f0d49ac1900cac2690d85b0c6632da50376d9aa2b0a28242c63c5a6c80b6a",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 7,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '512'), ('blockIdx.y', '1'), ('blockIdx.z', '2'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "parent": [
+        {
+          "sha256": "219f0d49ac1900cac2690d85b0c6632da50376d9aa2b0a28242c63c5a6c80b6a",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 7,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '512'), ('blockIdx.y', '1'), ('blockIdx.z', '2'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "development_submission_and_probe_equal": true
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "component": "large",
+      "expected_probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/fp32_core.py",
+      "submitted": [
+        {
+          "sha256": "041df890facfc8b51a6792f3c067e416a6165c4f43b014115aa6ed2805c230bf",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 7,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '1024'), ('blockIdx.y', '1'), ('blockIdx.z', '4'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "parent": [
+        {
+          "sha256": "eb614e57d40f4efcc397ee75d0629c154784604823393e6e7904744f0f3ea451",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 7,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '1024'), ('blockIdx.y', '1'), ('blockIdx.z', '4'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "development_submission_and_probe_equal": true
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "component": "parent",
+      "expected_probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/parent.py",
+      "submitted": [
+        {
+          "sha256": "e70dda781d17cb1e0d2f1ee3b545abe7bd0f21f9242a01d5793f67947f6fbc2f",
+          "flags": [],
+          "shared_bytes": 4096,
+          "block_barriers": 0,
+          "wave_barriers": 1,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '128'), ('blockIdx.y', '1'), ('blockIdx.z', '8'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "pass_configs": {
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        },
+        {
+          "sha256": "877648e8a383d621bd3023a63c57d9d6f07fc0817371905eded6f2d41428cd02",
+          "flags": [],
+          "shared_bytes": 4096,
+          "block_barriers": 0,
+          "wave_barriers": 3,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '1024'), ('blockIdx.y', '8'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "parent": [
+        {
+          "sha256": "e70dda781d17cb1e0d2f1ee3b545abe7bd0f21f9242a01d5793f67947f6fbc2f",
+          "flags": [],
+          "shared_bytes": 4096,
+          "block_barriers": 0,
+          "wave_barriers": 1,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '128'), ('blockIdx.y', '1'), ('blockIdx.z', '8'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "pass_configs": {
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        },
+        {
+          "sha256": "877648e8a383d621bd3023a63c57d9d6f07fc0817371905eded6f2d41428cd02",
+          "flags": [],
+          "shared_bytes": 4096,
+          "block_barriers": 0,
+          "wave_barriers": 3,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '1024'), ('blockIdx.y', '8'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "development_submission_and_probe_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 4096,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "component": "large",
+      "expected_probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/fp32_core.py",
+      "submitted": [
+        {
+          "sha256": "ab1f1b240d1c1e7904ccee589a76e706f28b10a13b32edc9ceaedfa1d2e9579b",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 7,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '4096'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "parent": [
+        {
+          "sha256": "7fc41077c7b426953fb97ebf6f751781b8c6269858203fdeb89b7ec8fa58bb2e",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 7,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '4096'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "development_submission_and_probe_equal": true
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 4096,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "component": "large",
+      "expected_probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/fp32_core.py",
+      "submitted": [
+        {
+          "sha256": "fb258ebbfeddcc36c3ada9c575e650b25d1cc415d875740817a99df8e91207e3",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 7,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '4096'), ('blockIdx.y', '1'), ('blockIdx.z', '2'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "parent": [
+        {
+          "sha256": "5789330522a956b6c8d9060cc4f088907ecd903d997710de0ef15f337a60966c",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 7,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '4096'), ('blockIdx.y', '1'), ('blockIdx.z', '2'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "development_submission_and_probe_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 8192,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "component": "large",
+      "expected_probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/fp32_core.py",
+      "submitted": [
+        {
+          "sha256": "1dff4f0c7f506f25dd626cf6eb02493f0dbb40e6361c2418083584e880dc0699",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 7,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '8192'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "parent": [
+        {
+          "sha256": "4d18d63bf9bca6e0bf433ce1ca600f3703e591578f310f518182259464ea1be9",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 7,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '8192'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "development_submission_and_probe_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 2,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "component": "parent",
+      "expected_probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/parent.py",
+      "submitted": [
+        {
+          "sha256": "68383172932519048a78f53f44b21cddd25a1ed5051ba3a72bda380f67ff6154",
+          "flags": [],
+          "shared_bytes": 4096,
+          "block_barriers": 3,
+          "wave_barriers": 0,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '256'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true
+          }
+        }
+      ],
+      "parent": [
+        {
+          "sha256": "68383172932519048a78f53f44b21cddd25a1ed5051ba3a72bda380f67ff6154",
+          "flags": [],
+          "shared_bytes": 4096,
+          "block_barriers": 3,
+          "wave_barriers": 0,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '256'), ('blockIdx.y', '1'), ('blockIdx.z', '1'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true
+          }
+        }
+      ],
+      "development_submission_and_probe_equal": true
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "component": "parent",
+      "expected_probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/parent.py",
+      "submitted": [
+        {
+          "sha256": "b65ba01a94f3273dfe3bc5ec5e607fe558c392f22152941c5762fe57f73f483d",
+          "flags": [],
+          "shared_bytes": 4096,
+          "block_barriers": 0,
+          "wave_barriers": 4,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '512'), ('blockIdx.y', '2'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "parent": [
+        {
+          "sha256": "b65ba01a94f3273dfe3bc5ec5e607fe558c392f22152941c5762fe57f73f483d",
+          "flags": [],
+          "shared_bytes": 4096,
+          "block_barriers": 0,
+          "wave_barriers": 4,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '512'), ('blockIdx.y', '2'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 10",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "development_submission_and_probe_equal": true
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "component": "parent",
+      "expected_probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/parent.py",
+      "submitted": [
+        {
+          "sha256": "33dd960d834b50f1c743f38b1457e9ce04ac889ed53010e247e9d38cba8514ff",
+          "flags": [],
+          "shared_bytes": 0,
+          "block_barriers": 0,
+          "wave_barriers": 0,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '64'), ('blockIdx.y', '1'), ('blockIdx.z', '4'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "pass_configs": {}
+        },
+        {
+          "sha256": "f80d9ba77f5659f2b1ec29196d63483799ae8ecb54cde633083e38f362375899",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 1,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '4'), ('blockIdx.y', '1'), ('blockIdx.z', '1024'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "parent": [
+        {
+          "sha256": "33dd960d834b50f1c743f38b1457e9ce04ac889ed53010e247e9d38cba8514ff",
+          "flags": [],
+          "shared_bytes": 0,
+          "block_barriers": 0,
+          "wave_barriers": 0,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '64'), ('blockIdx.y', '1'), ('blockIdx.z', '4'), ('threadIdx.x', '128'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; no shared argument",
+          "pass_configs": {}
+        },
+        {
+          "sha256": "f80d9ba77f5659f2b1ec29196d63483799ae8ecb54cde633083e38f362375899",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 1,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '4'), ('blockIdx.y', '1'), ('blockIdx.z', '1024'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "development_submission_and_probe_equal": true
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "component": "multihead",
+      "expected_probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/fp32_mask_post.py",
+      "submitted": [
+        {
+          "sha256": "c47f125ebdd1e77ce456ed1dae78f706c97f29cab27e9b63aaea4d28407c3b5f",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 7,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '256'), ('blockIdx.y', '1'), ('blockIdx.z', '2'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "parent": [
+        {
+          "sha256": "e9e6abda802f1049fe2e413646704a2b8cc13d1c114daca05873a947d4d40c53",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 7,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '256'), ('blockIdx.y', '1'), ('blockIdx.z', '2'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "development_submission_and_probe_equal": true
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "component": "multihead",
+      "expected_probe": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/fp32_mask_post.py",
+      "submitted": [
+        {
+          "sha256": "29f8de7aae99da767efc5a32dd3256ec23c307b64b32033e341324a680c5ae38",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 7,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '512'), ('blockIdx.y', '1'), ('blockIdx.z', '4'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "parent": [
+        {
+          "sha256": "727066da9745bc329448dff44d4038b8096a153369b27a945ddf5df27eafc388",
+          "flags": [],
+          "shared_bytes": 2048,
+          "block_barriers": 0,
+          "wave_barriers": 7,
+          "shared_evidence": "FFI dimensions verified against PrimFunc: [('blockIdx.x', '512'), ('blockIdx.y', '1'), ('blockIdx.z', '4'), ('threadIdx.x', '64'), ('threadIdx.y', '1'), ('threadIdx.z', '1')]; TVM FFI launch argument 11",
+          "pass_configs": {
+            "PassConfigKey.TL_ENABLE_FAST_MATH": true,
+            "PassConfigKey.TL_DISABLE_WARP_SPECIALIZED": true,
+            "PassConfigKey.TL_DISABLE_THREAD_STORAGE_SYNC": true
+          }
+        }
+      ],
+      "development_submission_and_probe_equal": true
+    }
+  ],
+  "timings": []
+}

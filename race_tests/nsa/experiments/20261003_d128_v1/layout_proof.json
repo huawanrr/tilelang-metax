@@ -1,0 +1,62 @@
+{
+  "status": "PASS",
+  "parent": "experiments/20261002_mid_v1/nsa.py",
+  "parent_sha256": "644206570d4ca96c15acdf28ff9ef365e61dcbbe1670915e1ec188c80f834412",
+  "modules": [
+    {
+      "path": "experiments/20261003_d128_v1/nsa.py",
+      "sha256": "9b08cfb7274b10ca2b933d81b80af57e2ad5fd37d01b8b0516b3d7c38fefa9df",
+      "operands": [
+        {
+          "operand": "K",
+          "elements_per_load": 2,
+          "loads": 2048,
+          "stores": 2048,
+          "same_lane_values": true,
+          "shared_bijection": true
+        },
+        {
+          "operand": "V",
+          "elements_per_load": 2,
+          "loads": 2048,
+          "stores": 2048,
+          "same_lane_values": true,
+          "shared_bijection": true
+        }
+      ],
+      "preserved_fragment_layouts": true,
+      "protected_shared_dependencies": 3,
+      "checked_guard_combinations": 630
+    }
+  ],
+  "views": [
+    {
+      "batch": 1,
+      "heads": 1,
+      "seq_len": 16,
+      "checked_half_addresses": 2048,
+      "identical_storage_bytes": true
+    },
+    {
+      "batch": 2,
+      "heads": 2,
+      "seq_len": 32,
+      "checked_half_addresses": 16384,
+      "identical_storage_bytes": true
+    },
+    {
+      "batch": 2,
+      "heads": 4,
+      "seq_len": 256,
+      "checked_half_addresses": 262144,
+      "identical_storage_bytes": true
+    },
+    {
+      "batch": 8,
+      "heads": 1,
+      "seq_len": 128,
+      "checked_half_addresses": 131072,
+      "identical_storage_bytes": true
+    }
+  ]
+}

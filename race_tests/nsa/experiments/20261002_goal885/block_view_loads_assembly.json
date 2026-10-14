@@ -1,0 +1,17 @@
+{
+  "baseline": "coalesced_block_view_local.py",
+  "baseline_sha256": "a5afde30d406c994ffc8393b2efea7090079b4bc3922c1a7b7b1e32fceebfe7c",
+  "variants": [
+    {
+      "path": "coalesced_block_view_scalar_loads.py",
+      "sha256": "a42b07cf552e80896e84cb2ff40aa814372997b76ef9b0fb49a60be9e099c057",
+      "elements_per_load": 1
+    },
+    {
+      "path": "coalesced_block_view_pair_loads.py",
+      "sha256": "381d4c78e108b0520b19446b7dbb0e28f57a73ef3fa87f91c0625173682cc26b",
+      "elements_per_load": 2
+    }
+  ],
+  "hypothesis": "LLVM diagnostic eliminates both K_reg/V_reg private allocations after scalarizing global reads; this tests the equivalent TileLang source"
+}

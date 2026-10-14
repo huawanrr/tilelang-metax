@@ -1,0 +1,203 @@
+{
+  "status": "PASS",
+  "source": "experiments/20261002_d32_v1/nsa.py",
+  "source_sha256": "05139dd9eb19e19b7ccb63b12cebb005613ed1c595004b879c3d4101ee798689",
+  "backend_layout_source": "/app/tilelang-metax/tilelang/maca/intrinsics/layout/mma_layout.py",
+  "backend_layout_sha256": "794c894c74a38627c5fdd82f8480c1e628c89dd38f3850016fd6a62580d98262",
+  "backend_functions": [
+    "shared_16x32_to_local_64x8_layout_A",
+    "thread_id_shared_access_64x4_to_16x16_layout_B"
+  ],
+  "k_unique_loads": 512,
+  "k_mma_elements": 512,
+  "v_owners": 512,
+  "v_unique_shared_stores": 512,
+  "v_unique_shared_reads": 512,
+  "shared_allocation_bytes": 1024,
+  "denominator_rows": 16,
+  "denominator_terms_per_row": 16,
+  "denominator_shared_accesses": 0,
+  "bounds": [
+    {
+      "seq_len": 1,
+      "candidate_indices": [
+        -2147483648,
+        -1,
+        0,
+        1,
+        2,
+        2147483647
+      ],
+      "causal_and_noncausal": true
+    },
+    {
+      "seq_len": 15,
+      "candidate_indices": [
+        -2147483648,
+        -1,
+        0,
+        1,
+        2,
+        2147483647
+      ],
+      "causal_and_noncausal": true
+    },
+    {
+      "seq_len": 16,
+      "candidate_indices": [
+        -2147483648,
+        -1,
+        0,
+        1,
+        2,
+        2147483647
+      ],
+      "causal_and_noncausal": true
+    },
+    {
+      "seq_len": 17,
+      "candidate_indices": [
+        -2147483648,
+        -1,
+        0,
+        1,
+        2,
+        3,
+        2147483647
+      ],
+      "causal_and_noncausal": true
+    },
+    {
+      "seq_len": 37,
+      "candidate_indices": [
+        -2147483648,
+        -1,
+        0,
+        2,
+        3,
+        4,
+        2147483647
+      ],
+      "causal_and_noncausal": true
+    },
+    {
+      "seq_len": 192,
+      "candidate_indices": [
+        -2147483648,
+        -1,
+        0,
+        11,
+        12,
+        13,
+        2147483647
+      ],
+      "causal_and_noncausal": true
+    },
+    {
+      "seq_len": 193,
+      "candidate_indices": [
+        -2147483648,
+        -1,
+        0,
+        12,
+        13,
+        14,
+        2147483647
+      ],
+      "causal_and_noncausal": true
+    },
+    {
+      "seq_len": 511,
+      "candidate_indices": [
+        -2147483648,
+        -1,
+        0,
+        31,
+        32,
+        33,
+        2147483647
+      ],
+      "causal_and_noncausal": true
+    },
+    {
+      "seq_len": 512,
+      "candidate_indices": [
+        -2147483648,
+        -1,
+        0,
+        31,
+        32,
+        33,
+        2147483647
+      ],
+      "causal_and_noncausal": true
+    },
+    {
+      "seq_len": 513,
+      "candidate_indices": [
+        -2147483648,
+        -1,
+        0,
+        32,
+        33,
+        34,
+        2147483647
+      ],
+      "causal_and_noncausal": true
+    },
+    {
+      "seq_len": 768,
+      "candidate_indices": [
+        -2147483648,
+        -1,
+        0,
+        47,
+        48,
+        49,
+        2147483647
+      ],
+      "causal_and_noncausal": true
+    },
+    {
+      "seq_len": 1023,
+      "candidate_indices": [
+        -2147483648,
+        -1,
+        0,
+        63,
+        64,
+        65,
+        2147483647
+      ],
+      "causal_and_noncausal": true
+    },
+    {
+      "seq_len": 1024,
+      "candidate_indices": [
+        -2147483648,
+        -1,
+        0,
+        63,
+        64,
+        65,
+        2147483647
+      ],
+      "causal_and_noncausal": true
+    },
+    {
+      "seq_len": 4096,
+      "candidate_indices": [
+        -2147483648,
+        -1,
+        0,
+        255,
+        256,
+        257,
+        2147483647
+      ],
+      "causal_and_noncausal": true
+    }
+  ],
+  "synchronization": "One 64-lane CTA; the selected index is wave uniform. The V store-to-read dependency retains one wave barrier.",
+  "scope": "D32/BS16/G16 single-query compact builder. GPU release checks verify generated source, barriers, invalid outputs and live graph inputs."
+}

@@ -1,0 +1,32 @@
+{
+  "baseline": "experiments/20261002_mid_v1/nsa.py",
+  "baseline_sha256": "644206570d4ca96c15acdf28ff9ef365e61dcbbe1670915e1ec188c80f834412",
+  "variants": [
+    {
+      "path": "experiments/20261004_resume/compiler_o2.py",
+      "flags": [
+        "-O2"
+      ],
+      "sha256": "f0bf2b3b18bc55f6ecf8c8bc8741456153b8c3aef18d1792fad595c9578ffa83"
+    },
+    {
+      "path": "experiments/20261004_resume/compiler_no_slp.py",
+      "flags": [
+        "-fno-slp-vectorize"
+      ],
+      "sha256": "efa7e96bcc2d6d5c685bf745b35c1b1dfa3d4a55263586a91b76e30a871604f8"
+    },
+    {
+      "path": "experiments/20261004_resume/compiler_o2_no_slp.py",
+      "flags": [
+        "-O2",
+        "-fno-slp-vectorize"
+      ],
+      "sha256": "64265cd56f042ffa15387f792c764afa96c9cd987cddf80edfe05ac2440445ac"
+    }
+  ],
+  "unchanged_bodies": true,
+  "unchanged_tilelang_pass_configs": true,
+  "hypothesis": "Check whether SLP vectorization or O3 transformations increase register live ranges or memory instruction dependencies",
+  "backend_changes": false
+}

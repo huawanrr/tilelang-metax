@@ -1,0 +1,288 @@
+{
+  "command": [
+    "experiments/20261007_exp_math/preflight.py",
+    "experiments/20261007_exp_math/packed_cast_scalar_v3.py",
+    "experiments/20261007_exp_math/packed_cast_scalar_base_v3.py",
+    "experiments/20261007_exp_math/single_cast_prob_v3.py",
+    "experiments/20261007_exp_math/s8_math_reg80.py",
+    "experiments/20261007_exp_math/s8_math_reg88.py",
+    "experiments/20261007_exp_math/s8_math_reg96.py",
+    "--cases",
+    "oj12,oj6",
+    "--output",
+    "experiments/20261007_exp_math/cast_v3_preflight.json"
+  ],
+  "sha256": {
+    "experiments/20261007_exp_math/packed_cast_scalar_v3.py": "80290994199c67d793d1daff59ab9a15acc2ccd313421933f8cddd3d23b45524",
+    "experiments/20261007_exp_math/packed_cast_scalar_base_v3.py": "9c7a66fdd2731268486cc01c9cfe967ef7ab0cbf08c92c862bbcfd8c034d515e",
+    "experiments/20261007_exp_math/single_cast_prob_v3.py": "c4a2ee8d02de13c66c4e91e522747b947f535db4f1fc582fad48215afa967401",
+    "experiments/20261007_exp_math/s8_math_reg80.py": "ebd93f486db4625bcc6e8a6e7c1803c9936157e43166532b0b00c171737c206d",
+    "experiments/20261007_exp_math/s8_math_reg88.py": "092d15f7d483d9fdf2ee89509344637c5e072f2532b5d602653580db92750467",
+    "experiments/20261007_exp_math/s8_math_reg96.py": "dd92bc48448da56c0c7e30de71de302125e8f22a15ab4824bfcee6df98a4da64"
+  },
+  "rows": [
+    {
+      "module": "experiments/20261007_exp_math/packed_cast_scalar_v3.py",
+      "case": "oj12",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": false,
+      "failure_stage": "compile",
+      "traceback": "Traceback (most recent call last):\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/preflight.py\", line 61, in main\n    kernel = mod._get_kernel(*shape)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/packed_cast_scalar_v3.py\", line 7502, in _get_kernel\n    attention = online_builder(\n                ^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/__init__.py\", line 465, in __call__\n    kernel = self.compile(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/__init__.py\", line 395, in compile\n    kernel_result = compile(\n                    ^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/__init__.py\", line 115, in compile\n    return cached(\n           ^^^^^^^\n  File \"/app/tilelang-metax/tilelang/cache/__init__.py\", line 74, in cached\n    return _dispatch_map[execution_backend].cached(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/cache/kernel_cache.py\", line 350, in cached\n    kernel = JITKernel(\n             ^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/kernel.py\", line 136, in __init__\n    adapter = self._compile_and_create_adapter(func, out_idx)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/kernel.py\", line 247, in _compile_and_create_adapter\n    artifact = tilelang.lower(\n               ^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/engine/lower.py\", line 364, in lower\n    mod = LowerAndLegalize(mod, target)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/engine/phase.py\", line 202, in LowerAndLegalize\n    mod = tilelang.transform.LayoutInference()(mod)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/3rdparty/tvm/python/tvm/ir/transform.py\", line 167, in __call__\n    return _ffi_transform_api.RunPass(self, mod)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"python/tvm_ffi/cython/function.pxi\", line 904, in tvm_ffi.core.Function.__call__\ntvm.error.InternalError: Layout infer conflict between acc_s and acc_s_cast in T.Parallel loop:\n    loop Fragment([16, 4] -> [1], replicate: 1, thread: 64, forward_thread: _j * 16 + _i, forward_index: [0], thread_range: I.Range(0, 64))\n    fragment Fragment([16, 16] -> [4], replicate: 1, thread: 64, forward_thread: _j // 4 * 16 + _i, forward_index: [_j % 4])\n\n"
+    },
+    {
+      "module": "experiments/20261007_exp_math/packed_cast_scalar_base_v3.py",
+      "case": "oj12",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": false,
+      "failure_stage": "compile",
+      "traceback": "Traceback (most recent call last):\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/preflight.py\", line 61, in main\n    kernel = mod._get_kernel(*shape)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/packed_cast_scalar_base_v3.py\", line 7517, in _get_kernel\n    attention = online_builder(\n                ^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/__init__.py\", line 465, in __call__\n    kernel = self.compile(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/__init__.py\", line 395, in compile\n    kernel_result = compile(\n                    ^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/__init__.py\", line 115, in compile\n    return cached(\n           ^^^^^^^\n  File \"/app/tilelang-metax/tilelang/cache/__init__.py\", line 74, in cached\n    return _dispatch_map[execution_backend].cached(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/cache/kernel_cache.py\", line 350, in cached\n    kernel = JITKernel(\n             ^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/kernel.py\", line 136, in __init__\n    adapter = self._compile_and_create_adapter(func, out_idx)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/kernel.py\", line 247, in _compile_and_create_adapter\n    artifact = tilelang.lower(\n               ^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/engine/lower.py\", line 364, in lower\n    mod = LowerAndLegalize(mod, target)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/engine/phase.py\", line 202, in LowerAndLegalize\n    mod = tilelang.transform.LayoutInference()(mod)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/3rdparty/tvm/python/tvm/ir/transform.py\", line 167, in __call__\n    return _ffi_transform_api.RunPass(self, mod)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"python/tvm_ffi/cython/function.pxi\", line 904, in tvm_ffi.core.Function.__call__\ntvm.error.InternalError: Layout infer conflict between acc_s and acc_s_cast in T.Parallel loop:\n    loop Fragment([16, 4] -> [1], replicate: 1, thread: 64, forward_thread: _j * 16 + _i, forward_index: [0], thread_range: I.Range(0, 64))\n    fragment Fragment([16, 16] -> [4], replicate: 1, thread: 64, forward_thread: _j // 4 * 16 + _i, forward_index: [_j % 4])\n\n"
+    },
+    {
+      "module": "experiments/20261007_exp_math/single_cast_prob_v3.py",
+      "case": "oj12",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "33dd960d834b50f1c743f38b1457e9ce04ac889ed53010e247e9d38cba8514ff",
+        "d990334bb3d29cb83e74ddf76c697def94d197943e7ad5be26a8baceaaaf5ced"
+      ],
+      "compile_flags": [
+        [],
+        []
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/s8_math_reg80.py",
+      "case": "oj12",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "33dd960d834b50f1c743f38b1457e9ce04ac889ed53010e247e9d38cba8514ff",
+        "e0e27a6a1a7466fde030a5297bef5d57117b7e2360201c166f2f97bb11ce7955"
+      ],
+      "compile_flags": [
+        [],
+        [
+          "-mllvm",
+          "--max-mtreg-number=80"
+        ]
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/s8_math_reg88.py",
+      "case": "oj12",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "33dd960d834b50f1c743f38b1457e9ce04ac889ed53010e247e9d38cba8514ff",
+        "e0e27a6a1a7466fde030a5297bef5d57117b7e2360201c166f2f97bb11ce7955"
+      ],
+      "compile_flags": [
+        [],
+        [
+          "-mllvm",
+          "--max-mtreg-number=88"
+        ]
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/s8_math_reg96.py",
+      "case": "oj12",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "33dd960d834b50f1c743f38b1457e9ce04ac889ed53010e247e9d38cba8514ff",
+        "e0e27a6a1a7466fde030a5297bef5d57117b7e2360201c166f2f97bb11ce7955"
+      ],
+      "compile_flags": [
+        [],
+        [
+          "-mllvm",
+          "--max-mtreg-number=96"
+        ]
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/packed_cast_scalar_v3.py",
+      "case": "oj6",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "passed": false,
+      "failure_stage": "compile",
+      "traceback": "Traceback (most recent call last):\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/preflight.py\", line 61, in main\n    kernel = mod._get_kernel(*shape)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/packed_cast_scalar_v3.py\", line 7419, in _get_kernel\n    attention = native_sparse_attention_single_packed_qo_v2(width=128, late=False, **common)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/__init__.py\", line 465, in __call__\n    kernel = self.compile(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/__init__.py\", line 395, in compile\n    kernel_result = compile(\n                    ^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/__init__.py\", line 115, in compile\n    return cached(\n           ^^^^^^^\n  File \"/app/tilelang-metax/tilelang/cache/__init__.py\", line 74, in cached\n    return _dispatch_map[execution_backend].cached(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/cache/kernel_cache.py\", line 350, in cached\n    kernel = JITKernel(\n             ^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/kernel.py\", line 136, in __init__\n    adapter = self._compile_and_create_adapter(func, out_idx)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/kernel.py\", line 247, in _compile_and_create_adapter\n    artifact = tilelang.lower(\n               ^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/engine/lower.py\", line 364, in lower\n    mod = LowerAndLegalize(mod, target)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/engine/phase.py\", line 202, in LowerAndLegalize\n    mod = tilelang.transform.LayoutInference()(mod)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/3rdparty/tvm/python/tvm/ir/transform.py\", line 167, in __call__\n    return _ffi_transform_api.RunPass(self, mod)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"python/tvm_ffi/cython/function.pxi\", line 904, in tvm_ffi.core.Function.__call__\ntvm.error.InternalError: Layout infer conflict between scores and prob in T.Parallel loop:\n    loop Fragment([16, 4] -> [1], replicate: 1, thread: 64, forward_thread: _j * 16 + _i, forward_index: [0], thread_range: I.Range(0, 64))\n    fragment Fragment([16, 32] -> [8], replicate: 1, thread: 64, forward_thread: _j % 16 // 4 * 16 + _i, forward_index: [_j // 16 * 4 + _j % 4])\n\n"
+    },
+    {
+      "module": "experiments/20261007_exp_math/packed_cast_scalar_base_v3.py",
+      "case": "oj6",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "passed": false,
+      "failure_stage": "compile",
+      "traceback": "Traceback (most recent call last):\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/preflight.py\", line 61, in main\n    kernel = mod._get_kernel(*shape)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/packed_cast_scalar_base_v3.py\", line 7434, in _get_kernel\n    attention = native_sparse_attention_single_packed_qo_v2(width=128, late=False, **common)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/__init__.py\", line 465, in __call__\n    kernel = self.compile(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/__init__.py\", line 395, in compile\n    kernel_result = compile(\n                    ^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/__init__.py\", line 115, in compile\n    return cached(\n           ^^^^^^^\n  File \"/app/tilelang-metax/tilelang/cache/__init__.py\", line 74, in cached\n    return _dispatch_map[execution_backend].cached(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/cache/kernel_cache.py\", line 350, in cached\n    kernel = JITKernel(\n             ^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/kernel.py\", line 136, in __init__\n    adapter = self._compile_and_create_adapter(func, out_idx)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/kernel.py\", line 247, in _compile_and_create_adapter\n    artifact = tilelang.lower(\n               ^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/engine/lower.py\", line 364, in lower\n    mod = LowerAndLegalize(mod, target)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/engine/phase.py\", line 202, in LowerAndLegalize\n    mod = tilelang.transform.LayoutInference()(mod)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/3rdparty/tvm/python/tvm/ir/transform.py\", line 167, in __call__\n    return _ffi_transform_api.RunPass(self, mod)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"python/tvm_ffi/cython/function.pxi\", line 904, in tvm_ffi.core.Function.__call__\ntvm.error.InternalError: Layout infer conflict between scores and prob in T.Parallel loop:\n    loop Fragment([16, 4] -> [1], replicate: 1, thread: 64, forward_thread: _j * 16 + _i, forward_index: [0], thread_range: I.Range(0, 64))\n    fragment Fragment([16, 32] -> [8], replicate: 1, thread: 64, forward_thread: _j % 16 // 4 * 16 + _i, forward_index: [_j // 16 * 4 + _j % 4])\n\n"
+    },
+    {
+      "module": "experiments/20261007_exp_math/single_cast_prob_v3.py",
+      "case": "oj6",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "passed": false,
+      "failure_stage": "compile",
+      "traceback": "Traceback (most recent call last):\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/preflight.py\", line 61, in main\n    kernel = mod._get_kernel(*shape)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data/tilelang-metax/race_tests/nsa/experiments/20261007_exp_math/single_cast_prob_v3.py\", line 7381, in _get_kernel\n    attention = native_sparse_attention_single_packed_qo_v2(width=128, late=False, **common)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/__init__.py\", line 465, in __call__\n    kernel = self.compile(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/__init__.py\", line 395, in compile\n    kernel_result = compile(\n                    ^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/__init__.py\", line 115, in compile\n    return cached(\n           ^^^^^^^\n  File \"/app/tilelang-metax/tilelang/cache/__init__.py\", line 74, in cached\n    return _dispatch_map[execution_backend].cached(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/cache/kernel_cache.py\", line 350, in cached\n    kernel = JITKernel(\n             ^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/kernel.py\", line 136, in __init__\n    adapter = self._compile_and_create_adapter(func, out_idx)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/jit/kernel.py\", line 247, in _compile_and_create_adapter\n    artifact = tilelang.lower(\n               ^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/engine/lower.py\", line 364, in lower\n    mod = LowerAndLegalize(mod, target)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/tilelang/engine/phase.py\", line 202, in LowerAndLegalize\n    mod = tilelang.transform.LayoutInference()(mod)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/tilelang-metax/3rdparty/tvm/python/tvm/ir/transform.py\", line 167, in __call__\n    return _ffi_transform_api.RunPass(self, mod)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"python/tvm_ffi/cython/function.pxi\", line 904, in tvm_ffi.core.Function.__call__\ntvm.error.InternalError: Layout infer conflict between scores and prob in T.Parallel loop:\n    loop Fragment([16, 4] -> [1], replicate: 1, thread: 64, forward_thread: _j * 16 + _i, forward_index: [0], thread_range: I.Range(0, 64))\n    fragment Fragment([16, 32] -> [8], replicate: 1, thread: 64, forward_thread: _j % 16 // 4 * 16 + _i, forward_index: [_j // 16 * 4 + _j % 4])\n\n"
+    },
+    {
+      "module": "experiments/20261007_exp_math/s8_math_reg80.py",
+      "case": "oj6",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "75ed150868cee8fc780cb5a595db084a3a3a6a0a454b5061cec3d638baaf1658",
+        "0e6c9cfd2480a47bcd49dde8fa09b7d07364c14952f8716cbeb5f6567b81e41a"
+      ],
+      "compile_flags": [
+        [],
+        []
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/s8_math_reg88.py",
+      "case": "oj6",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "75ed150868cee8fc780cb5a595db084a3a3a6a0a454b5061cec3d638baaf1658",
+        "0e6c9cfd2480a47bcd49dde8fa09b7d07364c14952f8716cbeb5f6567b81e41a"
+      ],
+      "compile_flags": [
+        [],
+        []
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/s8_math_reg96.py",
+      "case": "oj6",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "75ed150868cee8fc780cb5a595db084a3a3a6a0a454b5061cec3d638baaf1658",
+        "0e6c9cfd2480a47bcd49dde8fa09b7d07364c14952f8716cbeb5f6567b81e41a"
+      ],
+      "compile_flags": [
+        [],
+        []
+      ],
+      "max_abs_error": 0.001953125
+    }
+  ],
+  "method": "Compilation then independent FP32 reference; no timings"
+}

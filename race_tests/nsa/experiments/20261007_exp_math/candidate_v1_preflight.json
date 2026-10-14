@@ -1,0 +1,86 @@
+{
+  "command": [
+    "experiments/20261007_exp_math/preflight.py",
+    "experiments/20261007_exp_math/candidate_v1.py",
+    "--cases",
+    "oj12,oj6,oj9",
+    "--output",
+    "experiments/20261007_exp_math/candidate_v1_preflight.json"
+  ],
+  "sha256": {
+    "experiments/20261007_exp_math/candidate_v1.py": "d6ef68ec0422c388148bc226a0f7c216f3cb8fb25a74a544a3a6847f3220e246"
+  },
+  "rows": [
+    {
+      "module": "experiments/20261007_exp_math/candidate_v1.py",
+      "case": "oj12",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "33dd960d834b50f1c743f38b1457e9ce04ac889ed53010e247e9d38cba8514ff",
+        "f80d9ba77f5659f2b1ec29196d63483799ae8ecb54cde633083e38f362375899"
+      ],
+      "compile_flags": [
+        [],
+        []
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/candidate_v1.py",
+      "case": "oj6",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "75ed150868cee8fc780cb5a595db084a3a3a6a0a454b5061cec3d638baaf1658",
+        "877648e8a383d621bd3023a63c57d9d6f07fc0817371905eded6f2d41428cd02"
+      ],
+      "compile_flags": [
+        [],
+        []
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/candidate_v1.py",
+      "case": "oj9",
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 8192,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "4d18d63bf9bca6e0bf433ce1ca600f3703e591578f310f518182259464ea1be9"
+      ],
+      "compile_flags": [
+        []
+      ],
+      "max_abs_error": 0.001953125
+    }
+  ],
+  "method": "Compilation then independent FP32 reference; no timings"
+}

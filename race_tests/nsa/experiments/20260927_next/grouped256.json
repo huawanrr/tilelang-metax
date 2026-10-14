@@ -1,0 +1,108 @@
+{
+  "command": [
+    "experiments/20260926/compare_warm.py",
+    "experiments/20260927/round2.py",
+    "experiments/20260927_next/grouped_256.py",
+    "--cases",
+    "oj6,69",
+    "--rounds",
+    "4",
+    "--output",
+    "experiments/20260927_next/grouped256.json",
+    "--dump"
+  ],
+  "torch": "2.8.0+metax3.5.3.9",
+  "device": "MetaX C500",
+  "source_sha256": {
+    "experiments/20260927/round2.py": "ab0bb5ff4b39ae8dfcc73a59cfb623c596602b4ed170d1e93c76cdfde43b3bb8",
+    "experiments/20260927_next/grouped_256.py": "c9fdf549a259fdcfbbc91d9cc3c175be91a4b1d8ff3df3a05fa884bd94929bcf"
+  },
+  "backend": "CUDA graph, preallocated public run_kernel output, no cache flush, ~40ms replay warmup",
+  "repeat": 100,
+  "samples": 7,
+  "rounds": 4,
+  "rows": [
+    {
+      "case": "oj6",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "us": [
+        109.5027208328247,
+        566.3091278076172
+      ],
+      "rounds_us": [
+        [
+          109.50400352478027,
+          109.49119567871094,
+          109.50143814086914,
+          109.50655937194824
+        ],
+        [
+          566.0646438598633,
+          566.0800170898438,
+          566.5459060668945,
+          566.5382385253906
+        ]
+      ],
+      "speedups": [
+        1.0,
+        0.19336209758219586
+      ],
+      "max_abs_error": [
+        0.001953125,
+        0.001953125
+      ]
+    },
+    {
+      "case": "69",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "us": [
+        64.03712034225464,
+        553.6819076538086
+      ],
+      "rounds_us": [
+        [
+          64.04096126556396,
+          64.06144142150879,
+          64.03327941894531,
+          64.01535987854004
+        ],
+        [
+          553.7740707397461,
+          553.6383819580078,
+          553.6332702636719,
+          553.7254333496094
+        ]
+      ],
+      "speedups": [
+        1.0,
+        0.11565687709321731
+      ],
+      "max_abs_error": [
+        0.001953125,
+        0.001953125
+      ]
+    }
+  ],
+  "geomean_speedups": [
+    1.0,
+    0.1495448305845131
+  ]
+}

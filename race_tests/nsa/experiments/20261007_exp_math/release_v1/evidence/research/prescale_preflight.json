@@ -1,0 +1,116 @@
+{
+  "command": [
+    "experiments/20261007_exp_math/preflight.py",
+    "experiments/20261007_exp_math/k_scaled_cast.py",
+    "experiments/20261007_exp_math/q_scaled_cast.py",
+    "--cases",
+    "oj12,s8_b8_t1024_h1_c1",
+    "--case-file",
+    "experiments/20261007_s8_residency/cases.json",
+    "--output",
+    "experiments/20261007_exp_math/prescale_preflight.json"
+  ],
+  "sha256": {
+    "experiments/20261007_exp_math/k_scaled_cast.py": "33cd5c1919ae9e2e62c6c1c86d20ac90c3a128bd972dcf8c17a5476a1b025cb2",
+    "experiments/20261007_exp_math/q_scaled_cast.py": "2cd6c7c6d29861111740a0cd43bfea3c36fa4335e431533403f05feb81eceeb3"
+  },
+  "rows": [
+    {
+      "module": "experiments/20261007_exp_math/k_scaled_cast.py",
+      "case": "oj12",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "cb1ff4e07495a2748d82efb05da03511a64ab2bf8ed5ed1a82b348de3f4d306f",
+        "0d58b45c5b25ced40bd6ac26c4dc89592378d9ae5794019f331edc28ead3644f"
+      ],
+      "compile_flags": [
+        [],
+        []
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/q_scaled_cast.py",
+      "case": "oj12",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "33dd960d834b50f1c743f38b1457e9ce04ac889ed53010e247e9d38cba8514ff",
+        "7802bcb0b27d5073e18e7d48fddf8d0a1415dd63476588588002389475e3ae4c"
+      ],
+      "compile_flags": [
+        [],
+        []
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/k_scaled_cast.py",
+      "case": "s8_b8_t1024_h1_c1",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "cb1ff4e07495a2748d82efb05da03511a64ab2bf8ed5ed1a82b348de3f4d306f",
+        "9d9a2c09956f8afc3ea556cc4d174f7ff406863773acaba8e22d0b551a667d40"
+      ],
+      "compile_flags": [
+        [],
+        []
+      ],
+      "max_abs_error": 0.001953125
+    },
+    {
+      "module": "experiments/20261007_exp_math/q_scaled_cast.py",
+      "case": "s8_b8_t1024_h1_c1",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "passed": true,
+      "device_source_sha256": [
+        "33dd960d834b50f1c743f38b1457e9ce04ac889ed53010e247e9d38cba8514ff",
+        "bf7afbbd128e6cf7bf8b942082732548f7dba5b2d23a7dec161602166bfebf4d"
+      ],
+      "compile_flags": [
+        [],
+        []
+      ],
+      "max_abs_error": 0.001953125
+    }
+  ],
+  "method": "Compilation then independent FP32 reference; no timings"
+}

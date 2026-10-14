@@ -1,0 +1,58 @@
+{
+  "parent_sha256": "17b91438e869aae07d53ce0b9d99cb8579735f366e80b25faf3dcbabbe94ac09",
+  "targets": [
+    "native_sparse_attention_coalesced_blocks_mathcast",
+    "native_sparse_attention_coalesced_blocks_oct8",
+    "native_sparse_attention_direct_kv",
+    "native_sparse_attention_linear_v_blocks_oct8",
+    "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_q_preload",
+    "native_sparse_attention_short_list_oct8",
+    "native_sparse_attention_single_packed_qo_v2_mathcast",
+    "native_sparse_attention_staged_sparse_blocks"
+  ],
+  "variants": [
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/schedule_ilp.py",
+      "flags": [
+        "-mllvm",
+        "--misched=metaxgpu-ilp"
+      ],
+      "sha256": "bf930724853d34499b55583c4444b33a7e46e3220873ab2aa4e77d4b6b598fac"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/schedule_minreg.py",
+      "flags": [
+        "-mllvm",
+        "--misched=metaxgpu-minreg"
+      ],
+      "sha256": "db76b3a2cf651c816310f8d39c762630d75961085c77d900f2d211e76b10d864"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/schedule_maxocc.py",
+      "flags": [
+        "-mllvm",
+        "--misched=metaxgpu-maxocc"
+      ],
+      "sha256": "e33499488d31e152bac11e95519e9c0039589abb08f2dcf9d068fb530efd5fcc"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/schedule_native_exp.py",
+      "flags": [
+        "-mllvm",
+        "--metaxgpu-use-native=exp,exp2"
+      ],
+      "sha256": "ed7bf8eb11198e13ea738e721887824a023049abc6b3d1d613e23a0afc7d17f3"
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/schedule_streg_abi.py",
+      "flags": [
+        "-metaxgpu-new-streg-abi",
+        "true"
+      ],
+      "sha256": "ed9bf9b14c51f507037defe9354e93776334cc87d4871527bd395c98cccb09ec"
+    }
+  ],
+  "kernel_bodies_and_safety_passes_unchanged": true
+}

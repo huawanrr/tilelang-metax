@@ -1,0 +1,59 @@
+{
+  "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/parent.py",
+  "variants": [
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/pack_cols32_w64.py",
+      "sha256": "96edd5abab747cebd94ce2a6aab92aa47d1296a738f5b7b7408111f0e917a4fc",
+      "maximum_tile": [
+        32,
+        32
+      ],
+      "threads": 64,
+      "targets": [
+        "native_sparse_attention_pack_kv_bs32_direct",
+        "native_sparse_attention_pack_kv_bs32_shared"
+      ]
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/pack_quads_w64.py",
+      "sha256": "6b0a12691a4156feb8d76ed2696d8e6f4e052892037a65309f20804ea291b48d",
+      "maximum_tile": [
+        16,
+        64
+      ],
+      "threads": 64,
+      "targets": [
+        "native_sparse_attention_pack_kv_bs32_direct",
+        "native_sparse_attention_pack_kv_bs32_shared"
+      ]
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/pack_s8_whole_w64.py",
+      "sha256": "19146d6baac571db8a6b5768b3e5a11f2ecfb00e24261afefacd2adae43e0ece",
+      "maximum_tile": [
+        16,
+        64
+      ],
+      "threads": 64,
+      "targets": [
+        "native_sparse_attention_pack_kv"
+      ]
+    },
+    {
+      "path": "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/pack_s8_cols32_w64.py",
+      "sha256": "a6ba0a64db97885d1c1911bba79410a67e4c048c256fe07cfc6641bc35391ec3",
+      "maximum_tile": [
+        16,
+        32
+      ],
+      "threads": 64,
+      "targets": [
+        "native_sparse_attention_pack_kv"
+      ]
+    }
+  ],
+  "attention_unchanged": true,
+  "partition": "Disjoint row/column tiles, with every packed element written once",
+  "synchronization": "One explicit wave barrier after both shared stores; only one wave per CTA",
+  "copies": "Synchronous T.copy retains tail padding and bounds checks"
+}

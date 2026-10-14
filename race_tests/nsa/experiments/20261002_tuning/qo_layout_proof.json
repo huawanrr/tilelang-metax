@@ -1,0 +1,259 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "dim": 64,
+      "block_size": 16,
+      "q_vector": 4,
+      "pv_width": 64,
+      "q_owners": 1024,
+      "kv_owners": 1024,
+      "o_owners": 1024,
+      "q_reads": 1024,
+      "k_reads": 1024,
+      "v_reads": 1024,
+      "shared_allocation_bytes": 2048
+    },
+    {
+      "dim": 64,
+      "block_size": 16,
+      "q_vector": 8,
+      "pv_width": 64,
+      "q_owners": 1024,
+      "kv_owners": 1024,
+      "o_owners": 1024,
+      "q_reads": 1024,
+      "k_reads": 1024,
+      "v_reads": 1024,
+      "shared_allocation_bytes": 2048
+    },
+    {
+      "dim": 64,
+      "block_size": 32,
+      "q_vector": 4,
+      "pv_width": 64,
+      "q_owners": 1024,
+      "kv_owners": 2048,
+      "o_owners": 1024,
+      "q_reads": 1024,
+      "k_reads": 2048,
+      "v_reads": 2048,
+      "shared_allocation_bytes": 4096
+    },
+    {
+      "dim": 64,
+      "block_size": 32,
+      "q_vector": 8,
+      "pv_width": 64,
+      "q_owners": 1024,
+      "kv_owners": 2048,
+      "o_owners": 1024,
+      "q_reads": 1024,
+      "k_reads": 2048,
+      "v_reads": 2048,
+      "shared_allocation_bytes": 4096
+    },
+    {
+      "dim": 128,
+      "block_size": 16,
+      "q_vector": 4,
+      "pv_width": 64,
+      "q_owners": 2048,
+      "kv_owners": 2048,
+      "o_owners": 2048,
+      "q_reads": 2048,
+      "k_reads": 2048,
+      "v_reads": 2048,
+      "shared_allocation_bytes": 4096
+    },
+    {
+      "dim": 128,
+      "block_size": 16,
+      "q_vector": 4,
+      "pv_width": 128,
+      "q_owners": 2048,
+      "kv_owners": 2048,
+      "o_owners": 2048,
+      "q_reads": 2048,
+      "k_reads": 2048,
+      "v_reads": 2048,
+      "shared_allocation_bytes": 4096
+    },
+    {
+      "dim": 128,
+      "block_size": 16,
+      "q_vector": 8,
+      "pv_width": 64,
+      "q_owners": 2048,
+      "kv_owners": 2048,
+      "o_owners": 2048,
+      "q_reads": 2048,
+      "k_reads": 2048,
+      "v_reads": 2048,
+      "shared_allocation_bytes": 4096
+    },
+    {
+      "dim": 128,
+      "block_size": 16,
+      "q_vector": 8,
+      "pv_width": 128,
+      "q_owners": 2048,
+      "kv_owners": 2048,
+      "o_owners": 2048,
+      "q_reads": 2048,
+      "k_reads": 2048,
+      "v_reads": 2048,
+      "shared_allocation_bytes": 4096
+    },
+    {
+      "dim": 128,
+      "block_size": 32,
+      "q_vector": 4,
+      "pv_width": 64,
+      "q_owners": 2048,
+      "kv_owners": 4096,
+      "o_owners": 2048,
+      "q_reads": 2048,
+      "k_reads": 4096,
+      "v_reads": 4096,
+      "shared_allocation_bytes": 8192
+    },
+    {
+      "dim": 128,
+      "block_size": 32,
+      "q_vector": 4,
+      "pv_width": 128,
+      "q_owners": 2048,
+      "kv_owners": 4096,
+      "o_owners": 2048,
+      "q_reads": 2048,
+      "k_reads": 4096,
+      "v_reads": 4096,
+      "shared_allocation_bytes": 8192
+    },
+    {
+      "dim": 128,
+      "block_size": 32,
+      "q_vector": 8,
+      "pv_width": 64,
+      "q_owners": 2048,
+      "kv_owners": 4096,
+      "o_owners": 2048,
+      "q_reads": 2048,
+      "k_reads": 4096,
+      "v_reads": 4096,
+      "shared_allocation_bytes": 8192
+    },
+    {
+      "dim": 128,
+      "block_size": 32,
+      "q_vector": 8,
+      "pv_width": 128,
+      "q_owners": 2048,
+      "kv_owners": 4096,
+      "o_owners": 2048,
+      "q_reads": 2048,
+      "k_reads": 4096,
+      "v_reads": 4096,
+      "shared_allocation_bytes": 8192
+    }
+  ],
+  "threads_per_cta": 64,
+  "lanes_per_wave": 64,
+  "barriers": [
+    "Q stores -> Q reads",
+    "Q reads -> K stores",
+    "K stores -> K reads",
+    "K reads -> V stores",
+    "V stores -> V reads",
+    "V reads -> O stores",
+    "O stores -> output reads"
+  ],
+  "uniformity": "Each CTA owns one query and one KV head. Query and block validity are wave uniform.",
+  "invalid_rows": "PV accumulators are cleared even when the selected block is invalid; output writes cover every element.",
+  "allocation": "Q, K, V and O have disjoint shared live ranges. Check the actual common allocation base and byte count in generated source.",
+  "packed": {
+    "dim": 128,
+    "block_size": 32,
+    "unique_k_elements": 4096,
+    "unique_v_elements": 4096,
+    "inverse_maps": true,
+    "tail_families": [
+      {
+        "seq_len": 1,
+        "valid_positions": 1,
+        "padded_rows": 31
+      },
+      {
+        "seq_len": 15,
+        "valid_positions": 15,
+        "padded_rows": 17
+      },
+      {
+        "seq_len": 16,
+        "valid_positions": 16,
+        "padded_rows": 16
+      },
+      {
+        "seq_len": 17,
+        "valid_positions": 17,
+        "padded_rows": 15
+      },
+      {
+        "seq_len": 31,
+        "valid_positions": 31,
+        "padded_rows": 1
+      },
+      {
+        "seq_len": 32,
+        "valid_positions": 32,
+        "padded_rows": 0
+      },
+      {
+        "seq_len": 33,
+        "valid_positions": 33,
+        "padded_rows": 31
+      },
+      {
+        "seq_len": 37,
+        "valid_positions": 37,
+        "padded_rows": 27
+      },
+      {
+        "seq_len": 64,
+        "valid_positions": 64,
+        "padded_rows": 0
+      },
+      {
+        "seq_len": 1023,
+        "valid_positions": 1023,
+        "padded_rows": 1
+      },
+      {
+        "seq_len": 1024,
+        "valid_positions": 1024,
+        "padded_rows": 0
+      },
+      {
+        "seq_len": 1025,
+        "valid_positions": 1025,
+        "padded_rows": 31
+      }
+    ],
+    "barriers": [
+      "Q stores -> Q reads",
+      "Q reads -> O stores",
+      "O stores -> output reads"
+    ],
+    "reduction_offsets": [
+      32,
+      16
+    ],
+    "reduction_shared_accesses": 0,
+    "reduction_header": "/app/tilelang-metax/src/tl_templates/maca/reduce.h",
+    "reduction_header_sha256": "ca5b49087fed84da9cd290ddf8d57578bce3f3bb20a89b61d0fd0739e3d5809f",
+    "live_inputs": "The ordinary host closure allocates and repacks K/V on every call."
+  },
+  "race_checks_disabled": false,
+  "bounds_checks_disabled": false
+}

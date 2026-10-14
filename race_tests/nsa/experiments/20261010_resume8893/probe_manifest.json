@@ -1,0 +1,66 @@
+{
+  "parent": "v7_parent.py",
+  "parent_sha256": "c0b0d1891dfbaea02e45fd5196a010a012a3d9efed512eaa953e89d446380fe5",
+  "variants": [
+    {
+      "name": "loads_vec4",
+      "mode": "vector",
+      "value": 4,
+      "functions": [
+        "_coalesced_block_loads_prim_fp32_mask",
+        "_coalesced_block_loads_prim_fp32_sum",
+        "_coalesced_block_loads_prim_mathcast",
+        "_coalesced_block_loads_prim_oct8"
+      ],
+      "sha256": "9ae07f0d3457a913b26078c59d3ff41ae4d370a2e0764413ae78536fbe5dcb34"
+    },
+    {
+      "name": "loads_vec8",
+      "mode": "vector",
+      "value": 8,
+      "functions": [
+        "_coalesced_block_loads_prim_fp32_mask",
+        "_coalesced_block_loads_prim_fp32_sum",
+        "_coalesced_block_loads_prim_mathcast",
+        "_coalesced_block_loads_prim_oct8"
+      ],
+      "sha256": "fef65949a50d0141ede4fb06f418b9385a447a407626372a96ec027a72e3db07"
+    },
+    {
+      "name": "q_vec4",
+      "mode": "qvector",
+      "value": 4,
+      "functions": [
+        "_coalesced_block_loads_prim_fp32_mask",
+        "_coalesced_block_loads_prim_fp32_sum",
+        "_coalesced_block_loads_prim_mathcast",
+        "_coalesced_block_loads_prim_oct8"
+      ],
+      "sha256": "5a2875ee0cc46f06f666da62d805cde9ab2baee8899337903cef41c0f0e454ad"
+    },
+    {
+      "name": "q_vec16",
+      "mode": "qvector",
+      "value": 16,
+      "functions": [
+        "_coalesced_block_loads_prim_fp32_mask",
+        "_coalesced_block_loads_prim_fp32_sum",
+        "_coalesced_block_loads_prim_mathcast",
+        "_coalesced_block_loads_prim_oct8"
+      ],
+      "sha256": "b97914fe02a8b4f2f6cbfa11c5ae7dd623fc9ef91824c2c888fd62fcbcbec902"
+    },
+    {
+      "name": "mid_boundary_init",
+      "mode": "mask",
+      "value": null,
+      "functions": [
+        "_coalesced_block_loads_prim_oct8"
+      ],
+      "sha256": "1c2e3108de2fac8f54d484279e7d486a1f868921aa0054c4c38051545d16588b"
+    }
+  ],
+  "synchronization_unchanged": true,
+  "safety_passes_unchanged": true,
+  "note": "Research variants modify builders directly; final candidate must retain original tuning fallbacks."
+}

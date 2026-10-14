@@ -1,0 +1,681 @@
+--- parent
+
++++ post
+
+@@ -197,7 +197,7 @@
+
+   %arrayidx = getelementptr inbounds i32, ptr addrspace(1) %BlockIndices.coerce, i64 %idxprom
+   %7 = load i32, ptr addrspace(1) %arrayidx, align 4, !tbaa !30
+   %cmp42 = icmp ult i32 %7, 32
+-  br i1 %cmp42, label %for.cond45.preheader, label %if.end346
++  br i1 %cmp42, label %for.cond45.preheader, label %if.end336
+ 
+ for.cond45.preheader:                             ; preds = %entry
+   %add.ptr.1 = getelementptr inbounds %struct.__half, ptr addrspace(4) %Q.coerce, i64 %5
+@@ -227,8 +227,8 @@
+
+   %add.ptr76.3 = getelementptr inbounds %struct.__half, ptr addrspace(4) %K_blocks.coerce, i64 %16
+   %17 = load i32, ptr addrspace(4) %add.ptr76.3, align 4, !tbaa !30
+   %18 = add nuw nsw i64 %10, 1024
+-  %add.ptr76.1663 = getelementptr inbounds %struct.__half, ptr addrspace(4) %K_blocks.coerce, i64 %18
+-  %19 = load i32, ptr addrspace(4) %add.ptr76.1663, align 4, !tbaa !30
++  %add.ptr76.1652 = getelementptr inbounds %struct.__half, ptr addrspace(4) %K_blocks.coerce, i64 %18
++  %19 = load i32, ptr addrspace(4) %add.ptr76.1652, align 4, !tbaa !30
+   %20 = add nuw nsw i64 %10, 1026
+   %add.ptr76.1.1 = getelementptr inbounds %struct.__half, ptr addrspace(4) %K_blocks.coerce, i64 %20
+   %21 = load i32, ptr addrspace(4) %add.ptr76.1.1, align 4, !tbaa !30
+@@ -246,8 +246,8 @@
+
+   %28 = load i32, ptr addrspace(4) %add.ptr119.2, align 4, !tbaa !30
+   %add.ptr119.3 = getelementptr inbounds %struct.__half, ptr addrspace(4) %V_blocks.coerce, i64 %16
+   %29 = load i32, ptr addrspace(4) %add.ptr119.3, align 4, !tbaa !30
+-  %add.ptr119.1675 = getelementptr inbounds %struct.__half, ptr addrspace(4) %V_blocks.coerce, i64 %18
+-  %30 = load i32, ptr addrspace(4) %add.ptr119.1675, align 4, !tbaa !30
++  %add.ptr119.1664 = getelementptr inbounds %struct.__half, ptr addrspace(4) %V_blocks.coerce, i64 %18
++  %30 = load i32, ptr addrspace(4) %add.ptr119.1664, align 4, !tbaa !30
+   %add.ptr119.1.1 = getelementptr inbounds %struct.__half, ptr addrspace(4) %V_blocks.coerce, i64 %20
+   %31 = load i32, ptr addrspace(4) %add.ptr119.1.1, align 4, !tbaa !30
+   %add.ptr119.2.1 = getelementptr inbounds %struct.__half, ptr addrspace(4) %V_blocks.coerce, i64 %22
+@@ -258,10 +258,10 @@
+
+   %call147.masked = and i32 %3, 1016
+   %mul149 = xor i32 %mul71, %call147.masked
+   %invariant.gep = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %mul143
+-  %invariant.gep616 = getelementptr inbounds %struct.__half, ptr addrspace(3) %invariant.gep, i32 %mul149
+-  tail call void @llvm.memcpy.p3.p4.i64(ptr addrspace(3) noundef align 16 dereferenceable(16) %invariant.gep616, ptr addrspace(4) noundef align 16 dereferenceable(16) %add.ptr, i64 16, i1 false), !call_argsrelate !61
+-  %gep617.1 = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep616, i32 1024
+-  tail call void @llvm.memcpy.p3.p4.i64(ptr addrspace(3) noundef align 16 dereferenceable(16) %gep617.1, ptr addrspace(4) noundef align 16 dereferenceable(16) %add.ptr.1, i64 16, i1 false), !call_argsrelate !61
++  %invariant.gep605 = getelementptr inbounds %struct.__half, ptr addrspace(3) %invariant.gep, i32 %mul149
++  tail call void @llvm.memcpy.p3.p4.i64(ptr addrspace(3) noundef align 16 dereferenceable(16) %invariant.gep605, ptr addrspace(4) noundef align 16 dereferenceable(16) %add.ptr, i64 16, i1 false), !call_argsrelate !61
++  %gep606.1 = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep605, i32 1024
++  tail call void @llvm.memcpy.p3.p4.i64(ptr addrspace(3) noundef align 16 dereferenceable(16) %gep606.1, ptr addrspace(4) noundef align 16 dereferenceable(16) %add.ptr.1, i64 16, i1 false), !call_argsrelate !61
+   fence syncscope("warp") release
+   tail call void @llvm.mxc.barrier.warp()
+   fence syncscope("warp") acquire
+@@ -286,20 +286,20 @@
+
+   fence syncscope("warp") release
+   tail call void @llvm.mxc.barrier.warp()
+   fence syncscope("warp") acquire
+-  store i32 %11, ptr addrspace(3) %invariant.gep616, align 16, !tbaa !30
+-  %K_reg.sroa.4.0.invariant.gep621.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep616, i32 4
+-  store i32 %13, ptr addrspace(3) %K_reg.sroa.4.0.invariant.gep621.sroa_idx, align 4, !tbaa !30
+-  %K_reg.sroa.5.0.invariant.gep621.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep616, i32 8
+-  store i32 %15, ptr addrspace(3) %K_reg.sroa.5.0.invariant.gep621.sroa_idx, align 8, !tbaa !30
+-  %K_reg.sroa.6.0.invariant.gep621.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep616, i32 12
+-  store i32 %17, ptr addrspace(3) %K_reg.sroa.6.0.invariant.gep621.sroa_idx, align 4, !tbaa !30
+-  store i32 %19, ptr addrspace(3) %gep617.1, align 16, !tbaa !30
+-  %K_reg.sroa.9.16.gep622.1.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep616, i32 1028
+-  store i32 %21, ptr addrspace(3) %K_reg.sroa.9.16.gep622.1.sroa_idx, align 4, !tbaa !30
+-  %K_reg.sroa.10.16.gep622.1.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep616, i32 1032
+-  store i32 %23, ptr addrspace(3) %K_reg.sroa.10.16.gep622.1.sroa_idx, align 8, !tbaa !30
+-  %K_reg.sroa.11.16.gep622.1.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep616, i32 1036
+-  store i32 %25, ptr addrspace(3) %K_reg.sroa.11.16.gep622.1.sroa_idx, align 4, !tbaa !30
++  store i32 %11, ptr addrspace(3) %invariant.gep605, align 16, !tbaa !30
++  %K_reg.sroa.4.0.invariant.gep610.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep605, i32 4
++  store i32 %13, ptr addrspace(3) %K_reg.sroa.4.0.invariant.gep610.sroa_idx, align 4, !tbaa !30
++  %K_reg.sroa.5.0.invariant.gep610.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep605, i32 8
++  store i32 %15, ptr addrspace(3) %K_reg.sroa.5.0.invariant.gep610.sroa_idx, align 8, !tbaa !30
++  %K_reg.sroa.6.0.invariant.gep610.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep605, i32 12
++  store i32 %17, ptr addrspace(3) %K_reg.sroa.6.0.invariant.gep610.sroa_idx, align 4, !tbaa !30
++  store i32 %19, ptr addrspace(3) %gep606.1, align 16, !tbaa !30
++  %K_reg.sroa.9.16.gep611.1.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep605, i32 1028
++  store i32 %21, ptr addrspace(3) %K_reg.sroa.9.16.gep611.1.sroa_idx, align 4, !tbaa !30
++  %K_reg.sroa.10.16.gep611.1.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep605, i32 1032
++  store i32 %23, ptr addrspace(3) %K_reg.sroa.10.16.gep611.1.sroa_idx, align 8, !tbaa !30
++  %K_reg.sroa.11.16.gep611.1.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep605, i32 1036
++  store i32 %25, ptr addrspace(3) %K_reg.sroa.11.16.gep611.1.sroa_idx, align 4, !tbaa !30
+   fence syncscope("warp") release
+   tail call void @llvm.mxc.barrier.warp()
+   fence syncscope("warp") acquire
+@@ -307,344 +307,313 @@
+
+   %kb.sroa.6.0.copyload = load <4 x half>, ptr addrspace(3) %Q_reg.sroa.4.0.add.ptr173.sroa_idx, align 8
+   %35 = tail call contract <4 x float> @llvm.mxc.mma.f32.16x16x16f16(<4 x half> %kb.sroa.0.0.copyload, <4 x half> %Q_reg.sroa.0.0.copyload, <4 x float> zeroinitializer)
+   %36 = tail call contract <4 x float> @llvm.mxc.mma.f32.16x16x16f16(<4 x half> %kb.sroa.6.0.copyload, <4 x half> %Q_reg.sroa.4.0.copyload, <4 x float> %35)
+-  %kb.sroa.0.0.copyload705 = load <4 x half>, ptr addrspace(3) %add.ptr173.1, align 16
+-  %kb.sroa.6.0.copyload706 = load <4 x half>, ptr addrspace(3) %Q_reg.sroa.7.16.add.ptr173.1.sroa_idx, align 8
+-  %37 = tail call contract <4 x float> @llvm.mxc.mma.f32.16x16x16f16(<4 x half> %kb.sroa.0.0.copyload705, <4 x half> %Q_reg.sroa.5.16.copyload, <4 x float> %36)
+-  %38 = tail call contract <4 x float> @llvm.mxc.mma.f32.16x16x16f16(<4 x half> %kb.sroa.6.0.copyload706, <4 x half> %Q_reg.sroa.7.16.copyload, <4 x float> %37)
++  %kb.sroa.0.0.copyload694 = load <4 x half>, ptr addrspace(3) %add.ptr173.1, align 16
++  %kb.sroa.6.0.copyload695 = load <4 x half>, ptr addrspace(3) %Q_reg.sroa.7.16.add.ptr173.1.sroa_idx, align 8
++  %37 = tail call contract <4 x float> @llvm.mxc.mma.f32.16x16x16f16(<4 x half> %kb.sroa.0.0.copyload694, <4 x half> %Q_reg.sroa.5.16.copyload, <4 x float> %36)
++  %38 = tail call contract <4 x float> @llvm.mxc.mma.f32.16x16x16f16(<4 x half> %kb.sroa.6.0.copyload695, <4 x half> %Q_reg.sroa.7.16.copyload, <4 x float> %37)
+   fence syncscope("warp") release
+   tail call void @llvm.mxc.barrier.warp()
+   fence syncscope("warp") acquire
+-  %invariant.gep629 = getelementptr inbounds i8, ptr addrspace(3) @buf_dyn_shmem, i32 %9
+-  store i32 %26, ptr addrspace(3) %invariant.gep629, align 16, !tbaa !30
+-  %V_reg.sroa.4.0.invariant.gep629.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep629, i32 4
+-  store i32 %27, ptr addrspace(3) %V_reg.sroa.4.0.invariant.gep629.sroa_idx, align 4, !tbaa !30
+-  %V_reg.sroa.5.0.invariant.gep629.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep629, i32 8
+-  store i32 %28, ptr addrspace(3) %V_reg.sroa.5.0.invariant.gep629.sroa_idx, align 8, !tbaa !30
+-  %V_reg.sroa.6.0.invariant.gep629.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep629, i32 12
+-  store i32 %29, ptr addrspace(3) %V_reg.sroa.6.0.invariant.gep629.sroa_idx, align 4, !tbaa !30
+-  %gep.1 = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep629, i32 1024
++  %invariant.gep618 = getelementptr inbounds i8, ptr addrspace(3) @buf_dyn_shmem, i32 %9
++  store i32 %26, ptr addrspace(3) %invariant.gep618, align 16, !tbaa !30
++  %V_reg.sroa.4.0.invariant.gep618.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep618, i32 4
++  store i32 %27, ptr addrspace(3) %V_reg.sroa.4.0.invariant.gep618.sroa_idx, align 4, !tbaa !30
++  %V_reg.sroa.5.0.invariant.gep618.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep618, i32 8
++  store i32 %28, ptr addrspace(3) %V_reg.sroa.5.0.invariant.gep618.sroa_idx, align 8, !tbaa !30
++  %V_reg.sroa.6.0.invariant.gep618.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep618, i32 12
++  store i32 %29, ptr addrspace(3) %V_reg.sroa.6.0.invariant.gep618.sroa_idx, align 4, !tbaa !30
++  %gep.1 = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep618, i32 1024
+   store i32 %30, ptr addrspace(3) %gep.1, align 16, !tbaa !30
+-  %V_reg.sroa.9.16.gep.1.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep629, i32 1028
++  %V_reg.sroa.9.16.gep.1.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep618, i32 1028
+   store i32 %31, ptr addrspace(3) %V_reg.sroa.9.16.gep.1.sroa_idx, align 4, !tbaa !30
+-  %V_reg.sroa.10.16.gep.1.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep629, i32 1032
++  %V_reg.sroa.10.16.gep.1.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep618, i32 1032
+   store i32 %32, ptr addrspace(3) %V_reg.sroa.10.16.gep.1.sroa_idx, align 8, !tbaa !30
+-  %V_reg.sroa.11.16.gep.1.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep629, i32 1036
++  %V_reg.sroa.11.16.gep.1.sroa_idx = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep618, i32 1036
+   store i32 %33, ptr addrspace(3) %V_reg.sroa.11.16.gep.1.sroa_idx, align 4, !tbaa !30
+-  %39 = shl nuw nsw i32 %7, 2
+-  %add278 = add nuw nsw i32 %39, %shr165
+-  %cmp279 = icmp ult i32 %add278, 128
+-  br i1 %cmp279, label %if.then280, label %if.end
+-
+-if.then280:                                       ; preds = %for.cond45.preheader
+   %acc_s.sroa.0.0.vec.extract = extractelement <4 x float> %38, i64 0
+-  %mul283 = fmul contract float %acc_s.sroa.0.0.vec.extract, 0x3FB99999A0000000
+-  %40 = tail call contract noundef float @llvm.minnum.f32(float %mul283, float 0x4024CB5EC0000000)
+-  %41 = tail call contract noundef float @llvm.exp.f32(float %40)
+-  br label %if.end
+-
+-if.end:                                           ; preds = %for.cond45.preheader, %if.then280
+-  %condval.0 = phi float [ %41, %if.then280 ], [ 0.000000e+00, %for.cond45.preheader ]
+-  br i1 %cmp279, label %if.then280.1, label %if.end.1
+-
+-if.then280.1:                                     ; preds = %if.end
++  %mul275 = fmul contract float %acc_s.sroa.0.0.vec.extract, 0x3FB99999A0000000
++  %39 = tail call contract noundef float @llvm.minnum.f32(float %mul275, float 0x4024CB5EC0000000)
++  %40 = tail call contract noundef float @llvm.exp.f32(float %39)
+   %acc_s.sroa.0.4.vec.extract = extractelement <4 x float> %38, i64 1
+-  %mul283.1 = fmul contract float %acc_s.sroa.0.4.vec.extract, 0x3FB99999A0000000
+-  %42 = tail call contract noundef float @llvm.minnum.f32(float %mul283.1, float 0x4024CB5EC0000000)
+-  %43 = tail call contract noundef float @llvm.exp.f32(float %42)
+-  br label %if.end.1
+-
+-if.end.1:                                         ; preds = %if.then280.1, %if.end
+-  %condval.0.1 = phi float [ %43, %if.then280.1 ], [ 0.000000e+00, %if.end ]
+-  br i1 %cmp279, label %if.then280.2, label %if.end.2
+-
+-if.then280.2:                                     ; preds = %if.end.1
++  %mul275.1 = fmul contract float %acc_s.sroa.0.4.vec.extract, 0x3FB99999A0000000
++  %41 = tail call contract noundef float @llvm.minnum.f32(float %mul275.1, float 0x4024CB5EC0000000)
++  %42 = tail call contract noundef float @llvm.exp.f32(float %41)
+   %acc_s.sroa.0.8.vec.extract = extractelement <4 x float> %38, i64 2
+-  %mul283.2 = fmul contract float %acc_s.sroa.0.8.vec.extract, 0x3FB99999A0000000
+-  %44 = tail call contract noundef float @llvm.minnum.f32(float %mul283.2, float 0x4024CB5EC0000000)
+-  %45 = tail call contract noundef float @llvm.exp.f32(float %44)
+-  br label %if.end.2
+-
+-if.end.2:                                         ; preds = %if.then280.2, %if.end.1
+-  %condval.0.2 = phi float [ %45, %if.then280.2 ], [ 0.000000e+00, %if.end.1 ]
+-  br i1 %cmp279, label %if.then280.3, label %if.end.3
+-
+-if.then280.3:                                     ; preds = %if.end.2
++  %mul275.2 = fmul contract float %acc_s.sroa.0.8.vec.extract, 0x3FB99999A0000000
++  %43 = tail call contract noundef float @llvm.minnum.f32(float %mul275.2, float 0x4024CB5EC0000000)
++  %44 = tail call contract noundef float @llvm.exp.f32(float %43)
+   %acc_s.sroa.0.12.vec.extract = extractelement <4 x float> %38, i64 3
+-  %mul283.3 = fmul contract float %acc_s.sroa.0.12.vec.extract, 0x3FB99999A0000000
+-  %46 = tail call contract noundef float @llvm.minnum.f32(float %mul283.3, float 0x4024CB5EC0000000)
+-  %47 = tail call contract noundef float @llvm.exp.f32(float %46)
+-  br label %if.end.3
+-
+-if.end.3:                                         ; preds = %if.then280.3, %if.end.2
+-  %condval.0.3 = phi float [ %47, %if.then280.3 ], [ 0.000000e+00, %if.end.2 ]
+-  %add299.1 = fadd contract float %condval.0, %condval.0.1
+-  %add299.2 = fadd contract float %add299.1, %condval.0.2
+-  %add299.3 = fadd contract float %add299.2, %condval.0.3
+-  %48 = bitcast float %add299.3 to i32
+-  %49 = tail call i32 @llvm.mxc.mbcnt.lo(i32 -1, i32 0) #11
+-  %50 = tail call noundef i32 @llvm.mxc.mbcnt.hi(i32 -1, i32 %49) #11
+-  %xor.i.i = xor i32 %50, 32
+-  %51 = and i32 %50, -64
+-  %and.i.i = add nsw i32 %51, 64
++  %mul275.3 = fmul contract float %acc_s.sroa.0.12.vec.extract, 0x3FB99999A0000000
++  %45 = tail call contract noundef float @llvm.minnum.f32(float %mul275.3, float 0x4024CB5EC0000000)
++  %46 = tail call contract noundef float @llvm.exp.f32(float %45)
++  %add291.1 = fadd contract float %40, %42
++  %add291.2 = fadd contract float %add291.1, %44
++  %add291.3 = fadd contract float %add291.2, %46
++  %47 = bitcast float %add291.3 to i32
++  %48 = tail call i32 @llvm.mxc.mbcnt.lo(i32 -1, i32 0) #11
++  %49 = tail call noundef i32 @llvm.mxc.mbcnt.hi(i32 -1, i32 %48) #11
++  %xor.i.i = xor i32 %49, 32
++  %50 = and i32 %49, -64
++  %and.i.i = add nsw i32 %50, 64
+   %cmp.not.i.i = icmp slt i32 %xor.i.i, %and.i.i
+-  %cond.i.i = select i1 %cmp.not.i.i, i32 %xor.i.i, i32 %50
++  %cond.i.i = select i1 %cmp.not.i.i, i32 %xor.i.i, i32 %49
+   %shl.i.i = shl i32 %cond.i.i, 2
+-  %52 = tail call noundef i32 @llvm.mxc.bsm.bpermute(i32 %shl.i.i, i32 %48)
+-  %53 = bitcast i32 %52 to float
+-  %add307 = fadd contract float %add299.3, %53
+-  %54 = bitcast float %add307 to i32
+-  %55 = tail call i32 @llvm.mxc.mbcnt.lo(i32 -1, i32 0) #11
+-  %56 = tail call noundef i32 @llvm.mxc.mbcnt.hi(i32 -1, i32 %55) #11
+-  %xor.i.i603 = xor i32 %56, 16
+-  %57 = and i32 %56, -64
+-  %and.i.i604 = add nsw i32 %57, 64
+-  %cmp.not.i.i605 = icmp slt i32 %xor.i.i603, %and.i.i604
+-  %cond.i.i606 = select i1 %cmp.not.i.i605, i32 %xor.i.i603, i32 %56
+-  %shl.i.i607 = shl i32 %cond.i.i606, 2
+-  %58 = tail call noundef i32 @llvm.mxc.bsm.bpermute(i32 %shl.i.i607, i32 %54)
+-  %59 = bitcast i32 %58 to float
+-  %add312 = fadd contract float %add307, %59
+-  %cmp315 = fcmp contract ogt float %add312, 0.000000e+00
+-  %div = fdiv contract float 1.000000e+00, %add312
+-  %condval_1.0 = select i1 %cmp315, float %div, float 0.000000e+00
+-  %mul328 = fmul contract float %condval_1.0, %condval.0
+-  %mul328.1 = fmul contract float %condval_1.0, %condval.0.1
+-  %mul328.2 = fmul contract float %condval_1.0, %condval.0.2
+-  %mul328.3 = fmul contract float %condval_1.0, %condval.0.3
+-  %60 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %mul328)
+-  %61 = insertelement <4 x i16> poison, i16 %60, i64 0
+-  %62 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %mul328.1)
+-  %63 = insertelement <4 x i16> %61, i16 %62, i64 1
+-  %64 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %mul328.2)
+-  %65 = insertelement <4 x i16> %63, i16 %64, i64 2
+-  %66 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %mul328.3)
+-  %67 = insertelement <4 x i16> %65, i16 %66, i64 3
+-  %acc_s_cast.sroa.0.6.vec.insert = bitcast <4 x i16> %67 to <4 x half>
++  %51 = tail call noundef i32 @llvm.mxc.bsm.bpermute(i32 %shl.i.i, i32 %47)
++  %52 = bitcast i32 %51 to float
++  %add299 = fadd contract float %add291.3, %52
++  %53 = bitcast float %add299 to i32
++  %54 = tail call i32 @llvm.mxc.mbcnt.lo(i32 -1, i32 0) #11
++  %55 = tail call noundef i32 @llvm.mxc.mbcnt.hi(i32 -1, i32 %54) #11
++  %xor.i.i592 = xor i32 %55, 16
++  %56 = and i32 %55, -64
++  %and.i.i593 = add nsw i32 %56, 64
++  %cmp.not.i.i594 = icmp slt i32 %xor.i.i592, %and.i.i593
++  %cond.i.i595 = select i1 %cmp.not.i.i594, i32 %xor.i.i592, i32 %55
++  %shl.i.i596 = shl i32 %cond.i.i595, 2
++  %57 = tail call noundef i32 @llvm.mxc.bsm.bpermute(i32 %shl.i.i596, i32 %53)
++  %58 = bitcast i32 %57 to float
++  %add304 = fadd contract float %add299, %58
++  %cmp307 = fcmp contract ogt float %add304, 0.000000e+00
++  %div = fdiv contract float 1.000000e+00, %add304
++  %condval.0 = select i1 %cmp307, float %div, float 0.000000e+00
++  %mul318 = fmul contract float %condval.0, %40
++  %mul318.1 = fmul contract float %condval.0, %42
++  %mul318.2 = fmul contract float %condval.0, %44
++  %mul318.3 = fmul contract float %condval.0, %46
++  %59 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %mul318)
++  %60 = insertelement <4 x i16> poison, i16 %59, i64 0
++  %61 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %mul318.1)
++  %62 = insertelement <4 x i16> %60, i16 %61, i64 1
++  %63 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %mul318.2)
++  %64 = insertelement <4 x i16> %62, i16 %63, i64 2
++  %65 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %mul318.3)
++  %66 = insertelement <4 x i16> %64, i16 %65, i64 3
++  %acc_s_cast.sroa.0.6.vec.insert = bitcast <4 x i16> %66 to <4 x half>
+   fence syncscope("warp") release
+   tail call void @llvm.mxc.barrier.warp()
+   fence syncscope("warp") acquire
+-  br label %if.end346
+-
+-if.end346:                                        ; preds = %if.end.3, %entry
+-  %acc_s_cast.sroa.0.0 = phi <4 x half> [ %acc_s_cast.sroa.0.6.vec.insert, %if.end.3 ], [ undef, %entry ]
+-  br i1 %cmp42, label %for.cond364.preheader, label %if.end412
+-
+-for.cond364.preheader:                            ; preds = %if.end346
+-  %68 = shl nuw nsw i32 %3, 4
+-  %mul374 = and i32 %68, 16128
+-  %and380 = and i32 %3, 15
+-  %add381 = or disjoint i32 %mul374, %and380
+-  %arrayidx383 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381
+-  %69 = load half, ptr addrspace(3) %arrayidx383, align 2, !tbaa !163
+-  %vb.sroa.0.0.vec.insert = insertelement <4 x half> poison, half %69, i64 0
+-  %add376.1 = or disjoint i32 %mul374, %and380
+-  %add381.1 = or disjoint i32 %add376.1, 64
+-  %arrayidx383.1 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381.1
+-  %70 = load half, ptr addrspace(3) %arrayidx383.1, align 2, !tbaa !163
+-  %vb.sroa.0.2.vec.insert = insertelement <4 x half> %vb.sroa.0.0.vec.insert, half %70, i64 1
+-  %add376.2 = or disjoint i32 %mul374, %and380
+-  %add381.2 = or disjoint i32 %add376.2, 128
+-  %arrayidx383.2 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381.2
+-  %71 = load half, ptr addrspace(3) %arrayidx383.2, align 2, !tbaa !163
+-  %vb.sroa.0.4.vec.insert = insertelement <4 x half> %vb.sroa.0.2.vec.insert, half %71, i64 2
+-  %add376.3 = or disjoint i32 %mul374, %and380
+-  %add381.3 = or disjoint i32 %add376.3, 192
+-  %arrayidx383.3 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381.3
+-  %72 = load half, ptr addrspace(3) %arrayidx383.3, align 2, !tbaa !163
+-  %vb.sroa.0.6.vec.insert = insertelement <4 x half> %vb.sroa.0.4.vec.insert, half %72, i64 3
+-  %add378.1679 = or disjoint i32 %mul374, %and380
+-  %add381.1680 = or disjoint i32 %add378.1679, 16
+-  %arrayidx383.1681 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381.1680
+-  %73 = load half, ptr addrspace(3) %arrayidx383.1681, align 2, !tbaa !163
+-  %vb.sroa.7.8.vec.insert = insertelement <4 x half> poison, half %73, i64 0
+-  %add378.1.1 = or disjoint i32 %mul374, %and380
+-  %add381.1.1 = or disjoint i32 %add378.1.1, 80
+-  %arrayidx383.1.1 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381.1.1
+-  %74 = load half, ptr addrspace(3) %arrayidx383.1.1, align 2, !tbaa !163
+-  %vb.sroa.7.10.vec.insert = insertelement <4 x half> %vb.sroa.7.8.vec.insert, half %74, i64 1
+-  %add378.2.1 = or disjoint i32 %mul374, %and380
+-  %add381.2.1 = or disjoint i32 %add378.2.1, 144
+-  %arrayidx383.2.1 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381.2.1
+-  %75 = load half, ptr addrspace(3) %arrayidx383.2.1, align 2, !tbaa !163
+-  %vb.sroa.7.12.vec.insert = insertelement <4 x half> %vb.sroa.7.10.vec.insert, half %75, i64 2
+-  %add378.3.1 = or disjoint i32 %mul374, %and380
+-  %add381.3.1 = or disjoint i32 %add378.3.1, 208
+-  %arrayidx383.3.1 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381.3.1
+-  %76 = load half, ptr addrspace(3) %arrayidx383.3.1, align 2, !tbaa !163
+-  %vb.sroa.7.14.vec.insert = insertelement <4 x half> %vb.sroa.7.12.vec.insert, half %76, i64 3
+-  %add378.2683 = or disjoint i32 %mul374, %and380
+-  %add381.2684 = or disjoint i32 %add378.2683, 32
+-  %arrayidx383.2685 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381.2684
+-  %77 = load half, ptr addrspace(3) %arrayidx383.2685, align 2, !tbaa !163
+-  %vb.sroa.12.16.vec.insert = insertelement <4 x half> poison, half %77, i64 0
+-  %add378.1.2 = or disjoint i32 %mul374, %and380
+-  %add381.1.2 = or disjoint i32 %add378.1.2, 96
+-  %arrayidx383.1.2 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381.1.2
+-  %78 = load half, ptr addrspace(3) %arrayidx383.1.2, align 2, !tbaa !163
+-  %vb.sroa.12.18.vec.insert = insertelement <4 x half> %vb.sroa.12.16.vec.insert, half %78, i64 1
+-  %add378.2.2 = or disjoint i32 %mul374, %and380
+-  %add381.2.2 = or disjoint i32 %add378.2.2, 160
+-  %arrayidx383.2.2 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381.2.2
+-  %79 = load half, ptr addrspace(3) %arrayidx383.2.2, align 2, !tbaa !163
+-  %vb.sroa.12.20.vec.insert = insertelement <4 x half> %vb.sroa.12.18.vec.insert, half %79, i64 2
+-  %add378.3.2 = or disjoint i32 %mul374, %and380
+-  %add381.3.2 = or disjoint i32 %add378.3.2, 224
+-  %arrayidx383.3.2 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381.3.2
+-  %80 = load half, ptr addrspace(3) %arrayidx383.3.2, align 2, !tbaa !163
+-  %vb.sroa.12.22.vec.insert = insertelement <4 x half> %vb.sroa.12.20.vec.insert, half %80, i64 3
+-  %add378.3687 = or disjoint i32 %mul374, %and380
+-  %add381.3688 = or disjoint i32 %add378.3687, 48
+-  %arrayidx383.3689 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381.3688
+-  %81 = load half, ptr addrspace(3) %arrayidx383.3689, align 2, !tbaa !163
+-  %vb.sroa.17.24.vec.insert = insertelement <4 x half> poison, half %81, i64 0
+-  %add378.1.3 = or disjoint i32 %mul374, %and380
+-  %add381.1.3 = or disjoint i32 %add378.1.3, 112
+-  %arrayidx383.1.3 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381.1.3
+-  %82 = load half, ptr addrspace(3) %arrayidx383.1.3, align 2, !tbaa !163
+-  %vb.sroa.17.26.vec.insert = insertelement <4 x half> %vb.sroa.17.24.vec.insert, half %82, i64 1
+-  %add378.2.3 = or disjoint i32 %mul374, %and380
+-  %add381.2.3 = or disjoint i32 %add378.2.3, 176
+-  %arrayidx383.2.3 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381.2.3
+-  %83 = load half, ptr addrspace(3) %arrayidx383.2.3, align 2, !tbaa !163
+-  %vb.sroa.17.28.vec.insert = insertelement <4 x half> %vb.sroa.17.26.vec.insert, half %83, i64 2
+-  %add378.3.3 = or disjoint i32 %68, %and380
+-  %add381.3.3 = or i32 %add378.3.3, 240
+-  %arrayidx383.3.3 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add381.3.3
+-  %84 = load half, ptr addrspace(3) %arrayidx383.3.3, align 2, !tbaa !163
+-  %vb.sroa.17.30.vec.insert = insertelement <4 x half> %vb.sroa.17.28.vec.insert, half %84, i64 3
+-  %85 = tail call contract <4 x float> @llvm.mxc.mma.f32.16x16x16f16(<4 x half> %vb.sroa.0.6.vec.insert, <4 x half> %acc_s_cast.sroa.0.0, <4 x float> zeroinitializer)
+-  %86 = tail call contract <4 x float> @llvm.mxc.mma.f32.16x16x16f16(<4 x half> %vb.sroa.7.14.vec.insert, <4 x half> %acc_s_cast.sroa.0.0, <4 x float> zeroinitializer)
+-  %87 = tail call contract <4 x float> @llvm.mxc.mma.f32.16x16x16f16(<4 x half> %vb.sroa.12.22.vec.insert, <4 x half> %acc_s_cast.sroa.0.0, <4 x float> zeroinitializer)
+-  %88 = tail call contract <4 x float> @llvm.mxc.mma.f32.16x16x16f16(<4 x half> %vb.sroa.17.30.vec.insert, <4 x half> %acc_s_cast.sroa.0.0, <4 x float> zeroinitializer)
+-  br label %if.end412
+-
+-if.end412:                                        ; preds = %for.cond364.preheader, %if.end346
+-  %acc_o.sroa.0.0 = phi <4 x float> [ %85, %for.cond364.preheader ], [ zeroinitializer, %if.end346 ]
+-  %acc_o.sroa.16.0 = phi <4 x float> [ %86, %for.cond364.preheader ], [ zeroinitializer, %if.end346 ]
+-  %acc_o.sroa.30.0 = phi <4 x float> [ %87, %for.cond364.preheader ], [ zeroinitializer, %if.end346 ]
+-  %acc_o.sroa.44.0 = phi <4 x float> [ %88, %for.cond364.preheader ], [ zeroinitializer, %if.end346 ]
++  br label %if.end336
++
++if.end336:                                        ; preds = %for.cond45.preheader, %entry
++  %acc_s_cast.sroa.0.0 = phi <4 x half> [ %acc_s_cast.sroa.0.6.vec.insert, %for.cond45.preheader ], [ undef, %entry ]
++  br i1 %cmp42, label %for.cond354.preheader, label %if.end402
++
++for.cond354.preheader:                            ; preds = %if.end336
++  %67 = shl nuw nsw i32 %3, 4
++  %mul364 = and i32 %67, 16128
++  %and370 = and i32 %3, 15
++  %add371 = or disjoint i32 %mul364, %and370
++  %arrayidx373 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371
++  %68 = load half, ptr addrspace(3) %arrayidx373, align 2, !tbaa !160
++  %vb.sroa.0.0.vec.insert = insertelement <4 x half> poison, half %68, i64 0
++  %add366.1 = or disjoint i32 %mul364, %and370
++  %add371.1 = or disjoint i32 %add366.1, 64
++  %arrayidx373.1 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371.1
++  %69 = load half, ptr addrspace(3) %arrayidx373.1, align 2, !tbaa !160
++  %vb.sroa.0.2.vec.insert = insertelement <4 x half> %vb.sroa.0.0.vec.insert, half %69, i64 1
++  %add366.2 = or disjoint i32 %mul364, %and370
++  %add371.2 = or disjoint i32 %add366.2, 128
++  %arrayidx373.2 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371.2
++  %70 = load half, ptr addrspace(3) %arrayidx373.2, align 2, !tbaa !160
++  %vb.sroa.0.4.vec.insert = insertelement <4 x half> %vb.sroa.0.2.vec.insert, half %70, i64 2
++  %add366.3 = or disjoint i32 %mul364, %and370
++  %add371.3 = or disjoint i32 %add366.3, 192
++  %arrayidx373.3 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371.3
++  %71 = load half, ptr addrspace(3) %arrayidx373.3, align 2, !tbaa !160
++  %vb.sroa.0.6.vec.insert = insertelement <4 x half> %vb.sroa.0.4.vec.insert, half %71, i64 3
++  %add368.1668 = or disjoint i32 %mul364, %and370
++  %add371.1669 = or disjoint i32 %add368.1668, 16
++  %arrayidx373.1670 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371.1669
++  %72 = load half, ptr addrspace(3) %arrayidx373.1670, align 2, !tbaa !160
++  %vb.sroa.7.8.vec.insert = insertelement <4 x half> poison, half %72, i64 0
++  %add368.1.1 = or disjoint i32 %mul364, %and370
++  %add371.1.1 = or disjoint i32 %add368.1.1, 80
++  %arrayidx373.1.1 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371.1.1
++  %73 = load half, ptr addrspace(3) %arrayidx373.1.1, align 2, !tbaa !160
++  %vb.sroa.7.10.vec.insert = insertelement <4 x half> %vb.sroa.7.8.vec.insert, half %73, i64 1
++  %add368.2.1 = or disjoint i32 %mul364, %and370
++  %add371.2.1 = or disjoint i32 %add368.2.1, 144
++  %arrayidx373.2.1 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371.2.1
++  %74 = load half, ptr addrspace(3) %arrayidx373.2.1, align 2, !tbaa !160
++  %vb.sroa.7.12.vec.insert = insertelement <4 x half> %vb.sroa.7.10.vec.insert, half %74, i64 2
++  %add368.3.1 = or disjoint i32 %mul364, %and370
++  %add371.3.1 = or disjoint i32 %add368.3.1, 208
++  %arrayidx373.3.1 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371.3.1
++  %75 = load half, ptr addrspace(3) %arrayidx373.3.1, align 2, !tbaa !160
++  %vb.sroa.7.14.vec.insert = insertelement <4 x half> %vb.sroa.7.12.vec.insert, half %75, i64 3
++  %add368.2672 = or disjoint i32 %mul364, %and370
++  %add371.2673 = or disjoint i32 %add368.2672, 32
++  %arrayidx373.2674 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371.2673
++  %76 = load half, ptr addrspace(3) %arrayidx373.2674, align 2, !tbaa !160
++  %vb.sroa.12.16.vec.insert = insertelement <4 x half> poison, half %76, i64 0
++  %add368.1.2 = or disjoint i32 %mul364, %and370
++  %add371.1.2 = or disjoint i32 %add368.1.2, 96
++  %arrayidx373.1.2 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371.1.2
++  %77 = load half, ptr addrspace(3) %arrayidx373.1.2, align 2, !tbaa !160
++  %vb.sroa.12.18.vec.insert = insertelement <4 x half> %vb.sroa.12.16.vec.insert, half %77, i64 1
++  %add368.2.2 = or disjoint i32 %mul364, %and370
++  %add371.2.2 = or disjoint i32 %add368.2.2, 160
++  %arrayidx373.2.2 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371.2.2
++  %78 = load half, ptr addrspace(3) %arrayidx373.2.2, align 2, !tbaa !160
++  %vb.sroa.12.20.vec.insert = insertelement <4 x half> %vb.sroa.12.18.vec.insert, half %78, i64 2
++  %add368.3.2 = or disjoint i32 %mul364, %and370
++  %add371.3.2 = or disjoint i32 %add368.3.2, 224
++  %arrayidx373.3.2 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371.3.2
++  %79 = load half, ptr addrspace(3) %arrayidx373.3.2, align 2, !tbaa !160
++  %vb.sroa.12.22.vec.insert = insertelement <4 x half> %vb.sroa.12.20.vec.insert, half %79, i64 3
++  %add368.3676 = or disjoint i32 %mul364, %and370
++  %add371.3677 = or disjoint i32 %add368.3676, 48
++  %arrayidx373.3678 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371.3677
++  %80 = load half, ptr addrspace(3) %arrayidx373.3678, align 2, !tbaa !160
++  %vb.sroa.17.24.vec.insert = insertelement <4 x half> poison, half %80, i64 0
++  %add368.1.3 = or disjoint i32 %mul364, %and370
++  %add371.1.3 = or disjoint i32 %add368.1.3, 112
++  %arrayidx373.1.3 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371.1.3
++  %81 = load half, ptr addrspace(3) %arrayidx373.1.3, align 2, !tbaa !160
++  %vb.sroa.17.26.vec.insert = insertelement <4 x half> %vb.sroa.17.24.vec.insert, half %81, i64 1
++  %add368.2.3 = or disjoint i32 %mul364, %and370
++  %add371.2.3 = or disjoint i32 %add368.2.3, 176
++  %arrayidx373.2.3 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371.2.3
++  %82 = load half, ptr addrspace(3) %arrayidx373.2.3, align 2, !tbaa !160
++  %vb.sroa.17.28.vec.insert = insertelement <4 x half> %vb.sroa.17.26.vec.insert, half %82, i64 2
++  %add368.3.3 = or disjoint i32 %67, %and370
++  %add371.3.3 = or i32 %add368.3.3, 240
++  %arrayidx373.3.3 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add371.3.3
++  %83 = load half, ptr addrspace(3) %arrayidx373.3.3, align 2, !tbaa !160
++  %vb.sroa.17.30.vec.insert = insertelement <4 x half> %vb.sroa.17.28.vec.insert, half %83, i64 3
++  %84 = tail call contract <4 x float> @llvm.mxc.mma.f32.16x16x16f16(<4 x half> %vb.sroa.0.6.vec.insert, <4 x half> %acc_s_cast.sroa.0.0, <4 x float> zeroinitializer)
++  %85 = tail call contract <4 x float> @llvm.mxc.mma.f32.16x16x16f16(<4 x half> %vb.sroa.7.14.vec.insert, <4 x half> %acc_s_cast.sroa.0.0, <4 x float> zeroinitializer)
++  %86 = tail call contract <4 x float> @llvm.mxc.mma.f32.16x16x16f16(<4 x half> %vb.sroa.12.22.vec.insert, <4 x half> %acc_s_cast.sroa.0.0, <4 x float> zeroinitializer)
++  %87 = tail call contract <4 x float> @llvm.mxc.mma.f32.16x16x16f16(<4 x half> %vb.sroa.17.30.vec.insert, <4 x half> %acc_s_cast.sroa.0.0, <4 x float> zeroinitializer)
++  br label %if.end402
++
++if.end402:                                        ; preds = %for.cond354.preheader, %if.end336
++  %acc_o.sroa.0.0 = phi <4 x float> [ %84, %for.cond354.preheader ], [ zeroinitializer, %if.end336 ]
++  %acc_o.sroa.16.0 = phi <4 x float> [ %85, %for.cond354.preheader ], [ zeroinitializer, %if.end336 ]
++  %acc_o.sroa.30.0 = phi <4 x float> [ %86, %for.cond354.preheader ], [ zeroinitializer, %if.end336 ]
++  %acc_o.sroa.44.0 = phi <4 x float> [ %87, %for.cond354.preheader ], [ zeroinitializer, %if.end336 ]
+   %acc_o.sroa.0.0.vec.extract = extractelement <4 x float> %acc_o.sroa.0.0, i64 0
+-  %89 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.0.0.vec.extract)
+-  %O_reg.sroa.0.0.insert.ext = zext i16 %89 to i64
++  %88 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.0.0.vec.extract)
++  %O_reg.sroa.0.0.insert.ext = zext i16 %88 to i64
+   %acc_o.sroa.0.4.vec.extract = extractelement <4 x float> %acc_o.sroa.0.0, i64 1
+-  %90 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.0.4.vec.extract)
+-  %O_reg.sroa.0.2.insert.ext = zext i16 %90 to i64
++  %89 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.0.4.vec.extract)
++  %O_reg.sroa.0.2.insert.ext = zext i16 %89 to i64
+   %O_reg.sroa.0.2.insert.shift = shl nuw nsw i64 %O_reg.sroa.0.2.insert.ext, 16
+   %O_reg.sroa.0.2.insert.insert = or disjoint i64 %O_reg.sroa.0.2.insert.shift, %O_reg.sroa.0.0.insert.ext
+   %acc_o.sroa.0.8.vec.extract = extractelement <4 x float> %acc_o.sroa.0.0, i64 2
+-  %91 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.0.8.vec.extract)
+-  %O_reg.sroa.0.4.insert.ext = zext i16 %91 to i64
++  %90 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.0.8.vec.extract)
++  %O_reg.sroa.0.4.insert.ext = zext i16 %90 to i64
+   %O_reg.sroa.0.4.insert.shift = shl nuw nsw i64 %O_reg.sroa.0.4.insert.ext, 32
+   %O_reg.sroa.0.4.insert.insert = or disjoint i64 %O_reg.sroa.0.2.insert.insert, %O_reg.sroa.0.4.insert.shift
+   %acc_o.sroa.0.12.vec.extract = extractelement <4 x float> %acc_o.sroa.0.0, i64 3
+-  %92 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.0.12.vec.extract)
+-  %O_reg.sroa.0.6.insert.ext = zext i16 %92 to i64
++  %91 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.0.12.vec.extract)
++  %O_reg.sroa.0.6.insert.ext = zext i16 %91 to i64
+   %O_reg.sroa.0.6.insert.shift = shl nuw i64 %O_reg.sroa.0.6.insert.ext, 48
+   %O_reg.sroa.0.6.insert.insert = or disjoint i64 %O_reg.sroa.0.4.insert.insert, %O_reg.sroa.0.6.insert.shift
+   %acc_o.sroa.16.16.vec.extract = extractelement <4 x float> %acc_o.sroa.16.0, i64 0
+-  %93 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.16.16.vec.extract)
+-  %O_reg.sroa.7.8.insert.ext = zext i16 %93 to i64
++  %92 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.16.16.vec.extract)
++  %O_reg.sroa.7.8.insert.ext = zext i16 %92 to i64
+   %acc_o.sroa.16.20.vec.extract = extractelement <4 x float> %acc_o.sroa.16.0, i64 1
+-  %94 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.16.20.vec.extract)
+-  %O_reg.sroa.7.10.insert.ext = zext i16 %94 to i64
++  %93 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.16.20.vec.extract)
++  %O_reg.sroa.7.10.insert.ext = zext i16 %93 to i64
+   %O_reg.sroa.7.10.insert.shift = shl nuw nsw i64 %O_reg.sroa.7.10.insert.ext, 16
+   %O_reg.sroa.7.10.insert.insert = or disjoint i64 %O_reg.sroa.7.10.insert.shift, %O_reg.sroa.7.8.insert.ext
+   %acc_o.sroa.16.24.vec.extract = extractelement <4 x float> %acc_o.sroa.16.0, i64 2
+-  %95 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.16.24.vec.extract)
+-  %O_reg.sroa.7.12.insert.ext = zext i16 %95 to i64
++  %94 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.16.24.vec.extract)
++  %O_reg.sroa.7.12.insert.ext = zext i16 %94 to i64
+   %O_reg.sroa.7.12.insert.shift = shl nuw nsw i64 %O_reg.sroa.7.12.insert.ext, 32
+   %O_reg.sroa.7.12.insert.insert = or disjoint i64 %O_reg.sroa.7.10.insert.insert, %O_reg.sroa.7.12.insert.shift
+   %acc_o.sroa.16.28.vec.extract = extractelement <4 x float> %acc_o.sroa.16.0, i64 3
+-  %96 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.16.28.vec.extract)
+-  %O_reg.sroa.7.14.insert.ext = zext i16 %96 to i64
++  %95 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.16.28.vec.extract)
++  %O_reg.sroa.7.14.insert.ext = zext i16 %95 to i64
+   %O_reg.sroa.7.14.insert.shift = shl nuw i64 %O_reg.sroa.7.14.insert.ext, 48
+   %O_reg.sroa.7.14.insert.insert = or disjoint i64 %O_reg.sroa.7.12.insert.insert, %O_reg.sroa.7.14.insert.shift
+   %acc_o.sroa.30.32.vec.extract = extractelement <4 x float> %acc_o.sroa.30.0, i64 0
+-  %97 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.30.32.vec.extract)
+-  %O_reg.sroa.12.16.insert.ext = zext i16 %97 to i64
++  %96 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.30.32.vec.extract)
++  %O_reg.sroa.12.16.insert.ext = zext i16 %96 to i64
+   %acc_o.sroa.30.36.vec.extract = extractelement <4 x float> %acc_o.sroa.30.0, i64 1
+-  %98 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.30.36.vec.extract)
+-  %O_reg.sroa.12.18.insert.ext = zext i16 %98 to i64
++  %97 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.30.36.vec.extract)
++  %O_reg.sroa.12.18.insert.ext = zext i16 %97 to i64
+   %O_reg.sroa.12.18.insert.shift = shl nuw nsw i64 %O_reg.sroa.12.18.insert.ext, 16
+   %O_reg.sroa.12.18.insert.insert = or disjoint i64 %O_reg.sroa.12.18.insert.shift, %O_reg.sroa.12.16.insert.ext
+   %acc_o.sroa.30.40.vec.extract = extractelement <4 x float> %acc_o.sroa.30.0, i64 2
+-  %99 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.30.40.vec.extract)
+-  %O_reg.sroa.12.20.insert.ext = zext i16 %99 to i64
++  %98 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.30.40.vec.extract)
++  %O_reg.sroa.12.20.insert.ext = zext i16 %98 to i64
+   %O_reg.sroa.12.20.insert.shift = shl nuw nsw i64 %O_reg.sroa.12.20.insert.ext, 32
+   %O_reg.sroa.12.20.insert.insert = or disjoint i64 %O_reg.sroa.12.18.insert.insert, %O_reg.sroa.12.20.insert.shift
+   %acc_o.sroa.30.44.vec.extract = extractelement <4 x float> %acc_o.sroa.30.0, i64 3
+-  %100 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.30.44.vec.extract)
+-  %O_reg.sroa.12.22.insert.ext = zext i16 %100 to i64
++  %99 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.30.44.vec.extract)
++  %O_reg.sroa.12.22.insert.ext = zext i16 %99 to i64
+   %O_reg.sroa.12.22.insert.shift = shl nuw i64 %O_reg.sroa.12.22.insert.ext, 48
+   %O_reg.sroa.12.22.insert.insert = or disjoint i64 %O_reg.sroa.12.20.insert.insert, %O_reg.sroa.12.22.insert.shift
+   %acc_o.sroa.44.48.vec.extract = extractelement <4 x float> %acc_o.sroa.44.0, i64 0
+-  %101 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.44.48.vec.extract)
+-  %O_reg.sroa.17.24.insert.ext = zext i16 %101 to i64
++  %100 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.44.48.vec.extract)
++  %O_reg.sroa.17.24.insert.ext = zext i16 %100 to i64
+   %acc_o.sroa.44.52.vec.extract = extractelement <4 x float> %acc_o.sroa.44.0, i64 1
+-  %102 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.44.52.vec.extract)
+-  %O_reg.sroa.17.26.insert.ext = zext i16 %102 to i64
++  %101 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.44.52.vec.extract)
++  %O_reg.sroa.17.26.insert.ext = zext i16 %101 to i64
+   %O_reg.sroa.17.26.insert.shift = shl nuw nsw i64 %O_reg.sroa.17.26.insert.ext, 16
+   %O_reg.sroa.17.26.insert.insert = or disjoint i64 %O_reg.sroa.17.26.insert.shift, %O_reg.sroa.17.24.insert.ext
+   %acc_o.sroa.44.56.vec.extract = extractelement <4 x float> %acc_o.sroa.44.0, i64 2
+-  %103 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.44.56.vec.extract)
+-  %O_reg.sroa.17.28.insert.ext = zext i16 %103 to i64
++  %102 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.44.56.vec.extract)
++  %O_reg.sroa.17.28.insert.ext = zext i16 %102 to i64
+   %O_reg.sroa.17.28.insert.shift = shl nuw nsw i64 %O_reg.sroa.17.28.insert.ext, 32
+   %O_reg.sroa.17.28.insert.insert = or disjoint i64 %O_reg.sroa.17.26.insert.insert, %O_reg.sroa.17.28.insert.shift
+   %acc_o.sroa.44.60.vec.extract = extractelement <4 x float> %acc_o.sroa.44.0, i64 3
+-  %104 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.44.60.vec.extract)
+-  %O_reg.sroa.17.30.insert.ext = zext i16 %104 to i64
++  %103 = tail call noundef i16 @llvm.convert.to.fp16.f32(float %acc_o.sroa.44.60.vec.extract)
++  %O_reg.sroa.17.30.insert.ext = zext i16 %103 to i64
+   %O_reg.sroa.17.30.insert.shift = shl nuw i64 %O_reg.sroa.17.30.insert.ext, 48
+   %O_reg.sroa.17.30.insert.insert = or disjoint i64 %O_reg.sroa.17.28.insert.insert, %O_reg.sroa.17.30.insert.shift
+   fence syncscope("warp") release
+   tail call void @llvm.mxc.barrier.warp()
+   fence syncscope("warp") acquire
+-  %and445 = shl nuw nsw i32 %3, 6
+-  %mul446 = and i32 %and445, 960
+-  %shr449 = lshr i32 %3, 5
+-  %and452 = and i32 %3, 7
+-  %105 = lshr i32 %3, 2
+-  %mul459 = and i32 %105, 4
+-  %xor453 = xor i32 %shr449, %and452
+-  %mul454 = shl nuw nsw i32 %xor453, 3
+-  %add455 = add nuw nsw i32 %mul454, %mul446
+-  %add460 = or disjoint i32 %add455, %mul459
+-  %add.ptr462 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add460
+-  store i64 %O_reg.sroa.0.6.insert.insert, ptr addrspace(3) %add.ptr462, align 8
+-  %add450.1 = add nuw nsw i32 %shr449, 2
+-  %xor453.1 = xor i32 %add450.1, %and452
+-  %mul454.1 = shl nuw nsw i32 %xor453.1, 3
+-  %add455.1 = add nuw nsw i32 %mul454.1, %mul446
+-  %add460.1 = or disjoint i32 %add455.1, %mul459
+-  %add.ptr462.1 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add460.1
+-  store i64 %O_reg.sroa.7.14.insert.insert, ptr addrspace(3) %add.ptr462.1, align 8
+-  %add450.2 = add nuw nsw i32 %shr449, 4
+-  %xor453.2 = xor i32 %add450.2, %and452
+-  %mul454.2 = shl nuw nsw i32 %xor453.2, 3
+-  %add455.2 = add nuw nsw i32 %mul454.2, %mul446
+-  %add460.2 = or disjoint i32 %add455.2, %mul459
+-  %add.ptr462.2 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add460.2
+-  store i64 %O_reg.sroa.12.22.insert.insert, ptr addrspace(3) %add.ptr462.2, align 8
+-  %add450.3 = add nuw nsw i32 %shr449, 6
+-  %xor453.3 = xor i32 %add450.3, %and452
+-  %mul454.3 = shl nuw nsw i32 %xor453.3, 3
+-  %add455.3 = add nuw nsw i32 %mul454.3, %mul446
+-  %add460.3 = or disjoint i32 %add455.3, %mul459
+-  %add.ptr462.3 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add460.3
+-  store i64 %O_reg.sroa.17.30.insert.insert, ptr addrspace(3) %add.ptr462.3, align 8
++  %and435 = shl nuw nsw i32 %3, 6
++  %mul436 = and i32 %and435, 960
++  %shr439 = lshr i32 %3, 5
++  %and442 = and i32 %3, 7
++  %104 = lshr i32 %3, 2
++  %mul449 = and i32 %104, 4
++  %xor443 = xor i32 %shr439, %and442
++  %mul444 = shl nuw nsw i32 %xor443, 3
++  %add445 = add nuw nsw i32 %mul444, %mul436
++  %add450 = or disjoint i32 %add445, %mul449
++  %add.ptr452 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add450
++  store i64 %O_reg.sroa.0.6.insert.insert, ptr addrspace(3) %add.ptr452, align 8
++  %add440.1 = add nuw nsw i32 %shr439, 2
++  %xor443.1 = xor i32 %add440.1, %and442
++  %mul444.1 = shl nuw nsw i32 %xor443.1, 3
++  %add445.1 = add nuw nsw i32 %mul444.1, %mul436
++  %add450.1 = or disjoint i32 %add445.1, %mul449
++  %add.ptr452.1 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add450.1
++  store i64 %O_reg.sroa.7.14.insert.insert, ptr addrspace(3) %add.ptr452.1, align 8
++  %add440.2 = add nuw nsw i32 %shr439, 4
++  %xor443.2 = xor i32 %add440.2, %and442
++  %mul444.2 = shl nuw nsw i32 %xor443.2, 3
++  %add445.2 = add nuw nsw i32 %mul444.2, %mul436
++  %add450.2 = or disjoint i32 %add445.2, %mul449
++  %add.ptr452.2 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add450.2
++  store i64 %O_reg.sroa.12.22.insert.insert, ptr addrspace(3) %add.ptr452.2, align 8
++  %add440.3 = add nuw nsw i32 %shr439, 6
++  %xor443.3 = xor i32 %add440.3, %and442
++  %mul444.3 = shl nuw nsw i32 %xor443.3, 3
++  %add445.3 = add nuw nsw i32 %mul444.3, %mul436
++  %add450.3 = or disjoint i32 %add445.3, %mul449
++  %add.ptr452.3 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %add450.3
++  store i64 %O_reg.sroa.17.30.insert.insert, ptr addrspace(3) %add.ptr452.3, align 8
+   fence syncscope("warp") release
+   tail call void @llvm.mxc.barrier.warp()
+   fence syncscope("warp") acquire
+-  %mul473 = and i32 %mul14, 8128
+-  %xor479597 = and i32 %mul14, 56
+-  %call477.masked = and i32 %3, 1016
+-  %mul480 = xor i32 %xor479597, %call477.masked
+-  %invariant.gep643 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %mul473
+-  %invariant.gep645 = getelementptr inbounds %struct.__half, ptr addrspace(3) %invariant.gep643, i32 %mul480
+-  %add.ptr500 = getelementptr inbounds %struct.__half, ptr addrspace(1) %Output.coerce, i64 %4
+-  tail call void @llvm.memcpy.p1.p3.i64(ptr addrspace(1) noundef align 16 dereferenceable(16) %add.ptr500, ptr addrspace(3) noundef align 16 dereferenceable(16) %invariant.gep645, i64 16, i1 false), !tbaa.struct !192, !call_argsrelate !193
+-  %gep646.1 = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep645, i32 1024
+-  %add.ptr500.1 = getelementptr inbounds %struct.__half, ptr addrspace(1) %Output.coerce, i64 %5
+-  tail call void @llvm.memcpy.p1.p3.i64(ptr addrspace(1) noundef align 16 dereferenceable(16) %add.ptr500.1, ptr addrspace(3) noundef align 16 dereferenceable(16) %gep646.1, i64 16, i1 false), !tbaa.struct !192, !call_argsrelate !193
++  %mul463 = and i32 %mul14, 8128
++  %xor469586 = and i32 %mul14, 56
++  %call467.masked = and i32 %3, 1016
++  %mul470 = xor i32 %xor469586, %call467.masked
++  %invariant.gep632 = getelementptr inbounds %struct.__half, ptr addrspace(3) @buf_dyn_shmem, i32 %mul463
++  %invariant.gep634 = getelementptr inbounds %struct.__half, ptr addrspace(3) %invariant.gep632, i32 %mul470
++  %add.ptr490 = getelementptr inbounds %struct.__half, ptr addrspace(1) %Output.coerce, i64 %4
++  tail call void @llvm.memcpy.p1.p3.i64(ptr addrspace(1) noundef align 16 dereferenceable(16) %add.ptr490, ptr addrspace(3) noundef align 16 dereferenceable(16) %invariant.gep634, i64 16, i1 false), !tbaa.struct !190, !call_argsrelate !191
++  %gep635.1 = getelementptr inbounds i8, ptr addrspace(3) %invariant.gep634, i32 1024
++  %add.ptr490.1 = getelementptr inbounds %struct.__half, ptr addrspace(1) %Output.coerce, i64 %5
++  tail call void @llvm.memcpy.p1.p3.i64(ptr addrspace(1) noundef align 16 dereferenceable(16) %add.ptr490.1, ptr addrspace(3) noundef align 16 dereferenceable(16) %gep635.1, i64 16, i1 false), !tbaa.struct !190, !call_argsrelate !191
+   ret void
+ }
+ 

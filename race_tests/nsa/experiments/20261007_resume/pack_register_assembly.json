@@ -1,0 +1,41 @@
+{
+  "baseline": "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_v1/nsa.py",
+  "baseline_sha256": "644206570d4ca96c15acdf28ff9ef365e61dcbbe1670915e1ec188c80f834412",
+  "variants": [
+    {
+      "path": "pack_register_t64.py",
+      "threads": 64,
+      "sha256": "97bb29f9cc575149c0022f76e23b53971e6cfe299ff1ecccfed963b31ed61d25"
+    },
+    {
+      "path": "pack_register_t128.py",
+      "threads": 128,
+      "sha256": "e862bf9fa8175c89c133d5071db0d37165f273c4fbc698fe91f80b8ecf9a08f1"
+    },
+    {
+      "path": "pack_register_t256.py",
+      "threads": 256,
+      "sha256": "a3becafafb8fe7d0617f8d095c3b0f35f765e8fd54420a9d407989f90f283f1c"
+    }
+  ],
+  "layout_proof": {
+    "status": "PASS",
+    "exact_elements": 512,
+    "exchange_steps": [
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        1
+      ]
+    ]
+  },
+  "attention_unchanged": true,
+  "note": "Per-call synchronous packing with lossless uint32 shuffle transpose; no shared buffer or cross-call input caching."
+}

@@ -1,0 +1,190 @@
+{
+  "command": [
+    "experiments/20261002_goal885/check_block_layouts.py",
+    "experiments/20261002_blocks_v2/nsa.py",
+    "--output",
+    "experiments/20261002_blocks_v2/layout_proof.json"
+  ],
+  "status": "PASS",
+  "source": "experiments/20261002_blocks_v2/nsa.py",
+  "source_sha256": "dfd56499dd405def3b1247780aa404919b8c03b7d493fdbb13c1420a331f4ee6",
+  "layouts": [
+    {
+      "dim": 64,
+      "values": 1024,
+      "lanes": 64,
+      "word_bytes": 4,
+      "lane_ownership": true,
+      "load_coverage": true,
+      "shared_k_bijection": true,
+      "mma_k_and_v_coverage": true
+    },
+    {
+      "dim": 128,
+      "values": 2048,
+      "lanes": 64,
+      "word_bytes": 4,
+      "lane_ownership": true,
+      "load_coverage": true,
+      "shared_k_bijection": true,
+      "mma_k_and_v_coverage": true
+    }
+  ],
+  "views": [
+    {
+      "batch": 1,
+      "heads": 1,
+      "seq_len": 16,
+      "dim": 64,
+      "compared_addresses": 1024,
+      "identical_storage_offsets": true
+    },
+    {
+      "batch": 2,
+      "heads": 2,
+      "seq_len": 32,
+      "dim": 64,
+      "compared_addresses": 8192,
+      "identical_storage_offsets": true
+    },
+    {
+      "batch": 3,
+      "heads": 4,
+      "seq_len": 48,
+      "dim": 64,
+      "compared_addresses": 36864,
+      "identical_storage_offsets": true
+    },
+    {
+      "batch": 8,
+      "heads": 1,
+      "seq_len": 1024,
+      "dim": 64,
+      "compared_addresses": 24576,
+      "identical_storage_offsets": true
+    },
+    {
+      "batch": 1,
+      "heads": 1,
+      "seq_len": 16,
+      "dim": 128,
+      "compared_addresses": 2048,
+      "identical_storage_offsets": true
+    },
+    {
+      "batch": 2,
+      "heads": 2,
+      "seq_len": 32,
+      "dim": 128,
+      "compared_addresses": 16384,
+      "identical_storage_offsets": true
+    },
+    {
+      "batch": 3,
+      "heads": 4,
+      "seq_len": 48,
+      "dim": 128,
+      "compared_addresses": 73728,
+      "identical_storage_offsets": true
+    },
+    {
+      "batch": 8,
+      "heads": 1,
+      "seq_len": 1024,
+      "dim": 128,
+      "compared_addresses": 49152,
+      "identical_storage_offsets": true
+    }
+  ],
+  "bounds": [
+    {
+      "seq_len": 16,
+      "causal": false,
+      "cases": 27,
+      "validate_before_multiplication": true,
+      "full_block_access_in_range": true
+    },
+    {
+      "seq_len": 16,
+      "causal": true,
+      "cases": 27,
+      "validate_before_multiplication": true,
+      "full_block_access_in_range": true
+    },
+    {
+      "seq_len": 32,
+      "causal": false,
+      "cases": 36,
+      "validate_before_multiplication": true,
+      "full_block_access_in_range": true
+    },
+    {
+      "seq_len": 32,
+      "causal": true,
+      "cases": 36,
+      "validate_before_multiplication": true,
+      "full_block_access_in_range": true
+    },
+    {
+      "seq_len": 48,
+      "causal": false,
+      "cases": 36,
+      "validate_before_multiplication": true,
+      "full_block_access_in_range": true
+    },
+    {
+      "seq_len": 48,
+      "causal": true,
+      "cases": 36,
+      "validate_before_multiplication": true,
+      "full_block_access_in_range": true
+    },
+    {
+      "seq_len": 1280,
+      "causal": false,
+      "cases": 36,
+      "validate_before_multiplication": true,
+      "full_block_access_in_range": true
+    },
+    {
+      "seq_len": 1280,
+      "causal": true,
+      "cases": 36,
+      "validate_before_multiplication": true,
+      "full_block_access_in_range": true
+    },
+    {
+      "seq_len": 2304,
+      "causal": false,
+      "cases": 36,
+      "validate_before_multiplication": true,
+      "full_block_access_in_range": true
+    },
+    {
+      "seq_len": 2304,
+      "causal": true,
+      "cases": 36,
+      "validate_before_multiplication": true,
+      "full_block_access_in_range": true
+    },
+    {
+      "seq_len": 8192,
+      "causal": false,
+      "cases": 36,
+      "validate_before_multiplication": true,
+      "full_block_access_in_range": true
+    },
+    {
+      "seq_len": 8192,
+      "causal": true,
+      "cases": 36,
+      "validate_before_multiplication": true,
+      "full_block_access_in_range": true
+    }
+  ],
+  "value_transfer": "Direct fp16 buffer assignment, without numeric conversion or arithmetic",
+  "unchanged_baseline_manifest": {
+    "path": "experiments/20261002_d32_v1/release_manifest.json",
+    "sha256": "8961d1398af2a02407d1eef8bce7c34928fd98a08f6fae0c78d89ee4170793c2"
+  }
+}

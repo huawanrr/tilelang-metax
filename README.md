@@ -51,6 +51,10 @@ Although tile-lang aims to be portable across a range of Devices, it has been sp
 
 Within the `examples` directory, you will also find additional complex kernels—such as convolutions, forward/backward passes for FlashAttention, more operators will continuously be added.
 
+## MetaX C500 Kernel Optimization Notes
+
+This repository also records hands-on TileLang optimization work for MoE, MLA decoding, and Native Sparse Attention on MetaX C500, including performance methodology, generated-code analysis, optimization history, and measured negative results. See the [C500 optimization overview](./docs/maca-c500-kernels/README.md) and [optimization journey](./docs/maca-c500-kernels/optimization-journey.md).
+
 ## Benchmark Summary
 
 TileLang achieves exceptional performance across a variety of computational patterns. Comprehensive benchmark scripts and settings are available at [tilelang-benchmark](https://github.com/tile-ai/tilelang-benchmark). Below are selected results showcasing its capabilities:

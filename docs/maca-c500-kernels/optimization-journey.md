@@ -1,6 +1,6 @@
 # 优化历程：从可运行到可解释
 
-本文按问题和决策整理 MoE、MLA、NSA 在 MetaX C500 上的优化过程。具体版本号、命令、逐 case 数据和负结果见各自的 [MoE](../../race_tests/moe/NOTES.md)、[MLA](../../race_tests/mla/NOTES.md)、[NSA](../../race_tests/nsa/NOTES.md) 工程笔记。
+本文按问题和决策整理 MoE、MLA、NSA 在 MetaX C500 上的优化过程。具体版本号、命令、逐 case 数据和负结果见各自的 [MoE](engineering-notes/moe.md)、[MLA](engineering-notes/mla.md)、[NSA](engineering-notes/nsa.md) 工程笔记。
 
 ## 共同的起点：题目基线并不等于本地模板
 

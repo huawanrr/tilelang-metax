@@ -6,11 +6,13 @@
 
 下表保留原始笔记中的口径与日期。三个任务的测试集和评分规则不同，分数不能横向比较。
 
+本次上传包括总览、优化历程和三份工程笔记快照。表内版本与结果来自本地实验记录；尚未提交的实现、日志和 release 包未随文档上传，下文代码路径用于定位原始实验资料。
+
 | 算子 | 记录中的代表实现 | 已有性能证据 | 官方成绩状态 |
 |---|---|---|---|
-| MoE | `race_tests/moe/submission.py`，v42-regstage | 本地三个评测 shape：2.678 / 4.734 / 8.905 ms；v39 对应为 3.054 / 5.461 / 10.385 ms | 记录有多次成绩及明显评测波动；NOTES 汇总最佳单项为 81.7 / 80.7 / 80.7，平均 80.33。详见 [MoE 笔记](../../race_tests/moe/NOTES.md) |
-| MLA | `race_tests/mla/mla.py`，v3 | 31 个官方 case 正确；相对旧提交版 CUDA Graph 几何平均延迟为 0.70，即约 1.43× | 2026-09-28 记录的上一次用户回报为 96.5；v3 的后续提交说明记录六个 case 平均 97.0。详见 [MLA 笔记](../../race_tests/mla/NOTES.md) |
-| NSA | 冻结的 [v17 候选](../../race_tests/nsa/experiments/20261016_resume895/release_v17/README.md)；开发与提交入口见 `race_tests/nsa` | 多轮全量正确性、冷/热测和设备码对照；部分后期优化只针对 OJ1，不能外推到 14 个评测点 | 2026-10-17 笔记确认总分 89；89.5 未确认，v15/v17 的 OJ 无提升反馈。详见 [NSA 笔记](../../race_tests/nsa/NOTES.md) |
+| MoE | `race_tests/moe/submission.py`，v42-regstage | 本地三个评测 shape：2.678 / 4.734 / 8.905 ms；v39 对应为 3.054 / 5.461 / 10.385 ms | 记录有多次成绩及明显评测波动；NOTES 汇总最佳单项为 81.7 / 80.7 / 80.7，平均 80.33。详见 [MoE 笔记](engineering-notes/moe.md) |
+| MLA | `race_tests/mla/mla.py`，v3 | 31 个官方 case 正确；相对旧提交版 CUDA Graph 几何平均延迟为 0.70，即约 1.43× | 2026-09-28 记录的上一次用户回报为 96.5；v3 的后续提交说明记录六个 case 平均 97.0。详见 [MLA 笔记](engineering-notes/mla.md) |
+| NSA | 本地实验中冻结的 v17 候选；开发与提交入口见 `race_tests/nsa` | 多轮全量正确性、冷/热测和设备码对照；部分后期优化只针对 OJ1，不能外推到 14 个评测点 | 2026-10-17 笔记确认总分 89；89.5 未确认，v15/v17 的 OJ 无提升反馈。详见 [NSA 笔记](engineering-notes/nsa.md) |
 
 成绩和版本会随评测反馈变化。准备复现实验或提交前，请先读各算子 NOTES 顶部的最新状态，再核对相应 release 目录、哈希清单和入口文件；不要仅凭本摘要替换提交文件。
 
@@ -52,7 +54,7 @@ C500 相关笔记记录的硬件基线为 104 个 SM、64-lane warp、每块约 
 
 ### MLA：长上下文 decode 的 split-K attention
 
-主要优化是用 split-K 增加 CTA 并行度、按 shape 选择流水 stages、对小上下文采用 nmax softmax 路径，以及按 split 数选择 partial merge 实现。31 个官方 case 在记录中全部通过严格正确性检查，v3 本地相对旧提交版达到约 1.43× 几何平均加速。
+主要优化是用 split-K 增加 CTA 并行度、按 shape 选择流水 stages、采用 nmax softmax 路径，并对短上下文条件化修正 fp16 概率求和，以及按 split 数选择 partial merge 实现。31 个官方 case 在记录中全部通过严格正确性检查，v3 本地相对旧提交版达到约 1.43× 几何平均加速。
 
 MLA 的 PV GEMM 受 shared-memory 访问方向限制：QK 和 PV 对同一个 KV tile 需要不同方向的连续布局。尝试转置 V tile 可令 PV 读取更向量化，但转置生产成本和循环重构损失大于收益；当前版本的 `k_pack` 形参在 MACA 路径没有改变生成代码。融合 kernel 因跨 CTA store 可见性缺少可靠 fence 而无法保证正确性；原子 merge 又因标量原子成本而未获净收益。
 
@@ -62,12 +64,12 @@ MLA 的 PV GEMM 受 shared-memory 访问方向限制：QK 和 PV 对同一个 KV
 
 NSA 的测量证据强调调用入口覆盖：OJ 走 `run_kernel`，仅在模板工厂中加入优化不够。后续 v15/v17 小 D32 改动展示了局部冷测改善并不自动转化为整体正式分数；是否采纳要看正式反馈和全量测量。
 
-## 文档与代码入口
+## 文档与原始资料位置
 
 - [优化历程与实验方法](optimization-journey.md)：跨算子的阶段、代表决策和失败路线。
-- [MoE 工程笔记](../../race_tests/moe/NOTES.md) · [MLA 工程笔记](../../race_tests/mla/NOTES.md) · [NSA 工程笔记](../../race_tests/nsa/NOTES.md)：完整数据、失败方向和工具索引。
-- [MoE 提交材料包](../../race_tests/moe/submit_XH-202608/README.md)：含 kernel、测试、兼容层和报告材料。
-- [NSA v17 冻结包](../../race_tests/nsa/experiments/20261016_resume895/release_v17/README.md)：提交文件、哈希与复现命令。
+- [MoE 工程笔记](engineering-notes/moe.md) · [MLA 工程笔记](engineering-notes/mla.md) · [NSA 工程笔记](engineering-notes/nsa.md)：完整数据、失败方向和工具索引。
+- 原工作区的 MoE 材料包：`race_tests/moe/submit_XH-202608/`，含 kernel、测试、兼容层和报告材料。
+- 原工作区的 NSA v17 冻结包：`race_tests/nsa/experiments/20261016_resume895/release_v17/`，含提交文件、哈希与复现命令。
 
 ## 复现前检查
 

@@ -1,0 +1,68 @@
+{
+  "baseline_sha256": "900cf61225dbd2b86191ffe61b68baa49029ab3188c0c644d06b1dc866daac40",
+  "function": "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint",
+  "variants": [
+    {
+      "path": "packed_exchange_q1_o0.py",
+      "q_exchange": 1,
+      "output_bits": 0,
+      "sha256": "7ee5d313edd5fd98c10a11fac881d4ed4b0e7ce96a1e08196cb7b6283e69088b"
+    },
+    {
+      "path": "packed_exchange_q0_o1.py",
+      "q_exchange": 0,
+      "output_bits": 1,
+      "sha256": "39c7381436a5ad01810e51ee9b751c21081989fa55a132c023d39d5dd57ac4b5"
+    },
+    {
+      "path": "packed_exchange_q0_o2.py",
+      "q_exchange": 0,
+      "output_bits": 2,
+      "sha256": "fc0417b633130913f1a06f42a6395d4301767ef05b485651acc37d9538fb021a"
+    },
+    {
+      "path": "packed_exchange_q1_o1.py",
+      "q_exchange": 1,
+      "output_bits": 1,
+      "sha256": "4a6cf9d265ba771ebe26f67fcf8cb22ea24b8417c4c0414dafc9f2d11b99adee"
+    },
+    {
+      "path": "packed_exchange_q1_o2.py",
+      "q_exchange": 1,
+      "output_bits": 2,
+      "sha256": "df21abc6eb385abacebabe4f37be82d480ebc81fbfaaae502eee4292a939a855"
+    }
+  ],
+  "output_proofs": [
+    {
+      "dim": 64,
+      "bits": 1,
+      "elements": 1024,
+      "unique_coverage": true,
+      "bit_preserving": true
+    },
+    {
+      "dim": 64,
+      "bits": 2,
+      "elements": 1024,
+      "unique_coverage": true,
+      "bit_preserving": true
+    },
+    {
+      "dim": 128,
+      "bits": 1,
+      "elements": 2048,
+      "unique_coverage": true,
+      "bit_preserving": true
+    },
+    {
+      "dim": 128,
+      "bits": 2,
+      "elements": 2048,
+      "unique_coverage": true,
+      "bit_preserving": true
+    }
+  ],
+  "q_mapping": "Same exact one-bit mapping proven in 20261014_goal8933/make_operand_butterfly.py",
+  "scope": "Existing default packed S1 block-joint builder only; all arithmetic and indices preserved"
+}

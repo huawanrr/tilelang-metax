@@ -1,0 +1,35 @@
+{
+  "parent_sha256": "fb6b0fb5df10bc497841e9a0da922a0062f84689088c9503bc526aef71b9a976",
+  "variants": [
+    {
+      "file": "k_only_v_direct.py",
+      "sha256": "cbdf4cb86fd22893acfe8b6102d410652081edd6dcc325a875415c89d745c7ea",
+      "mode": "direct",
+      "packed_planes": 1,
+      "v_tile_rows": 0
+    },
+    {
+      "file": "k_only_v_shared16.py",
+      "sha256": "858cea87ba8b83639007f993eda6f52ac095db7a7aad558eb295edfaa4601a2f",
+      "mode": "shared16",
+      "packed_planes": 1,
+      "v_tile_rows": 16
+    },
+    {
+      "file": "k_only_v_shared32.py",
+      "sha256": "0e5b5d4ee6b98070062e4d1e6f3a2f426af0912dadc6f2d341b5f5f26ed37f65",
+      "mode": "shared32",
+      "packed_planes": 1,
+      "v_tile_rows": 32
+    }
+  ],
+  "status": "unvalidated research probes",
+  "changed_functions": [
+    "native_sparse_attention_pack_kv_bs32_direct_block_joint",
+    "native_sparse_attention_pack_kv_bs32_shared_block_joint",
+    "native_sparse_attention_pack_kv_bs32_tiles_block_joint",
+    "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint",
+    "_make_block_joint_attention"
+  ],
+  "invariants": "Same FP16 inputs and FP32 math, complete original indices/masks, current-call K packing; explicit shared RAW/WAR wave barriers."
+}

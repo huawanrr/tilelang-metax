@@ -1,0 +1,28 @@
+{
+  "parent": "window_pair_shared_phases.py",
+  "parent_sha256": "e4041f3bb4ecbb88752c375a2fd3827c1e6f2bb9c5625983b8a5fb5c61b42557",
+  "variants": [
+    {
+      "path": "window_quads128.py",
+      "window": 128,
+      "queries": 4,
+      "sha256": "5b15af76eb4c620253d0c7f749b4dd0247b848ba00c26803c0f97bf714f6f106"
+    },
+    {
+      "path": "window_quads256.py",
+      "window": 256,
+      "queries": 4,
+      "sha256": "2e659944b6d476e05ddc715cb1226e5723fe1171f7b95af7d387cfed1c305d3a"
+    }
+  ],
+  "proof": {
+    "pattern_cases": 320,
+    "unique_complete_queries": true,
+    "word_roundtrips": true,
+    "invalid_bin_before_multiply": true,
+    "capacity": "min(WIN, floor((WIN + 3*(NB+1))/4))"
+  },
+  "original_per_query_fp32_order": true,
+  "one_shared_tile": true,
+  "original_public_interface_and_fallback": true
+}

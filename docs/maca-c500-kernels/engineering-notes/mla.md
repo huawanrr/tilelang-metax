@@ -1,4 +1,4 @@
-> 工程笔记归档：来自本地 `race_tests/mla/NOTES.md`。保留原始实验记录；其中脚本、日志、release 包与绝对路径指向原工作区，未全部随本次文档上传。阅读当前结果请先看[优化总览](../README.md)。
+> 工程笔记归档：来自本地 `race_tests/mla/NOTES.md`。保留原始实验记录；其中相对路径以对应的 `race_tests/` 算子目录为基准，绝对路径需按本机环境调整。阅读当前结果请先看[优化总览](../README.md)。
 
 # MLA 赛题优化笔记（MetaX C500, deepseek-MLA decode）
 

@@ -1,0 +1,34 @@
+{
+  "parent": "/data/tilelang-metax/race_tests/nsa/experiments/20261016_s2_family/release_v15/submission.py",
+  "parent_sha256": "58bbd21b67192a467242ae078cc8e7a135e0cbb9441401b0733e5d8155ac78c1",
+  "variants": [
+    {
+      "file": "rsqrt.py",
+      "helper": "def _rsqrt_denominator_probe(value):\n    root_inv = T.rsqrt(value)\n    return root_inv * root_inv\n\n",
+      "sha256": "009747237f1d271565cde615bde5d772e2ed05a1e732d02727819b6061d1f7e5"
+    },
+    {
+      "file": "ieee_rsqrt.py",
+      "helper": "def _rsqrt_denominator_probe(value):\n    root_inv = T.ieee_frsqrt(value)\n    return root_inv * root_inv\n\n",
+      "sha256": "75323f43fea0e49733630f51220c6d166d7e48e28c490f9af79d5d4cb7c5c513"
+    }
+  ],
+  "functions": [
+    "_coalesced_block_loads_prim_boundary_v8",
+    "_coalesced_block_loads_prim_fp32_mask",
+    "_coalesced_block_loads_prim_fp32_sum",
+    "_coalesced_block_loads_prim_oct8",
+    "native_sparse_attention_linear_v_blocks_oct8",
+    "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_q_preload",
+    "native_sparse_attention_q_preload_vfirst",
+    "native_sparse_attention_short_list_oct8_sum_v11",
+    "native_sparse_attention_short_list_oct8_wave_output_v15",
+    "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint",
+    "native_sparse_attention_staged_sparse_blocks_sum_v11"
+  ],
+  "expressions": 29,
+  "guards_and_dispatch_unchanged": true,
+  "status": "unvalidated probes"
+}

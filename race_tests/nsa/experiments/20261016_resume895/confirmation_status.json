@@ -1,0 +1,67 @@
+{
+  "plan": {
+    "reason": "Third-seed control was 1.085106x. Keep it and run one fixed confirmation batch; increase identical per-module warmup from 4 to 64 calls.",
+    "seeds": [
+      2026,
+      73
+    ],
+    "rounds": 10,
+    "repeat": 96,
+    "warmup": 64,
+    "flush_bytes": 256000000,
+    "cpu_core": 127,
+    "all_results_retained": true,
+    "source_sha256": "6ed153e286a7cf4a334153ba64fadef5d6a33ba67855bc7359272602aa4d364c"
+  },
+  "status": "PASS",
+  "stages": [
+    {
+      "name": "cold_confirm_seed2026",
+      "command": [
+        "/opt/conda/bin/python",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_resume895/profile_cold_warm.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_resume895/baseline.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_resume895/control.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_resume895/candidate_v17.py",
+        "--case-file",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_resume895/candidate_cases.json",
+        "--cases",
+        "oj1",
+        "--seed",
+        "2026",
+        "--rounds",
+        "10",
+        "--repeat",
+        "96",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_resume895/cold_confirm_seed2026.json"
+      ],
+      "status": "PASS",
+      "returncode": 0
+    },
+    {
+      "name": "cold_confirm_seed73",
+      "command": [
+        "/opt/conda/bin/python",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_resume895/profile_cold_warm.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_resume895/baseline.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_resume895/control.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_resume895/candidate_v17.py",
+        "--case-file",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_resume895/candidate_cases.json",
+        "--cases",
+        "oj1",
+        "--seed",
+        "73",
+        "--rounds",
+        "10",
+        "--repeat",
+        "96",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_resume895/cold_confirm_seed73.json"
+      ],
+      "status": "PASS",
+      "returncode": 0
+    }
+  ]
+}

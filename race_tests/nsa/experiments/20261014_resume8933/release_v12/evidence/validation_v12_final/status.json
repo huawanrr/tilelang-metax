@@ -1,0 +1,152 @@
+{
+  "status": "PASS",
+  "module": "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/candidate_v12_final_submission.py",
+  "source_sha256": "58bc2fd7a2aeb8ea805be63cc4aefae81487bcc39c3608fb5edc8293380888f9",
+  "official_baseline_sha256": "71dd44e50e32a83a3758f656cf5ffcd757acae853546d69a226ec185bb18df92",
+  "parent_sha256": "fc2d1f22d6bf769e7ef72c8c346ac586fbe85c2009bf171366dc8c883873d32e",
+  "steps": [
+    {
+      "name": "host_fast_cpu",
+      "command": [
+        "/opt/conda/bin/python",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/verify_host_fast_cpu.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/candidate_v12_final_submission.py",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/validation_v12_final/host_fast_cpu.json"
+      ],
+      "started": "2026-10-14T12:43:03.041296+00:00",
+      "returncode": 0,
+      "elapsed_seconds": 1.3573504969972419,
+      "finished": "2026-10-14T12:43:04.398807+00:00"
+    },
+    {
+      "name": "host_call",
+      "command": [
+        "/opt/conda/bin/python",
+        "-u",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/verify_host_call.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/candidate_v12_final_submission.py",
+        "--parent",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/baseline.py",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/validation_v12_final/host_call.json"
+      ],
+      "started": "2026-10-14T12:43:04.399121+00:00",
+      "returncode": 0,
+      "elapsed_seconds": 51.416275213996414,
+      "finished": "2026-10-14T12:43:55.815553+00:00"
+    },
+    {
+      "name": "legacy_scale",
+      "command": [
+        "/opt/conda/bin/python",
+        "-u",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/verify_legacy_scale.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/candidate_v12_final_submission.py",
+        "--parent",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/baseline.py",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/validation_v12_final/legacy_scale.json"
+      ],
+      "started": "2026-10-14T12:43:55.815926+00:00",
+      "returncode": 0,
+      "elapsed_seconds": 45.12946560699493,
+      "finished": "2026-10-14T12:44:40.945560+00:00"
+    },
+    {
+      "name": "reference",
+      "command": [
+        "/opt/conda/bin/python",
+        "-u",
+        "/data/tilelang-metax/race_tests/nsa/verify_nsa.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/candidate_v12_final_submission.py",
+        "--cases",
+        "all",
+        "--extras",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/validation_v12_final/reference.json"
+      ],
+      "started": "2026-10-14T12:44:40.946010+00:00",
+      "returncode": 0,
+      "elapsed_seconds": 54.681583807003335,
+      "finished": "2026-10-14T12:45:35.627769+00:00"
+    },
+    {
+      "name": "oj_graph",
+      "command": [
+        "/opt/conda/bin/python",
+        "-u",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261005_goal8929/bracketed_audited.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261013_mfma_fix/submission.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/validation_v12_final/official_control.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/baseline.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/candidate_v12_final_submission.py",
+        "--case-file",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/v12_cases.json",
+        "--cases",
+        "oj1,oj2,oj3,oj4,oj5,oj6,oj7,oj8,oj9,oj10,oj11,oj12,oj13,oj14",
+        "--seeds",
+        "0,61",
+        "--attempts",
+        "16",
+        "--repeat",
+        "240",
+        "--shared-pool",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/validation_v12_final/oj_graph.json"
+      ],
+      "started": "2026-10-14T12:45:35.628142+00:00",
+      "returncode": 0,
+      "elapsed_seconds": 88.69315089700103,
+      "finished": "2026-10-14T12:47:04.321474+00:00"
+    },
+    {
+      "name": "oj_public",
+      "command": [
+        "/opt/conda/bin/python",
+        "-u",
+        "-c",
+        "import os,runpy\nos.sched_setaffinity(0, {min(os.sched_getaffinity(0))})\nrunpy.run_path('/data/tilelang-metax/race_tests/nsa/experiments/20261009_goal8933/bench_public_loop.py', run_name=\"__main__\")\n",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261013_mfma_fix/submission.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/validation_v12_final/official_control.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/baseline.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/candidate_v12_final_submission.py",
+        "--case-file",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/v12_cases.json",
+        "--cases",
+        "oj1,oj2,oj3,oj4,oj5,oj6,oj7,oj8,oj9,oj10,oj11,oj12,oj13,oj14",
+        "--seeds",
+        "0,61",
+        "--attempts",
+        "16",
+        "--repeat",
+        "2400",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/validation_v12_final/oj_public.json"
+      ],
+      "started": "2026-10-14T12:47:04.321858+00:00",
+      "returncode": 0,
+      "elapsed_seconds": 325.29938426200533,
+      "finished": "2026-10-14T12:52:29.621449+00:00"
+    },
+    {
+      "name": "actual_binary",
+      "command": [
+        "/opt/conda/bin/python",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261008_resume8871/audit_actual_binary.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/baseline.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/candidate_v12_final_submission.py",
+        "--case-file",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/v12_cases.json",
+        "--cases",
+        "oj1,oj2,oj3,oj4,oj5,oj6,oj7,oj8,oj9,oj10,oj11,oj12,oj13,oj14,bs32_b8_t1025_h1_c1,s2_b1_t128_h4_c1,s4_b1_t256_h2_c1,d128_large,d64_large_noncausal,legacy_s2_t37_h2,legacy_s4_t37_h2,legacy_s4_t127_h1",
+        "--output-dir",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/validation_v12_final/actual_binary"
+      ],
+      "started": "2026-10-14T12:52:29.621885+00:00",
+      "returncode": 0,
+      "elapsed_seconds": 41.140225595998345,
+      "finished": "2026-10-14T12:53:10.762339+00:00"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+--- parent_v16.py
++++ submission.py
+@@ -8596,15 +8596,15 @@
+                 if scale_log2 > 0:
+                     for i, j in T.Parallel(G, BS):
+                         if natural:
+-                            scores[i, j] = T.exp(T.min(scores[i, j] * (scale_log2 * 0.6931471805599453), 10.39720770839918)) * T.if_then_else(block * BS + j >= 0 and block * BS + j < seq_len and (not is_causal or block * BS + j <= token), T.float32(1.0), T.float32(0.0))
++                            scores[i, j] = T.pow(T.float32(2.0), T.min(scores[i, j] * scale_log2, 15.0)) * T.if_then_else(block * BS + j >= 0 and block * BS + j < seq_len and (not is_causal or block * BS + j <= token), T.float32(1.0), T.float32(0.0))
+                         else:
+-                            scores[i, j] = T.exp2(T.min(scores[i, j] * scale_log2, 15.0)) * T.if_then_else(block * BS + j >= 0 and block * BS + j < seq_len and (not is_causal or block * BS + j <= token), T.float32(1.0), T.float32(0.0))
++                            scores[i, j] = T.pow(T.float32(2.0), T.min(scores[i, j] * scale_log2, 15.0)) * T.if_then_else(block * BS + j >= 0 and block * BS + j < seq_len and (not is_causal or block * BS + j <= token), T.float32(1.0), T.float32(0.0))
+                 else:
+                     for i, j in T.Parallel(G, BS):
+                         if natural:
+-                            scores[i, j] = T.if_then_else(not is_causal or block * BS + j <= token, T.exp(T.min(scores[i, j] * (scale_log2 * 0.6931471805599453), 10.39720770839918)), 0.0) * T.if_then_else(block * BS + j >= 0 and block * BS + j < seq_len and (not is_causal or block * BS + j <= token), T.float32(1.0), T.float32(0.0))
++                            scores[i, j] = T.if_then_else(not is_causal or block * BS + j <= token, T.pow(T.float32(2.0), T.min(scores[i, j] * scale_log2, 15.0)), 0.0) * T.if_then_else(block * BS + j >= 0 and block * BS + j < seq_len and (not is_causal or block * BS + j <= token), T.float32(1.0), T.float32(0.0))
+                         else:
+-                            scores[i, j] = T.if_then_else(not is_causal or block * BS + j <= token, T.exp2(T.min(scores[i, j] * scale_log2, 15.0)), 0.0) * T.if_then_else(block * BS + j >= 0 and block * BS + j < seq_len and (not is_causal or block * BS + j <= token), T.float32(1.0), T.float32(0.0))
++                            scores[i, j] = T.if_then_else(not is_causal or block * BS + j <= token, T.pow(T.float32(2.0), T.min(scores[i, j] * scale_log2, 15.0)), 0.0) * T.if_then_else(block * BS + j >= 0 and block * BS + j < seq_len and (not is_causal or block * BS + j <= token), T.float32(1.0), T.float32(0.0))
+                 if not late:
+                     for i, lane in T.Parallel(G, 4):
+                         lane_sum[i, lane] = 0.0

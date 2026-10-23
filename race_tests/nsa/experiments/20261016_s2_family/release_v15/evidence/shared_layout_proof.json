@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "module": "wave_output.py",
+  "sha256": "34319999657fe5dbcdf2f3ffad55a80499aa7f7c908547805b96560d15aace1c",
+  "proof_script_sha256": "32c2745c4b98ae72b4027ac0dcc2878f3132828c3b8497ebea5dd8ca25bc8a8f",
+  "scope": {
+    "groups": 16,
+    "dim": 64,
+    "selected_blocks": 2,
+    "block_size": 16,
+    "threads": 64
+  },
+  "expressions": {
+    "V_reg": "j * BK + d",
+    "K_reg": "j * BK + (d // 8 ^ j // KPHASE % KMAX) * 8 + d % 8",
+    "vb": "(ki * 16 + tid // 16 * 4 + e) * BK + (j * 16 + tid % 16)",
+    "kb": "(j * 16 + tid % 16) * BK + ((ki * 32 + tid // 16 * 8 + e) // 8 ^ (j * 16 + tid % 16) // KPHASE % KMAX) * 8 + (ki * 32 + tid // 16 * 8 + e) % 8"
+  },
+  "key_store_elements": 2048,
+  "value_store_elements": 2048,
+  "key_read_elements": 2048,
+  "value_read_elements": 2048,
+  "bijective": true,
+  "every_read_matches_producer": true,
+  "explicit_wave_barriers": 5,
+  "barrier_roles": [
+    "K write to K read",
+    "K reads before V overwrite",
+    "V write to V read",
+    "V reads before output reuse",
+    "Output shared write to global copy"
+  ],
+  "limitations": "Address enumeration proves manual K/V mappings; ordering is reviewed against the emitted source and explicit one-wave fences. This is not a dynamic race detector."
+}

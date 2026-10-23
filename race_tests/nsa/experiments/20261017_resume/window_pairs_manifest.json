@@ -1,0 +1,28 @@
+{
+  "parent_sha256": "900cf61225dbd2b86191ffe61b68baa49029ab3188c0c644d06b1dc866daac40",
+  "variants": [
+    {
+      "path": "window_pairs64.py",
+      "window": 64,
+      "sha256": "29cf3b2d43a50de0116cd12b45252f9bf10a7da4bafb38dcea550fc9b349e5ba"
+    },
+    {
+      "path": "window_pairs128.py",
+      "window": 128,
+      "sha256": "9679b749673e4a33afa79ef236c08cfbd583da73785d004fb376d2900948e243"
+    }
+  ],
+  "cpu_proof": {
+    "pattern_cases": 272,
+    "once_per_query": true,
+    "no_gaps_in_schedule": true,
+    "no_rank_collisions": true,
+    "guards_before_index_multiplication": true,
+    "capacity_bound": "sum ceil(count/2) <= min(WIN, floor((WIN + NB + 1)/2))"
+  },
+  "launches": 2,
+  "per_call_schedule": true,
+  "fp32_mma_and_denominator": true,
+  "arbitrary_input_order": true,
+  "original_builders_preserved": true
+}

@@ -1,0 +1,22 @@
+{
+  "file": "minimax_reciprocal.py",
+  "sha256": "2b402b692353c402b897dc88080ee7b53b1501bef5c48c6f3a40cdd976eda99b",
+  "parent_sha256": "49c5e4b40ba926ef0d9d687760a520306ccde4bc82b077907a5b3568b918b2ea",
+  "functions": [
+    "_coalesced_block_loads_prim_boundary_v8",
+    "_coalesced_block_loads_prim_fp32_mask",
+    "_coalesced_block_loads_prim_fp32_sum",
+    "_coalesced_block_loads_prim_oct8",
+    "native_sparse_attention_linear_v_blocks_oct8",
+    "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_q_preload",
+    "native_sparse_attention_short_list_oct8_sum_v11",
+    "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint",
+    "native_sparse_attention_staged_sparse_blocks_sum_v11"
+  ],
+  "expressions": 23,
+  "helper": "def _minimax_reciprocal_probe(value):\n    initial = T.reinterpret(\"float32\", T.uint32(2129867785) - T.reinterpret(\"uint32\", value))\n    return initial * (2.001281261444092 - value * initial)\n\n",
+  "end_to_end_tolerance_unchanged": true,
+  "status": "unvalidated numerical probe"
+}

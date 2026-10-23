@@ -1,0 +1,47 @@
+{
+  "command": [
+    "experiments/20261016_rsqrt/verify_math.py",
+    "--output",
+    "experiments/20261016_rsqrt/math.json"
+  ],
+  "inputs": 8755203,
+  "exhaustive_mantissa_exponent": 127,
+  "sampled_exponent_bits": [
+    1,
+    179
+  ],
+  "acceptance_bound": 1e-06,
+  "source_sha256": "1784dfd6c690e8f8eb93f3aee0172e0800b8b3d490fd571f2c1d654ab2bd49a6",
+  "generator_sha256": "a277f32a61a447bd43a4197d23d2714bf150671ca0b1cfaa83457bb94b55e672",
+  "note": "Positive normal FP32 denominators; original zero and negative guards; FP64 CPU reciprocal reference.",
+  "rows": [
+    {
+      "mode": "direct",
+      "passed": true,
+      "max_relative_error": 8.718519950434711e-08,
+      "central_max_relative_error": 8.718519950434711e-08,
+      "worst_input": 1.9687258005142212,
+      "worst_output": 0.507942795753479,
+      "device_source_sha256": "67b46b170b2f99946da5e6a774c30e897c3f730d851efdd1a8a62c4d398c6555"
+    },
+    {
+      "mode": "rsqrt",
+      "passed": true,
+      "max_relative_error": 2.053369883014966e-07,
+      "central_max_relative_error": 1.94234161199347e-07,
+      "worst_input": 8.459091992310899e-16,
+      "worst_output": 1182160220323840.0,
+      "device_source_sha256": "3faf53ae054c2c4bcf99e4c5e4ff806d4ae281df5cadd2acfca0dbc9eb8aa74b"
+    },
+    {
+      "mode": "ieee_rsqrt",
+      "passed": true,
+      "max_relative_error": 2.053369883014966e-07,
+      "central_max_relative_error": 1.94234161199347e-07,
+      "worst_input": 8.459091992310899e-16,
+      "worst_output": 1182160220323840.0,
+      "device_source_sha256": "e634e4425be5910a2f457b08198e1a71450eedf3dee2723c1889fad407099dbd"
+    }
+  ],
+  "status": "PASS"
+}

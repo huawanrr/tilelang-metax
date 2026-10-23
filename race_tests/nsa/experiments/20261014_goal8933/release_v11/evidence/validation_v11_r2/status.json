@@ -1,0 +1,53 @@
+{
+  "module": "/data/tilelang-metax/race_tests/nsa/experiments/20261014_goal8933/candidate_v11_submission.py",
+  "module_sha256": "e377f010cb26e22d4f7fe7c661f6fb2b427f6c51c9461d86af9e1586c7ba8799",
+  "baseline_sha256": "71dd44e50e32a83a3758f656cf5ffcd757acae853546d69a226ec185bb18df92",
+  "jobs": [
+    {
+      "name": "static",
+      "command": [
+        "/data/tilelang-metax/race_tests/nsa/check_submission_nsa.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_goal8933/candidate_v11_submission.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.7148895263671875
+    },
+    {
+      "name": "dispatch",
+      "command": [
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_goal8933/verify_dispatch_cpu.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_goal8933/candidate_v11_submission.py",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_goal8933/validation_v11_r2/dispatch.json"
+      ],
+      "exit_code": 0,
+      "seconds": 3.800316333770752
+    },
+    {
+      "name": "reference",
+      "command": [
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261002_mid_blocks/verify_reference.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_goal8933/candidate_v11_submission.py",
+        "--cases",
+        "all",
+        "--extras",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_goal8933/validation_v11_r2/reference.json"
+      ],
+      "exit_code": 0,
+      "seconds": 61.70208144187927
+    },
+    {
+      "name": "changed_families",
+      "command": [
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_goal8933/verify_changed_families.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_goal8933/candidate_v11_submission.py",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_goal8933/validation_v11_r2/changed_families.json"
+      ],
+      "exit_code": 1,
+      "seconds": 29.246964931488037
+    }
+  ],
+  "status": "FAILED"
+}

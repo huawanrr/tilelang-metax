@@ -1,0 +1,530 @@
+#include <tl_templates/maca/gemm.h>
+#include <tl_templates/maca/copy.h>
+#include <tl_templates/maca/reduce.h>
+#include <tl_templates/maca/intrin.h>
+#include <tl_templates/maca/atomic.h>
+#include <tl_templates/maca/threadblock_swizzle.h>
+#include <tl_templates/maca/debug.h>
+
+extern "C" __global__ void kernel_kernel(const int* __restrict__ BlockIndices, const half_t* __restrict__ K, half_t* __restrict__ Output, const half_t* __restrict__ Q, const half_t* __restrict__ V);
+extern "C" __global__ void __launch_bounds__(64, 1) kernel_kernel(const int* __restrict__ BlockIndices, const half_t* __restrict__ K, half_t* __restrict__ Output, const half_t* __restrict__ Q, const half_t* __restrict__ V) {
+  extern __shared__ __align__(1024) uchar buf_dyn_shmem[];
+  int indices[8];
+  half_t Q_reg[16];
+  float acc_o[16];
+  float acc_o_alt[16];
+  float sum_acc[4];
+  half_t K_reg[16];
+  half_t K_reg1[16];
+  half_t K_reg2[16];
+  half_t K_reg3[16];
+  half_t V_reg[16];
+  float acc_s[4];
+  half_t acc_s_cast[4];
+  float scores_sum[1];
+  float inv_sum[1];
+  half_t O_reg[16];
+  #pragma unroll
+  for (int si = 0; si < 8; ++si) {
+    int raw_index = BlockIndices[(((((int)blockIdx.x) * 8192) + (((int)blockIdx.z) * 8)) + si)];
+    indices[si] = (min(max(raw_index, -1), 64) * 16);
+  }
+  #pragma unroll
+  for (int i = 0; i < 2; ++i) {
+    *(uint4*)(Q_reg + (i * 8)) = *(uint4*)(Q + (((((((int)blockIdx.x) * 1048576) + (((int)blockIdx.z) * 1024)) + ((((int)threadIdx.x) & 15) * 64)) + (i * 32)) + ((((int)threadIdx.x) >> 4) * 8)));
+  }
+  #pragma unroll
+  for (int i_1 = 0; i_1 < 4; ++i_1) {
+    float broadcast_var = 0x0p+0f/*0.000000e+00*/;
+    *(float4*)(acc_o + (i_1 * 4)) = make_float4(broadcast_var, broadcast_var, broadcast_var, broadcast_var);
+  }
+  #pragma unroll
+  for (int i_2 = 0; i_2 < 4; ++i_2) {
+    float broadcast_var_1 = 0x0p+0f/*0.000000e+00*/;
+    *(float4*)(acc_o_alt + (i_2 * 4)) = make_float4(broadcast_var_1, broadcast_var_1, broadcast_var_1, broadcast_var_1);
+  }
+  float broadcast_var_2 = 0x0p+0f/*0.000000e+00*/;
+  *(float4*)(sum_acc + 0) = make_float4(broadcast_var_2, broadcast_var_2, broadcast_var_2, broadcast_var_2);
+  float neg_inf = -MACART_INF_F;
+  if ((((((((((((((((((((((((0 <= indices[0]) && (indices[0] <= 1008)) && ((indices[0] + 15) <= ((int)blockIdx.z))) && (0 <= indices[1])) && (indices[1] <= 1008)) && ((indices[1] + 15) <= ((int)blockIdx.z))) && (0 <= indices[2])) && (indices[2] <= 1008)) && ((indices[2] + 15) <= ((int)blockIdx.z))) && (0 <= indices[3])) && (indices[3] <= 1008)) && ((indices[3] + 15) <= ((int)blockIdx.z))) && (0 <= indices[4])) && (indices[4] <= 1008)) && ((indices[4] + 15) <= ((int)blockIdx.z))) && (0 <= indices[5])) && (indices[5] <= 1008)) && ((indices[5] + 15) <= ((int)blockIdx.z))) && (0 <= indices[6])) && (indices[6] <= 1008)) && ((indices[6] + 15) <= ((int)blockIdx.z))) && (0 <= indices[7])) && (indices[7] <= 1008)) && ((indices[7] + 15) <= ((int)blockIdx.z))) {
+    for (int group = 0; group < 2; ++group) {
+      int i_s0 = indices[(group * 4)];
+      int i_s1 = indices[((group * 4) + 1)];
+      int i_s2 = indices[((group * 4) + 2)];
+      int i_s3 = indices[((group * 4) + 3)];
+      #pragma unroll
+      for (int i_3 = 0; i_3 < 2; ++i_3) {
+        half_t broadcast_var_3 = half_t(0x0p+0f/*0.000000e+00*/);
+        uint4 condval;
+        if (((0 <= i_s0) && (i_s0 < 1024))) {
+          condval = *(uint4*)(K + ((((((int64_t)((int)blockIdx.x)) * (int64_t)65536) + ((((int64_t)i_s0) >> (int64_t)4) * (int64_t)1024)) + (((int64_t)i_3) * (int64_t)512)) + (((int64_t)((int)threadIdx.x)) * (int64_t)8)));
+        } else {
+          condval = make_uint4(__pack_half2(broadcast_var_3, broadcast_var_3), __pack_half2(broadcast_var_3, broadcast_var_3), __pack_half2(broadcast_var_3, broadcast_var_3), __pack_half2(broadcast_var_3, broadcast_var_3));
+        }
+        *(uint4*)(K_reg + (i_3 * 8)) = condval;
+      }
+      #pragma unroll
+      for (int i_4 = 0; i_4 < 2; ++i_4) {
+        half_t broadcast_var_4 = half_t(0x0p+0f/*0.000000e+00*/);
+        uint4 condval_1;
+        if (((0 <= i_s1) && (i_s1 < 1024))) {
+          condval_1 = *(uint4*)(K + ((((((int64_t)((int)blockIdx.x)) * (int64_t)65536) + ((((int64_t)i_s1) >> (int64_t)4) * (int64_t)1024)) + (((int64_t)i_4) * (int64_t)512)) + (((int64_t)((int)threadIdx.x)) * (int64_t)8)));
+        } else {
+          condval_1 = make_uint4(__pack_half2(broadcast_var_4, broadcast_var_4), __pack_half2(broadcast_var_4, broadcast_var_4), __pack_half2(broadcast_var_4, broadcast_var_4), __pack_half2(broadcast_var_4, broadcast_var_4));
+        }
+        *(uint4*)(K_reg1 + (i_4 * 8)) = condval_1;
+      }
+      #pragma unroll
+      for (int i_5 = 0; i_5 < 2; ++i_5) {
+        half_t broadcast_var_5 = half_t(0x0p+0f/*0.000000e+00*/);
+        uint4 condval_2;
+        if (((0 <= i_s2) && (i_s2 < 1024))) {
+          condval_2 = *(uint4*)(K + ((((((int64_t)((int)blockIdx.x)) * (int64_t)65536) + ((((int64_t)i_s2) >> (int64_t)4) * (int64_t)1024)) + (((int64_t)i_5) * (int64_t)512)) + (((int64_t)((int)threadIdx.x)) * (int64_t)8)));
+        } else {
+          condval_2 = make_uint4(__pack_half2(broadcast_var_5, broadcast_var_5), __pack_half2(broadcast_var_5, broadcast_var_5), __pack_half2(broadcast_var_5, broadcast_var_5), __pack_half2(broadcast_var_5, broadcast_var_5));
+        }
+        *(uint4*)(K_reg2 + (i_5 * 8)) = condval_2;
+      }
+      #pragma unroll
+      for (int i_6 = 0; i_6 < 2; ++i_6) {
+        half_t broadcast_var_6 = half_t(0x0p+0f/*0.000000e+00*/);
+        uint4 condval_3;
+        if (((0 <= i_s3) && (i_s3 < 1024))) {
+          condval_3 = *(uint4*)(K + ((((((int64_t)((int)blockIdx.x)) * (int64_t)65536) + ((((int64_t)i_s3) >> (int64_t)4) * (int64_t)1024)) + (((int64_t)i_6) * (int64_t)512)) + (((int64_t)((int)threadIdx.x)) * (int64_t)8)));
+        } else {
+          condval_3 = make_uint4(__pack_half2(broadcast_var_6, broadcast_var_6), __pack_half2(broadcast_var_6, broadcast_var_6), __pack_half2(broadcast_var_6, broadcast_var_6), __pack_half2(broadcast_var_6, broadcast_var_6));
+        }
+        *(uint4*)(K_reg3 + (i_6 * 8)) = condval_3;
+      }
+      #pragma unroll
+      for (int i_7 = 0; i_7 < 2; ++i_7) {
+        half_t broadcast_var_7 = half_t(0x0p+0f/*0.000000e+00*/);
+        uint4 condval_4;
+        if (((0 <= i_s0) && (i_s0 < 1024))) {
+          condval_4 = *(uint4*)(V + ((((((int64_t)((int)blockIdx.x)) * (int64_t)65536) + ((((int64_t)i_s0) >> (int64_t)4) * (int64_t)1024)) + (((int64_t)i_7) * (int64_t)512)) + (((int64_t)((int)threadIdx.x)) * (int64_t)8)));
+        } else {
+          condval_4 = make_uint4(__pack_half2(broadcast_var_7, broadcast_var_7), __pack_half2(broadcast_var_7, broadcast_var_7), __pack_half2(broadcast_var_7, broadcast_var_7), __pack_half2(broadcast_var_7, broadcast_var_7));
+        }
+        *(uint4*)(V_reg + (i_7 * 8)) = condval_4;
+      }
+      float broadcast_var_8 = 0x0p+0f/*0.000000e+00*/;
+      *(float4*)(acc_s + 0) = make_float4(broadcast_var_8, broadcast_var_8, broadcast_var_8, broadcast_var_8);
+      for (int ki = 0; ki < 2; ++ki) {
+        for (int kp = 0; kp < 2; ++kp) {
+          {
+      *(((float32x4*)acc_s) + 0) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)K_reg) + ((ki * 2) + kp)),
+                    *(((float16x4*)Q_reg) + ((ki * 2) + kp)),
+                    *(((float32x4*)acc_s) + 0));
+    };
+        }
+      }
+      #pragma unroll
+      for (int i_8 = 0; i_8 < 4; ++i_8) {
+        acc_s[i_8] = expf(min((acc_s[i_8] * 0x1.999999955d99cp-4f/*1.000000e-01*/), 0x1.4cb5ecf0a965p+3f/*1.039721e+01*/));
+      }
+      #pragma unroll
+      for (int i_9 = 0; i_9 < 4; ++i_9) {
+        sum_acc[i_9] = (sum_acc[i_9] + acc_s[i_9]);
+      }
+      #pragma unroll
+      for (int cast_lane = 0; cast_lane < 4; ++cast_lane) {
+        acc_s_cast[cast_lane] = ((half_t)acc_s[cast_lane]);
+      }
+      for (int j = 0; j < 4; ++j) {
+        {
+      *(((float32x4*)acc_o) + j) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)V_reg) + j),
+                    *(((float16x4*)acc_s_cast) + 0),
+                    *(((float32x4*)acc_o) + j));
+    };
+      }
+      #pragma unroll
+      for (int i_10 = 0; i_10 < 2; ++i_10) {
+        half_t broadcast_var_9 = half_t(0x0p+0f/*0.000000e+00*/);
+        uint4 condval_5;
+        if (((0 <= i_s1) && (i_s1 < 1024))) {
+          condval_5 = *(uint4*)(V + ((((((int64_t)((int)blockIdx.x)) * (int64_t)65536) + ((((int64_t)i_s1) >> (int64_t)4) * (int64_t)1024)) + (((int64_t)i_10) * (int64_t)512)) + (((int64_t)((int)threadIdx.x)) * (int64_t)8)));
+        } else {
+          condval_5 = make_uint4(__pack_half2(broadcast_var_9, broadcast_var_9), __pack_half2(broadcast_var_9, broadcast_var_9), __pack_half2(broadcast_var_9, broadcast_var_9), __pack_half2(broadcast_var_9, broadcast_var_9));
+        }
+        *(uint4*)(V_reg + (i_10 * 8)) = condval_5;
+      }
+      float broadcast_var_10 = 0x0p+0f/*0.000000e+00*/;
+      *(float4*)(acc_s + 0) = make_float4(broadcast_var_10, broadcast_var_10, broadcast_var_10, broadcast_var_10);
+      for (int ki_1 = 0; ki_1 < 2; ++ki_1) {
+        for (int kp_1 = 0; kp_1 < 2; ++kp_1) {
+          {
+      *(((float32x4*)acc_s) + 0) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)K_reg1) + ((ki_1 * 2) + kp_1)),
+                    *(((float16x4*)Q_reg) + ((ki_1 * 2) + kp_1)),
+                    *(((float32x4*)acc_s) + 0));
+    };
+        }
+      }
+      #pragma unroll
+      for (int i_11 = 0; i_11 < 4; ++i_11) {
+        acc_s[i_11] = expf(min((acc_s[i_11] * 0x1.999999955d99cp-4f/*1.000000e-01*/), 0x1.4cb5ecf0a965p+3f/*1.039721e+01*/));
+      }
+      #pragma unroll
+      for (int i_12 = 0; i_12 < 4; ++i_12) {
+        sum_acc[i_12] = (sum_acc[i_12] + acc_s[i_12]);
+      }
+      #pragma unroll
+      for (int cast_lane_1 = 0; cast_lane_1 < 4; ++cast_lane_1) {
+        acc_s_cast[cast_lane_1] = ((half_t)acc_s[cast_lane_1]);
+      }
+      for (int j_1 = 0; j_1 < 4; ++j_1) {
+        {
+      *(((float32x4*)acc_o_alt) + j_1) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)V_reg) + j_1),
+                    *(((float16x4*)acc_s_cast) + 0),
+                    *(((float32x4*)acc_o_alt) + j_1));
+    };
+      }
+      #pragma unroll
+      for (int i_13 = 0; i_13 < 2; ++i_13) {
+        half_t broadcast_var_11 = half_t(0x0p+0f/*0.000000e+00*/);
+        uint4 condval_6;
+        if (((0 <= i_s2) && (i_s2 < 1024))) {
+          condval_6 = *(uint4*)(V + ((((((int64_t)((int)blockIdx.x)) * (int64_t)65536) + ((((int64_t)i_s2) >> (int64_t)4) * (int64_t)1024)) + (((int64_t)i_13) * (int64_t)512)) + (((int64_t)((int)threadIdx.x)) * (int64_t)8)));
+        } else {
+          condval_6 = make_uint4(__pack_half2(broadcast_var_11, broadcast_var_11), __pack_half2(broadcast_var_11, broadcast_var_11), __pack_half2(broadcast_var_11, broadcast_var_11), __pack_half2(broadcast_var_11, broadcast_var_11));
+        }
+        *(uint4*)(V_reg + (i_13 * 8)) = condval_6;
+      }
+      float broadcast_var_12 = 0x0p+0f/*0.000000e+00*/;
+      *(float4*)(acc_s + 0) = make_float4(broadcast_var_12, broadcast_var_12, broadcast_var_12, broadcast_var_12);
+      for (int ki_2 = 0; ki_2 < 2; ++ki_2) {
+        for (int kp_2 = 0; kp_2 < 2; ++kp_2) {
+          {
+      *(((float32x4*)acc_s) + 0) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)K_reg2) + ((ki_2 * 2) + kp_2)),
+                    *(((float16x4*)Q_reg) + ((ki_2 * 2) + kp_2)),
+                    *(((float32x4*)acc_s) + 0));
+    };
+        }
+      }
+      #pragma unroll
+      for (int i_14 = 0; i_14 < 4; ++i_14) {
+        acc_s[i_14] = expf(min((acc_s[i_14] * 0x1.999999955d99cp-4f/*1.000000e-01*/), 0x1.4cb5ecf0a965p+3f/*1.039721e+01*/));
+      }
+      #pragma unroll
+      for (int i_15 = 0; i_15 < 4; ++i_15) {
+        sum_acc[i_15] = (sum_acc[i_15] + acc_s[i_15]);
+      }
+      #pragma unroll
+      for (int cast_lane_2 = 0; cast_lane_2 < 4; ++cast_lane_2) {
+        acc_s_cast[cast_lane_2] = ((half_t)acc_s[cast_lane_2]);
+      }
+      for (int j_2 = 0; j_2 < 4; ++j_2) {
+        {
+      *(((float32x4*)acc_o) + j_2) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)V_reg) + j_2),
+                    *(((float16x4*)acc_s_cast) + 0),
+                    *(((float32x4*)acc_o) + j_2));
+    };
+      }
+      #pragma unroll
+      for (int i_16 = 0; i_16 < 2; ++i_16) {
+        half_t broadcast_var_13 = half_t(0x0p+0f/*0.000000e+00*/);
+        uint4 condval_7;
+        if (((0 <= i_s3) && (i_s3 < 1024))) {
+          condval_7 = *(uint4*)(V + ((((((int64_t)((int)blockIdx.x)) * (int64_t)65536) + ((((int64_t)i_s3) >> (int64_t)4) * (int64_t)1024)) + (((int64_t)i_16) * (int64_t)512)) + (((int64_t)((int)threadIdx.x)) * (int64_t)8)));
+        } else {
+          condval_7 = make_uint4(__pack_half2(broadcast_var_13, broadcast_var_13), __pack_half2(broadcast_var_13, broadcast_var_13), __pack_half2(broadcast_var_13, broadcast_var_13), __pack_half2(broadcast_var_13, broadcast_var_13));
+        }
+        *(uint4*)(V_reg + (i_16 * 8)) = condval_7;
+      }
+      float broadcast_var_14 = 0x0p+0f/*0.000000e+00*/;
+      *(float4*)(acc_s + 0) = make_float4(broadcast_var_14, broadcast_var_14, broadcast_var_14, broadcast_var_14);
+      for (int ki_3 = 0; ki_3 < 2; ++ki_3) {
+        for (int kp_3 = 0; kp_3 < 2; ++kp_3) {
+          {
+      *(((float32x4*)acc_s) + 0) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)K_reg3) + ((ki_3 * 2) + kp_3)),
+                    *(((float16x4*)Q_reg) + ((ki_3 * 2) + kp_3)),
+                    *(((float32x4*)acc_s) + 0));
+    };
+        }
+      }
+      #pragma unroll
+      for (int i_17 = 0; i_17 < 4; ++i_17) {
+        acc_s[i_17] = expf(min((acc_s[i_17] * 0x1.999999955d99cp-4f/*1.000000e-01*/), 0x1.4cb5ecf0a965p+3f/*1.039721e+01*/));
+      }
+      #pragma unroll
+      for (int i_18 = 0; i_18 < 4; ++i_18) {
+        sum_acc[i_18] = (sum_acc[i_18] + acc_s[i_18]);
+      }
+      #pragma unroll
+      for (int cast_lane_3 = 0; cast_lane_3 < 4; ++cast_lane_3) {
+        acc_s_cast[cast_lane_3] = ((half_t)acc_s[cast_lane_3]);
+      }
+      for (int j_3 = 0; j_3 < 4; ++j_3) {
+        {
+      *(((float32x4*)acc_o_alt) + j_3) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)V_reg) + j_3),
+                    *(((float16x4*)acc_s_cast) + 0),
+                    *(((float32x4*)acc_o_alt) + j_3));
+    };
+      }
+    }
+  } else {
+    for (int group_1 = 0; group_1 < 2; ++group_1) {
+      int i_s0_1 = indices[(group_1 * 4)];
+      int i_s1_1 = indices[((group_1 * 4) + 1)];
+      int i_s2_1 = indices[((group_1 * 4) + 2)];
+      int i_s3_1 = indices[((group_1 * 4) + 3)];
+      if (((0 <= i_s0_1) && (i_s0_1 < 1024)) && (i_s0_1 <= ((int)blockIdx.z))) {
+        #pragma unroll
+        for (int i_19 = 0; i_19 < 2; ++i_19) {
+          *(uint4*)(K_reg + (i_19 * 8)) = *(uint4*)(K + ((((((int)blockIdx.x) * 65536) + ((i_s0_1 >> 4) * 1024)) + (i_19 * 512)) + (((int)threadIdx.x) * 8)));
+        }
+      }
+      if (((0 <= i_s1_1) && (i_s1_1 < 1024)) && (i_s1_1 <= ((int)blockIdx.z))) {
+        #pragma unroll
+        for (int i_20 = 0; i_20 < 2; ++i_20) {
+          *(uint4*)(K_reg1 + (i_20 * 8)) = *(uint4*)(K + ((((((int)blockIdx.x) * 65536) + ((i_s1_1 >> 4) * 1024)) + (i_20 * 512)) + (((int)threadIdx.x) * 8)));
+        }
+      }
+      if (((0 <= i_s2_1) && (i_s2_1 < 1024)) && (i_s2_1 <= ((int)blockIdx.z))) {
+        #pragma unroll
+        for (int i_21 = 0; i_21 < 2; ++i_21) {
+          *(uint4*)(K_reg2 + (i_21 * 8)) = *(uint4*)(K + ((((((int)blockIdx.x) * 65536) + ((i_s2_1 >> 4) * 1024)) + (i_21 * 512)) + (((int)threadIdx.x) * 8)));
+        }
+      }
+      if (((0 <= i_s3_1) && (i_s3_1 < 1024)) && (i_s3_1 <= ((int)blockIdx.z))) {
+        #pragma unroll
+        for (int i_22 = 0; i_22 < 2; ++i_22) {
+          *(uint4*)(K_reg3 + (i_22 * 8)) = *(uint4*)(K + ((((((int)blockIdx.x) * 65536) + ((i_s3_1 >> 4) * 1024)) + (i_22 * 512)) + (((int)threadIdx.x) * 8)));
+        }
+      }
+      if (((0 <= i_s0_1) && (i_s0_1 < 1024)) && (i_s0_1 <= ((int)blockIdx.z))) {
+        #pragma unroll
+        for (int i_23 = 0; i_23 < 2; ++i_23) {
+          *(uint4*)(V_reg + (i_23 * 8)) = *(uint4*)(V + ((((((int)blockIdx.x) * 65536) + ((i_s0_1 >> 4) * 1024)) + (i_23 * 512)) + (((int)threadIdx.x) * 8)));
+        }
+        if (((int)blockIdx.z) < (i_s0_1 + 15)) {
+          #pragma unroll
+          for (int i_24 = 0; i_24 < 4; ++i_24) {
+            float condval_8;
+            if ((((((((int)threadIdx.x) >> 4) * 4) + i_s0_1) + i_24) <= ((int)blockIdx.z))) {
+              condval_8 = 0x0p+0f/*0.000000e+00*/;
+            } else {
+              condval_8 = neg_inf;
+            }
+            acc_s[i_24] = condval_8;
+          }
+        } else {
+          float broadcast_var_15 = 0x0p+0f/*0.000000e+00*/;
+          *(float4*)(acc_s + 0) = make_float4(broadcast_var_15, broadcast_var_15, broadcast_var_15, broadcast_var_15);
+        }
+        for (int ki_4 = 0; ki_4 < 2; ++ki_4) {
+          for (int kp_4 = 0; kp_4 < 2; ++kp_4) {
+            {
+      *(((float32x4*)acc_s) + 0) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)K_reg) + ((ki_4 * 2) + kp_4)),
+                    *(((float16x4*)Q_reg) + ((ki_4 * 2) + kp_4)),
+                    *(((float32x4*)acc_s) + 0));
+    };
+          }
+        }
+        #pragma unroll
+        for (int i_25 = 0; i_25 < 4; ++i_25) {
+          acc_s[i_25] = expf(min((acc_s[i_25] * 0x1.999999955d99cp-4f/*1.000000e-01*/), 0x1.4cb5ecf0a965p+3f/*1.039721e+01*/));
+        }
+        #pragma unroll
+        for (int i_26 = 0; i_26 < 4; ++i_26) {
+          sum_acc[i_26] = (sum_acc[i_26] + acc_s[i_26]);
+        }
+        #pragma unroll
+        for (int cast_lane_4 = 0; cast_lane_4 < 4; ++cast_lane_4) {
+          acc_s_cast[cast_lane_4] = ((half_t)acc_s[cast_lane_4]);
+        }
+        for (int j_4 = 0; j_4 < 4; ++j_4) {
+          {
+      *(((float32x4*)acc_o) + j_4) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)V_reg) + j_4),
+                    *(((float16x4*)acc_s_cast) + 0),
+                    *(((float32x4*)acc_o) + j_4));
+    };
+        }
+      }
+      if (((0 <= i_s1_1) && (i_s1_1 < 1024)) && (i_s1_1 <= ((int)blockIdx.z))) {
+        #pragma unroll
+        for (int i_27 = 0; i_27 < 2; ++i_27) {
+          *(uint4*)(V_reg + (i_27 * 8)) = *(uint4*)(V + ((((((int)blockIdx.x) * 65536) + ((i_s1_1 >> 4) * 1024)) + (i_27 * 512)) + (((int)threadIdx.x) * 8)));
+        }
+        if (((int)blockIdx.z) < (i_s1_1 + 15)) {
+          #pragma unroll
+          for (int i_28 = 0; i_28 < 4; ++i_28) {
+            float condval_9;
+            if ((((((((int)threadIdx.x) >> 4) * 4) + i_s1_1) + i_28) <= ((int)blockIdx.z))) {
+              condval_9 = 0x0p+0f/*0.000000e+00*/;
+            } else {
+              condval_9 = neg_inf;
+            }
+            acc_s[i_28] = condval_9;
+          }
+        } else {
+          float broadcast_var_16 = 0x0p+0f/*0.000000e+00*/;
+          *(float4*)(acc_s + 0) = make_float4(broadcast_var_16, broadcast_var_16, broadcast_var_16, broadcast_var_16);
+        }
+        for (int ki_5 = 0; ki_5 < 2; ++ki_5) {
+          for (int kp_5 = 0; kp_5 < 2; ++kp_5) {
+            {
+      *(((float32x4*)acc_s) + 0) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)K_reg1) + ((ki_5 * 2) + kp_5)),
+                    *(((float16x4*)Q_reg) + ((ki_5 * 2) + kp_5)),
+                    *(((float32x4*)acc_s) + 0));
+    };
+          }
+        }
+        #pragma unroll
+        for (int i_29 = 0; i_29 < 4; ++i_29) {
+          acc_s[i_29] = expf(min((acc_s[i_29] * 0x1.999999955d99cp-4f/*1.000000e-01*/), 0x1.4cb5ecf0a965p+3f/*1.039721e+01*/));
+        }
+        #pragma unroll
+        for (int i_30 = 0; i_30 < 4; ++i_30) {
+          sum_acc[i_30] = (sum_acc[i_30] + acc_s[i_30]);
+        }
+        #pragma unroll
+        for (int cast_lane_5 = 0; cast_lane_5 < 4; ++cast_lane_5) {
+          acc_s_cast[cast_lane_5] = ((half_t)acc_s[cast_lane_5]);
+        }
+        for (int j_5 = 0; j_5 < 4; ++j_5) {
+          {
+      *(((float32x4*)acc_o_alt) + j_5) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)V_reg) + j_5),
+                    *(((float16x4*)acc_s_cast) + 0),
+                    *(((float32x4*)acc_o_alt) + j_5));
+    };
+        }
+      }
+      if (((0 <= i_s2_1) && (i_s2_1 < 1024)) && (i_s2_1 <= ((int)blockIdx.z))) {
+        #pragma unroll
+        for (int i_31 = 0; i_31 < 2; ++i_31) {
+          *(uint4*)(V_reg + (i_31 * 8)) = *(uint4*)(V + ((((((int)blockIdx.x) * 65536) + ((i_s2_1 >> 4) * 1024)) + (i_31 * 512)) + (((int)threadIdx.x) * 8)));
+        }
+        if (((int)blockIdx.z) < (i_s2_1 + 15)) {
+          #pragma unroll
+          for (int i_32 = 0; i_32 < 4; ++i_32) {
+            float condval_10;
+            if ((((((((int)threadIdx.x) >> 4) * 4) + i_s2_1) + i_32) <= ((int)blockIdx.z))) {
+              condval_10 = 0x0p+0f/*0.000000e+00*/;
+            } else {
+              condval_10 = neg_inf;
+            }
+            acc_s[i_32] = condval_10;
+          }
+        } else {
+          float broadcast_var_17 = 0x0p+0f/*0.000000e+00*/;
+          *(float4*)(acc_s + 0) = make_float4(broadcast_var_17, broadcast_var_17, broadcast_var_17, broadcast_var_17);
+        }
+        for (int ki_6 = 0; ki_6 < 2; ++ki_6) {
+          for (int kp_6 = 0; kp_6 < 2; ++kp_6) {
+            {
+      *(((float32x4*)acc_s) + 0) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)K_reg2) + ((ki_6 * 2) + kp_6)),
+                    *(((float16x4*)Q_reg) + ((ki_6 * 2) + kp_6)),
+                    *(((float32x4*)acc_s) + 0));
+    };
+          }
+        }
+        #pragma unroll
+        for (int i_33 = 0; i_33 < 4; ++i_33) {
+          acc_s[i_33] = expf(min((acc_s[i_33] * 0x1.999999955d99cp-4f/*1.000000e-01*/), 0x1.4cb5ecf0a965p+3f/*1.039721e+01*/));
+        }
+        #pragma unroll
+        for (int i_34 = 0; i_34 < 4; ++i_34) {
+          sum_acc[i_34] = (sum_acc[i_34] + acc_s[i_34]);
+        }
+        #pragma unroll
+        for (int cast_lane_6 = 0; cast_lane_6 < 4; ++cast_lane_6) {
+          acc_s_cast[cast_lane_6] = ((half_t)acc_s[cast_lane_6]);
+        }
+        for (int j_6 = 0; j_6 < 4; ++j_6) {
+          {
+      *(((float32x4*)acc_o) + j_6) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)V_reg) + j_6),
+                    *(((float16x4*)acc_s_cast) + 0),
+                    *(((float32x4*)acc_o) + j_6));
+    };
+        }
+      }
+      if (((0 <= i_s3_1) && (i_s3_1 < 1024)) && (i_s3_1 <= ((int)blockIdx.z))) {
+        #pragma unroll
+        for (int i_35 = 0; i_35 < 2; ++i_35) {
+          *(uint4*)(V_reg + (i_35 * 8)) = *(uint4*)(V + ((((((int)blockIdx.x) * 65536) + ((i_s3_1 >> 4) * 1024)) + (i_35 * 512)) + (((int)threadIdx.x) * 8)));
+        }
+        if (((int)blockIdx.z) < (i_s3_1 + 15)) {
+          #pragma unroll
+          for (int i_36 = 0; i_36 < 4; ++i_36) {
+            float condval_11;
+            if ((((((((int)threadIdx.x) >> 4) * 4) + i_s3_1) + i_36) <= ((int)blockIdx.z))) {
+              condval_11 = 0x0p+0f/*0.000000e+00*/;
+            } else {
+              condval_11 = neg_inf;
+            }
+            acc_s[i_36] = condval_11;
+          }
+        } else {
+          float broadcast_var_18 = 0x0p+0f/*0.000000e+00*/;
+          *(float4*)(acc_s + 0) = make_float4(broadcast_var_18, broadcast_var_18, broadcast_var_18, broadcast_var_18);
+        }
+        for (int ki_7 = 0; ki_7 < 2; ++ki_7) {
+          for (int kp_7 = 0; kp_7 < 2; ++kp_7) {
+            {
+      *(((float32x4*)acc_s) + 0) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)K_reg3) + ((ki_7 * 2) + kp_7)),
+                    *(((float16x4*)Q_reg) + ((ki_7 * 2) + kp_7)),
+                    *(((float32x4*)acc_s) + 0));
+    };
+          }
+        }
+        #pragma unroll
+        for (int i_37 = 0; i_37 < 4; ++i_37) {
+          acc_s[i_37] = expf(min((acc_s[i_37] * 0x1.999999955d99cp-4f/*1.000000e-01*/), 0x1.4cb5ecf0a965p+3f/*1.039721e+01*/));
+        }
+        #pragma unroll
+        for (int i_38 = 0; i_38 < 4; ++i_38) {
+          sum_acc[i_38] = (sum_acc[i_38] + acc_s[i_38]);
+        }
+        #pragma unroll
+        for (int cast_lane_7 = 0; cast_lane_7 < 4; ++cast_lane_7) {
+          acc_s_cast[cast_lane_7] = ((half_t)acc_s[cast_lane_7]);
+        }
+        for (int j_7 = 0; j_7 < 4; ++j_7) {
+          {
+      *(((float32x4*)acc_o_alt) + j_7) = __builtin_mxc_mma_16x16x16f16(*(((float16x4*)V_reg) + j_7),
+                    *(((float16x4*)acc_s_cast) + 0),
+                    *(((float32x4*)acc_o_alt) + j_7));
+    };
+        }
+      }
+    }
+  }
+  #pragma unroll
+  for (int i_39 = 0; i_39 < 16; ++i_39) {
+    acc_o[i_39] = (acc_o[i_39] + acc_o_alt[i_39]);
+  }
+  scores_sum[0] = 0x0p+0f/*0.000000e+00*/;
+  #pragma unroll
+  for (int rv = 0; rv < 4; ++rv) {
+    scores_sum[0] = (scores_sum[0] + sum_acc[rv]);
+  }
+  scores_sum[0] = tl::AllReduce<tl::SumOp, 64, 16, 0>::run(scores_sum[0], (&(((float*)buf_dyn_shmem)[0])));
+  float condval_12;
+  if ((0x0p+0f/*0.000000e+00*/ < scores_sum[0])) {
+    condval_12 = (0x1p+0f/*1.000000e+00*/ / scores_sum[0]);
+  } else {
+    condval_12 = 0x0p+0f/*0.000000e+00*/;
+  }
+  inv_sum[0] = condval_12;
+  #pragma unroll
+  for (int i_40 = 0; i_40 < 16; ++i_40) {
+    acc_o[i_40] = (acc_o[i_40] * inv_sum[0]);
+  }
+  #pragma unroll
+  for (int cast_chunk = 0; cast_chunk < 4; ++cast_chunk) {
+    #pragma unroll
+    for (int cast_lane_8 = 0; cast_lane_8 < 4; ++cast_lane_8) {
+      O_reg[((cast_chunk * 4) + cast_lane_8)] = ((half_t)acc_o[((cast_chunk * 4) + cast_lane_8)]);
+    }
+  }
+  #pragma unroll
+  for (int i_41 = 0; i_41 < 4; ++i_41) {
+    *(uint2*)(((half_t*)buf_dyn_shmem) + ((((((int)threadIdx.x) & 15) * 64) + ((((i_41 * 2) + (((int)threadIdx.x) >> 5)) ^ (((int)threadIdx.x) & 7)) * 8)) + (((((int)threadIdx.x) & 31) >> 4) * 4))) = *(uint2*)(O_reg + (i_41 * 4));
+  }
+  __syncwarp();
+  #pragma unroll
+  for (int i_42 = 0; i_42 < 2; ++i_42) {
+    *(uint4*)(Output + ((((((int)blockIdx.x) * 1048576) + (((int)blockIdx.z) * 1024)) + (i_42 * 512)) + (((int)threadIdx.x) * 8))) = *(uint4*)(((half_t*)buf_dyn_shmem) + (((i_42 * 512) + ((((int)threadIdx.x) >> 3) * 64)) + (((((int)threadIdx.x) & 7) ^ (((int)threadIdx.x) >> 3)) * 8)));
+  }
+}
+

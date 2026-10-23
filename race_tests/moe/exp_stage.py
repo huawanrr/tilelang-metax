@@ -27,6 +27,12 @@ NOSAFE_PASS[tilelang.PassConfigKey.TL_DISABLE_SAFE_MEMORY_ACCESS] = True
 POLICIES = tm.POLICIES
 
 
+def _mma_layout(buf, vec_size):
+    if not vec_size:
+        return None
+    return tilelang.maca.intrinsics.make_mma_swizzle_layout(buf, vecSize=vec_size)
+
+
 def build_stage1(cfg, shape):
     """Stage 1 with a selectable epilogue path.
 
@@ -76,6 +82,11 @@ def build_stage1(cfg, shape):
             up_s = gate_s if one_buf else T.alloc_shared((bn, bk), dtype=dtype)
             gate_l = T.alloc_fragment((bm, bn), dtype=accum)
             up_l = T.alloc_fragment((bm, bn), dtype=accum)
+            if cfg.get("layout_a", 0) or cfg.get("layout_b", 0):
+                T.annotate_layout({
+                    **({a_s: _mma_layout(a_s, cfg["layout_a"])} if cfg.get("layout_a", 0) else {}),
+                    **({gate_s: _mma_layout(gate_s, cfg["layout_b"])} if cfg.get("layout_b", 0) else {}),
+                })
             if cfg["prefetch_a"]:
                 # Fixed to the shipped 128x64/512-thread copy mapping: two
                 # 16-byte vectors per thread cover the complete A tile.
@@ -279,6 +290,11 @@ def build_stage2(cfg, shape):
             a_s = (T.alloc_shared if cfg["a_shared"] else T.alloc_fragment)((bm, bk), dtype=dtype)
             down_s = T.alloc_shared((bn, bk), dtype=dtype)
             out_l = T.alloc_fragment((bm, bn), dtype=accum)
+            if cfg.get("layout_a", 0) or cfg.get("layout_b", 0):
+                T.annotate_layout({
+                    **({a_s: _mma_layout(a_s, cfg["layout_a"])} if cfg.get("layout_a", 0) else {}),
+                    **({down_s: _mma_layout(down_s, cfg["layout_b"])} if cfg.get("layout_b", 0) else {}),
+                })
             if pair >= 2:
                 out_l2 = T.alloc_fragment((bm, bn), dtype=accum)
             else:
@@ -520,13 +536,13 @@ def _emitter(bm, bn, bk, threads, dtype, accum, k_pack=2):
     what `T.gemm` picks for the same shape -- so anything else returns None and the
     caller falls back to the two-`T.gemm` form.
     """
-    if (bm, bn, threads) != (128, 128, 512):
+    if (bm, bn) != (128, 128) or threads not in (256, 512):
         return None
     mod = _reach(tilelang, "maca.intrinsics.macro.mma_macro_generator")
     Emitter = getattr(mod, "TensorCoreIntrinEmitter", None) if mod else None
     if Emitter is None:
         return None
-    m_warp, n_warp = 4, 2
+    m_warp, n_warp = (2, 2) if threads == 256 else (4, 2)
     em = Emitter(
         a_dtype=dtype, b_dtype=dtype, accum_dtype=accum,
         a_transposed=False, b_transposed=True,
@@ -592,8 +608,8 @@ def build_stage1_fused(cfg, shape):
             # row-major tile (bank conflicts) and the epilogue reads the accumulator
             # with a layout the MMA never wrote.
             T.annotate_layout({
-                a_s: swizzled(a_s),
-                w_s: swizzled(w_s),
+                a_s: (_mma_layout(a_s, cfg["layout_a"]) if cfg.get("layout_a") else swizzled(a_s)),
+                w_s: (_mma_layout(w_s, cfg["layout_b"]) if cfg.get("layout_b") else swizzled(w_s)),
                 gate_l: em.make_mma_store_layout(gate_l),
                 up_l: em.make_mma_store_layout(up_l),
             })
@@ -673,6 +689,8 @@ DEFAULT = {
     "a_frag": False, "fused_a": False, "evict": "", "accum16": False,
     "prefetch_a": False, "route_f16": False, "route_pred": False,
     "fastmath": False, "e0": False, "a0": False,
+    "layout_vec": 0,
+    "layout_a": 0, "layout_b": 0,
 }
 
 
@@ -702,6 +720,12 @@ def variants(stage):
     add("t256_row", policy="row")
     add("t256_col", policy="col")
     add("kpack2", k_pack=2)
+    add("mma_vec4", layout_a=4, layout_b=4)
+    add("mma_vec8", layout_a=8, layout_b=8)
+    add("mma_a4", layout_a=4)
+    add("mma_b4", layout_b=4)
+    add("mma_a2b4", layout_a=2, layout_b=4)
+    add("mma_a4b2", layout_a=4, layout_b=2)
     add("kpack2_bk128", k_pack=2, block_k=128)
     add("kpack4_bk128", k_pack=4, block_k=128)
     add("t128_kpack2", threads=128, k_pack=2)

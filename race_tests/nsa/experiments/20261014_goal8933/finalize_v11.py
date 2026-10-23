@@ -1,4 +1,6 @@
 """Freeze the validated v11 candidate, raw evidence, and reproducible checks."""
+import argparse
+import ast
 import hashlib
 import json
 from pathlib import Path
@@ -99,3 +101,97 @@ race/bounds 检查未禁用，编译参数保持。
 输入、参考、测试工具和原始正负证据均已随包保留。
 需要提交本文件并取得官方总分及分项耗时，才能确认 89.33 是否达到。
 '''
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--summary", required=True)
+    parser.add_argument("--output-dir", default=str(HERE / "release_v11"))
+    args = parser.parse_args()
+    output = Path(args.output_dir).resolve()
+    report = json.loads(Path(args.summary).read_text())
+    candidate = HERE / "candidate_v11_final_submission.py"
+    baseline = HERE / "baseline.py"
+    assert report["status"] == "PASS"
+    assert sha(candidate) == report["candidate_sha256"]
+    assert sha(baseline) == report["baseline_sha256"]
+    assert report["binary"]["affected_official_cases"] == ["oj1", "oj6", "oj10", "oj11"]
+    for name, expected in report["evidence_sha256"].items():
+        assert sha(HERE / "validation_v11_final" / name) == expected, name
+    assert all(data["official_changed"]["count"] == 4 for data in report["cold"].values())
+
+    before = {n.name: ast.dump(n) for n in ast.parse(baseline.read_text()).body
+              if isinstance(n, ast.FunctionDef)}
+    after = {n.name: ast.dump(n) for n in ast.parse(candidate.read_text()).body
+             if isinstance(n, ast.FunctionDef)}
+    assert len(set(after) - set(before)) == 8
+    assert sum(before[name] == after[name] for name in before) == 61
+
+    # Snapshot before creating a release underneath the study directory.
+    evidence_files = [p for p in HERE.rglob("*") if p.is_file()
+                      and "__pycache__" not in p.parts
+                      and not any(part.startswith("release_") for part in p.relative_to(HERE).parts)]
+    output.mkdir(exist_ok=False)
+    shutil.copy2(candidate, output / "submission.py")
+    shutil.copy2(baseline, output / "baseline_8893.py")
+    (output / "final_summary.json").write_text(json.dumps(report, indent=2) + "\n")
+    (output / "README.md").write_text(release_readme(report))
+    for path in evidence_files:
+        destination = output / "evidence" / path.relative_to(HERE)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(path, destination)
+
+    # The previous release already includes the transitive helper imports.
+    prior_dependencies = ROOT / "experiments/20261012_goal89/release_v10/dependencies"
+    dependencies = output / "dependencies"
+    shutil.copytree(prior_dependencies, dependencies,
+                    ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+    for path in dependencies.rglob("*"):
+        if path.is_file():
+            current = ROOT.parent / path.relative_to(dependencies)
+            if current.is_file():
+                shutil.copy2(current, path)
+    study = dependencies / "nsa/experiments/20261014_goal8933"
+    study.mkdir(parents=True, exist_ok=True)
+    names = ("run_final.py", "verify_dispatch_cpu.py", "verify_changed_families.py",
+             "verify_legacy_guards.py", "summarize_final.py", "verify_newton_math.py",
+             "baseline.py", "control.py", "followup_cases.json", "bs32_cold_family_cases.json",
+             "short_cold_family_cases.json", "current_grid_family_cases.json")
+    for name in names:
+        shutil.copy2(HERE / name, study / name)
+    (output / "commands.sh").write_text('''#!/usr/bin/env bash
+set -eo pipefail
+release_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+python - "$release_dir" <<'PY'
+import hashlib,json,sys
+from pathlib import Path
+p=Path(sys.argv[1])
+manifest=json.loads((p/'release_manifest.json').read_text())
+for name,expected in manifest['files'].items():
+    assert hashlib.sha256((p/name).read_bytes()).hexdigest()==expected,name
+print('Release hashes verified:',len(manifest['files']))
+PY
+test_root="$release_dir/dependencies/nsa"
+test_study="$test_root/experiments/20261014_goal8933"
+cd "$test_root"
+source env.sh
+set -u
+export PYTHONDONTWRITEBYTECODE=1
+result_dir="$(mktemp -d "${TMPDIR:-/tmp}/nsa_v11_recheck.XXXXXX")"
+python "$test_study/run_final.py" "$release_dir/submission.py" --output-dir "$result_dir/validation"
+python "$test_study/verify_legacy_guards.py" "$release_dir/submission.py" --output "$result_dir/validation/legacy_guards.json"
+python "$test_study/summarize_final.py" "$result_dir/validation" --module "$release_dir/submission.py" --expected-oj oj1,oj6,oj10,oj11 --output "$result_dir/final_summary.json"
+printf 'Results: %s\\n' "$result_dir"
+''')
+    (output / "commands.sh").chmod(0o755)
+    files = {str(path.relative_to(output)): sha(path) for path in sorted(output.rglob("*")) if path.is_file()}
+    manifest = dict(candidate_sha256=sha(candidate), baseline_sha256=sha(baseline),
+                    official_baseline_score=88.93, official_candidate_score=None,
+                    official_target=89.33, official_target_verified=False, files=files)
+    (output / "release_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    assert all(sha(output / name) == expected for name, expected in files.items())
+    print("Frozen", output, "files", len(files), "submission", sha(output / "submission.py"))
+
+
+if __name__ == "__main__":
+    main()

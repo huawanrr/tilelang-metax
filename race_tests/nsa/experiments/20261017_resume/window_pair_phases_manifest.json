@@ -1,0 +1,26 @@
+{
+  "variants": [
+    {
+      "path": "window_pair_phases64.py",
+      "sha256": "a1b49b861c72635311beda78a9df54010a485275ed9d07ef4c61453344acad07",
+      "parent": "window_pairs64.py",
+      "parent_sha256": "29cf3b2d43a50de0116cd12b45252f9bf10a7da4bafb38dcea550fc9b349e5ba"
+    },
+    {
+      "path": "window_pair_phases128.py",
+      "sha256": "f5bd0b037706e14616df2d9bc8883152f6a548fe7006eebd08f6c00b9eb9921e",
+      "parent": "window_pairs128.py",
+      "parent_sha256": "9679b749673e4a33afa79ef236c08cfbd583da73785d004fb376d2900948e243"
+    }
+  ],
+  "schedule_proof": {
+    "pattern_cases": 272,
+    "once_per_query": true,
+    "no_gaps_in_schedule": true,
+    "no_rank_collisions": true,
+    "guards_before_index_multiplication": true,
+    "capacity_bound": "sum ceil(count/2) <= min(WIN, floor((WIN + NB + 1)/2))"
+  },
+  "packed_store_proof": "4096 unique elements in each plane; explicit eight-half lane stores",
+  "changed": "QK pair first, PV pair second; exact math and rounding retained"
+}

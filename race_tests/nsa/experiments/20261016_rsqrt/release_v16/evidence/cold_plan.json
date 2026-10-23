@@ -1,0 +1,29 @@
+{
+  "method": "per-call 256 MB flush, sum actual NSA device kernel durations, independent FP32 attention reference",
+  "cases": [
+    "oj1",
+    "oj6",
+    "oj12",
+    "oj13"
+  ],
+  "seeds": [
+    0,
+    61
+  ],
+  "rounds": 8,
+  "repeat": 64,
+  "modules": [
+    "baseline.py",
+    "control.py",
+    "rsqrt.py",
+    "ieee_rsqrt.py"
+  ],
+  "source_hashes": {
+    "baseline.py": "58bbd21b67192a467242ae078cc8e7a135e0cbb9441401b0733e5d8155ac78c1",
+    "control.py": "58bbd21b67192a467242ae078cc8e7a135e0cbb9441401b0733e5d8155ac78c1",
+    "rsqrt.py": "009747237f1d271565cde615bde5d772e2ed05a1e732d02727819b6061d1f7e5",
+    "ieee_rsqrt.py": "75323f43fea0e49733630f51220c6d166d7e48e28c490f9af79d5d4cb7c5c513"
+  },
+  "reason": "Test whether hot signals survive cold inputs; ordinary rsqrt passed all 32 address/window checks. Direct intrinsic has adverse placements and remains only a research comparison.",
+  "status": "planned before cold timing"
+}

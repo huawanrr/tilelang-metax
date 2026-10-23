@@ -1,0 +1,12 @@
+{
+  "path": "/opt/maca/lib/maca_xcore1000_mathlib.bc",
+  "sha256": "46bd11810d9e0e1e5dc801af26d39088ccad2a24754d921ad30190482305ad37",
+  "functions": {
+    "mc_math_func_frcp_rd": "entry:\n  %0 = tail call i32 @llvm.mxc.gethwreg(i32 2049)\n  tail call void @llvm.mxc.sethwreg(i32 2049, i32 2)\n  %div = fdiv contract float 1.000000e+00, %x\n  tail call void @llvm.mxc.sethwreg(i32 2049, i32 %0)\n  ret float %div\n",
+    "mc_math_func_frcp_rn": "entry:\n  %0 = tail call i32 @llvm.mxc.gethwreg(i32 2049)\n  tail call void @llvm.mxc.sethwreg(i32 2049, i32 0)\n  %div = fdiv contract float 1.000000e+00, %x\n  tail call void @llvm.mxc.sethwreg(i32 2049, i32 %0)\n  ret float %div\n",
+    "mc_math_func_frcp_ru": "entry:\n  %0 = tail call i32 @llvm.mxc.gethwreg(i32 2049)\n  tail call void @llvm.mxc.sethwreg(i32 2049, i32 1)\n  %div = fdiv contract float 1.000000e+00, %x\n  tail call void @llvm.mxc.sethwreg(i32 2049, i32 %0)\n  ret float %div\n",
+    "mc_math_func_frcp_rz": "entry:\n  %0 = tail call i32 @llvm.mxc.gethwreg(i32 2049)\n  tail call void @llvm.mxc.sethwreg(i32 2049, i32 3)\n  %div = fdiv contract float 1.000000e+00, %x\n  tail call void @llvm.mxc.sethwreg(i32 2049, i32 %0)\n  ret float %div\n",
+    "mc_math_func_exp2f": "entry:\n  %cmp = fcmp contract olt float %x, -1.260000e+02\n  %cond = select contract i1 %cmp, float 6.400000e+01, float 0.000000e+00\n  %add = fadd contract float %cond, %x\n  %0 = tail call contract float @llvm.exp2.f32(float %add)\n  %cond2 = select contract i1 %cmp, float 0x3BF0000000000000, float 1.000000e+00\n  %mul = fmul contract float %cond2, %0\n  ret float %mul\n"
+  },
+  "decision": "Directed IEEE reciprocal modes add rounding-register operations around the same division; do not benchmark. Public powf uses builtin exp2 under fast math and is investigated separately."
+}

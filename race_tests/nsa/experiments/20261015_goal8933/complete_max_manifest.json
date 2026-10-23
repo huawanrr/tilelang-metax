@@ -1,0 +1,26 @@
+{
+  "variants": [
+    {
+      "file": "complete_all_umax.py",
+      "sha256": "a48c488f33340b60367c31e3217f449889cb2d3b62b56bdee08c3942efd1194d",
+      "parent": "complete_all_a0.py",
+      "parent_sha256": "b66a755ba521ea522c77362c555f53bf703763e28ac2e8adaab4f4a6d390b19e",
+      "changed": {
+        "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast": 1,
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast": 1
+      }
+    },
+    {
+      "file": "complete_groups_umax.py",
+      "sha256": "466ba36a158147077e9e464b1185cba2fddb02acc52e7a69d755863be83a943b",
+      "parent": "complete_groups_a0.py",
+      "parent_sha256": "2ddca1df4486340580de6bbe94a96afd8fbe890aaf55ad3bf51d197400441fb6",
+      "changed": {
+        "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast": 1,
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast": 1
+      }
+    }
+  ],
+  "cpu_predicate_comparisons": 2442,
+  "proof": "Clamped positions are multiples of BS. Negative positions become unsigned maxima; positive positions are complete iff below the aligned end of the valid prefix. An all predicate is equivalent to its unsigned maximum comparison."
+}

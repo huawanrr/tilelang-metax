@@ -1,0 +1,17 @@
+{
+  "file": "candidate_dispatch_r1.py",
+  "sha256": "d3c4e9f7417069efc0a0189d5754d4f8e765034c848c2219d32e869dd3b22080",
+  "parent_sha256": "49c5e4b40ba926ef0d9d687760a520306ccde4bc82b077907a5b3568b918b2ea",
+  "changed_functions": [
+    "_get_kernel"
+  ],
+  "unchanged_functions": 72,
+  "predicate": "    small_coalesced_blocks = (\n        mathcast_defaults and S == 1 and groups == 16 and block_size == 16\n        and seq_len % block_size == 0\n        and ((D == 128 and 128 <= grid < 1280) or (D == 64 and 256 <= grid < 512))\n    )\n",
+  "normalized_cache_flag": "small_coalesced_blocks",
+  "builder": "native_sparse_attention_coalesced_blocks_boundary_v8",
+  "builder_parameters": {
+    "q_vec": 8,
+    "pv_width": 128
+  },
+  "status": "candidate awaiting final validation"
+}

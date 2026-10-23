@@ -1,0 +1,37 @@
+{
+  "baseline_sha256": "49c5e4b40ba926ef0d9d687760a520306ccde4bc82b077907a5b3568b918b2ea",
+  "variants": [
+    {
+      "path": "dispatch_direct.py",
+      "builder": "native_sparse_attention_direct_kv(natural=True, late=False, **common)",
+      "sha256": "922cdd3623786e5699b15390b8201850ae4f999befc7876ec3235c31a6afadfc"
+    },
+    {
+      "path": "dispatch_preload.py",
+      "builder": "native_sparse_attention_q_preload(natural=True, late=False, **common)",
+      "sha256": "99655e354b2306ea0dbe961af81dcb6c89c23ec9d7fe876fa995fb7cd1db49c1"
+    },
+    {
+      "path": "dispatch_coalesced.py",
+      "builder": "native_sparse_attention_coalesced_blocks_oct8(q_vec=8, pv_width=128, **common)",
+      "sha256": "a833703d034758c5fa54a4c0d1b86b163e5a092525206a8f71d1527620285c30"
+    },
+    {
+      "path": "dispatch_boundary_q8.py",
+      "builder": "native_sparse_attention_coalesced_blocks_boundary_v8(q_vec=8, pv_width=128, **common)",
+      "sha256": "932cff2541cc25ed857111e335270583311c2a7f24f23c8a6de2dd6e6ee81bdb"
+    },
+    {
+      "path": "dispatch_boundary_q4.py",
+      "builder": "native_sparse_attention_coalesced_blocks_boundary_v8(q_vec=4, pv_width=128, **common)",
+      "sha256": "fafc8874f743093028ba113a3ad8a26d426b2541933e8061b6d543cb0e24ed76"
+    },
+    {
+      "path": "dispatch_fp32_sum.py",
+      "builder": "native_sparse_attention_coalesced_blocks_fp32_sum(q_vec=8, pv_width=128, **common)",
+      "sha256": "32893d123c63f47f401f8bd8f81c722f5619b283fc9c6e0d4dbdc2b9a247a4d7"
+    }
+  ],
+  "all_builders_unchanged": true,
+  "scope": "default complete S1 BS16 D64/D128 G16 grid<=2560"
+}

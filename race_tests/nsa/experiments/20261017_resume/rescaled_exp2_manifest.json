@@ -1,0 +1,42 @@
+{
+  "parent_sha256": "900cf61225dbd2b86191ffe61b68baa49029ab3188c0c644d06b1dc866daac40",
+  "variants": [
+    {
+      "file": "rescaled_exp2_32.py",
+      "sha256": "bae231bccfc53438d7dc91366c653107b3eab8cf5c19ae21eddd4242aa2906d0",
+      "shift": 32,
+      "changes": {
+        "_coalesced_block_loads_prim_fp32_sum": 2,
+        "native_sparse_attention_single_packed_qo_v2_mathcast": 2,
+        "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint": 2
+      },
+      "math_check": {
+        "samples": 1500009,
+        "sampled_max_relative_error_normal": 1.4318593553053205e-06,
+        "max_absolute_error": 0.044921875,
+        "zero_underflow_preserved": true,
+        "description": "CPU float32 step rounding with float64 exp2; GPU math still needs checking"
+      }
+    },
+    {
+      "file": "rescaled_exp2_64.py",
+      "sha256": "16b44873ccd5098e110e5dc06293aa1dc890f8d5725a376433aebaf437573de3",
+      "shift": 64,
+      "changes": {
+        "_coalesced_block_loads_prim_fp32_sum": 2,
+        "native_sparse_attention_single_packed_qo_v2_mathcast": 2,
+        "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint": 2
+      },
+      "math_check": {
+        "samples": 1500009,
+        "sampled_max_relative_error_normal": 2.75166782603975e-06,
+        "max_absolute_error": 0.087890625,
+        "zero_underflow_preserved": true,
+        "description": "CPU float32 step rounding with float64 exp2; GPU math still needs checking"
+      }
+    }
+  ],
+  "current_input_semantics": true,
+  "dispatch_and_pack_unchanged": true,
+  "synchronization_unchanged": true
+}

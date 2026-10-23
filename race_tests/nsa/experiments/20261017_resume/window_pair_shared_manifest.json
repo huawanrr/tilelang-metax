@@ -1,0 +1,25 @@
+{
+  "variants": [
+    {
+      "path": "window_pair_shared_serial.py",
+      "sha256": "75e02ed7d356921f77f843ee4185511b56611505375025d7394ae99497b2d46f",
+      "parent": "window_pair_records_serial.py",
+      "parent_sha256": "a21216ce069e449e887e46445fc4f85d2eaa9c87b2398e755c45f2bf13a93627"
+    },
+    {
+      "path": "window_pair_shared_phases.py",
+      "sha256": "e4041f3bb4ecbb88752c375a2fd3827c1e6f2bb9c5625983b8a5fb5c61b42557",
+      "parent": "window_pair_records_phases.py",
+      "parent_sha256": "eabbd17311529afeb98e1ed2a51d1004e470f9858e07962f9415e1279678e5c0"
+    }
+  ],
+  "synchronizations_unchanged": true,
+  "proof": [
+    "The CTA is a single 64-lane wave and all metadata branches are wave-uniform.",
+    "Q shared reads finish before the existing pre-output wave fence.",
+    "Output shared reads finish before the pair's existing trailing wave fence.",
+    "The phased variant also has a wave fence after each QK iteration.",
+    "Both old shared arrays had the same shape, dtype, and vecSize=8 swizzle."
+  ],
+  "index_and_arithmetic_and_dispatch_unchanged": true
+}

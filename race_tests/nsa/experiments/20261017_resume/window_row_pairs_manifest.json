@@ -1,0 +1,23 @@
+{
+  "parent": "window_pair_shared_phases.py",
+  "parent_sha256": "e4041f3bb4ecbb88752c375a2fd3827c1e6f2bb9c5625983b8a5fb5c61b42557",
+  "template_sha256": "4d6ef161c5a29c0121c328eb6395c52e85d4b2262e18f6a6448fca4c52894e8e",
+  "variants": [
+    {
+      "path": "window_row_pairs_w64.py",
+      "width": 64,
+      "sha256": "921471628b673105ed24738475464bfe969016ff88ba974ea52f1bb20e36fd9d"
+    },
+    {
+      "path": "window_row_pairs_w128.py",
+      "width": 128,
+      "sha256": "cf5da9524c8e13d19984d6992465a8b1eee43cb34f72cfb7e4ef7dd29920170d"
+    }
+  ],
+  "prep_unchanged": true,
+  "tensor_rows": 32,
+  "one_query_shared_tile": true,
+  "fp32_mma_and_denominator": true,
+  "dummy_second_query": "Zero Q, masked score, zero probability, no global output",
+  "shared_hazards": "A wave fence precedes every reuse, and follows each shared write"
+}

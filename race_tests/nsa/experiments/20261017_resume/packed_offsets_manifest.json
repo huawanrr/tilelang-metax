@@ -1,0 +1,47 @@
+{
+  "parent_sha256": "900cf61225dbd2b86191ffe61b68baa49029ab3188c0c644d06b1dc866daac40",
+  "variants": [
+    {
+      "file": "packed_offsets64.py",
+      "bits": 64,
+      "sha256": "f8ecadf35204276b3c47ed1f2a2c8b71109c0b0bde167e25398755b34b899110",
+      "loads": {
+        "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint": {
+          "PackedKV": 3
+        },
+        "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast": {
+          "K": 5,
+          "V": 5
+        },
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast": {
+          "K": 5,
+          "V": 5
+        }
+      }
+    },
+    {
+      "file": "packed_offsets32.py",
+      "bits": 32,
+      "sha256": "c3f0028b4f97e0ce6a78af14396b5ea5f8068d8c38d72a257f17394c9e7a406d",
+      "loads": {
+        "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint": {
+          "PackedKV": 3
+        },
+        "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast": {
+          "K": 5,
+          "V": 5
+        },
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast": {
+          "K": 5,
+          "V": 5
+        }
+      }
+    }
+  ],
+  "proof": "Complete packed K/V lane coverage; nonnegative byte offsets below 2**31",
+  "checked_tensor_abi_unchanged": true,
+  "input_and_index_guards_unchanged": true,
+  "arithmetic_and_barriers_unchanged": true,
+  "pack_and_payload_unchanged": true,
+  "fallback": "Original builder for explicit tuning or packed allocation >= 2 GiB"
+}

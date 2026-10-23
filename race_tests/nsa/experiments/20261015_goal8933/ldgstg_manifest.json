@@ -1,0 +1,51 @@
+{
+  "parent_sha256": "58bc2fd7a2aeb8ea805be63cc4aefae81487bcc39c3608fb5edc8293380888f9",
+  "variants": [
+    {
+      "file": "ldgstg_pred0.py",
+      "sha256": "5a957c08eeea44a72bf4bd1fc26e17902cd810ddba7275f8d2dcc3ef84ef160e",
+      "predicated": false,
+      "decorators": [
+        "native_sparse_attention_pack_kv",
+        "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast",
+        "native_sparse_attention_linear_v_blocks_oct8",
+        "native_sparse_attention_coalesced_blocks_oct8",
+        "native_sparse_attention_q_preload",
+        "native_sparse_attention_coalesced_blocks_fp32_sum",
+        "native_sparse_attention_coalesced_blocks_fp32_mask",
+        "native_sparse_attention_q_preload_vfirst",
+        "native_sparse_attention_coalesced_blocks_boundary_v8",
+        "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint",
+        "native_sparse_attention_pack_kv_bs32_shared_block_joint",
+        "native_sparse_attention_pack_kv_bs32_tiles_block_joint",
+        "native_sparse_attention_short_list_oct8_sum_v11",
+        "native_sparse_attention_staged_sparse_blocks_sum_v11"
+      ]
+    },
+    {
+      "file": "ldgstg_pred1.py",
+      "sha256": "bd526552c6b82757c98e452cc8d97eda1368d49c72030d78fa3d410689643767",
+      "predicated": true,
+      "decorators": [
+        "native_sparse_attention_pack_kv",
+        "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast",
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast",
+        "native_sparse_attention_linear_v_blocks_oct8",
+        "native_sparse_attention_coalesced_blocks_oct8",
+        "native_sparse_attention_q_preload",
+        "native_sparse_attention_coalesced_blocks_fp32_sum",
+        "native_sparse_attention_coalesced_blocks_fp32_mask",
+        "native_sparse_attention_q_preload_vfirst",
+        "native_sparse_attention_coalesced_blocks_boundary_v8",
+        "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint",
+        "native_sparse_attention_pack_kv_bs32_shared_block_joint",
+        "native_sparse_attention_pack_kv_bs32_tiles_block_joint",
+        "native_sparse_attention_short_list_oct8_sum_v11",
+        "native_sparse_attention_staged_sparse_blocks_sum_v11"
+      ]
+    }
+  ],
+  "semantics": "Native compiler pass for synchronous loads/stores. MACA helpers are ordinary typed pointer accesses in the existing library. All algorithms, guards, synchronization and dispatch remain unchanged.",
+  "next_gate": "Check actual .text before interpreting any latency difference."
+}

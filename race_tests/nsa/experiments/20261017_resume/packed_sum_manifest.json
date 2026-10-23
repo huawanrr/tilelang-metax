@@ -1,0 +1,25 @@
+{
+  "baseline_sha256": "900cf61225dbd2b86191ffe61b68baa49029ab3188c0c644d06b1dc866daac40",
+  "variants": [
+    {
+      "path": "packed_sum_xor.py",
+      "mode": "xor",
+      "sha256": "cfe48724f4fee9df1727e8658a223674d1a907744689f24df899f243f4c4fdec"
+    },
+    {
+      "path": "packed_sum_index.py",
+      "mode": "index",
+      "sha256": "fa84a6d0b0ede3641cb352637951a80d8fab2dbf63bdec88d1474f26bd9facf5"
+    }
+  ],
+  "functions": [
+    "native_sparse_attention_single_packed_qo_v2_mathcast",
+    "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint"
+  ],
+  "local_order": "for element in 0..3, for chunk in 0..BS/16-1",
+  "wave_order": [
+    32,
+    16
+  ],
+  "reference": "Actual v17 generated C++ and maca/reduce.h; identical FP32 additions and reciprocal guard."
+}

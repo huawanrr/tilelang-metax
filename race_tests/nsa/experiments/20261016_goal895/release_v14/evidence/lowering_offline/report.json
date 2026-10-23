@@ -1,0 +1,1509 @@
+{
+  "cpu_only": true,
+  "flags": {
+    "default": [],
+    "arguments_true": [
+      "-mllvm",
+      "--metaxgpu-ir-lower-kernel-arguments=true"
+    ],
+    "arguments_false": [
+      "-mllvm",
+      "--metaxgpu-ir-lower-kernel-arguments=false"
+    ],
+    "sink_extract_true": [
+      "-mllvm",
+      "--metaxgpu-sink-load-extract=true"
+    ],
+    "sink_extract_false": [
+      "-mllvm",
+      "--metaxgpu-sink-load-extract=false"
+    ],
+    "sink_load_true": [
+      "-mllvm",
+      "--metaxgpu-sinkload=true"
+    ],
+    "sink_load_false": [
+      "-mllvm",
+      "--metaxgpu-sinkload=false"
+    ],
+    "memcpy_lower_true": [
+      "-mllvm",
+      "--metaxgpu-MemcpyToLoadStore=true"
+    ],
+    "memcpy_lower_false": [
+      "-mllvm",
+      "--metaxgpu-MemcpyToLoadStore=false"
+    ]
+  },
+  "rows": [
+    {
+      "case": "oj1",
+      "part": 0,
+      "source": "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj1_m1_p0.cpp",
+      "source_sha256": "313568cc6e4a84515181f3c5f5a5716885ec3d57461691517562a3cac754ebd5",
+      "actual_text_sha256": "47125743024f0c983f98809e840f22e096475ff9e3bbd51b7d16f2f1ef228152",
+      "variants": [
+        {
+          "name": "default",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj1_default.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj1_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "47125743024f0c983f98809e840f22e096475ff9e3bbd51b7d16f2f1ef228152",
+          "text_bytes": 1792,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 32,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "arguments_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-ir-lower-kernel-arguments=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj1_arguments_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj1_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "47125743024f0c983f98809e840f22e096475ff9e3bbd51b7d16f2f1ef228152",
+          "text_bytes": 1792,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 32,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "arguments_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-ir-lower-kernel-arguments=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj1_arguments_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj1_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "47125743024f0c983f98809e840f22e096475ff9e3bbd51b7d16f2f1ef228152",
+          "text_bytes": 1792,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 32,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_extract_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sink-load-extract=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj1_sink_extract_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj1_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "47125743024f0c983f98809e840f22e096475ff9e3bbd51b7d16f2f1ef228152",
+          "text_bytes": 1792,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 32,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_extract_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sink-load-extract=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj1_sink_extract_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj1_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "47125743024f0c983f98809e840f22e096475ff9e3bbd51b7d16f2f1ef228152",
+          "text_bytes": 1792,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 32,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_load_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sinkload=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj1_sink_load_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj1_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "47125743024f0c983f98809e840f22e096475ff9e3bbd51b7d16f2f1ef228152",
+          "text_bytes": 1792,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 32,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_load_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sinkload=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj1_sink_load_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj1_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "47125743024f0c983f98809e840f22e096475ff9e3bbd51b7d16f2f1ef228152",
+          "text_bytes": 1792,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 32,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "memcpy_lower_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-MemcpyToLoadStore=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj1_memcpy_lower_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj1_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "08cadf8827ab7faf30322558826030de24e69ee6fa5692650cc679a2893f6550",
+          "text_bytes": 1792,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 32,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": true
+        },
+        {
+          "name": "memcpy_lower_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-MemcpyToLoadStore=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj1_memcpy_lower_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj1_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "47125743024f0c983f98809e840f22e096475ff9e3bbd51b7d16f2f1ef228152",
+          "text_bytes": 1792,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 32,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        }
+      ]
+    },
+    {
+      "case": "oj6",
+      "part": 1,
+      "source": "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj6_m1_p1.cpp",
+      "source_sha256": "27270ad9b2ee5ca0eb20a528140246c63217cf0d97456e59cd6f84208f8d7370",
+      "actual_text_sha256": "2d93d41562bc43337e7dcaa255ae7f76f5622ec37d6e15623507b6dfcc0c749d",
+      "variants": [
+        {
+          "name": "default",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj6_default.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj6_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "2d93d41562bc43337e7dcaa255ae7f76f5622ec37d6e15623507b6dfcc0c749d",
+          "text_bytes": 4864,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 112,
+              ".max_block_size": 64,
+              ".mtreg_count": 86,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "arguments_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-ir-lower-kernel-arguments=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj6_arguments_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj6_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "2d93d41562bc43337e7dcaa255ae7f76f5622ec37d6e15623507b6dfcc0c749d",
+          "text_bytes": 4864,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 112,
+              ".max_block_size": 64,
+              ".mtreg_count": 86,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "arguments_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-ir-lower-kernel-arguments=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj6_arguments_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj6_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "2d93d41562bc43337e7dcaa255ae7f76f5622ec37d6e15623507b6dfcc0c749d",
+          "text_bytes": 4864,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 112,
+              ".max_block_size": 64,
+              ".mtreg_count": 86,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_extract_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sink-load-extract=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj6_sink_extract_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj6_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "2d93d41562bc43337e7dcaa255ae7f76f5622ec37d6e15623507b6dfcc0c749d",
+          "text_bytes": 4864,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 112,
+              ".max_block_size": 64,
+              ".mtreg_count": 86,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_extract_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sink-load-extract=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj6_sink_extract_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj6_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "2d93d41562bc43337e7dcaa255ae7f76f5622ec37d6e15623507b6dfcc0c749d",
+          "text_bytes": 4864,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 112,
+              ".max_block_size": 64,
+              ".mtreg_count": 86,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_load_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sinkload=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj6_sink_load_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj6_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "2d93d41562bc43337e7dcaa255ae7f76f5622ec37d6e15623507b6dfcc0c749d",
+          "text_bytes": 4864,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 112,
+              ".max_block_size": 64,
+              ".mtreg_count": 86,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_load_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sinkload=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj6_sink_load_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj6_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "2d93d41562bc43337e7dcaa255ae7f76f5622ec37d6e15623507b6dfcc0c749d",
+          "text_bytes": 4864,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 112,
+              ".max_block_size": 64,
+              ".mtreg_count": 86,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "memcpy_lower_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-MemcpyToLoadStore=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj6_memcpy_lower_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj6_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "2d93d41562bc43337e7dcaa255ae7f76f5622ec37d6e15623507b6dfcc0c749d",
+          "text_bytes": 4864,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 112,
+              ".max_block_size": 64,
+              ".mtreg_count": 86,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "memcpy_lower_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-MemcpyToLoadStore=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj6_memcpy_lower_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj6_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "2d93d41562bc43337e7dcaa255ae7f76f5622ec37d6e15623507b6dfcc0c749d",
+          "text_bytes": 4864,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 112,
+              ".max_block_size": 64,
+              ".mtreg_count": 86,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        }
+      ]
+    },
+    {
+      "case": "oj9",
+      "part": 0,
+      "source": "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj9_m1_p0.cpp",
+      "source_sha256": "5b668a84404be6bc6c9582999443cfc572b87a111a9a33b7f59ccc50549a447c",
+      "actual_text_sha256": "5f05ce3b9e0b344e1090a72b0b913489ea1c1abfc61de14e294acd64e2215697",
+      "variants": [
+        {
+          "name": "default",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj9_default.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj9_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "5f05ce3b9e0b344e1090a72b0b913489ea1c1abfc61de14e294acd64e2215697",
+          "text_bytes": 2816,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 34,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "arguments_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-ir-lower-kernel-arguments=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj9_arguments_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj9_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "5f05ce3b9e0b344e1090a72b0b913489ea1c1abfc61de14e294acd64e2215697",
+          "text_bytes": 2816,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 34,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "arguments_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-ir-lower-kernel-arguments=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj9_arguments_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj9_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "5f05ce3b9e0b344e1090a72b0b913489ea1c1abfc61de14e294acd64e2215697",
+          "text_bytes": 2816,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 34,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_extract_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sink-load-extract=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj9_sink_extract_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj9_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "5f05ce3b9e0b344e1090a72b0b913489ea1c1abfc61de14e294acd64e2215697",
+          "text_bytes": 2816,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 34,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_extract_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sink-load-extract=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj9_sink_extract_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj9_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "5f05ce3b9e0b344e1090a72b0b913489ea1c1abfc61de14e294acd64e2215697",
+          "text_bytes": 2816,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 34,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_load_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sinkload=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj9_sink_load_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj9_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "5f05ce3b9e0b344e1090a72b0b913489ea1c1abfc61de14e294acd64e2215697",
+          "text_bytes": 2816,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 34,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_load_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sinkload=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj9_sink_load_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj9_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "5f05ce3b9e0b344e1090a72b0b913489ea1c1abfc61de14e294acd64e2215697",
+          "text_bytes": 2816,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 34,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "memcpy_lower_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-MemcpyToLoadStore=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj9_memcpy_lower_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj9_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "61e754ae3289512aad07568839d9eb5db58174970b3e81ccfb01bd970180a17d",
+          "text_bytes": 2816,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 34,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": true
+        },
+        {
+          "name": "memcpy_lower_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-MemcpyToLoadStore=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj9_memcpy_lower_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj9_m1_p0.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "5f05ce3b9e0b344e1090a72b0b913489ea1c1abfc61de14e294acd64e2215697",
+          "text_bytes": 2816,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 34,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 20
+            }
+          ],
+          "changed": false
+        }
+      ]
+    },
+    {
+      "case": "oj12",
+      "part": 1,
+      "source": "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj12_m1_p1.cpp",
+      "source_sha256": "f80d9ba77f5659f2b1ec29196d63483799ae8ecb54cde633083e38f362375899",
+      "actual_text_sha256": "4ce63d7746a619fda7a6ece10d7fb9d350051231c340a51eadc924b6e99b1c8a",
+      "variants": [
+        {
+          "name": "default",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj12_default.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj12_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "4ce63d7746a619fda7a6ece10d7fb9d350051231c340a51eadc924b6e99b1c8a",
+          "text_bytes": 7680,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 94,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 52
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "arguments_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-ir-lower-kernel-arguments=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj12_arguments_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj12_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "4ce63d7746a619fda7a6ece10d7fb9d350051231c340a51eadc924b6e99b1c8a",
+          "text_bytes": 7680,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 94,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 52
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "arguments_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-ir-lower-kernel-arguments=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj12_arguments_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj12_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "4ce63d7746a619fda7a6ece10d7fb9d350051231c340a51eadc924b6e99b1c8a",
+          "text_bytes": 7680,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 94,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 52
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_extract_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sink-load-extract=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj12_sink_extract_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj12_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "4ce63d7746a619fda7a6ece10d7fb9d350051231c340a51eadc924b6e99b1c8a",
+          "text_bytes": 7680,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 94,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 52
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_extract_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sink-load-extract=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj12_sink_extract_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj12_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "4ce63d7746a619fda7a6ece10d7fb9d350051231c340a51eadc924b6e99b1c8a",
+          "text_bytes": 7680,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 94,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 52
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_load_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sinkload=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj12_sink_load_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj12_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "4ce63d7746a619fda7a6ece10d7fb9d350051231c340a51eadc924b6e99b1c8a",
+          "text_bytes": 7680,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 94,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 52
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "sink_load_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-sinkload=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj12_sink_load_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj12_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "4ce63d7746a619fda7a6ece10d7fb9d350051231c340a51eadc924b6e99b1c8a",
+          "text_bytes": 7680,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 94,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 52
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "memcpy_lower_true",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-MemcpyToLoadStore=true",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj12_memcpy_lower_true.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj12_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "4ce63d7746a619fda7a6ece10d7fb9d350051231c340a51eadc924b6e99b1c8a",
+          "text_bytes": 7680,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 94,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 52
+            }
+          ],
+          "changed": false
+        },
+        {
+          "name": "memcpy_lower_false",
+          "command": [
+            "/opt/maca/mxgpu_llvm/bin/mxcc",
+            "-x",
+            "maca",
+            "-device-obj",
+            "-O3",
+            "-lineinfo",
+            "--offload-arch=xcore1000",
+            "-std=c++17",
+            "-I/app/tilelang-metax/src",
+            "-I/opt/maca/include",
+            "-use-fast-math",
+            "-mllvm",
+            "--metaxgpu-MemcpyToLoadStore=false",
+            "-D__FAST_HALF_CVT__",
+            "-o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/lowering_offline/oj12_memcpy_lower_false.o",
+            "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/validation_v13_final/actual_binary/oj12_m1_p1.cpp"
+          ],
+          "exit_code": 0,
+          "text_sha256": "4ce63d7746a619fda7a6ece10d7fb9d350051231c340a51eadc924b6e99b1c8a",
+          "text_bytes": 7680,
+          "resources": [
+            {
+              ".dcompcapab": 8,
+              ".kd_symbol": "kernel_kernel.kd",
+              ".kernarg_align_bytes": 8,
+              ".kernarg_size_bytes": 120,
+              ".max_block_size": 64,
+              ".mtreg_count": 94,
+              ".name": "kernel_kernel",
+              ".private_memory_size": 0,
+              ".share_memory_size": 0,
+              ".streg_count": 52
+            }
+          ],
+          "changed": false
+        }
+      ]
+    }
+  ],
+  "command_source": "v13 final actual JIT source"
+}

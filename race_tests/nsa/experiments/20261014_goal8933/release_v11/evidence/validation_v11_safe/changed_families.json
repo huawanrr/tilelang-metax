@@ -1,0 +1,1511 @@
+{
+  "status": "PASS",
+  "source_sha256": "56dcb0880c4bc7f6192ed998f855a7d05d23c77cc54f18fd49f87af3af2932b6",
+  "official_sandbox": false,
+  "strict_fp32": [
+    {
+      "builder": "_coalesced_block_loads_prim_fp32_sum",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "_coalesced_block_loads_prim_fp32_mask",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "_coalesced_block_loads_prim_boundary_v8",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "_coalesced_block_loads_prim_fp32_mask_head_first_v11",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "native_sparse_attention_short_list_oct8_sum_v11",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "native_sparse_attention_staged_sparse_blocks_sum_v11",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 32,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 63,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 65,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 127,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 4096,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 4112,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 3,
+        "HQ": 48,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1023,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 352,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 384,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 528,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 3,
+        "SEQ_LEN": 128,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 3,
+        "HQ": 48,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.0009765625
+    }
+  ],
+  "scales": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": null,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.0,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": -0.1,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.03125,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": null,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.0,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": -0.1,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.03125,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "scale": null,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "scale": 0.0,
+      "max_abs_error": 7.62939453125e-06
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "scale": -0.1,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "scale": 0.03125,
+      "max_abs_error": 0.00048828125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "scale": 0.1,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "scale": null,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "scale": 0.0,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "scale": -0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "scale": 0.03125,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "scale": null,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "scale": 0.0,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "scale": -0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "scale": 0.03125,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": null,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.0,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": -0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.03125,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "max_abs_error": 0.001953125
+    }
+  ],
+  "live": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 1,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 2,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.0009765625,
+      "direct_max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.0009765625,
+      "direct_max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 1,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 2,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.0009765625,
+      "direct_max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.0009765625,
+      "direct_max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "changed": 1,
+      "graph_max_abs_error": 0.0009765625,
+      "direct_max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "changed": 2,
+      "graph_max_abs_error": 0.0009765625,
+      "direct_max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.0009765625,
+      "direct_max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.0009765625,
+      "direct_max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.0009765625,
+      "direct_max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "changed": 1,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "changed": 2,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "changed": 1,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "changed": 2,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 1,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 2,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    }
+  ],
+  "restricted": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 32,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 4,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1025,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    }
+  ]
+}

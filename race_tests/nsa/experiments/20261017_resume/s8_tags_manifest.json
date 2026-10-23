@@ -1,0 +1,186 @@
+{
+  "parent_sha256": "900cf61225dbd2b86191ffe61b68baa49029ab3188c0c644d06b1dc866daac40",
+  "proof": {
+    "index_scenarios": 536940,
+    "shuffle_scenarios": 128,
+    "tails_extremes_causal_and_noncausal": true,
+    "eight_byte_order_and_duplicates_preserved": true
+  },
+  "variants": [
+    {
+      "file": "s8_tags_compact.py",
+      "sha256": "98323f901621991041a0f3705c73e465f80e85c95f189795eb4fab0ea65042bd",
+      "mode": "compact",
+      "replaced_guards": {
+        "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast": [],
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast": []
+      }
+    },
+    {
+      "file": "s8_tags_validated.py",
+      "sha256": "e1573fb1afddb311da46e184328289364a6ffc99ec54b1381b20d5dd3803cfcb",
+      "mode": "validated",
+      "replaced_guards": {
+        "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast": [
+          {
+            "before": "not is_causal and i_s + BS > seq_len",
+            "after": "not is_causal and packed_tags[s] & 64 != 0"
+          },
+          {
+            "before": "is_causal and i_s + BS > i_t + 1",
+            "after": "is_causal and packed_tags[s] & 64 != 0"
+          },
+          {
+            "before": "i_s >= 0 and i_s < seq_len and (not is_causal or i_s <= i_t)",
+            "after": "packed_tags[s] != 0"
+          },
+          {
+            "before": "prefetch_depth > 0 and group * prefetch_depth + 0 < S and (i_s0 >= 0) and (i_s0 < seq_len) and (not is_causal or i_s0 <= i_t)",
+            "after": "prefetch_depth > 0 and group * prefetch_depth + 0 < S and (packed_tags[T.min(group * prefetch_depth + 0, S - 1)] != 0)"
+          },
+          {
+            "before": "prefetch_depth > 1 and group * prefetch_depth + 1 < S and (i_s1 >= 0) and (i_s1 < seq_len) and (not is_causal or i_s1 <= i_t)",
+            "after": "prefetch_depth > 1 and group * prefetch_depth + 1 < S and (packed_tags[T.min(group * prefetch_depth + 1, S - 1)] != 0)"
+          },
+          {
+            "before": "prefetch_depth > 2 and group * prefetch_depth + 2 < S and (i_s2 >= 0) and (i_s2 < seq_len) and (not is_causal or i_s2 <= i_t)",
+            "after": "prefetch_depth > 2 and group * prefetch_depth + 2 < S and (packed_tags[T.min(group * prefetch_depth + 2, S - 1)] != 0)"
+          },
+          {
+            "before": "prefetch_depth > 3 and group * prefetch_depth + 3 < S and (i_s3 >= 0) and (i_s3 < seq_len) and (not is_causal or i_s3 <= i_t)",
+            "after": "prefetch_depth > 3 and group * prefetch_depth + 3 < S and (packed_tags[T.min(group * prefetch_depth + 3, S - 1)] != 0)"
+          },
+          {
+            "before": "not is_causal and i_s0 + BS > seq_len",
+            "after": "not is_causal and packed_tags[T.min(group * prefetch_depth + 0, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "is_causal and i_s0 + BS > i_t + 1",
+            "after": "is_causal and packed_tags[T.min(group * prefetch_depth + 0, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "prefetch_depth > 0 and group * prefetch_depth + 0 < S and (i_s0 >= 0) and (i_s0 < seq_len) and (not is_causal or i_s0 <= i_t)",
+            "after": "prefetch_depth > 0 and group * prefetch_depth + 0 < S and (packed_tags[T.min(group * prefetch_depth + 0, S - 1)] != 0)"
+          },
+          {
+            "before": "not is_causal and i_s1 + BS > seq_len",
+            "after": "not is_causal and packed_tags[T.min(group * prefetch_depth + 1, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "is_causal and i_s1 + BS > i_t + 1",
+            "after": "is_causal and packed_tags[T.min(group * prefetch_depth + 1, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "prefetch_depth > 1 and group * prefetch_depth + 1 < S and (i_s1 >= 0) and (i_s1 < seq_len) and (not is_causal or i_s1 <= i_t)",
+            "after": "prefetch_depth > 1 and group * prefetch_depth + 1 < S and (packed_tags[T.min(group * prefetch_depth + 1, S - 1)] != 0)"
+          },
+          {
+            "before": "not is_causal and i_s2 + BS > seq_len",
+            "after": "not is_causal and packed_tags[T.min(group * prefetch_depth + 2, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "is_causal and i_s2 + BS > i_t + 1",
+            "after": "is_causal and packed_tags[T.min(group * prefetch_depth + 2, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "prefetch_depth > 2 and group * prefetch_depth + 2 < S and (i_s2 >= 0) and (i_s2 < seq_len) and (not is_causal or i_s2 <= i_t)",
+            "after": "prefetch_depth > 2 and group * prefetch_depth + 2 < S and (packed_tags[T.min(group * prefetch_depth + 2, S - 1)] != 0)"
+          },
+          {
+            "before": "not is_causal and i_s3 + BS > seq_len",
+            "after": "not is_causal and packed_tags[T.min(group * prefetch_depth + 3, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "is_causal and i_s3 + BS > i_t + 1",
+            "after": "is_causal and packed_tags[T.min(group * prefetch_depth + 3, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "prefetch_depth > 3 and group * prefetch_depth + 3 < S and (i_s3 >= 0) and (i_s3 < seq_len) and (not is_causal or i_s3 <= i_t)",
+            "after": "prefetch_depth > 3 and group * prefetch_depth + 3 < S and (packed_tags[T.min(group * prefetch_depth + 3, S - 1)] != 0)"
+          }
+        ],
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast": [
+          {
+            "before": "not is_causal and i_s + BS > seq_len",
+            "after": "not is_causal and packed_tags[s] & 64 != 0"
+          },
+          {
+            "before": "is_causal and i_s + BS > i_t + 1",
+            "after": "is_causal and packed_tags[s] & 64 != 0"
+          },
+          {
+            "before": "i_s >= 0 and i_s < seq_len and (not is_causal or i_s <= i_t)",
+            "after": "packed_tags[s] != 0"
+          },
+          {
+            "before": "prefetch_depth > 0 and group * prefetch_depth + 0 < S and (i_s0 >= 0) and (i_s0 < seq_len) and (not is_causal or i_s0 <= i_t)",
+            "after": "prefetch_depth > 0 and group * prefetch_depth + 0 < S and (packed_tags[T.min(group * prefetch_depth + 0, S - 1)] != 0)"
+          },
+          {
+            "before": "prefetch_depth > 1 and group * prefetch_depth + 1 < S and (i_s1 >= 0) and (i_s1 < seq_len) and (not is_causal or i_s1 <= i_t)",
+            "after": "prefetch_depth > 1 and group * prefetch_depth + 1 < S and (packed_tags[T.min(group * prefetch_depth + 1, S - 1)] != 0)"
+          },
+          {
+            "before": "prefetch_depth > 2 and group * prefetch_depth + 2 < S and (i_s2 >= 0) and (i_s2 < seq_len) and (not is_causal or i_s2 <= i_t)",
+            "after": "prefetch_depth > 2 and group * prefetch_depth + 2 < S and (packed_tags[T.min(group * prefetch_depth + 2, S - 1)] != 0)"
+          },
+          {
+            "before": "prefetch_depth > 3 and group * prefetch_depth + 3 < S and (i_s3 >= 0) and (i_s3 < seq_len) and (not is_causal or i_s3 <= i_t)",
+            "after": "prefetch_depth > 3 and group * prefetch_depth + 3 < S and (packed_tags[T.min(group * prefetch_depth + 3, S - 1)] != 0)"
+          },
+          {
+            "before": "not is_causal and i_s0 + BS > seq_len",
+            "after": "not is_causal and packed_tags[T.min(group * prefetch_depth + 0, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "is_causal and i_s0 + BS > i_t + 1",
+            "after": "is_causal and packed_tags[T.min(group * prefetch_depth + 0, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "prefetch_depth > 0 and group * prefetch_depth + 0 < S and (i_s0 >= 0) and (i_s0 < seq_len) and (not is_causal or i_s0 <= i_t)",
+            "after": "prefetch_depth > 0 and group * prefetch_depth + 0 < S and (packed_tags[T.min(group * prefetch_depth + 0, S - 1)] != 0)"
+          },
+          {
+            "before": "not is_causal and i_s1 + BS > seq_len",
+            "after": "not is_causal and packed_tags[T.min(group * prefetch_depth + 1, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "is_causal and i_s1 + BS > i_t + 1",
+            "after": "is_causal and packed_tags[T.min(group * prefetch_depth + 1, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "prefetch_depth > 1 and group * prefetch_depth + 1 < S and (i_s1 >= 0) and (i_s1 < seq_len) and (not is_causal or i_s1 <= i_t)",
+            "after": "prefetch_depth > 1 and group * prefetch_depth + 1 < S and (packed_tags[T.min(group * prefetch_depth + 1, S - 1)] != 0)"
+          },
+          {
+            "before": "not is_causal and i_s2 + BS > seq_len",
+            "after": "not is_causal and packed_tags[T.min(group * prefetch_depth + 2, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "is_causal and i_s2 + BS > i_t + 1",
+            "after": "is_causal and packed_tags[T.min(group * prefetch_depth + 2, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "prefetch_depth > 2 and group * prefetch_depth + 2 < S and (i_s2 >= 0) and (i_s2 < seq_len) and (not is_causal or i_s2 <= i_t)",
+            "after": "prefetch_depth > 2 and group * prefetch_depth + 2 < S and (packed_tags[T.min(group * prefetch_depth + 2, S - 1)] != 0)"
+          },
+          {
+            "before": "not is_causal and i_s3 + BS > seq_len",
+            "after": "not is_causal and packed_tags[T.min(group * prefetch_depth + 3, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "is_causal and i_s3 + BS > i_t + 1",
+            "after": "is_causal and packed_tags[T.min(group * prefetch_depth + 3, S - 1)] & 64 != 0"
+          },
+          {
+            "before": "prefetch_depth > 3 and group * prefetch_depth + 3 < S and (i_s3 >= 0) and (i_s3 < seq_len) and (not is_causal or i_s3 <= i_t)",
+            "after": "prefetch_depth > 3 and group * prefetch_depth + 3 < S and (packed_tags[T.min(group * prefetch_depth + 3, S - 1)] != 0)"
+          }
+        ]
+      }
+    }
+  ],
+  "all_launches_in_public_call": true,
+  "metadata_rebuilt_on_every_call": true,
+  "original_math_and_tuning_fallbacks_preserved": true
+}

@@ -1,14 +1,36 @@
-# MoE submission v40-shape-only-tile.  If you are pasting this into the OJ, check the paste starts
-# with this line.  The grader's sandbox validates the AST before running anything,
-# so `check_submission.py` enforces its three rules here: no top-level statement
+# MoE submission v42-regstage.  This is the documented source; `submission.py` is the
+# compact form that gets pasted into the OJ, and `check_equiv.py` proves the two
+# generate the same device code on the three graded shapes -- run it after editing
+# either file.  The grader's sandbox validates the AST before running anything, so
+# `check_submission.py` enforces its three rules here: no top-level statement
 # other than an import / def / literal assignment, no `import` of anything but
 # torch and tilelang (even inside a function, and even inside try/except -- the
 # check is static), and no type annotations on `run_kernel`.
+#
+# v42 is two changes on top of v40's kernels, both pure TileLang high-level syntax:
+#   * `make_mma_swizzle_layout(..., vecSize=4)` on every MMA shared tile (-9%), and
+#   * the second weight tile of each k-step staged through registers so its DRAM
+#     read issues before the barrier instead of between two of them (-3 to -6%).
+# See NOTES.md section 25 for the measurements and for what lost.
 import torch
 import tilelang
 import tilelang.language as T
 
 
+# **`k_pack=2` is worth nothing once the shared tiles carry the MMA swizzle layout,
+# so the lowering override that used to live here is gone.**  It repaired the two
+# `k_pack == 1` constants in `maca/op/gemm/gemm_mma.py` to make the emitter read MMA
+# operands 16 bytes at a time instead of 8, and on the pre-swizzle kernel that was
+# worth 6-9%.  Re-measured on top of `make_mma_swizzle_layout` (2026-09-02, one
+# process per lowering with separate cache directories): oj1/oj2/oj3exact 2.758 /
+# 4.981 / 9.513 ms with the override against 2.761 / 4.975 / 9.510 without it -- i.e.
+# nothing, three times over.  Both changes were attacking the same term, and the
+# swizzle captures all of it while staying inside public TileLang syntax.  Matching
+# the wider read with `vecSize=8` is *worse* (2.823 / 5.068 / 9.669).
+#
+# That also retires the rules question the override raised: nothing in this file now
+# patches a TileLang internal, and `T.tvm_mfma` -- which the emitter's own `mma()`
+# macro emits -- is reached only through `T.gemm`.
 _KERNEL_CACHE = {}
 _WORKSPACE_CACHE = {}
 
@@ -52,7 +74,7 @@ _STAGE1_BLOCK_K = 64
 # Bump this whenever the submitted file changes.  Three OJ runs in a row returned
 # 14.12-14.20 ms while local per-stage time fell 16%; the explanation turned out
 # to be that all three selected the same `block_m`, so they were the same kernel.
-_VERSION = "v40-shape-only-tile"
+_VERSION = "v42-regstage"
 
 # One line per distinct shape reporting what the grader handed us.  Off by
 # default -- the OJ shows no stdout, so it earns nothing there.  Set
@@ -102,6 +124,7 @@ def _moe_forward_kernel(
     num_blocks_m,
     block_m,
     tail_rows,
+    unpadded_rows=0,
 ):
     """Routed fused-MoE forward kernel for the competition layout.
 
@@ -181,6 +204,12 @@ def _moe_forward_kernel(
     stage1_swizzle = 8
     # The stock TileLang GEMM lowering performs best at 256 threads for the
     # competition shapes (oj1real 2.019 ms, oj3real 7.177 ms per stage).
+    # 256 threads, in both lowerings.  Under the stock 8-byte operand reads it is the
+    # clear optimum (512 costs 24% on the isolated stage: the wave tile falls to 32x64
+    # and the LDS reads per MMA rise 50%).  Under k_pack=2 the reads stop pacing the
+    # loop and 512 becomes viable, but it is a wash and not an improvement -- measured
+    # oj1/oj2/oj3exact 2.831/5.094/9.702 ms at 256 against 2.838/5.096/9.670 at 512 --
+    # so the k_pack switch changes the lowering and nothing else.
     stage1_threads = 256
     stage1_policy = T.GemmWarpPolicy.Square
     # Two weight buffers cost a second 16 KiB tile, which drops the block from two
@@ -243,19 +272,20 @@ def _moe_forward_kernel(
     # 2048 and 7168 are both multiples of 256).
     stage2_pair = 2 if hidden % (2 * stage2_block_n) == 0 else 1
     # K-loop unroll factors, applied to *every* scope (main and tail, both stages).
-    # `T.unroll` is public TileLang and the only thing that has moved this loop since
-    # the tile was frozen: the body is copy/gemm/copy/gemm behind four
-    # `__syncthreads()`, and unrolling lets the backend software-pipeline the address
-    # arithmetic and the global loads of one k-step against the MMAs of the previous
-    # one.  Isolated stage 1 on the Config2 layout, 112 k-steps: 3.672 ms at factor 1,
-    # 3.652 at 2, **3.641 at 4**, 3.655 at 8, 3.660 at 16.  Stage 2 has only 32
-    # k-steps and prefers 2 (Config3 end to end: 10.409 ms at factor 1, 10.381 at 2,
-    # 10.384 at 4, 10.398 at 8).  Config1's stage 1 has 32 k-steps and Config2/3's has
-    # 112, and 4 is the optimum for both, so this is one value rather than a
-    # shape-gated one -- which also keeps Config1's device code byte-identical to v38
-    # and so makes it the in-run noise reference for this submission.
-    stage1_unroll = 4
-    stage2_unroll = 2
+    # `T.unroll` is public TileLang, and it interacts with the register staging below:
+    # unrolling lengthens the live range of every staged tile, so it trades barriers
+    # and address arithmetic against the register budget that decides whether a CU
+    # holds one block or two.  Re-swept on 2026-09-02 with the staging in place
+    # (oj1/oj2/oj3exact, end to end):
+    #   stage1_unroll  2 -> 2.696 / 4.780 / 9.000    4 -> 2.681 / 4.753 / 8.928
+    #                  8 -> 2.671 / 4.731 / 8.898   16 -> 2.684 / 4.737 / 8.908
+    #   stage2_unroll  1 -> 2.671 / 4.731 / 8.898    2 -> 2.960 / 5.371 / 9.778
+    # Stage 2's factor 2 is not slightly worse but 10% worse, and mcTracer says why:
+    # at factor 2 the scope needs 244 registers a thread and the staged tile pushes it
+    # past the 256 that two blocks per CU allow, so the CU drops to one block.  At
+    # factor 1 it fits in 238.  Stage 1's main scope lands at 250 either way.
+    stage1_unroll = 8
+    stage2_unroll = 1
     # The paired stock-lowering path is fastest at 256 threads (Config3 3.625 ms,
     # versus 3.926 ms at 512 threads and 3.833 ms without pairing).
     # Pairing halves Config2/3's grid width from 56 to 28.  Repeated isolated-stage
@@ -264,8 +294,11 @@ def _moe_forward_kernel(
     # only eight paired n-tiles, so this specialization leaves its device code alone.
     # Keep the condition exact: panel 8 remains the measured optimum on the broader
     # regression shapes, while 7168 is the only graded hidden width that needs 28.
+    # Config2 (48 token blocks) measures the same at 28 and at 32 -- 4.731 vs 4.724 ms
+    # over 40 iterations, i.e. inside the noise -- so the literal below is the form that
+    # scored 91/79/79 rather than a re-tuned one.
     if hidden == 7168 and stage2_pair == 2:
-        stage2_swizzle = hidden // (stage2_block_n * stage2_pair)
+        stage2_swizzle = 32 if num_blocks_m < 64 else 28
 
     # Computed after the clamps above, since they can shrink `stage1_block_n` and
     # so change the grid width.  See the note on two weight buffers.
@@ -385,6 +418,29 @@ def _moe_forward_kernel(
             up_local = T.alloc_fragment(
                 (s1_main_m, stage1_block_n), dtype=accum_dtype
             )
+            # One k-step's worth of the *second* weight tile, held in registers.
+            # See the block comment on the k-loop below: this is what lets the
+            # up-weight tile's DRAM read issue before the barrier that gates the
+            # gate GEMM instead of sitting between two barriers with nothing to
+            # overlap it.  32 fp16 a thread at 256 threads, which mcTracer shows
+            # costs 16 of the 22 registers this scope had spare.
+            w_stage = T.alloc_fragment(
+                (stage1_block_n, stage1_block_k), dtype=dtype
+            )
+            # The MMA swizzle layout for the two shared tiles: the single biggest
+            # win left on this kernel, -8.7 to -9.7% end to end (oj1/oj2/oj3exact
+            # 3.052 -> 2.761, 5.451 -> 4.975, 10.367 -> 9.510 ms).  Both tiles are
+            # read by the emitter's `ldmatrix_a`/`ldmatrix_b` in 8-byte pieces, and
+            # `vecSize=4` (= 8 bytes of fp16) is the granularity the XOR swizzle has
+            # to match: it gives `maxPhase = 16` against `vecSize=8`'s 8, and 8
+            # measures *worse* (2.823 / 5.068 / 9.669).  This is `tilelang.maca`'s
+            # own public layout helper -- it only permutes where a shared element
+            # lives, `T.gemm` still does the arithmetic -- and it subsumes the
+            # `k_pack=2` lowering patch that used to be at the top of this file.
+            T.annotate_layout({
+                input_shared: tilelang.maca.intrinsics.make_mma_swizzle_layout(input_shared, vecSize=4),
+                weight_shared: tilelang.maca.intrinsics.make_mma_swizzle_layout(weight_shared, vecSize=4),
+            })
 
             T.use_swizzle(stage1_swizzle)
 
@@ -408,6 +464,17 @@ def _moe_forward_kernel(
             group_size = group_sizes[expert_id]
             padded_start = group_padded_offsets[expert_id]
             token_offset = block_start - padded_start
+            # The OJ hands us rows at *padded* positions, so the row index is
+            # `block_start + i`.  The starter kit's harness
+            # (`compat/custom_fusedmoe.py`) packs them *unpacked* instead, with the
+            # same expert-aligned block mapping, so there the row index is
+            # `group_offsets[e] + token_offset + i`.  `unpadded_rows` is a compile-time
+            # Python flag: at its default the expression below *is* `block_start`, so the
+            # graded device code is byte-identical (check_equiv.py proves it).
+            if unpadded_rows:
+                row_base = group_offsets[expert_id] + token_offset
+            else:
+                row_base = block_start
             actual_rows = T.max(
                 0, T.min(s1_main_m, group_size - token_offset)
             )
@@ -439,7 +506,7 @@ def _moe_forward_kernel(
                 ):
                     T.copy(
                         stacked_expert_tokens[
-                            block_start : block_start + s1_main_m,
+                            row_base : row_base + s1_main_m,
                             k * stage1_block_k : (k + 1) * stage1_block_k,
                         ],
                         input_shared,
@@ -453,6 +520,32 @@ def _moe_forward_kernel(
                         weight_shared,
                     )
                     if stage1_one_weight_buffer:
+                        # **Register-staged prefetch (v42).**  The up-weight tile is
+                        # read into registers *here*, before the barrier that gates
+                        # the gate GEMM, and written to shared memory only after that
+                        # GEMM has finished with the buffer.  The DRAM read therefore
+                        # overlaps the GEMM instead of standing between two barriers,
+                        # which is the one thing left to attack: with the swizzle in,
+                        # halving the LDS read instructions (k_pack=2) buys nothing,
+                        # so the k-step is no longer paced by shared-memory reads but
+                        # by its fixed costs, and unhidden global latency is one of
+                        # them.  It cannot be fixed with a second shared buffer --
+                        # 48 KiB drops the CU from two resident blocks to one and
+                        # costs 65% -- and async copy is both forbidden and silently
+                        # wrong above 128 threads on this build.  Registers were the
+                        # only resource with slack.  Measured, stage 1 alone:
+                        # main scope 4.364 -> 4.092 ms, M64 tail 1.893 -> 1.733,
+                        # end to end 2.761 / 4.975 / 9.489 -> 2.696 / 4.814 / 9.067.
+                        # Barrier count is unchanged; nothing is written after being
+                        # read, so this is safe by construction rather than by test.
+                        T.copy(
+                            up_w[
+                                expert_id,
+                                by * stage1_block_n : (by + 1) * stage1_block_n,
+                                k * stage1_block_k : (k + 1) * stage1_block_k,
+                            ],
+                            w_stage,
+                        )
                         T.gemm(
                             input_shared,
                             weight_shared,
@@ -460,14 +553,7 @@ def _moe_forward_kernel(
                             transpose_B=True,
                             policy=stage1_policy,
                         )
-                        T.copy(
-                            up_w[
-                                expert_id,
-                                by * stage1_block_n : (by + 1) * stage1_block_n,
-                                k * stage1_block_k : (k + 1) * stage1_block_k,
-                            ],
-                            up_weight_shared,
-                        )
+                        T.copy(w_stage, up_weight_shared)
                         T.gemm(
                             input_shared,
                             up_weight_shared,
@@ -503,7 +589,7 @@ def _moe_forward_kernel(
                     for i, j in T.Parallel(s1_main_m, stage1_block_n):
                         if i < actual_rows:
                             up_logits[
-                                block_start + i,
+                                row_base + i,
                                 by * stage1_block_n + j,
                             ] = up_local[i, j] * gate_local[i, j] * (
                                 1.0 / (1.0 + T.exp2(-gate_local[i, j] * scale))
@@ -519,7 +605,7 @@ def _moe_forward_kernel(
                         # zeroing here would only add store traffic.
                         if i < actual_rows:
                             up_logits[
-                                block_start + i,
+                                row_base + i,
                                 by * stage1_block_n + j,
                             ] = up_local[i, j]
 
@@ -553,6 +639,13 @@ def _moe_forward_kernel(
                 up_local = T.alloc_fragment(
                     (external_block_m, stage1_block_n), dtype=accum_dtype
                 )
+                w_stage = T.alloc_fragment(
+                    (stage1_block_n, stage1_block_k), dtype=dtype
+                )
+                T.annotate_layout({
+                    input_shared: tilelang.maca.intrinsics.make_mma_swizzle_layout(input_shared, vecSize=4),
+                    weight_shared: tilelang.maca.intrinsics.make_mma_swizzle_layout(weight_shared, vecSize=4),
+                })
 
                 T.use_swizzle(stage1_swizzle)
 
@@ -569,6 +662,17 @@ def _moe_forward_kernel(
                 group_size = group_sizes[expert_id]
                 padded_start = group_padded_offsets[expert_id]
                 token_offset = block_start - padded_start
+                # The OJ hands us rows at *padded* positions, so the row index is
+                # `block_start + i`.  The starter kit's harness
+                # (`compat/custom_fusedmoe.py`) packs them *unpacked* instead, with the
+                # same expert-aligned block mapping, so there the row index is
+                # `group_offsets[e] + token_offset + i`.  `unpadded_rows` is a compile-time
+                # Python flag: at its default the expression below *is* `block_start`, so the
+                # graded device code is byte-identical (check_equiv.py proves it).
+                if unpadded_rows:
+                    row_base = group_offsets[expert_id] + token_offset
+                else:
+                    row_base = block_start
                 # The parent block's row count, not the tile's: the predicate below
                 # decides which scope owns the block, and a 64-row tile must not
                 # make a block with 100 valid rows look like a 64-row one.
@@ -596,7 +700,7 @@ def _moe_forward_kernel(
                     ):
                         T.copy(
                             stacked_expert_tokens[
-                                block_start : block_start + external_block_m,
+                                row_base : row_base + external_block_m,
                                 k * stage1_block_k : (k + 1) * stage1_block_k,
                             ],
                             input_shared,
@@ -610,6 +714,14 @@ def _moe_forward_kernel(
                             weight_shared,
                         )
                         if stage1_one_weight_buffer:
+                            T.copy(
+                                up_w[
+                                    expert_id,
+                                    by * stage1_block_n : (by + 1) * stage1_block_n,
+                                    k * stage1_block_k : (k + 1) * stage1_block_k,
+                                ],
+                                w_stage,
+                            )
                             T.gemm(
                                 input_shared,
                                 weight_shared,
@@ -617,14 +729,7 @@ def _moe_forward_kernel(
                                 transpose_B=True,
                                 policy=stage1_policy,
                             )
-                            T.copy(
-                                up_w[
-                                    expert_id,
-                                    by * stage1_block_n : (by + 1) * stage1_block_n,
-                                    k * stage1_block_k : (k + 1) * stage1_block_k,
-                                ],
-                                up_weight_shared,
-                            )
+                            T.copy(w_stage, up_weight_shared)
                             T.gemm(
                                 input_shared,
                                 up_weight_shared,
@@ -666,7 +771,7 @@ def _moe_forward_kernel(
                         # zeroing here would only add store traffic.
                         if i < actual_rows:
                             up_logits[
-                                block_start + i,
+                                row_base + i,
                                 by * stage1_block_n + j,
                             ] = up_local[i, j]
 
@@ -703,6 +808,13 @@ def _moe_forward_kernel(
                 up_local = T.alloc_fragment(
                     (s1_tail_m, stage1_block_n), dtype=accum_dtype
                 )
+                w_stage = T.alloc_fragment(
+                    (stage1_block_n, stage1_block_k), dtype=dtype
+                )
+                T.annotate_layout({
+                    input_shared: tilelang.maca.intrinsics.make_mma_swizzle_layout(input_shared, vecSize=4),
+                    weight_shared: tilelang.maca.intrinsics.make_mma_swizzle_layout(weight_shared, vecSize=4),
+                })
 
                 T.use_swizzle(stage1_swizzle)
 
@@ -719,6 +831,17 @@ def _moe_forward_kernel(
                 group_size = group_sizes[expert_id]
                 padded_start = group_padded_offsets[expert_id]
                 token_offset = block_start - padded_start
+                # The OJ hands us rows at *padded* positions, so the row index is
+                # `block_start + i`.  The starter kit's harness
+                # (`compat/custom_fusedmoe.py`) packs them *unpacked* instead, with the
+                # same expert-aligned block mapping, so there the row index is
+                # `group_offsets[e] + token_offset + i`.  `unpadded_rows` is a compile-time
+                # Python flag: at its default the expression below *is* `block_start`, so the
+                # graded device code is byte-identical (check_equiv.py proves it).
+                if unpadded_rows:
+                    row_base = group_offsets[expert_id] + token_offset
+                else:
+                    row_base = block_start
                 # The parent block's row count, not the tile's: the predicate below
                 # decides which scope owns the block, and a 64-row tile must not
                 # make a block with 100 valid rows look like a 64-row one.
@@ -745,7 +868,7 @@ def _moe_forward_kernel(
                     ):
                         T.copy(
                             stacked_expert_tokens[
-                                block_start : block_start + s1_tail_m,
+                                row_base : row_base + s1_tail_m,
                                 k * stage1_block_k : (k + 1) * stage1_block_k,
                             ],
                             input_shared,
@@ -759,6 +882,14 @@ def _moe_forward_kernel(
                             weight_shared,
                         )
                         if stage1_one_weight_buffer:
+                            T.copy(
+                                up_w[
+                                    expert_id,
+                                    by * stage1_block_n : (by + 1) * stage1_block_n,
+                                    k * stage1_block_k : (k + 1) * stage1_block_k,
+                                ],
+                                w_stage,
+                            )
                             T.gemm(
                                 input_shared,
                                 weight_shared,
@@ -766,14 +897,7 @@ def _moe_forward_kernel(
                                 transpose_B=True,
                                 policy=stage1_policy,
                             )
-                            T.copy(
-                                up_w[
-                                    expert_id,
-                                    by * stage1_block_n : (by + 1) * stage1_block_n,
-                                    k * stage1_block_k : (k + 1) * stage1_block_k,
-                                ],
-                                up_weight_shared,
-                            )
+                            T.copy(w_stage, up_weight_shared)
                             T.gemm(
                                 input_shared,
                                 up_weight_shared,
@@ -815,7 +939,7 @@ def _moe_forward_kernel(
                         # zeroing here would only add store traffic.
                         if i < actual_rows:
                             up_logits[
-                                block_start + i,
+                                row_base + i,
                                 by * stage1_block_n + j,
                             ] = up_local[i, j]
 
@@ -842,6 +966,19 @@ def _moe_forward_kernel(
                 out_shared = T.alloc_shared(
                     (block_m, stage2_block_n), dtype=dtype
                 )
+            # The paired second down-weight tile, staged in registers for the same
+            # reason as stage 1's up-weight tile.  This scope is the one place where
+            # the staging competes with the register budget: at `stage2_unroll = 2` it
+            # needs 244 + 16 registers a thread, the CU falls to one resident block
+            # and Config2/3 lose 10%.  At `stage2_unroll = 1` the whole scope fits in
+            # 238 and the staging is worth -3.9% on the main scope, -5.6% on the tail.
+            d_stage = T.alloc_fragment(
+                (stage2_block_n, stage2_block_k), dtype=dtype
+            )
+            T.annotate_layout({
+                up_tile_shared: tilelang.maca.intrinsics.make_mma_swizzle_layout(up_tile_shared, vecSize=4),
+                down_shared: tilelang.maca.intrinsics.make_mma_swizzle_layout(down_shared, vecSize=4),
+            })
             route_dtype = dtype if hidden == 2048 else T.float32
             route_weight_local = T.alloc_fragment((block_m,), dtype=route_dtype)
             T.use_swizzle(stage2_swizzle)
@@ -859,6 +996,17 @@ def _moe_forward_kernel(
             raw_start = group_offsets[expert_id]
             padded_start = group_padded_offsets[expert_id]
             token_offset = block_start - padded_start
+            # The OJ hands us rows at *padded* positions, so the row index is
+            # `block_start + i`.  The starter kit's harness
+            # (`compat/custom_fusedmoe.py`) packs them *unpacked* instead, with the
+            # same expert-aligned block mapping, so there the row index is
+            # `group_offsets[e] + token_offset + i`.  `unpadded_rows` is a compile-time
+            # Python flag: at its default the expression below *is* `block_start`, so the
+            # graded device code is byte-identical (check_equiv.py proves it).
+            if unpadded_rows:
+                row_base = group_offsets[expert_id] + token_offset
+            else:
+                row_base = block_start
             actual_rows = T.max(
                 0, T.min(block_m, group_size - token_offset)
             )
@@ -878,7 +1026,7 @@ def _moe_forward_kernel(
                 ):
                     T.copy(
                         up_logits[
-                            block_start : block_start + block_m,
+                            row_base : row_base + block_m,
                             k * stage2_block_k : (k + 1) * stage2_block_k,
                         ],
                         up_tile_shared,
@@ -892,13 +1040,6 @@ def _moe_forward_kernel(
                         ],
                         down_shared,
                     )
-                    T.gemm(
-                        up_tile_shared,
-                        down_shared,
-                        out_local,
-                        transpose_B=True,
-                        policy=stage2_policy,
-                    )
                     if stage2_pair == 2:
                         T.copy(
                             down_w[
@@ -907,8 +1048,17 @@ def _moe_forward_kernel(
                                 : (by * stage2_pair + 2) * stage2_block_n,
                                 k * stage2_block_k : (k + 1) * stage2_block_k,
                             ],
-                            down_shared,
+                            d_stage,
                         )
+                    T.gemm(
+                        up_tile_shared,
+                        down_shared,
+                        out_local,
+                        transpose_B=True,
+                        policy=stage2_policy,
+                    )
+                    if stage2_pair == 2:
+                        T.copy(d_stage, down_shared)
                         T.gemm(
                             up_tile_shared,
                             down_shared,
@@ -958,18 +1108,18 @@ def _moe_forward_kernel(
                         for i, j in T.Parallel(block_m, stage2_block_n):
                             if i < actual_rows:
                                 out[
-                                    block_start + i,
+                                    row_base + i,
                                     (by * stage2_pair) * stage2_block_n + j,
                                 ] = T.cast(out_local[i, j], dtype) * route_weight_local[i]
                                 out[
-                                    block_start + i,
+                                    row_base + i,
                                     (by * stage2_pair + 1) * stage2_block_n + j,
                                 ] = T.cast(out_local2[i, j], dtype) * route_weight_local[i]
                     else:
                         for i, j in T.Parallel(block_m, stage2_block_n):
                             if i < actual_rows:
                                 out[
-                                    block_start + i,
+                                    row_base + i,
                                     (by * stage2_pair) * stage2_block_n + j,
                                 ] = T.cast(
                                     out_local[i, j] * route_weight_local[i], dtype
@@ -977,7 +1127,7 @@ def _moe_forward_kernel(
                         for i, j in T.Parallel(block_m, stage2_block_n):
                             if i < actual_rows:
                                 out[
-                                    block_start + i,
+                                    row_base + i,
                                     (by * stage2_pair + 1) * stage2_block_n + j,
                                 ] = T.cast(
                                     out_local2[i, j] * route_weight_local[i], dtype
@@ -994,7 +1144,7 @@ def _moe_forward_kernel(
                     for i, j in T.Parallel(block_m, stage2_block_n):
                         if i < actual_rows:
                             out[
-                                block_start + i,
+                                row_base + i,
                                 by * stage2_block_n + j,
                             ] = out_shared[i, j]
         # Stage 2 for the same low-occupancy blocks; see the note above stage 1's
@@ -1022,6 +1172,13 @@ def _moe_forward_kernel(
                     out_shared = T.alloc_shared(
                         (tail_m, stage2_block_n), dtype=dtype
                     )
+                d_stage = T.alloc_fragment(
+                    (stage2_block_n, stage2_block_k), dtype=dtype
+                )
+                T.annotate_layout({
+                    up_tile_shared: tilelang.maca.intrinsics.make_mma_swizzle_layout(up_tile_shared, vecSize=4),
+                    down_shared: tilelang.maca.intrinsics.make_mma_swizzle_layout(down_shared, vecSize=4),
+                })
                 route_weight_local = T.alloc_fragment(
                     (tail_m,), dtype=T.float32
                 )
@@ -1037,6 +1194,17 @@ def _moe_forward_kernel(
                 raw_start = group_offsets[expert_id]
                 padded_start = group_padded_offsets[expert_id]
                 token_offset = block_start - padded_start
+                # The OJ hands us rows at *padded* positions, so the row index is
+                # `block_start + i`.  The starter kit's harness
+                # (`compat/custom_fusedmoe.py`) packs them *unpacked* instead, with the
+                # same expert-aligned block mapping, so there the row index is
+                # `group_offsets[e] + token_offset + i`.  `unpadded_rows` is a compile-time
+                # Python flag: at its default the expression below *is* `block_start`, so the
+                # graded device code is byte-identical (check_equiv.py proves it).
+                if unpadded_rows:
+                    row_base = group_offsets[expert_id] + token_offset
+                else:
+                    row_base = block_start
                 actual_rows = T.max(
                     0, T.min(external_block_m, group_size - token_offset)
                 )
@@ -1052,7 +1220,7 @@ def _moe_forward_kernel(
                     ):
                         T.copy(
                             up_logits[
-                                block_start : block_start + tail_m,
+                                row_base : row_base + tail_m,
                                 k * stage2_block_k : (k + 1) * stage2_block_k,
                             ],
                             up_tile_shared,
@@ -1066,13 +1234,6 @@ def _moe_forward_kernel(
                             ],
                             down_shared,
                         )
-                        T.gemm(
-                            up_tile_shared,
-                            down_shared,
-                            out_local,
-                            transpose_B=True,
-                            policy=stage2_policy,
-                        )
                         if stage2_pair == 2:
                             T.copy(
                                 down_w[
@@ -1081,8 +1242,17 @@ def _moe_forward_kernel(
                                     : (by * stage2_pair + 2) * stage2_block_n,
                                     k * stage2_block_k : (k + 1) * stage2_block_k,
                                 ],
-                                down_shared,
+                                d_stage,
                             )
+                        T.gemm(
+                            up_tile_shared,
+                            down_shared,
+                            out_local,
+                            transpose_B=True,
+                            policy=stage2_policy,
+                        )
+                        if stage2_pair == 2:
+                            T.copy(d_stage, down_shared)
                             T.gemm(
                                 up_tile_shared,
                                 down_shared,
@@ -1112,7 +1282,7 @@ def _moe_forward_kernel(
                         for i, j in T.Parallel(tail_m, stage2_block_n):
                             if i < actual_rows:
                                 out[
-                                    block_start + i,
+                                    row_base + i,
                                     (by * stage2_pair) * stage2_block_n + j,
                                 ] = T.cast(
                                     out_local[i, j] * route_weight_local[i], dtype
@@ -1120,7 +1290,7 @@ def _moe_forward_kernel(
                         for i, j in T.Parallel(tail_m, stage2_block_n):
                             if i < actual_rows:
                                 out[
-                                    block_start + i,
+                                    row_base + i,
                                     (by * stage2_pair + 1) * stage2_block_n + j,
                                 ] = T.cast(
                                     out_local2[i, j] * route_weight_local[i], dtype
@@ -1133,385 +1303,20 @@ def _moe_forward_kernel(
                         for i, j in T.Parallel(tail_m, stage2_block_n):
                             if i < actual_rows:
                                 out[
-                                    block_start + i,
+                                    row_base + i,
                                     by * stage2_block_n + j,
                                 ] = out_shared[i, j]
     return kernel
 
 
-@tilelang.jit(
-    pass_configs={tilelang.PassConfigKey.TL_DISABLE_WARP_SPECIALIZED: True}
-)
-def _hybrid_kernel(hidden, intermediate, experts, padded, valid, pairs, layout):
-    """M=64 TileLang path plus routed writeback for the vendor-BMM M=256 path."""
-    dtype = T.float16
-    accum_dtype = T.float32
-    block_m = 64
-    block_n = 128
-    block_k = 64
-    threads = 512
-    scale = 1.44269504
-
-    @T.prim_func
-    def kernel(
-        tokens: T.Tensor((padded, hidden), dtype),
-        gate_w: T.Tensor((experts, intermediate, hidden), dtype),
-        up_w: T.Tensor((experts, intermediate, hidden), dtype),
-        down_w: T.Tensor((experts, hidden, intermediate), dtype),
-        routed_w: T.Tensor((valid,), T.float32),
-        group_sizes: T.Tensor((experts,), T.int32),
-        group_offsets: T.Tensor((experts + 1,), T.int32),
-        big_result: T.Tensor((pairs, 256, hidden), dtype),
-        up_logits: T.Tensor((padded, intermediate), dtype),
-        out: T.Tensor((padded, hidden), dtype),
-    ):
-        with T.Kernel(
-            pairs, T.ceildiv(intermediate, block_n), threads=threads
-        ) as (bx, by):
-            input_shared = T.alloc_shared((block_m, block_k), dtype)
-            weight_shared = T.alloc_shared((block_n, block_k), dtype)
-            gate_local = T.alloc_fragment((block_m, block_n), accum_dtype)
-            up_local = T.alloc_fragment((block_m, block_n), accum_dtype)
-            T.use_swizzle(8)
-
-            if layout == 1:
-                expert = bx * 2
-                block_start = bx * 384
-            elif layout == 2:
-                expert = bx * 2 + 1
-                block_start = bx * 384 + 256
-            elif layout == 3:
-                expert = bx
-                block_start = bx * 128
-            else:
-                expert = pairs + bx
-                block_start = pairs * 256 + bx * 128
-            actual_rows = group_sizes[expert]
-            T.clear(gate_local)
-            T.clear(up_local)
-            for k in T.Pipelined(T.ceildiv(hidden, block_k), num_stages=0):
-                T.copy(
-                    tokens[
-                        block_start : block_start + block_m,
-                        k * block_k : (k + 1) * block_k,
-                    ],
-                    input_shared,
-                )
-                T.copy(
-                    gate_w[
-                        expert,
-                        by * block_n : (by + 1) * block_n,
-                        k * block_k : (k + 1) * block_k,
-                    ],
-                    weight_shared,
-                )
-                T.gemm(
-                    input_shared,
-                    weight_shared,
-                    gate_local,
-                    transpose_B=True,
-                    policy=T.GemmWarpPolicy.Square,
-                )
-                T.copy(
-                    up_w[
-                        expert,
-                        by * block_n : (by + 1) * block_n,
-                        k * block_k : (k + 1) * block_k,
-                    ],
-                    weight_shared,
-                )
-                T.gemm(
-                    input_shared,
-                    weight_shared,
-                    up_local,
-                    transpose_B=True,
-                    policy=T.GemmWarpPolicy.Square,
-                )
-            for i, j in T.Parallel(block_m, block_n):
-                gate_local[i, j] = gate_local[i, j] * (
-                    1.0 / (1.0 + T.exp2(-gate_local[i, j] * scale))
-                )
-                if i < actual_rows:
-                    up_logits[block_start + i, by * block_n + j] = T.cast(
-                        up_local[i, j] * gate_local[i, j], dtype
-                    )
-
-        with T.Kernel(
-            pairs, T.ceildiv(hidden, block_n * 2), threads=threads
-        ) as (bx, by):
-            up_shared = T.alloc_shared((block_m, block_k), dtype)
-            down_shared = T.alloc_shared((block_n, block_k), dtype)
-            out_local0 = T.alloc_fragment((block_m, block_n), accum_dtype)
-            out_local1 = T.alloc_fragment((block_m, block_n), accum_dtype)
-            route_local = T.alloc_fragment((block_m,), T.float32)
-            T.use_swizzle(T.ceildiv(hidden, block_n * 2))
-
-            if layout == 1:
-                expert = bx * 2
-                block_start = bx * 384
-            elif layout == 2:
-                expert = bx * 2 + 1
-                block_start = bx * 384 + 256
-            elif layout == 3:
-                expert = bx
-                block_start = bx * 128
-            else:
-                expert = pairs + bx
-                block_start = pairs * 256 + bx * 128
-            actual_rows = group_sizes[expert]
-            raw_start = group_offsets[expert]
-            T.clear(out_local0)
-            T.clear(out_local1)
-            for k in T.Pipelined(T.ceildiv(intermediate, block_k), num_stages=0):
-                T.copy(
-                    up_logits[
-                        block_start : block_start + block_m,
-                        k * block_k : (k + 1) * block_k,
-                    ],
-                    up_shared,
-                )
-                T.copy(
-                    down_w[
-                        expert,
-                        (by * 2) * block_n : (by * 2 + 1) * block_n,
-                        k * block_k : (k + 1) * block_k,
-                    ],
-                    down_shared,
-                )
-                T.gemm(
-                    up_shared,
-                    down_shared,
-                    out_local0,
-                    transpose_B=True,
-                    policy=T.GemmWarpPolicy.Square,
-                )
-                T.copy(
-                    down_w[
-                        expert,
-                        (by * 2 + 1) * block_n : (by * 2 + 2) * block_n,
-                        k * block_k : (k + 1) * block_k,
-                    ],
-                    down_shared,
-                )
-                T.gemm(
-                    up_shared,
-                    down_shared,
-                    out_local1,
-                    transpose_B=True,
-                    policy=T.GemmWarpPolicy.Square,
-                )
-            for i in T.Parallel(block_m):
-                route_local[i] = T.if_then_else(
-                    i < actual_rows,
-                    routed_w[raw_start + i],
-                    T.cast(0, T.float32),
-                )
-            for i, j in T.Parallel(block_m, block_n):
-                if i < actual_rows:
-                    out[block_start + i, (by * 2) * block_n + j] = T.cast(
-                        out_local0[i, j] * route_local[i], dtype
-                    )
-            for i, j in T.Parallel(block_m, block_n):
-                if i < actual_rows:
-                    out[block_start + i, (by * 2 + 1) * block_n + j] = T.cast(
-                        out_local1[i, j] * route_local[i], dtype
-                    )
-
-        with T.Kernel(pairs, T.ceildiv(hidden, 256), threads=256) as (bx, by):
-            if layout == 1:
-                expert = bx * 2 + 1
-                block_start = bx * 384 + 128
-            elif layout == 2:
-                expert = bx * 2
-                block_start = bx * 384
-            elif layout == 3:
-                expert = pairs + bx
-                block_start = pairs * 128 + bx * 256
-            else:
-                expert = bx
-                block_start = bx * 256
-            actual_rows = group_sizes[expert]
-            raw_start = group_offsets[expert]
-            for i, j in T.Parallel(256, 256):
-                if i < actual_rows:
-                    out[block_start + i, by * 256 + j] = T.cast(
-                        big_result[bx, i, by * 256 + j]
-                        * routed_w[raw_start + i],
-                        dtype,
-                    )
-    return kernel
+# `_hybrid_kernel` and `_exact_hybrid_kernel` -- the v28-v35 line that split the work
+# between a vendor BMM and a TileLang kernel -- were deleted here on 2026-09-02.  The
+# organisers' list forbids PyTorch for the core computation, v36 already stopped
+# calling them, and keeping 370 lines of unreachable device code in the submitted file
+# only made it harder to audit against that list.  `git log` has them if the rules
+# change.
 
 
-@tilelang.jit(
-    pass_configs={tilelang.PassConfigKey.TL_DISABLE_WARP_SPECIALIZED: True}
-)
-def _exact_hybrid_kernel(hidden, intermediate, experts, padded, valid, cycles):
-    """Fuse the four one-block experts and scatter four zero-copy BMM batches."""
-    dtype = T.float16
-    accum_dtype = T.float32
-    block_m = 128
-    block_n = 128
-    block_k = 64
-    threads = 512
-    scale = 1.44269504
-
-    @T.prim_func
-    def kernel(
-        tokens: T.Tensor((padded, hidden), dtype),
-        gate_w: T.Tensor((experts, intermediate, hidden), dtype),
-        up_w: T.Tensor((experts, intermediate, hidden), dtype),
-        down_w: T.Tensor((experts, hidden, intermediate), dtype),
-        routed_w: T.Tensor((valid,), T.float32),
-        group_sizes: T.Tensor((experts,), T.int32),
-        group_offsets: T.Tensor((experts + 1,), T.int32),
-        group_padded_offsets: T.Tensor((experts + 1,), T.int32),
-        result2: T.Tensor((cycles, 176, hidden), dtype),
-        result4: T.Tensor((cycles, 208, hidden), dtype),
-        result6: T.Tensor((cycles, 176, hidden), dtype),
-        result7: T.Tensor((cycles, 176, hidden), dtype),
-        up_logits: T.Tensor((padded, intermediate), dtype),
-        out: T.Tensor((padded, hidden), dtype),
-    ):
-        with T.Kernel(cycles * 4, T.ceildiv(intermediate, block_n), threads=threads) as (bx, by):
-            input_shared = T.alloc_shared((block_m, block_k), dtype)
-            weight_shared = T.alloc_shared((block_n, block_k), dtype)
-            gate_local = T.alloc_fragment((block_m, block_n), accum_dtype)
-            up_local = T.alloc_fragment((block_m, block_n), accum_dtype)
-            T.use_swizzle(16)
-            cycle = bx // 4
-            slot = bx % 4
-            expert = cycle * 8 + T.if_then_else(
-                slot == 0,
-                0,
-                T.if_then_else(slot == 1, 1, T.if_then_else(slot == 2, 3, 5)),
-            )
-            row0 = group_padded_offsets[expert]
-            rows = group_sizes[expert]
-            T.clear(gate_local)
-            T.clear(up_local)
-            for k in T.Pipelined(T.ceildiv(hidden, block_k), num_stages=0):
-                T.copy(
-                    tokens[row0 : row0 + block_m,
-                           k * block_k : (k + 1) * block_k],
-                    input_shared,
-                )
-                T.copy(
-                    gate_w[expert, by * block_n : (by + 1) * block_n,
-                           k * block_k : (k + 1) * block_k],
-                    weight_shared,
-                )
-                T.gemm(input_shared, weight_shared, gate_local,
-                       transpose_B=True, policy=T.GemmWarpPolicy.Square)
-                T.copy(
-                    up_w[expert, by * block_n : (by + 1) * block_n,
-                         k * block_k : (k + 1) * block_k],
-                    weight_shared,
-                )
-                T.gemm(input_shared, weight_shared, up_local,
-                       transpose_B=True, policy=T.GemmWarpPolicy.Square)
-            for i, j in T.Parallel(block_m, block_n):
-                gate_local[i, j] = gate_local[i, j] * (
-                    1.0 / (1.0 + T.exp2(-gate_local[i, j] * scale))
-                )
-                if i < rows:
-                    up_logits[row0 + i, by * block_n + j] = T.cast(
-                        up_local[i, j] * gate_local[i, j], dtype
-                    )
-
-        with T.Kernel(cycles * 4, T.ceildiv(hidden, block_n * 2), threads=threads) as (bx, by):
-            input_shared = T.alloc_shared((block_m, block_k), dtype)
-            weight_shared = T.alloc_shared((block_n, block_k), dtype)
-            out_local0 = T.alloc_fragment((block_m, block_n), accum_dtype)
-            out_local1 = T.alloc_fragment((block_m, block_n), accum_dtype)
-            route_local = T.alloc_fragment((block_m,), T.float32)
-            T.use_swizzle(T.ceildiv(hidden, block_n * 2))
-            cycle = bx // 4
-            slot = bx % 4
-            expert = cycle * 8 + T.if_then_else(
-                slot == 0,
-                0,
-                T.if_then_else(slot == 1, 1, T.if_then_else(slot == 2, 3, 5)),
-            )
-            row0 = group_padded_offsets[expert]
-            raw0 = group_offsets[expert]
-            rows = group_sizes[expert]
-            T.clear(out_local0)
-            T.clear(out_local1)
-            for k in T.Pipelined(T.ceildiv(intermediate, block_k), num_stages=0):
-                T.copy(
-                    up_logits[row0 : row0 + block_m,
-                              k * block_k : (k + 1) * block_k],
-                    input_shared,
-                )
-                T.copy(
-                    down_w[expert, (by * 2) * block_n : (by * 2 + 1) * block_n,
-                            k * block_k : (k + 1) * block_k],
-                    weight_shared,
-                )
-                T.gemm(input_shared, weight_shared, out_local0,
-                       transpose_B=True, policy=T.GemmWarpPolicy.Square)
-                T.copy(
-                    down_w[expert, (by * 2 + 1) * block_n : (by * 2 + 2) * block_n,
-                            k * block_k : (k + 1) * block_k],
-                    weight_shared,
-                )
-                T.gemm(input_shared, weight_shared, out_local1,
-                       transpose_B=True, policy=T.GemmWarpPolicy.Square)
-            for i in T.Parallel(block_m):
-                route_local[i] = T.if_then_else(
-                    i < rows, routed_w[raw0 + i], T.cast(0, T.float32)
-                )
-            for i, j in T.Parallel(block_m, block_n):
-                if i < rows:
-                    out[row0 + i, (by * 2) * block_n + j] = T.cast(
-                        out_local0[i, j] * route_local[i], dtype
-                    )
-                    out[row0 + i, (by * 2 + 1) * block_n + j] = T.cast(
-                        out_local1[i, j] * route_local[i], dtype
-                    )
-
-        with T.Kernel(cycles * 4, T.ceildiv(hidden, 256), threads=256) as (bx, by):
-            cycle = bx // 4
-            slot = bx % 4
-            expert = cycle * 8 + T.if_then_else(
-                slot == 0,
-                2,
-                T.if_then_else(slot == 1, 4, T.if_then_else(slot == 2, 6, 7)),
-            )
-            row0 = group_padded_offsets[expert]
-            raw0 = group_offsets[expert]
-            rows = group_sizes[expert]
-            for i, j in T.Parallel(192, 256):
-                if i < rows:
-                    if slot == 0:
-                        out[row0 + i, by * 256 + j] = T.cast(
-                            result2[cycle, i, by * 256 + j]
-                            * routed_w[raw0 + i], dtype
-                        )
-                    elif slot == 1:
-                        out[row0 + i, by * 256 + j] = T.cast(
-                            result4[cycle, i, by * 256 + j]
-                            * routed_w[raw0 + i], dtype
-                        )
-                    elif slot == 2:
-                        out[row0 + i, by * 256 + j] = T.cast(
-                            result6[cycle, i, by * 256 + j]
-                            * routed_w[raw0 + i], dtype
-                        )
-                    else:
-                        out[row0 + i, by * 256 + j] = T.cast(
-                            result7[cycle, i, by * 256 + j]
-                            * routed_w[raw0 + i], dtype
-                        )
-    return kernel
-
-
-# Rows per millisecond of an M=64 tile relative to an M=128 one, measured on this
-# backend in stage 1 (1338 vs 2104 rows/ms).  M=64 computes fewer of the rows an
-# expert does not fill, but every sub-block that survives re-reads the whole weight
-# tile for its (expert, n-tile) and its wave tile is half as tall.  Kept as the
-# reason the tile below is always 128, not as a live parameter.
-_M64_REL_RATE = 0.636
 
 
 def _choose_block_m(num_experts, total_valid_tokens, num_blocks_m):
@@ -1569,6 +1374,7 @@ def _get_kernel(
     num_blocks_m,
     block_m,
     tail_rows,
+    unpadded_rows=0,
 ):
     key = (
         int(hidden),
@@ -1579,6 +1385,7 @@ def _get_kernel(
         int(num_blocks_m),
         int(block_m),
         int(tail_rows),
+        int(unpadded_rows),
     )
     kernel = _KERNEL_CACHE.get(key)
     if kernel is None:

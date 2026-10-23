@@ -1,0 +1,998 @@
+{
+  "command": [
+    "experiments/20261017_resume/probe_qo_floor.py",
+    "--output",
+    "experiments/20261017_resume/qo_copy_diagnostic.json"
+  ],
+  "not_a_submission": true,
+  "method": "Serial same-address CUDA graphs; all raw A/B/A timings retained; public NSA includes pack",
+  "copy_limitation": "Copy kernel omits all attention computation and KV traffic; measured copy time is not an NSA speedup claim",
+  "baseline_sha256": "900cf61225dbd2b86191ffe61b68baa49029ab3188c0c644d06b1dc866daac40",
+  "tool_sha256": "97a9fb039bef833d07e311e1656b80915052c8dd546128d066169bbf74f0a68a",
+  "rows": [
+    {
+      "case": "oj6",
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 32,
+        "is_causal": true
+      },
+      "logical_q_plus_o_bytes": 67108864,
+      "summaries": [
+        {
+          "label": "public_nsa",
+          "median_us": 67.00213352839152
+        },
+        {
+          "label": "attention_only_prepared_kv",
+          "median_us": 59.794131914774574
+        },
+        {
+          "label": "copy_tile2048_threads64",
+          "median_us": 47.9583998521169
+        },
+        {
+          "label": "copy_tile4096_threads128",
+          "median_us": 47.877333561579384
+        },
+        {
+          "label": "copy_tile8192_threads256",
+          "median_us": 47.90026744206746
+        },
+        {
+          "label": "copy_tile16384_threads256",
+          "median_us": 48.05440107981364
+        }
+      ],
+      "trials": [
+        [
+          67.01227029164632,
+          66.98986689249675,
+          66.97813669840495,
+          66.98880195617676,
+          67.78026421864827,
+          67.02079772949219,
+          66.99946721394856,
+          66.97173118591309,
+          67.0080025990804,
+          66.97813669840495,
+          66.98239644368489,
+          66.99306964874268,
+          66.98453426361084,
+          67.0197327931722,
+          67.02933311462402,
+          66.99519952138265,
+          67.04426606496175,
+          67.00479984283447,
+          67.0197327931722,
+          67.05813407897949,
+          66.99306964874268,
+          67.01119740804036,
+          66.98453426361084,
+          67.02400048573811,
+          66.99840227762859,
+          67.03146298726399,
+          67.06133683522542,
+          67.00906753540039,
+          67.03146298726399,
+          67.03680356343587,
+          67.02400048573811,
+          67.01013247172038,
+          67.02720324198405,
+          67.02720324198405,
+          67.03573067982991,
+          67.01760292053223,
+          67.01119740804036,
+          67.03253587086995,
+          66.99519952138265,
+          67.0144001642863,
+          66.97173118591309,
+          67.02720324198405,
+          67.0197327931722,
+          67.02079772949219,
+          66.98773701985677,
+          66.97813669840495,
+          66.97920163472493,
+          67.00053215026855,
+          67.05066363016765,
+          67.0026699701945,
+          66.98880195617676,
+          66.97173118591309,
+          66.98559919993083,
+          67.00692971547444,
+          67.01013247172038,
+          66.98880195617676,
+          67.00159708658855,
+          66.96746349334717,
+          67.01653003692627,
+          66.99732939402263,
+          66.99306964874268,
+          67.0026699701945,
+          66.98666413625081,
+          66.98239644368489,
+          67.02933311462402,
+          66.96853637695312,
+          67.01653003692627,
+          66.96746349334717,
+          66.99519952138265,
+          66.99413458506267,
+          67.00053215026855,
+          66.99199676513672,
+          66.99199676513672,
+          67.02079772949219,
+          67.0741319656372,
+          66.99626445770264,
+          66.99306964874268,
+          66.98559919993083,
+          67.02293554941814,
+          66.98666413625081,
+          66.98986689249675,
+          66.98026657104492,
+          66.96746349334717,
+          67.00479984283447,
+          66.96000099182129,
+          67.00373490651448,
+          66.98346932729085,
+          67.0026699701945,
+          66.99306964874268,
+          67.0197327931722,
+          66.97279612223308,
+          67.00692971547444,
+          67.04533100128174,
+          66.97493394215901,
+          67.01013247172038,
+          67.01866785685222,
+          66.98133150736491,
+          67.00479984283447,
+          66.99626445770264,
+          67.03360080718994,
+          66.98773701985677,
+          67.01013247172038,
+          67.00053215026855,
+          66.99199676513672,
+          66.99626445770264,
+          66.99732939402263,
+          67.0026699701945,
+          66.99840227762859,
+          67.03360080718994,
+          67.0634667078654,
+          67.22026666005452,
+          67.11040337880452,
+          66.97279612223308,
+          66.98239644368489,
+          66.98880195617676,
+          67.00373490651448,
+          67.02933311462402,
+          67.00479984283447,
+          67.04320112864177,
+          66.99519952138265
+        ],
+        [
+          {
+            "before_public_us": 67.01227029164632,
+            "diagnostic_us": 59.791998068491615,
+            "after_public_us": 66.98986689249675
+          },
+          {
+            "before_public_us": 67.0197327931722,
+            "diagnostic_us": 59.809064865112305,
+            "after_public_us": 67.05813407897949
+          },
+          {
+            "before_public_us": 66.99306964874268,
+            "diagnostic_us": 59.82186794281006,
+            "after_public_us": 67.01119740804036
+          },
+          {
+            "before_public_us": 66.99519952138265,
+            "diagnostic_us": 59.79626576105753,
+            "after_public_us": 67.0144001642863
+          },
+          {
+            "before_public_us": 66.97173118591309,
+            "diagnostic_us": 59.78133281071981,
+            "after_public_us": 67.02720324198405
+          },
+          {
+            "before_public_us": 67.01653003692627,
+            "diagnostic_us": 59.80693499247233,
+            "after_public_us": 66.99732939402263
+          },
+          {
+            "before_public_us": 66.99306964874268,
+            "diagnostic_us": 59.784531593322754,
+            "after_public_us": 67.0026699701945
+          },
+          {
+            "before_public_us": 67.02293554941814,
+            "diagnostic_us": 59.80799992879232,
+            "after_public_us": 66.98666413625081
+          },
+          {
+            "before_public_us": 66.98986689249675,
+            "diagnostic_us": 59.91679827372233,
+            "after_public_us": 66.98026657104492
+          },
+          {
+            "before_public_us": 66.99626445770264,
+            "diagnostic_us": 59.78346665700277,
+            "after_public_us": 67.03360080718994
+          },
+          {
+            "before_public_us": 66.98773701985677,
+            "diagnostic_us": 59.769598642985024,
+            "after_public_us": 67.01013247172038
+          },
+          {
+            "before_public_us": 67.04320112864177,
+            "diagnostic_us": 59.789868195851646,
+            "after_public_us": 66.99519952138265
+          }
+        ],
+        [
+          {
+            "before_public_us": 66.97813669840495,
+            "diagnostic_us": 48.22400013605753,
+            "after_public_us": 66.98880195617676
+          },
+          {
+            "before_public_us": 67.04426606496175,
+            "diagnostic_us": 47.96479940414429,
+            "after_public_us": 67.00479984283447
+          },
+          {
+            "before_public_us": 66.98453426361084,
+            "diagnostic_us": 47.995734214782715,
+            "after_public_us": 67.02400048573811
+          },
+          {
+            "before_public_us": 67.01119740804036,
+            "diagnostic_us": 48.005334536234535,
+            "after_public_us": 67.03253587086995
+          },
+          {
+            "before_public_us": 67.0197327931722,
+            "diagnostic_us": 47.944533824920654,
+            "after_public_us": 67.02079772949219
+          },
+          {
+            "before_public_us": 67.00159708658855,
+            "diagnostic_us": 47.97333478927612,
+            "after_public_us": 66.96746349334717
+          },
+          {
+            "before_public_us": 66.98666413625081,
+            "diagnostic_us": 47.94880151748657,
+            "after_public_us": 66.98239644368489
+          },
+          {
+            "before_public_us": 66.99306964874268,
+            "diagnostic_us": 47.952000300089516,
+            "after_public_us": 66.98559919993083
+          },
+          {
+            "before_public_us": 66.96746349334717,
+            "diagnostic_us": 47.927467028299965,
+            "after_public_us": 67.00479984283447
+          },
+          {
+            "before_public_us": 66.98133150736491,
+            "diagnostic_us": 47.94559876124064,
+            "after_public_us": 67.00479984283447
+          },
+          {
+            "before_public_us": 67.00053215026855,
+            "diagnostic_us": 47.94346491495768,
+            "after_public_us": 66.99199676513672
+          },
+          {
+            "before_public_us": 67.02933311462402,
+            "diagnostic_us": 47.96479940414429,
+            "after_public_us": 67.00479984283447
+          }
+        ],
+        [
+          {
+            "before_public_us": 67.78026421864827,
+            "diagnostic_us": 47.88479804992676,
+            "after_public_us": 67.02079772949219
+          },
+          {
+            "before_public_us": 67.02933311462402,
+            "diagnostic_us": 47.87520170211792,
+            "after_public_us": 66.99519952138265
+          },
+          {
+            "before_public_us": 66.99840227762859,
+            "diagnostic_us": 47.88053433100382,
+            "after_public_us": 67.03146298726399
+          },
+          {
+            "before_public_us": 67.03573067982991,
+            "diagnostic_us": 47.876266638437905,
+            "after_public_us": 67.01760292053223
+          },
+          {
+            "before_public_us": 66.98773701985677,
+            "diagnostic_us": 47.87840048472086,
+            "after_public_us": 66.97813669840495
+          },
+          {
+            "before_public_us": 67.01013247172038,
+            "diagnostic_us": 47.852798302968345,
+            "after_public_us": 66.98880195617676
+          },
+          {
+            "before_public_us": 67.02933311462402,
+            "diagnostic_us": 47.83466657002767,
+            "after_public_us": 66.96853637695312
+          },
+          {
+            "before_public_us": 67.0741319656372,
+            "diagnostic_us": 47.906132539113365,
+            "after_public_us": 66.99626445770264
+          },
+          {
+            "before_public_us": 66.96000099182129,
+            "diagnostic_us": 47.864532470703125,
+            "after_public_us": 67.00373490651448
+          },
+          {
+            "before_public_us": 67.01013247172038,
+            "diagnostic_us": 47.879465421040855,
+            "after_public_us": 67.01866785685222
+          },
+          {
+            "before_public_us": 66.99626445770264,
+            "diagnostic_us": 47.88800080617269,
+            "after_public_us": 66.99732939402263
+          },
+          {
+            "before_public_us": 66.98880195617676,
+            "diagnostic_us": 47.8656013806661,
+            "after_public_us": 67.00373490651448
+          }
+        ],
+        [
+          {
+            "before_public_us": 66.99946721394856,
+            "diagnostic_us": 47.900799910227455,
+            "after_public_us": 66.97173118591309
+          },
+          {
+            "before_public_us": 66.98453426361084,
+            "diagnostic_us": 47.91359901428223,
+            "after_public_us": 67.0197327931722
+          },
+          {
+            "before_public_us": 67.06133683522542,
+            "diagnostic_us": 47.87840048472086,
+            "after_public_us": 67.00906753540039
+          },
+          {
+            "before_public_us": 67.02720324198405,
+            "diagnostic_us": 47.926398118337,
+            "after_public_us": 67.02720324198405
+          },
+          {
+            "before_public_us": 66.97920163472493,
+            "diagnostic_us": 47.91680177052816,
+            "after_public_us": 67.00053215026855
+          },
+          {
+            "before_public_us": 66.98559919993083,
+            "diagnostic_us": 47.90933529535929,
+            "after_public_us": 67.00692971547444
+          },
+          {
+            "before_public_us": 67.01653003692627,
+            "diagnostic_us": 47.89653221766154,
+            "after_public_us": 66.96746349334717
+          },
+          {
+            "before_public_us": 66.99199676513672,
+            "diagnostic_us": 47.940266132354736,
+            "after_public_us": 67.02079772949219
+          },
+          {
+            "before_public_us": 66.98346932729085,
+            "diagnostic_us": 47.89973497390747,
+            "after_public_us": 67.0026699701945
+          },
+          {
+            "before_public_us": 67.04533100128174,
+            "diagnostic_us": 47.89973497390747,
+            "after_public_us": 66.97493394215901
+          },
+          {
+            "before_public_us": 67.0026699701945,
+            "diagnostic_us": 47.88266817728678,
+            "after_public_us": 66.99840227762859
+          },
+          {
+            "before_public_us": 66.97279612223308,
+            "diagnostic_us": 47.88479804992676,
+            "after_public_us": 66.98239644368489
+          }
+        ],
+        [
+          {
+            "before_public_us": 67.0080025990804,
+            "diagnostic_us": 48.01919857660929,
+            "after_public_us": 66.97813669840495
+          },
+          {
+            "before_public_us": 66.98239644368489,
+            "diagnostic_us": 48.08319807052612,
+            "after_public_us": 66.99306964874268
+          },
+          {
+            "before_public_us": 67.03146298726399,
+            "diagnostic_us": 48.06079864501953,
+            "after_public_us": 67.03680356343587
+          },
+          {
+            "before_public_us": 67.02400048573811,
+            "diagnostic_us": 48.056534926096596,
+            "after_public_us": 67.01013247172038
+          },
+          {
+            "before_public_us": 67.05066363016765,
+            "diagnostic_us": 48.06826512018839,
+            "after_public_us": 67.0026699701945
+          },
+          {
+            "before_public_us": 66.98880195617676,
+            "diagnostic_us": 48.05013338724772,
+            "after_public_us": 66.97173118591309
+          },
+          {
+            "before_public_us": 66.99519952138265,
+            "diagnostic_us": 48.024535179138184,
+            "after_public_us": 66.99413458506267
+          },
+          {
+            "before_public_us": 67.00053215026855,
+            "diagnostic_us": 48.071467876434326,
+            "after_public_us": 66.99199676513672
+          },
+          {
+            "before_public_us": 66.99306964874268,
+            "diagnostic_us": 48.039468129475914,
+            "after_public_us": 67.0197327931722
+          },
+          {
+            "before_public_us": 66.97279612223308,
+            "diagnostic_us": 48.022401332855225,
+            "after_public_us": 67.00692971547444
+          },
+          {
+            "before_public_us": 67.03360080718994,
+            "diagnostic_us": 48.05226723353068,
+            "after_public_us": 67.0634667078654
+          },
+          {
+            "before_public_us": 67.22026666005452,
+            "diagnostic_us": 48.10453255971273,
+            "after_public_us": 67.11040337880452
+          }
+        ]
+      ],
+      "copy_kernel_sources": [
+        {
+          "label": "copy_tile2048_threads64",
+          "source": "#include <tl_templates/maca/gemm.h>\n#include <tl_templates/maca/copy.h>\n#include <tl_templates/maca/reduce.h>\n#include <tl_templates/maca/intrin.h>\n#include <tl_templates/maca/atomic.h>\n#include <tl_templates/maca/threadblock_swizzle.h>\n#include <tl_templates/maca/debug.h>\n\nextern \"C\" __global__ void kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output);\nextern \"C\" __global__ void __launch_bounds__(64, 1) kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output) {\n  half_t values[32];\n  #pragma unroll\n  for (int i = 0; i < 4; ++i) {\n    *(uint4*)(values + (i * 8)) = *(uint4*)(Input + (((((int)blockIdx.x) * 2048) + (i * 512)) + (((int)threadIdx.x) * 8)));\n  }\n  #pragma unroll\n  for (int i_1 = 0; i_1 < 4; ++i_1) {\n    *(uint4*)(Output + (((((int)blockIdx.x) * 2048) + (i_1 * 512)) + (((int)threadIdx.x) * 8))) = *(uint4*)(values + (i_1 * 8));\n  }\n}\n\n"
+        },
+        {
+          "label": "copy_tile4096_threads128",
+          "source": "#include <tl_templates/maca/gemm.h>\n#include <tl_templates/maca/copy.h>\n#include <tl_templates/maca/reduce.h>\n#include <tl_templates/maca/intrin.h>\n#include <tl_templates/maca/atomic.h>\n#include <tl_templates/maca/threadblock_swizzle.h>\n#include <tl_templates/maca/debug.h>\n\nextern \"C\" __global__ void kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output);\nextern \"C\" __global__ void __launch_bounds__(128, 1) kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output) {\n  half_t values[32];\n  #pragma unroll\n  for (int i = 0; i < 4; ++i) {\n    *(uint4*)(values + (i * 8)) = *(uint4*)(Input + (((((int)blockIdx.x) * 4096) + (i * 1024)) + (((int)threadIdx.x) * 8)));\n  }\n  #pragma unroll\n  for (int i_1 = 0; i_1 < 4; ++i_1) {\n    *(uint4*)(Output + (((((int)blockIdx.x) * 4096) + (i_1 * 1024)) + (((int)threadIdx.x) * 8))) = *(uint4*)(values + (i_1 * 8));\n  }\n}\n\n"
+        },
+        {
+          "label": "copy_tile8192_threads256",
+          "source": "#include <tl_templates/maca/gemm.h>\n#include <tl_templates/maca/copy.h>\n#include <tl_templates/maca/reduce.h>\n#include <tl_templates/maca/intrin.h>\n#include <tl_templates/maca/atomic.h>\n#include <tl_templates/maca/threadblock_swizzle.h>\n#include <tl_templates/maca/debug.h>\n\nextern \"C\" __global__ void kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output);\nextern \"C\" __global__ void __launch_bounds__(256, 1) kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output) {\n  half_t values[32];\n  #pragma unroll\n  for (int i = 0; i < 4; ++i) {\n    *(uint4*)(values + (i * 8)) = *(uint4*)(Input + (((((int)blockIdx.x) * 8192) + (i * 2048)) + (((int)threadIdx.x) * 8)));\n  }\n  #pragma unroll\n  for (int i_1 = 0; i_1 < 4; ++i_1) {\n    *(uint4*)(Output + (((((int)blockIdx.x) * 8192) + (i_1 * 2048)) + (((int)threadIdx.x) * 8))) = *(uint4*)(values + (i_1 * 8));\n  }\n}\n\n"
+        },
+        {
+          "label": "copy_tile16384_threads256",
+          "source": "#include <tl_templates/maca/gemm.h>\n#include <tl_templates/maca/copy.h>\n#include <tl_templates/maca/reduce.h>\n#include <tl_templates/maca/intrin.h>\n#include <tl_templates/maca/atomic.h>\n#include <tl_templates/maca/threadblock_swizzle.h>\n#include <tl_templates/maca/debug.h>\n\nextern \"C\" __global__ void kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output);\nextern \"C\" __global__ void __launch_bounds__(256, 1) kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output) {\n  half_t values[64];\n  #pragma unroll\n  for (int i = 0; i < 8; ++i) {\n    *(uint4*)(values + (i * 8)) = *(uint4*)(Input + (((((int)blockIdx.x) * 16384) + (i * 2048)) + (((int)threadIdx.x) * 8)));\n  }\n  #pragma unroll\n  for (int i_1 = 0; i_1 < 8; ++i_1) {\n    *(uint4*)(Output + (((((int)blockIdx.x) * 16384) + (i_1 * 2048)) + (((int)threadIdx.x) * 8))) = *(uint4*)(values + (i_1 * 8));\n  }\n}\n\n"
+        }
+      ]
+    },
+    {
+      "case": "oj12",
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 8,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "logical_q_plus_o_bytes": 16777216,
+      "summaries": [
+        {
+          "label": "public_nsa",
+          "median_us": 47.9146679242452
+        },
+        {
+          "label": "attention_only_prepared_kv",
+          "median_us": 43.795200188954674
+        },
+        {
+          "label": "copy_tile2048_threads64",
+          "median_us": 13.645866513252258
+        },
+        {
+          "label": "copy_tile4096_threads128",
+          "median_us": 13.497066497802734
+        },
+        {
+          "label": "copy_tile8192_threads256",
+          "median_us": 13.57013334830602
+        },
+        {
+          "label": "copy_tile16384_threads256",
+          "median_us": 13.841599722703297
+        }
+      ],
+      "trials": [
+        [
+          47.903998692830406,
+          47.91253407796224,
+          47.89226849873861,
+          47.879465421040855,
+          47.903998692830406,
+          47.88479804992676,
+          47.9146679242452,
+          48.05546601613363,
+          47.902933756510414,
+          47.91359901428223,
+          47.91359901428223,
+          47.91040023167928,
+          47.93599843978882,
+          47.89653221766154,
+          47.91040023167928,
+          47.926398118337,
+          48.166398207346596,
+          47.89653221766154,
+          47.915732860565186,
+          48.06933403015137,
+          47.902933756510414,
+          47.89973497390747,
+          47.92213439941406,
+          47.89760112762451,
+          48.092798391977944,
+          48.044800758361816,
+          47.91253407796224,
+          47.92106548945109,
+          47.91253407796224,
+          47.92853196461996,
+          47.89760112762451,
+          47.908266385396324,
+          47.92319933573405,
+          47.90186484654745,
+          47.95093139012655,
+          47.90720144907633,
+          47.91893164316813,
+          47.900799910227455,
+          47.89653221766154,
+          47.89973497390747,
+          47.88693189620972,
+          48.17493359247843,
+          48.08319807052612,
+          47.92426824569702,
+          47.94133504231771,
+          47.891199588775635,
+          47.90506760279337,
+          47.906132539113365,
+          47.89973497390747,
+          47.932799657185875,
+          47.89546728134155,
+          47.89226849873861,
+          47.91359901428223,
+          47.908266385396324,
+          47.96266555786133,
+          47.91253407796224,
+          47.93920119603475,
+          47.93386856714884,
+          47.90720144907633,
+          47.94133504231771,
+          48.05866479873657,
+          47.930665810902916,
+          47.92319933573405,
+          47.92106548945109,
+          47.91893164316813,
+          47.927467028299965,
+          47.94133504231771,
+          47.89653221766154,
+          47.93813228607178,
+          47.91040023167928,
+          47.930665810902916,
+          47.934933503468834,
+          47.91359901428223,
+          47.92853196461996,
+          47.93706734975179,
+          47.88586695988973,
+          47.898666063944496,
+          47.893333435058594,
+          47.96160062154134,
+          47.942399978637695,
+          47.93706734975179,
+          47.927467028299965,
+          47.93386856714884,
+          47.9146679242452,
+          47.92213439941406,
+          47.90933529535929,
+          48.05759986241659,
+          47.99893299738566,
+          47.97013203303019,
+          47.993600368499756,
+          47.981866200764976,
+          48.03626537322998,
+          47.981866200764976,
+          47.98719882965088,
+          47.96479940414429,
+          47.93599843978882,
+          47.94133504231771,
+          47.9200005531311,
+          47.91359901428223,
+          47.91359901428223,
+          47.89546728134155,
+          47.954134146372475,
+          47.90720144907633,
+          48.03626537322998,
+          47.9146679242452,
+          47.902933756510414,
+          47.9146679242452,
+          47.88800080617269,
+          47.87840048472086,
+          47.926398118337,
+          47.88800080617269,
+          47.893333435058594,
+          47.91359901428223,
+          47.93599843978882,
+          47.90933529535929,
+          47.90720144907633,
+          47.91146516799927,
+          47.91040023167928,
+          47.91680177052816,
+          47.89973497390747
+        ],
+        [
+          {
+            "before_public_us": 47.903998692830406,
+            "diagnostic_us": 43.800532817840576,
+            "after_public_us": 47.91253407796224
+          },
+          {
+            "before_public_us": 47.915732860565186,
+            "diagnostic_us": 43.778133392333984,
+            "after_public_us": 48.06933403015137
+          },
+          {
+            "before_public_us": 47.902933756510414,
+            "diagnostic_us": 43.79733403523763,
+            "after_public_us": 47.89973497390747
+          },
+          {
+            "before_public_us": 47.89653221766154,
+            "diagnostic_us": 43.75253518422445,
+            "after_public_us": 47.89973497390747
+          },
+          {
+            "before_public_us": 47.88693189620972,
+            "diagnostic_us": 43.793066342671715,
+            "after_public_us": 48.17493359247843
+          },
+          {
+            "before_public_us": 47.90720144907633,
+            "diagnostic_us": 43.81866852442423,
+            "after_public_us": 47.94133504231771
+          },
+          {
+            "before_public_us": 48.05866479873657,
+            "diagnostic_us": 43.785599867502846,
+            "after_public_us": 47.930665810902916
+          },
+          {
+            "before_public_us": 47.96160062154134,
+            "diagnostic_us": 43.80693435668945,
+            "after_public_us": 47.942399978637695
+          },
+          {
+            "before_public_us": 47.93706734975179,
+            "diagnostic_us": 43.814400831858315,
+            "after_public_us": 47.927467028299965
+          },
+          {
+            "before_public_us": 47.91359901428223,
+            "diagnostic_us": 43.886931737264,
+            "after_public_us": 47.91359901428223
+          },
+          {
+            "before_public_us": 47.89546728134155,
+            "diagnostic_us": 43.77280076344808,
+            "after_public_us": 47.954134146372475
+          },
+          {
+            "before_public_us": 47.91680177052816,
+            "diagnostic_us": 43.76960198084513,
+            "after_public_us": 47.89973497390747
+          }
+        ],
+        [
+          {
+            "before_public_us": 47.89226849873861,
+            "diagnostic_us": 13.65546683470408,
+            "after_public_us": 47.879465421040855
+          },
+          {
+            "before_public_us": 48.166398207346596,
+            "diagnostic_us": 13.610666990280151,
+            "after_public_us": 47.89653221766154
+          },
+          {
+            "before_public_us": 47.92213439941406,
+            "diagnostic_us": 13.633066415786743,
+            "after_public_us": 47.89760112762451
+          },
+          {
+            "before_public_us": 47.91893164316813,
+            "diagnostic_us": 13.615999619166056,
+            "after_public_us": 47.900799910227455
+          },
+          {
+            "before_public_us": 48.08319807052612,
+            "diagnostic_us": 13.66933286190033,
+            "after_public_us": 47.92426824569702
+          },
+          {
+            "before_public_us": 47.93920119603475,
+            "diagnostic_us": 13.681067029635111,
+            "after_public_us": 47.93386856714884
+          },
+          {
+            "before_public_us": 47.92319933573405,
+            "diagnostic_us": 13.688533504803976,
+            "after_public_us": 47.92106548945109
+          },
+          {
+            "before_public_us": 47.898666063944496,
+            "diagnostic_us": 13.640532890955607,
+            "after_public_us": 47.893333435058594
+          },
+          {
+            "before_public_us": 47.93386856714884,
+            "diagnostic_us": 13.641599814097086,
+            "after_public_us": 47.9146679242452
+          },
+          {
+            "before_public_us": 47.94133504231771,
+            "diagnostic_us": 13.677866260210672,
+            "after_public_us": 47.9200005531311
+          },
+          {
+            "before_public_us": 47.90720144907633,
+            "diagnostic_us": 13.65013321240743,
+            "after_public_us": 48.03626537322998
+          },
+          {
+            "before_public_us": 47.91146516799927,
+            "diagnostic_us": 13.637333114941915,
+            "after_public_us": 47.91040023167928
+          }
+        ],
+        [
+          {
+            "before_public_us": 47.903998692830406,
+            "diagnostic_us": 13.46560021241506,
+            "after_public_us": 47.88479804992676
+          },
+          {
+            "before_public_us": 47.91040023167928,
+            "diagnostic_us": 13.489066561063131,
+            "after_public_us": 47.926398118337
+          },
+          {
+            "before_public_us": 48.092798391977944,
+            "diagnostic_us": 13.612799843152365,
+            "after_public_us": 48.044800758361816
+          },
+          {
+            "before_public_us": 47.95093139012655,
+            "diagnostic_us": 13.481600085894266,
+            "after_public_us": 47.90720144907633
+          },
+          {
+            "before_public_us": 47.94133504231771,
+            "diagnostic_us": 13.552000125249227,
+            "after_public_us": 47.891199588775635
+          },
+          {
+            "before_public_us": 47.96266555786133,
+            "diagnostic_us": 13.493333260218302,
+            "after_public_us": 47.91253407796224
+          },
+          {
+            "before_public_us": 47.91893164316813,
+            "diagnostic_us": 13.505066434542337,
+            "after_public_us": 47.927467028299965
+          },
+          {
+            "before_public_us": 47.93706734975179,
+            "diagnostic_us": 13.496533036231995,
+            "after_public_us": 47.88586695988973
+          },
+          {
+            "before_public_us": 47.92213439941406,
+            "diagnostic_us": 13.492266337076822,
+            "after_public_us": 47.90933529535929
+          },
+          {
+            "before_public_us": 47.96479940414429,
+            "diagnostic_us": 13.917866349220276,
+            "after_public_us": 47.93599843978882
+          },
+          {
+            "before_public_us": 47.9146679242452,
+            "diagnostic_us": 13.497599959373474,
+            "after_public_us": 47.902933756510414
+          },
+          {
+            "before_public_us": 47.90933529535929,
+            "diagnostic_us": 13.513599832852682,
+            "after_public_us": 47.90720144907633
+          }
+        ],
+        [
+          {
+            "before_public_us": 47.9146679242452,
+            "diagnostic_us": 13.555199901262919,
+            "after_public_us": 48.05546601613363
+          },
+          {
+            "before_public_us": 47.93599843978882,
+            "diagnostic_us": 13.548800349235535,
+            "after_public_us": 47.89653221766154
+          },
+          {
+            "before_public_us": 47.91253407796224,
+            "diagnostic_us": 13.539200027783712,
+            "after_public_us": 47.92106548945109
+          },
+          {
+            "before_public_us": 47.92319933573405,
+            "diagnostic_us": 13.56160044670105,
+            "after_public_us": 47.90186484654745
+          },
+          {
+            "before_public_us": 47.90506760279337,
+            "diagnostic_us": 13.541332880655924,
+            "after_public_us": 47.906132539113365
+          },
+          {
+            "before_public_us": 47.91359901428223,
+            "diagnostic_us": 13.62666686375936,
+            "after_public_us": 47.908266385396324
+          },
+          {
+            "before_public_us": 47.94133504231771,
+            "diagnostic_us": 13.581867019335428,
+            "after_public_us": 47.89653221766154
+          },
+          {
+            "before_public_us": 47.91359901428223,
+            "diagnostic_us": 13.576533397038778,
+            "after_public_us": 47.92853196461996
+          },
+          {
+            "before_public_us": 48.05759986241659,
+            "diagnostic_us": 13.665067156155905,
+            "after_public_us": 47.99893299738566
+          },
+          {
+            "before_public_us": 47.981866200764976,
+            "diagnostic_us": 13.63093356291453,
+            "after_public_us": 47.98719882965088
+          },
+          {
+            "before_public_us": 47.9146679242452,
+            "diagnostic_us": 13.575466473897299,
+            "after_public_us": 47.88800080617269
+          },
+          {
+            "before_public_us": 47.91359901428223,
+            "diagnostic_us": 13.564800222714743,
+            "after_public_us": 47.93599843978882
+          }
+        ],
+        [
+          {
+            "before_public_us": 47.902933756510414,
+            "diagnostic_us": 13.844266533851624,
+            "after_public_us": 47.91359901428223
+          },
+          {
+            "before_public_us": 47.91359901428223,
+            "diagnostic_us": 13.827199737230936,
+            "after_public_us": 47.91040023167928
+          },
+          {
+            "before_public_us": 47.91253407796224,
+            "diagnostic_us": 13.986133535703024,
+            "after_public_us": 47.92853196461996
+          },
+          {
+            "before_public_us": 47.89760112762451,
+            "diagnostic_us": 13.8154665629069,
+            "after_public_us": 47.908266385396324
+          },
+          {
+            "before_public_us": 47.89973497390747,
+            "diagnostic_us": 13.814399639765421,
+            "after_public_us": 47.932799657185875
+          },
+          {
+            "before_public_us": 47.89546728134155,
+            "diagnostic_us": 13.858133554458618,
+            "after_public_us": 47.89226849873861
+          },
+          {
+            "before_public_us": 47.93813228607178,
+            "diagnostic_us": 13.859200477600098,
+            "after_public_us": 47.91040023167928
+          },
+          {
+            "before_public_us": 47.930665810902916,
+            "diagnostic_us": 13.838932911554972,
+            "after_public_us": 47.934933503468834
+          },
+          {
+            "before_public_us": 47.97013203303019,
+            "diagnostic_us": 13.969066739082336,
+            "after_public_us": 47.993600368499756
+          },
+          {
+            "before_public_us": 47.981866200764976,
+            "diagnostic_us": 13.9082670211792,
+            "after_public_us": 48.03626537322998
+          },
+          {
+            "before_public_us": 47.87840048472086,
+            "diagnostic_us": 13.820800185203552,
+            "after_public_us": 47.926398118337
+          },
+          {
+            "before_public_us": 47.88800080617269,
+            "diagnostic_us": 13.832533359527588,
+            "after_public_us": 47.893333435058594
+          }
+        ]
+      ],
+      "copy_kernel_sources": [
+        {
+          "label": "copy_tile2048_threads64",
+          "source": "#include <tl_templates/maca/gemm.h>\n#include <tl_templates/maca/copy.h>\n#include <tl_templates/maca/reduce.h>\n#include <tl_templates/maca/intrin.h>\n#include <tl_templates/maca/atomic.h>\n#include <tl_templates/maca/threadblock_swizzle.h>\n#include <tl_templates/maca/debug.h>\n\nextern \"C\" __global__ void kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output);\nextern \"C\" __global__ void __launch_bounds__(64, 1) kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output) {\n  half_t values[32];\n  #pragma unroll\n  for (int i = 0; i < 4; ++i) {\n    *(uint4*)(values + (i * 8)) = *(uint4*)(Input + (((((int)blockIdx.x) * 2048) + (i * 512)) + (((int)threadIdx.x) * 8)));\n  }\n  #pragma unroll\n  for (int i_1 = 0; i_1 < 4; ++i_1) {\n    *(uint4*)(Output + (((((int)blockIdx.x) * 2048) + (i_1 * 512)) + (((int)threadIdx.x) * 8))) = *(uint4*)(values + (i_1 * 8));\n  }\n}\n\n"
+        },
+        {
+          "label": "copy_tile4096_threads128",
+          "source": "#include <tl_templates/maca/gemm.h>\n#include <tl_templates/maca/copy.h>\n#include <tl_templates/maca/reduce.h>\n#include <tl_templates/maca/intrin.h>\n#include <tl_templates/maca/atomic.h>\n#include <tl_templates/maca/threadblock_swizzle.h>\n#include <tl_templates/maca/debug.h>\n\nextern \"C\" __global__ void kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output);\nextern \"C\" __global__ void __launch_bounds__(128, 1) kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output) {\n  half_t values[32];\n  #pragma unroll\n  for (int i = 0; i < 4; ++i) {\n    *(uint4*)(values + (i * 8)) = *(uint4*)(Input + (((((int)blockIdx.x) * 4096) + (i * 1024)) + (((int)threadIdx.x) * 8)));\n  }\n  #pragma unroll\n  for (int i_1 = 0; i_1 < 4; ++i_1) {\n    *(uint4*)(Output + (((((int)blockIdx.x) * 4096) + (i_1 * 1024)) + (((int)threadIdx.x) * 8))) = *(uint4*)(values + (i_1 * 8));\n  }\n}\n\n"
+        },
+        {
+          "label": "copy_tile8192_threads256",
+          "source": "#include <tl_templates/maca/gemm.h>\n#include <tl_templates/maca/copy.h>\n#include <tl_templates/maca/reduce.h>\n#include <tl_templates/maca/intrin.h>\n#include <tl_templates/maca/atomic.h>\n#include <tl_templates/maca/threadblock_swizzle.h>\n#include <tl_templates/maca/debug.h>\n\nextern \"C\" __global__ void kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output);\nextern \"C\" __global__ void __launch_bounds__(256, 1) kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output) {\n  half_t values[32];\n  #pragma unroll\n  for (int i = 0; i < 4; ++i) {\n    *(uint4*)(values + (i * 8)) = *(uint4*)(Input + (((((int)blockIdx.x) * 8192) + (i * 2048)) + (((int)threadIdx.x) * 8)));\n  }\n  #pragma unroll\n  for (int i_1 = 0; i_1 < 4; ++i_1) {\n    *(uint4*)(Output + (((((int)blockIdx.x) * 8192) + (i_1 * 2048)) + (((int)threadIdx.x) * 8))) = *(uint4*)(values + (i_1 * 8));\n  }\n}\n\n"
+        },
+        {
+          "label": "copy_tile16384_threads256",
+          "source": "#include <tl_templates/maca/gemm.h>\n#include <tl_templates/maca/copy.h>\n#include <tl_templates/maca/reduce.h>\n#include <tl_templates/maca/intrin.h>\n#include <tl_templates/maca/atomic.h>\n#include <tl_templates/maca/threadblock_swizzle.h>\n#include <tl_templates/maca/debug.h>\n\nextern \"C\" __global__ void kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output);\nextern \"C\" __global__ void __launch_bounds__(256, 1) kernel_kernel(const half_t* __restrict__ Input, half_t* __restrict__ Output) {\n  half_t values[64];\n  #pragma unroll\n  for (int i = 0; i < 8; ++i) {\n    *(uint4*)(values + (i * 8)) = *(uint4*)(Input + (((((int)blockIdx.x) * 16384) + (i * 2048)) + (((int)threadIdx.x) * 8)));\n  }\n  #pragma unroll\n  for (int i_1 = 0; i_1 < 8; ++i_1) {\n    *(uint4*)(Output + (((((int)blockIdx.x) * 16384) + (i_1 * 2048)) + (((int)threadIdx.x) * 8))) = *(uint4*)(values + (i_1 * 8));\n  }\n}\n\n"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "parent_sha256": "fb6b0fb5df10bc497841e9a0da922a0062f84689088c9503bc526aef71b9a976",
+  "variants": [
+    {
+      "file": "pow2_existing.py",
+      "sha256": "46df2b63c5e11e35cc43d9464c9716ccab54a6782dd1dc488183e73b2244d997",
+      "include_natural": false,
+      "changed_functions": {
+        "_coalesced_block_loads_prim_fp32_sum": 2,
+        "native_sparse_attention_q_preload": 2,
+        "native_sparse_attention_q_preload_vfirst": 2,
+        "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint": 2
+      }
+    },
+    {
+      "file": "pow2_all.py",
+      "sha256": "811aac4732d7d30a2f069d8fc30fefc76e3ae0133683c761939d05d0059d8765",
+      "include_natural": true,
+      "changed_functions": {
+        "_coalesced_block_loads_prim_boundary_v8": 1,
+        "_coalesced_block_loads_prim_fp32_mask": 1,
+        "_coalesced_block_loads_prim_fp32_sum": 2,
+        "_coalesced_block_loads_prim_oct8": 2,
+        "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast": 10,
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast": 10,
+        "native_sparse_attention_q_preload": 4,
+        "native_sparse_attention_q_preload_vfirst": 4,
+        "native_sparse_attention_short_list_oct8_sum_v11": 2,
+        "native_sparse_attention_short_list_oct8_wave_output_v15": 2,
+        "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint": 2,
+        "native_sparse_attention_staged_sparse_blocks_sum_v11": 2
+      }
+    }
+  ],
+  "invariants": "All score masks, normalization, FP32 emitter strings, layout, synchronization, packing, public interfaces and dispatch remain unchanged.",
+  "status": "unvalidated attention probes; scalar exp2 equivalence checked separately"
+}

@@ -1,0 +1,15 @@
+{
+  "file": "candidate_v12_submission.py",
+  "sha256": "4db9f13b8c3c1afb456eaef7c5425791e264c2906a4fd4046f56548ac8d19859",
+  "parent": "host_inline.py",
+  "parent_sha256": "659040e7ec05d1e26dd8cd89e5ea905d123bcea69cca1fd64f8eeda8ec6e6d2f",
+  "v11_sha256": "fc2d1f22d6bf769e7ef72c8c346ac586fbe85c2009bf171366dc8c883873d32e",
+  "changed_functions": [
+    "native_sparse_attention_online_emitter",
+    "native_sparse_attention",
+    "run_kernel"
+  ],
+  "dispatch_unchanged": true,
+  "original_positive_scale_expression_preserved": true,
+  "reason": "Masked -inf times a zero or negative scale may produce nonzero weights in the legacy online emitter; explicitly zero invalid tail/causal lanes after exponentiation."
+}

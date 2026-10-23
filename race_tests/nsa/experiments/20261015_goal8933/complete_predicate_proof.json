@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "rows": [
+    {
+      "block_size": 16,
+      "raw_index": "all int32",
+      "sequence_length": [
+        1,
+        2147483616
+      ],
+      "token": "all [0, sequence_length)",
+      "causal": "both",
+      "counterexample": "unsat"
+    },
+    {
+      "block_size": 32,
+      "raw_index": "all int32",
+      "sequence_length": [
+        1,
+        2147483584
+      ],
+      "token": "all [0, sequence_length)",
+      "causal": "both",
+      "counterexample": "unsat"
+    },
+    {
+      "block_size": 64,
+      "raw_index": "all int32",
+      "sequence_length": [
+        1,
+        2147483520
+      ],
+      "token": "all [0, sequence_length)",
+      "causal": "both",
+      "counterexample": "unsat"
+    }
+  ],
+  "unsigned_maximum_equivalence": "all uint32 values, unsat",
+  "note": "Only complete valid blocks enter the fast branch; partial, future, negative and oversized indices retain the original fallback."
+}

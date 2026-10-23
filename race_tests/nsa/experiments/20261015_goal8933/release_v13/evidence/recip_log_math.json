@@ -1,0 +1,65 @@
+{
+  "command": [
+    "experiments/20261015_goal8933/verify_recip_log_math.py",
+    "--output",
+    "experiments/20261015_goal8933/recip_log_math.json"
+  ],
+  "source_sha256": "b91ed982313cffa3302e898896f6f86586a745fb8fc35f7266127a08943a087e",
+  "generator_sha256": "5d213a815510d70be3caa80142bb3b5af859783532a5451abed91da2b1d03da7",
+  "inputs": 8755203,
+  "exhaustive_mantissa_exponent": 127,
+  "sampled_exponent_bits": [
+    1,
+    179
+  ],
+  "acceptance_bound": 2e-05,
+  "note": "Positive normal FP32 denominators plus zero/negative guards; FP64 CPU reciprocal reference.",
+  "rows": [
+    {
+      "mode": "direct",
+      "passed": true,
+      "max_relative_error": 8.718519950434711e-08,
+      "central_max_relative_error": 8.718519950434711e-08,
+      "worst_input": 1.9687258005142212,
+      "worst_output": 0.507942795753479,
+      "device_source_sha256": "67b46b170b2f99946da5e6a774c30e897c3f730d851efdd1a8a62c4d398c6555"
+    },
+    {
+      "mode": "newton2",
+      "passed": true,
+      "max_relative_error": 6.6211313978215e-06,
+      "central_max_relative_error": 6.6211313978215e-06,
+      "worst_input": 1.9998515844345093,
+      "worst_output": 0.5000337958335876,
+      "device_source_sha256": "e78a027ccb7b2be735fef207fdd8dbe0ebcf5db90d7f8f834a20252aa06d979f"
+    },
+    {
+      "mode": "exp2_log2",
+      "passed": true,
+      "max_relative_error": 2.7005751945807788e-06,
+      "central_max_relative_error": 7.143109854723662e-07,
+      "worst_input": 4.975087808690769e-26,
+      "worst_output": 2.010009346323401e+25,
+      "device_source_sha256": "b41e831571d858a5cb61ec1361fdecba49e8f44d98ecc33c87993323b1dd3aa4"
+    },
+    {
+      "mode": "exp_log",
+      "passed": true,
+      "max_relative_error": 7.968452067075305e-06,
+      "central_max_relative_error": 2.026049571668409e-06,
+      "worst_input": 3.589547850861701e-36,
+      "worst_output": 2.7858883904055123e+35,
+      "device_source_sha256": "a7dcc36c94199560d1a543bd93414778da62f178ce4d4828026ac0ab1badc66e"
+    },
+    {
+      "mode": "exp_log2",
+      "passed": true,
+      "max_relative_error": 7.968452067075305e-06,
+      "central_max_relative_error": 2.026049571668409e-06,
+      "worst_input": 3.589547850861701e-36,
+      "worst_output": 2.7858883904055123e+35,
+      "device_source_sha256": "c7b652f195908e77adf13027ec5e9ca9664329fdadd2397b68de902f68019315"
+    }
+  ],
+  "status": "PASS"
+}

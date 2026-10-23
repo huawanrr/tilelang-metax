@@ -1,0 +1,36 @@
+{
+  "baseline_sha256": "900cf61225dbd2b86191ffe61b68baa49029ab3188c0c644d06b1dc866daac40",
+  "functions": [
+    "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast"
+  ],
+  "variants": [
+    {
+      "path": "s8_output_exchange1.py",
+      "bits": 1,
+      "sha256": "4558a7672b84ca2a344429b55197a80124aa2eb11054274dc4afd35edbe399ab"
+    },
+    {
+      "path": "s8_output_exchange2.py",
+      "bits": 2,
+      "sha256": "cd40dcb718da0a2a6740528adf1af24305ab43c8781f78e61bd7e86e93482223"
+    }
+  ],
+  "output_proofs": [
+    {
+      "dim": 64,
+      "bits": 1,
+      "elements": 1024,
+      "unique_coverage": true,
+      "bit_preserving": true
+    },
+    {
+      "dim": 64,
+      "bits": 2,
+      "elements": 1024,
+      "unique_coverage": true,
+      "bit_preserving": true
+    }
+  ],
+  "scope": "Existing default D64 S8 mathcast builders only; all QK/PV, masking, summation and normalisation preserved"
+}

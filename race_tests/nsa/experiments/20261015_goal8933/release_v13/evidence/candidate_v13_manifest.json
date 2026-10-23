@@ -1,0 +1,31 @@
+{
+  "source": "d32_log_m1_e0.py",
+  "file": "candidate_v13.py",
+  "sha256": "49c5e4b40ba926ef0d9d687760a520306ccde4bc82b077907a5b3568b918b2ea",
+  "parent_sha256": "58bc2fd7a2aeb8ea805be63cc4aefae81487bcc39c3608fb5edc8293380888f9",
+  "changed_function": "native_sparse_attention_q_preload_vfirst",
+  "choice": "FP32 MMA lane reduction and exp(-log(x)) reciprocal, retaining late normalization. Only the existing small D32 builder changes; all public dispatch and other functions remain.",
+  "cold_selection": [
+    {
+      "file": "d32_log_cold_seed0.json",
+      "sha256": "8844b30dd9e9d0a9b02137e642dcc2b17c060cec3d4c0992be9780e484b0ccc1",
+      "seed": 0,
+      "control_speedup": 0.997574497574498,
+      "selected_speedup": 1.061186877994818,
+      "baseline_us": 3.838666666666625,
+      "selected_us": 3.6173333333333684
+    },
+    {
+      "file": "d32_log_cold_seed61.json",
+      "sha256": "6937ade203ccf24e707f52a024768084ec5e434a499994639aea957050a41b92",
+      "seed": 61,
+      "control_speedup": 0.998960138648167,
+      "selected_speedup": 1.0607287449392784,
+      "baseline_us": 3.8426666666666573,
+      "selected_us": 3.6226666666666336
+    }
+  ],
+  "official_score": null,
+  "official_target": 89.33,
+  "status": "awaiting final regression"
+}

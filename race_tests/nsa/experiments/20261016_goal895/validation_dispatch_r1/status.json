@@ -1,0 +1,204 @@
+{
+  "status": "PASS",
+  "module": "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/candidate_dispatch_r1.py",
+  "candidate_sha256": "d3c4e9f7417069efc0a0189d5754d4f8e765034c848c2219d32e869dd3b22080",
+  "parent_sha256": "49c5e4b40ba926ef0d9d687760a520306ccde4bc82b077907a5b3568b918b2ea",
+  "steps": [
+    {
+      "name": "submission_rules",
+      "command": [
+        "/opt/conda/bin/python",
+        "/data/tilelang-metax/race_tests/nsa/check_submission_nsa.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/candidate_dispatch_r1.py"
+      ],
+      "started": "2026-10-16T02:56:04.150238+00:00",
+      "returncode": 0,
+      "seconds": 0.7107026720041176,
+      "finished": "2026-10-16T02:56:04.861120+00:00"
+    },
+    {
+      "name": "reference",
+      "command": [
+        "/opt/conda/bin/python",
+        "/data/tilelang-metax/race_tests/nsa/verify_nsa.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/candidate_dispatch_r1.py",
+        "--cases",
+        "all",
+        "--extras",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/reference.json"
+      ],
+      "started": "2026-10-16T02:56:04.862324+00:00",
+      "returncode": 0,
+      "seconds": 61.61159687000327,
+      "finished": "2026-10-16T02:57:06.474100+00:00"
+    },
+    {
+      "name": "changed_families",
+      "command": [
+        "/opt/conda/bin/python",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/verify_dispatch_gpu.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/candidate_dispatch_r1.py",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/changed_families.json"
+      ],
+      "started": "2026-10-16T02:57:06.475466+00:00",
+      "returncode": 0,
+      "seconds": 211.51585865599918,
+      "finished": "2026-10-16T03:00:37.991532+00:00"
+    },
+    {
+      "name": "host_call",
+      "command": [
+        "/opt/conda/bin/python",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261014_resume8933/verify_host_call.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/candidate_dispatch_r1.py",
+        "--parent",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/baseline.py",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/host_call.json"
+      ],
+      "started": "2026-10-16T03:00:37.993008+00:00",
+      "returncode": 0,
+      "seconds": 50.528855803000624,
+      "finished": "2026-10-16T03:01:28.522091+00:00"
+    },
+    {
+      "name": "oj_graph",
+      "command": [
+        "/opt/conda/bin/python",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261005_goal8929/bracketed_audited.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/baseline.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/control.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/candidate_dispatch_r1.py",
+        "--case-file",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/cases.json",
+        "--cases",
+        "oj1,oj2,oj3,oj4,oj5,oj6,oj7,oj8,oj9,oj10,oj11,oj12,oj13,oj14",
+        "--seeds",
+        "0,61",
+        "--attempts",
+        "24",
+        "--repeat",
+        "400",
+        "--shared-pool",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/oj_graph.json"
+      ],
+      "started": "2026-10-16T03:01:28.523513+00:00",
+      "returncode": 0,
+      "seconds": 89.3410579909978,
+      "finished": "2026-10-16T03:02:57.864831+00:00"
+    },
+    {
+      "name": "family_graph",
+      "command": [
+        "/opt/conda/bin/python",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261005_goal8929/bracketed_audited.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/baseline.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/control.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/candidate_dispatch_r1.py",
+        "--case-file",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/cases.json",
+        "--cases",
+        "d128_b1_h1_t128_c1,d128_b1_h1_t144_c1,d128_b1_h1_t1264_c1,d128_b1_h1_t1280_c1,d128_b2_h3_t64_c1,d128_b16_h1_t16_c1,d64_b1_h1_t240_c1,d64_b1_h1_t256_c1,d64_b1_h1_t272_c1,d64_b1_h1_t384_c1,d64_b1_h1_t496_c1,d64_b1_h1_t511_c1,d64_b1_h1_t512_c1,d64_b1_h1_t513_c1,d64_b16_h1_t16_c1,d64_b1_h3_t96_c1,d64_b1_h4_t64_c1,d64_b1_h1_t256_c0",
+        "--seeds",
+        "0,61",
+        "--attempts",
+        "24",
+        "--repeat",
+        "240",
+        "--shared-pool",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/family_graph.json"
+      ],
+      "started": "2026-10-16T03:02:57.866302+00:00",
+      "returncode": 0,
+      "seconds": 75.62260339599743,
+      "finished": "2026-10-16T03:04:13.489185+00:00"
+    },
+    {
+      "name": "cold_seed0",
+      "command": [
+        "/opt/conda/bin/python",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261008_goal895/profile_cold.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/baseline.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/control.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/candidate_dispatch_r1.py",
+        "--case-file",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/cases.json",
+        "--cases",
+        "oj3,d64_b1_h1_t256_c1,d128_b1_h1_t1264_c1,d64_b1_h1_t496_c1,d128_b16_h1_t16_c1,d64_b16_h1_t16_c1",
+        "--seed",
+        "0",
+        "--rounds",
+        "6",
+        "--repeat",
+        "64",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/cold_seed0.json"
+      ],
+      "started": "2026-10-16T03:04:13.490617+00:00",
+      "returncode": 0,
+      "seconds": 48.136932321998756,
+      "finished": "2026-10-16T03:05:01.627839+00:00"
+    },
+    {
+      "name": "cold_seed61",
+      "command": [
+        "/opt/conda/bin/python",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261008_goal895/profile_cold.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/baseline.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/control.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/candidate_dispatch_r1.py",
+        "--case-file",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/cases.json",
+        "--cases",
+        "oj3,d64_b1_h1_t256_c1,d128_b1_h1_t1264_c1,d64_b1_h1_t496_c1,d128_b16_h1_t16_c1,d64_b16_h1_t16_c1",
+        "--seed",
+        "61",
+        "--rounds",
+        "6",
+        "--repeat",
+        "64",
+        "--output",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/cold_seed61.json"
+      ],
+      "started": "2026-10-16T03:05:01.629330+00:00",
+      "returncode": 0,
+      "seconds": 47.63582366101036,
+      "finished": "2026-10-16T03:05:49.265571+00:00"
+    },
+    {
+      "name": "actual_binary",
+      "command": [
+        "/opt/conda/bin/python",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261015_goal8933/audit_binary.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/baseline.py",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/candidate_dispatch_r1.py",
+        "--case-file",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/cases.json",
+        "--cases",
+        "oj1,oj2,oj3,oj4,oj5,oj6,oj7,oj8,oj9,oj10,oj11,oj12,oj13,oj14,d128_b1_h1_t128_c1,d128_b1_h1_t144_c1,d128_b1_h1_t1264_c1,d128_b1_h1_t1280_c1,d128_b2_h3_t64_c1,d128_b16_h1_t16_c1,d64_b1_h1_t240_c1,d64_b1_h1_t256_c1,d64_b1_h1_t272_c1,d64_b1_h1_t384_c1,d64_b1_h1_t496_c1,d64_b1_h1_t511_c1,d64_b1_h1_t512_c1,d64_b1_h1_t513_c1,d64_b16_h1_t16_c1,d64_b1_h3_t96_c1,d64_b1_h4_t64_c1,d64_b1_h1_t256_c0",
+        "--output-dir",
+        "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/validation_dispatch_r1/actual_binary"
+      ],
+      "started": "2026-10-16T03:05:49.267030+00:00",
+      "returncode": 0,
+      "seconds": 44.12827055499656,
+      "finished": "2026-10-16T03:06:33.395622+00:00"
+    }
+  ],
+  "prevalidated": {
+    "cpu_report": "/data/tilelang-metax/race_tests/nsa/experiments/20261016_goal895/dispatch_cpu_r1.json",
+    "sha256": "a350462eb087bbd4412368fcb79aada47bcf843b3f464c396719a89f86a8277b"
+  },
+  "static": {
+    "changed_functions": [
+      "_get_kernel"
+    ],
+    "unchanged_functions": 72,
+    "module_statements_equal": true,
+    "all_device_builders_equal": true
+  }
+}

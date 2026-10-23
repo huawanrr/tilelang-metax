@@ -1,0 +1,37 @@
+{
+  "parent_sha256": "58bc2fd7a2aeb8ea805be63cc4aefae81487bcc39c3608fb5edc8293380888f9",
+  "variants": [
+    {
+      "file": "recip_exp2_log2.py",
+      "expression": "T.exp2(-T.log2({value}))",
+      "sha256": "269e9d55517f72b062e9d0fb87e3fc4fe71dce8cb9285d87838175ee8c9f50fb"
+    },
+    {
+      "file": "recip_exp_log.py",
+      "expression": "T.exp(-T.log({value}))",
+      "sha256": "6d70955acbebca868773bc6837a4f2c8c8c5ae233d49db00b23658e98a437e55"
+    },
+    {
+      "file": "recip_exp_log2.py",
+      "expression": "T.exp(-T.log2({value}) * 0.6931471805599453)",
+      "sha256": "f4b8f76e5250f1d5ec331ad05a8f28f6f4869c6adcc3d769889db768bf3bf575"
+    }
+  ],
+  "functions": [
+    "_coalesced_block_loads_prim_boundary_v8",
+    "_coalesced_block_loads_prim_fp32_mask",
+    "_coalesced_block_loads_prim_fp32_sum",
+    "_coalesced_block_loads_prim_oct8",
+    "native_sparse_attention_linear_v_blocks_oct8",
+    "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_q_preload",
+    "native_sparse_attention_q_preload_vfirst",
+    "native_sparse_attention_short_list_oct8_sum_v11",
+    "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint",
+    "native_sparse_attention_staged_sparse_blocks_sum_v11"
+  ],
+  "expressions": 25,
+  "semantics": "Only replace positive-denominator reciprocal expressions; retain every zero guard, mask, reduction order, packing, dispatch and checked public adapter. Screening probes only.",
+  "validation_needed": "Actual device instructions, independent math and attention references, hot/cold A/B/A."
+}

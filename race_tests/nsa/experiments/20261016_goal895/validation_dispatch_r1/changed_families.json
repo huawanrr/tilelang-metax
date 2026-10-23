@@ -1,0 +1,2573 @@
+{
+  "status": "PASS",
+  "source_sha256": "d3c4e9f7417069efc0a0189d5754d4f8e765034c848c2219d32e869dd3b22080",
+  "official_sandbox": false,
+  "strict_fp32": [
+    {
+      "builder": "_coalesced_block_loads_prim_fp32_sum",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "_coalesced_block_loads_prim_fp32_mask",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "native_sparse_attention_q_preload_vfirst",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "_coalesced_block_loads_prim_boundary_v8",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "native_sparse_attention_short_list_oct8_sum_v11",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    },
+    {
+      "builder": "native_sparse_attention_staged_sparse_blocks_sum_v11",
+      "calls": [
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x16f16",
+          "a_type": "str",
+          "b_type": "str"
+        },
+        {
+          "shape": "16x16x4f32",
+          "a_type": "str",
+          "b_type": "str"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 112,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 127,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 129,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 144,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 255,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 257,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1008,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1264,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1280,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1296,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 32,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 16,
+        "SEQ_LEN": 16,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 64,
+        "H": 2,
+        "HQ": 32,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 48,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 32,
+        "H": 4,
+        "HQ": 64,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 16,
+        "H": 8,
+        "HQ": 128,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 64,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 3,
+        "SEQ_LEN": 128,
+        "H": 2,
+        "HQ": 32,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 304,
+        "H": 2,
+        "HQ": 32,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 144,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 1024,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 240,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 272,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 384,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 496,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 511,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 512,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 513,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 128,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 8,
+        "SEQ_LEN": 32,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 16,
+        "SEQ_LEN": 16,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 2,
+        "SEQ_LEN": 64,
+        "H": 2,
+        "HQ": 32,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.0009765625
+    }
+  ],
+  "scales": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": null,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.0,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": -0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.03125,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": null,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.0,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": -0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.03125,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "scale": null,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "scale": 0.0,
+      "max_abs_error": 6.103515625e-05
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "scale": -0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "scale": 0.03125,
+      "max_abs_error": 0.00048828125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "scale": 0.1,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": null,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.0,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": -0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.03125,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": null,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.0,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": -0.1,
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.03125,
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "scale": 0.1,
+      "max_abs_error": 0.001953125
+    }
+  ],
+  "live": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 1,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 2,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 1,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 2,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "changed": 1,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "changed": 2,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.0009765625,
+      "direct_max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 1,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 2,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.0009765625,
+      "direct_max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 1,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 2,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 0,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "changed": 3,
+      "graph_max_abs_error": 0.001953125,
+      "direct_max_abs_error": 0.001953125
+    }
+  ],
+  "restricted": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": false
+      },
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "max_abs_error": 0.001953125
+    }
+  ],
+  "parent_sha256": "49c5e4b40ba926ef0d9d687760a520306ccde4bc82b077907a5b3568b918b2ea",
+  "compiled_cache_orders": [
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5ca8ca867ab2750986344351b969260ea949ace9f8d13d16c8dab4474d492fb1",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "045dda84dca09758fa4ea072e9155fb1d1ccff011f2eb1670b34740355724e02",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5ca8ca867ab2750986344351b969260ea949ace9f8d13d16c8dab4474d492fb1",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "045dda84dca09758fa4ea072e9155fb1d1ccff011f2eb1670b34740355724e02",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "045dda84dca09758fa4ea072e9155fb1d1ccff011f2eb1670b34740355724e02",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5ca8ca867ab2750986344351b969260ea949ace9f8d13d16c8dab4474d492fb1",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "045dda84dca09758fa4ea072e9155fb1d1ccff011f2eb1670b34740355724e02",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5ca8ca867ab2750986344351b969260ea949ace9f8d13d16c8dab4474d492fb1",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5ca8ca867ab2750986344351b969260ea949ace9f8d13d16c8dab4474d492fb1",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "045dda84dca09758fa4ea072e9155fb1d1ccff011f2eb1670b34740355724e02",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5ca8ca867ab2750986344351b969260ea949ace9f8d13d16c8dab4474d492fb1",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "045dda84dca09758fa4ea072e9155fb1d1ccff011f2eb1670b34740355724e02",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "045dda84dca09758fa4ea072e9155fb1d1ccff011f2eb1670b34740355724e02",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5ca8ca867ab2750986344351b969260ea949ace9f8d13d16c8dab4474d492fb1",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "045dda84dca09758fa4ea072e9155fb1d1ccff011f2eb1670b34740355724e02",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5ca8ca867ab2750986344351b969260ea949ace9f8d13d16c8dab4474d492fb1",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "61ced4f76c3a691c784eb3782c9540be9206a7803479e7871700c261ae7c2463",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "c10e16b99e64d198103b0228244a74b02b0dcf9d354dee406aaf7428ae610024",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "61ced4f76c3a691c784eb3782c9540be9206a7803479e7871700c261ae7c2463",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "c10e16b99e64d198103b0228244a74b02b0dcf9d354dee406aaf7428ae610024",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "c10e16b99e64d198103b0228244a74b02b0dcf9d354dee406aaf7428ae610024",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "61ced4f76c3a691c784eb3782c9540be9206a7803479e7871700c261ae7c2463",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "c10e16b99e64d198103b0228244a74b02b0dcf9d354dee406aaf7428ae610024",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "61ced4f76c3a691c784eb3782c9540be9206a7803479e7871700c261ae7c2463",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "61ced4f76c3a691c784eb3782c9540be9206a7803479e7871700c261ae7c2463",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "c10e16b99e64d198103b0228244a74b02b0dcf9d354dee406aaf7428ae610024",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "61ced4f76c3a691c784eb3782c9540be9206a7803479e7871700c261ae7c2463",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "c10e16b99e64d198103b0228244a74b02b0dcf9d354dee406aaf7428ae610024",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "c10e16b99e64d198103b0228244a74b02b0dcf9d354dee406aaf7428ae610024",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "61ced4f76c3a691c784eb3782c9540be9206a7803479e7871700c261ae7c2463",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "c10e16b99e64d198103b0228244a74b02b0dcf9d354dee406aaf7428ae610024",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 96,
+        "H": 3,
+        "HQ": 48,
+        "D": 128,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "61ced4f76c3a691c784eb3782c9540be9206a7803479e7871700c261ae7c2463",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "67f314916cfd16ca8228bb090b821247d153700a17bf69b5de6e71dd220890fc",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "08f73e30bfcbedcb248d81619ed0e5076c5cb7a311e7c35a6540352147dad5f9",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "67f314916cfd16ca8228bb090b821247d153700a17bf69b5de6e71dd220890fc",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "08f73e30bfcbedcb248d81619ed0e5076c5cb7a311e7c35a6540352147dad5f9",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "08f73e30bfcbedcb248d81619ed0e5076c5cb7a311e7c35a6540352147dad5f9",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "67f314916cfd16ca8228bb090b821247d153700a17bf69b5de6e71dd220890fc",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "08f73e30bfcbedcb248d81619ed0e5076c5cb7a311e7c35a6540352147dad5f9",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "67f314916cfd16ca8228bb090b821247d153700a17bf69b5de6e71dd220890fc",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "67f314916cfd16ca8228bb090b821247d153700a17bf69b5de6e71dd220890fc",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "08f73e30bfcbedcb248d81619ed0e5076c5cb7a311e7c35a6540352147dad5f9",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "67f314916cfd16ca8228bb090b821247d153700a17bf69b5de6e71dd220890fc",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "08f73e30bfcbedcb248d81619ed0e5076c5cb7a311e7c35a6540352147dad5f9",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "08f73e30bfcbedcb248d81619ed0e5076c5cb7a311e7c35a6540352147dad5f9",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "67f314916cfd16ca8228bb090b821247d153700a17bf69b5de6e71dd220890fc",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "08f73e30bfcbedcb248d81619ed0e5076c5cb7a311e7c35a6540352147dad5f9",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 1,
+        "SEQ_LEN": 256,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "67f314916cfd16ca8228bb090b821247d153700a17bf69b5de6e71dd220890fc",
+      "max_abs_error": 0.0009765625
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5a7dcf6605a5ea83d56ae25d6c86846d44354358bd8d0ec8cc993b5918213ab4",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "e94136fc4d0283ca89748d46e175599c1be0eb4419253dcb26597b117089540e",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5a7dcf6605a5ea83d56ae25d6c86846d44354358bd8d0ec8cc993b5918213ab4",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "e94136fc4d0283ca89748d46e175599c1be0eb4419253dcb26597b117089540e",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "e94136fc4d0283ca89748d46e175599c1be0eb4419253dcb26597b117089540e",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5a7dcf6605a5ea83d56ae25d6c86846d44354358bd8d0ec8cc993b5918213ab4",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_frag": false
+      },
+      "device_source_sha256": "e94136fc4d0283ca89748d46e175599c1be0eb4419253dcb26597b117089540e",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5a7dcf6605a5ea83d56ae25d6c86846d44354358bd8d0ec8cc993b5918213ab4",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5a7dcf6605a5ea83d56ae25d6c86846d44354358bd8d0ec8cc993b5918213ab4",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "e94136fc4d0283ca89748d46e175599c1be0eb4419253dcb26597b117089540e",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5a7dcf6605a5ea83d56ae25d6c86846d44354358bd8d0ec8cc993b5918213ab4",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "e94136fc4d0283ca89748d46e175599c1be0eb4419253dcb26597b117089540e",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "e94136fc4d0283ca89748d46e175599c1be0eb4419253dcb26597b117089540e",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5a7dcf6605a5ea83d56ae25d6c86846d44354358bd8d0ec8cc993b5918213ab4",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {
+        "q_preload": true
+      },
+      "device_source_sha256": "e94136fc4d0283ca89748d46e175599c1be0eb4419253dcb26597b117089540e",
+      "max_abs_error": 0.001953125
+    },
+    {
+      "config": {
+        "B": 4,
+        "SEQ_LEN": 64,
+        "H": 1,
+        "HQ": 16,
+        "D": 64,
+        "S": 1,
+        "block_size": 16,
+        "is_causal": true
+      },
+      "options": {},
+      "device_source_sha256": "5a7dcf6605a5ea83d56ae25d6c86846d44354358bd8d0ec8cc993b5918213ab4",
+      "max_abs_error": 0.001953125
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "parent_sha256": "900cf61225dbd2b86191ffe61b68baa49029ab3188c0c644d06b1dc866daac40",
+  "variants": [
+    {
+      "file": "reciprocal_broadcast_contiguous.py",
+      "mode": "contiguous",
+      "transformed_loops": {
+        "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint": 2,
+        "native_sparse_attention_single_packed_qo_v2_mathcast": 2,
+        "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast": 1,
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast": 1,
+        "_coalesced_block_loads_prim_fp32_sum": 2,
+        "_coalesced_block_loads_prim_boundary_v8": 2
+      },
+      "sha256": "483f51cc7d4d10bf034b0cadaee4597bde9f890b1d7e064463c91c4b2f05c0b3"
+    },
+    {
+      "file": "reciprocal_broadcast_spread.py",
+      "mode": "spread",
+      "transformed_loops": {
+        "native_sparse_attention_single_packed_qo_v2_mathcast_block_joint": 2,
+        "native_sparse_attention_single_packed_qo_v2_mathcast": 2,
+        "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast": 1,
+        "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast": 1,
+        "_coalesced_block_loads_prim_fp32_sum": 2,
+        "_coalesced_block_loads_prim_boundary_v8": 2
+      },
+      "sha256": "cfeacf08200bbf3fc0adfc4847ef351abcb995d2a8eb044e0257705c73c78265"
+    }
+  ],
+  "owner_proof": "Exactly one owner per head, all four consumer lanes receive that head's value",
+  "unchanged_reciprocal_formula": true,
+  "unchanged_denominator_and_normalization": true,
+  "original_builders_and_explicit_tuning_fallback": true
+}

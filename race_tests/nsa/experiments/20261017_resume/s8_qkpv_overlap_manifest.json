@@ -1,0 +1,21 @@
+{
+  "parent_sha256": "900cf61225dbd2b86191ffe61b68baa49029ab3188c0c644d06b1dc866daac40",
+  "variants": [
+    {
+      "path": "s8_qkpv_overlap_i0.py",
+      "native_interleave": false,
+      "sha256": "7e5403aeb76b29e04473610c8b7c240102c4122f610d97c139b9c17145ed8611"
+    },
+    {
+      "path": "s8_qkpv_overlap_i1.py",
+      "native_interleave": true,
+      "sha256": "5650a66cff3389be7116efa012c42f36bc9001c539d24df1d836d1f26f251b94"
+    }
+  ],
+  "changed_functions": [
+    "native_sparse_attention_online_packed_batch_minor_o_v2_mathcast",
+    "native_sparse_attention_online_packed_quad_batch_minor_o_v2_mathcast"
+  ],
+  "fallback": "Original per-block algorithm for partial or invalid groups",
+  "preserved": "FP32 MMA, per-dot K order, per-block exp/clip, denominator addition order, FP16 cast, alternating PV accumulators, output fences, packing and dispatch"
+}
